@@ -1,8 +1,7 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http.Features;
-
-
-
+using RetailSales.Interface;
+using RetailSales.Services;
 internal class Program
 {
     private static void Main(string[] args)
@@ -15,8 +14,9 @@ internal class Program
      
 
         builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+		builder.Services.TryAddSingleton<ILoginService, LoginService>();
 
-        builder.Services.AddSession();
+		builder.Services.AddSession();
 
 
         builder.Services.AddControllers();
@@ -45,7 +45,7 @@ internal class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{fid?}");
+            pattern: "{controller=Account}/{action=Login}/{fid?}");
 
 
 
