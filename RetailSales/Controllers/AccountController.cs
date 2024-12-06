@@ -102,8 +102,6 @@ namespace RetailSales.Controllers
             
             if (isValidUser == true)
             {
-                TempData["msg"] = "You are welcome to Admin Section";
-                //return RedirectToAction(actionName: "Index", controllerName: "Home");
                 return RedirectToAction(actionName: "Index", controllerName: "Home");
             }
             else
