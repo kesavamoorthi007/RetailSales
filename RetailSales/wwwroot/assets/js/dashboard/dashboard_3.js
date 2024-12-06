@@ -261,115 +261,115 @@ var options = {
       }
     ],
   };
-  var revenuegrowth = new ApexCharts(document.querySelector("#revenuegrowth"), options);
-  revenuegrowth.render();
+  //var revenuegrowth = new ApexCharts(document.querySelector("#revenuegrowth"), options);
+  //revenuegrowth.render();
   
   //  visitsCharts
   
-  var options = {
-    series: [{
-    name: 'Chrome',
-    data: [44, 55, 41, 37, 22, 43, 21]
-  }, {
-    name: 'Firefox',
-    data: [53, 32, 33, 52, 13, 43, 32]
-  }, { 
-    name: 'Firefox',
-    data: [12, 17, 11, 9, 15, 11, 20]
-  }],
-    colors:['var(--theme-deafult)' ,'#80B3B3' ,'#CCE0E0'],
-    chart: { 
-    type: 'bar',
-    height: 325,
-    stacked: true, 
-    toolbar: {
-      show: false,
-      tools: {
-        download: false,
-      }
-    }, 
-    zoom: {
-      enabled: true,
-    } 
-  },
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        legend: {
-          position: 'bottom',
-          offsetY: 2,
-        }
-      } 
-    }], 
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        barHeight: '28%',
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu','Fri', 'Sat' ,'Sun'
-      ],
-      labels:{
-        show: false,
-      },
-      axisTicks:{
-        show: false,
-      },
-    },
-    legend: {
-      show: false,
-    },
-    fill: { 
-      opacity: 1 
-    },
-    grid: {
-      show: false,
-    }
-  };
-  var  visitsCharts = new ApexCharts(document.querySelector("#visitsCharts"), options);
-   visitsCharts.render();
+  //var options = {
+  //  series: [{
+  //  name: 'Chrome',
+  //  data: [44, 55, 41, 37, 22, 43, 21]
+  //}, {
+  //  name: 'Firefox',
+  //  data: [53, 32, 33, 52, 13, 43, 32]
+  //}, { 
+  //  name: 'Firefox',
+  //  data: [12, 17, 11, 9, 15, 11, 20]
+  //}],
+  //  colors:['var(--theme-deafult)' ,'#80B3B3' ,'#CCE0E0'],
+  //  chart: { 
+  //  type: 'bar',
+  //  height: 325,
+  //  stacked: true, 
+  //  toolbar: {
+  //    show: false,
+  //    tools: {
+  //      download: false,
+  //    }
+  //  }, 
+  //  zoom: {
+  //    enabled: true,
+  //  } 
+  //},
+  //  responsive: [{
+  //    breakpoint: 480,
+  //    options: {
+  //      legend: {
+  //        position: 'bottom',
+  //        offsetY: 2,
+  //      }
+  //    } 
+  //  }], 
+  //  plotOptions: {
+  //    bar: {
+  //      horizontal: true,
+  //      barHeight: '28%',
+  //    },
+  //  },
+  //  dataLabels: {
+  //    enabled: false,
+  //  },
+  //  xaxis: {
+  //    categories: ['Mon', 'Tue', 'Wed', 'Thu','Fri', 'Sat' ,'Sun'
+  //    ],
+  //    labels:{
+  //      show: false,
+  //    },
+  //    axisTicks:{
+  //      show: false,
+  //    },
+  //  },
+  //  legend: {
+  //    show: false,
+  //  },
+  //  fill: { 
+  //    opacity: 1 
+  //  },
+  //  grid: {
+  //    show: false,
+  //  }
+  //};
+  //var  visitsCharts = new ApexCharts(document.querySelector("#visitsCharts"), options);
+  // visitsCharts.render();
   
   // echart-polar
   
-  require([
-    'echarts'
-  ], function (echarts) {
+  //require([
+  //  'echarts'
+  //], function (echarts) {
   
-    var chart = echarts.init(document.getElementById('echart-polar'));
-    chart.setOption({
-      polar: {
-        radius: [30, '80%']
-      },
-      angleAxis: {
-        max: 4,
-        startAngle: 90
-      },
-      radiusAxis: {
-        type: 'category',
-      },
-      tooltip: {},
-      series: {
-        type: 'bar',
-        data: [
-          {value : 2, itemStyle: { color:'#86909C'},},
-          {value : 2.2, itemStyle: { color:'#FF8367'},},
-          {value : 2.4, itemStyle: { color:'#FFAE1A'},},
-          {value : 3.4, itemStyle: { color:'#006666'},},
-        ],
-        coordinateSystem: 'polar',
-        label: {
-          show: true,
-          position: 'middle',
-          formatter: '{b}: {c}' 
-        }
-      }
-    });
-    chart.on('click', function (params) { 
-        console.log(params);
-    });
-    window.onresize = chart.resize;
-  });
+  //  var chart = echarts.init(document.getElementById('echart-polar'));
+  //  chart.setOption({
+  //    polar: {
+  //      radius: [30, '80%']
+  //    },
+  //    angleAxis: {
+  //      max: 4,
+  //      startAngle: 90
+  //    },
+  //    radiusAxis: {
+  //      type: 'category',
+  //    },
+  //    tooltip: {},
+  //    series: {
+  //      type: 'bar',
+  //      data: [
+  //        {value : 2, itemStyle: { color:'#86909C'},},
+  //        {value : 2.2, itemStyle: { color:'#FF8367'},},
+  //        {value : 2.4, itemStyle: { color:'#FFAE1A'},},
+  //        {value : 3.4, itemStyle: { color:'#006666'},},
+  //      ],
+  //      coordinateSystem: 'polar',
+  //      label: {
+  //        show: true,
+  //        position: 'middle',
+  //        formatter: '{b}: {c}' 
+  //      }
+  //    }
+  //  });
+  //  chart.on('click', function (params) { 
+  //      console.log(params);
+  //  });
+  //  window.onresize = chart.resize;
+  //});
