@@ -41,6 +41,9 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="~/assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="~/assets/css/sidebar.css">
+
+    <!-- theme css -->
+    <link href="~/jqwidgets/styles/jqx.fresh.css" rel="stylesheet">
   </head>
 
 
@@ -197,11 +200,10 @@
                                     </svg>
                                     <svg class="fill-icon">
                                         <use href="../assets/svg/icon-sprite.svg#fill-project"></use>
-                                    </svg><span>Project           </span>
+                                    </svg><span>Master</span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="projects.html">Project List</a></li>
-                                    <li><a href="projectcreate.html">Create new</a></li>
+                                    <li><a href="@Url.Action("ListCountry", "Country")">Country</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">

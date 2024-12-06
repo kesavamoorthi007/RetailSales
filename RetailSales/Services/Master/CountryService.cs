@@ -41,10 +41,19 @@ namespace RetailSales.Services.Master
                 string StatementType = string.Empty;
                 string svSQL = "";
 
+                if (cy.ID == null)
+                {
+
+                    svSQL = "SELECT Count(COUNTRY_CODE) as cnt FROM COUNTRY WHERE COUNTRY_CODE = LTRIM(RTRIM('" + cy.ConCode + "')) and COUNTRY_NAME = LTRIM(RTRIM('" + cy.ConName + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Country Name Already Existed";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("CountryProc", objConn);
-
                     objCmd.CommandType = CommandType.StoredProcedure;
                     if (cy.ID == null)
                     {
@@ -56,7 +65,6 @@ namespace RetailSales.Services.Master
                         StatementType = "Update";
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
-
                     objCmd.Parameters.Add("@Countryname", SqlDbType.NVarChar).Value = cy.ConName;
                     objCmd.Parameters.Add("@Countrycode", SqlDbType.NVarChar).Value = cy.ConCode;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
@@ -80,6 +88,62 @@ namespace RetailSales.Services.Master
             }
 
             return msg;
+        }
+        public DataTable GetEditCountryDetail(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,COUNTRY_CODE,COUNTRY_NAME FROM COUNTRY WHERE ID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public string StatusChange(string tag, string id)
+        {
+
+            try
+            {
+                string svSQL = string.Empty;
+                using (SqlConnection objConnT = new SqlConnection(_connectionString))
+                {
+                    svSQL = "UPDATE COUNTRY SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
+                    SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
+                    objConnT.Open();
+                    objCmds.ExecuteNonQuery();
+                    objConnT.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return "";
+
+        }
+        public string RemoveChange(string tag, string id)
+        {
+
+            try
+            {
+                string svSQL = string.Empty;
+                using (SqlConnection objConnT = new SqlConnection(_connectionString))
+                {
+                    svSQL = "UPDATE COUNTRY SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
+                    objConnT.Open();
+                    objCmds.ExecuteNonQuery();
+                    objConnT.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return "";
+
         }
     }
 }

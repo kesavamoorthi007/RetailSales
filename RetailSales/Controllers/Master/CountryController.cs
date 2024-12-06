@@ -22,7 +22,15 @@ namespace RetailSales.Controllers.Master
             }
             else
             {
-                //ic = CountryService.GetCountryById(id);
+                DataTable dt = new DataTable();
+                dt = CountryService.GetEditCountryDetail(id);
+                if (dt.Rows.Count > 0)
+                {
+                    ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.ConName = dt.Rows[0]["COUNTRY_NAME"].ToString();
+                    ic.ConCode = dt.Rows[0]["COUNTRY_CODE"].ToString();
+
+                }
 
             }
             return View(ic);
@@ -45,7 +53,7 @@ namespace RetailSales.Controllers.Master
                     {
                         TempData["notice"] = "Country Updated Successfully...!";
                     }
-                    return RedirectToAction("Country");
+                    return RedirectToAction("ListCountry");
                 }
 
                 else
@@ -82,17 +90,14 @@ namespace RetailSales.Controllers.Master
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-
-                    EditRow = "<a href=Country?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit' /></a>";
-                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
+                    EditRow = "<a href=Country?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit-color.png' alt='Edit' width='28' /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/trash-bin.png' alt='Deactivate' width='28' /></a>";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
-
-
                 Reg.Add(new Countrygrid
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
@@ -109,6 +114,36 @@ namespace RetailSales.Controllers.Master
                 Reg
             });
 
+        }
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = CountryService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListCountry");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListCountry");
+            }
+        }
+        public ActionResult Remove(string tag, string id)
+        {
+
+            string flag = CountryService.RemoveChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListCountry");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListCountry");
+            }
         }
 
     }
