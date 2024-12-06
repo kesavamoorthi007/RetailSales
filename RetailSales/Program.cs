@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using RetailSales.Interface;
 using RetailSales.Services;
+using RetailSales.Interface.Master;
+using RetailSales.Services.Master;
 internal class Program
 {
     private static void Main(string[] args)
@@ -15,6 +17,7 @@ internal class Program
 
         builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		builder.Services.TryAddSingleton<ILoginService, LoginService>();
+		builder.Services.TryAddSingleton<ICountryService, CountryService>();
 
 		builder.Services.AddSession();
 
