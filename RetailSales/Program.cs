@@ -19,8 +19,16 @@ internal class Program
 		builder.Services.TryAddSingleton<ILoginService, LoginService>();
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
 
+
         // adding interface and services containers
         builder.Services.TryAddSingleton<ICityService, CityServices>();
+
+        builder.Services.TryAddSingleton<IStateService, StateService>();
+
+		builder.Services.TryAddSingleton<ICCategoryService, CCategoryService>();
+		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
+
+
 
         builder.Services.AddSession();
 

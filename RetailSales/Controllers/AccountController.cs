@@ -10,7 +10,7 @@ namespace RetailSales.Controllers
     public class AccountController : Controller
     {
 		DataTransactions _dtransactions;
-		IConfiguration? _configuratio;
+		//IConfiguration _configuratio;
         ILoginService loginService;
         private string? _connectionString;
         public AccountController(ILoginService _loginService, IConfiguration _configuratio)
@@ -30,34 +30,7 @@ namespace RetailSales.Controllers
             LoginViewModel L = new LoginViewModel();
             return View(L);
         }
-
-
-        //public IActionResult Login([Bind] LoginViewModel model)
-        //{
-        //    int res = loginServi
-        //    ce.LoginCheck(model.Username, model.Password);
-        //    if (res == 1)
-        //    {
-        //        TempData["msg"] = "You are welcome to Admin Section";
-        //        return RedirectToAction(actionName: "Index", controllerName: "Home");
-        //    }
-        //    else
-        //    {
-        //        TempData["msg"] = "Admin id or Password is wrong.!";
-        //    }
-        //    return View(model);
-        //}
-
         [HttpPost]
-
-
-       // public IActionResult Login(LoginViewModel model )
-
-        //public IActionResult Login(LoginViewModel model)
-       // { 
-
-
-
         public IActionResult Login(LoginViewModel model )
         { 
             //bool res = loginService.LoginCheck(model.Username, model.Password);
