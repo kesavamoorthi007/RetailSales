@@ -18,7 +18,12 @@ internal class Program
         builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		builder.Services.TryAddSingleton<ILoginService, LoginService>();
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
+
         builder.Services.TryAddSingleton<IStateService, StateService>();
+
+		builder.Services.TryAddSingleton<ICCategoryService, CCategoryService>();
+		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
+
 
         builder.Services.AddSession();
 
