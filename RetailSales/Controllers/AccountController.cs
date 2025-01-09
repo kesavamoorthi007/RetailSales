@@ -10,7 +10,7 @@ namespace RetailSales.Controllers
     public class AccountController : Controller
     {
 		DataTransactions _dtransactions;
-		IConfiguration? _configuratio;
+		//IConfiguration _configuratio;
         ILoginService loginService;
         private string? _connectionString;
         public AccountController(ILoginService _loginService, IConfiguration _configuratio)
