@@ -20,6 +20,7 @@ internal class Program
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
 		builder.Services.TryAddSingleton<ICCategoryService, CCategoryService>();
 		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
+		builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
 
 		builder.Services.AddSession();
 
