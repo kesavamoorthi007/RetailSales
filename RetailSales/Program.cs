@@ -29,6 +29,7 @@ internal class Program
 
 		builder.Services.TryAddSingleton<ICCategoryService, CCategoryService>();
 		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
+		builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
 
 
 
