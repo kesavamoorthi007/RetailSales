@@ -18,9 +18,11 @@ internal class Program
         builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		builder.Services.TryAddSingleton<ILoginService, LoginService>();
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
+        builder.Services.TryAddSingleton<IEmployeeService, EmployeeService>();
 
 
-        // adding interface and services containers
+
+        
         builder.Services.TryAddSingleton<ICityService, CityServices>();
 
         builder.Services.TryAddSingleton<IStateService, StateService>();
