@@ -1,0 +1,187 @@
+﻿@model RetailSales.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee ";
+
+}
+<partial name="JqxGridPartial" />
+<script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            @*  <li> <a href="#">Home</a> </li>
+            <li> <a>Master</a> </li> *@
+            <li class="active"> <strong>Employee </strong> </li>
+        </ol>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var source =
+        {
+            url: "/Employee/MyListEmployeegrid",
+            data: {
+                strstatus: ""
+            },
+            datatype: "json",
+            updaterow: function (rowid, rowdata) {
+                // synchronize with the server - send update command
+            },
+            datafields: [
+                { name: 'empid', type: 'string' },
+                { name: 'fname', type: 'string' },
+                { name: 'gender', type: 'string' },
+                //{ name: 'Address', type: 'string' },
+                //{ name: 'Cityid', type: 'string' },
+                //{ name: 'Stateid', type: 'string' },
+                //{ name: 'Countryid', type: 'string' },
+                { name: 'mobile', type: 'string' },
+                { name: 'email', type: 'string' },
+                //{ name: 'Remark', type: 'string' },
+                //{ name: 'Approved', type: 'string' },
+                //{ name: 'Designation', type: 'string' },
+                //{ name: 'Branch', type: 'string' },
+                //{ name: 'Department', type: 'string' },
+                //{ name: 'Maritalstatus', type: 'string' },
+                //{ name: 'Emailpersonal', type: 'string' },
+                //{ name: 'Djoining', type: 'string' },
+                //{ name: 'Dbirth', type: 'string' },
+                //{ name: 'Dleaving', type: 'string' },
+                //{ name: 'Degree', type: 'string' },
+                //{ name: 'EmployeeStatus', type: 'string' },
+                //{ name: 'Report', type: 'string' },
+                { name: 'editrow', type: 'string' },
+                { name: 'delrow', type: 'string' },
+
+            ],
+            id: 'id',
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source,
+            { contentType: 'application/json; charset=utf-8' }, {
+            loadComplete: function () {
+
+            }
+        }
+        );
+
+        $("#grid").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                height: 450,
+                source: source,
+                //autoheight: true,
+                sortable: true,
+                filterable: true,
+                groupable: false,
+                pageable: true,
+                showfilterbar: true,
+                //showfilterrow: true,
+                theme: 'fresh',
+                autorowheight: true,
+                filterbarmode: 'simple',
+                enablebrowserselection: true,
+                columnsresize: true,
+                selectionmode: 'multiplerowsextended',
+                keyboardnavigation: false,
+
+                columns: [
+
+                    { text: 'EMPLOYEE ID', filtertype: 'checkedlist', datafield: 'empid', width: 200 },
+                    { text: 'FNAME', filtertype: 'input', datafield: 'fname', width: 200 },
+                    { text: 'GENDER', filtertype: 'input', datafield: 'gender', width: 200 },
+                    //{ text: 'ADDRESS', filtertype: 'input', datafield: 'Address', width: 200 },
+                    //{ text: 'CITY ID', filtertype: 'input', datafield: 'cityid', width: 200 },
+                    //{ text: 'STATE_ID', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'COUNTRY_ID', filtertype: 'input', datafield: 'concode', width: 200 },
+                    { text: 'MOBILE', filtertype: 'input', datafield: 'mobile', width: 200 },
+                    { text: 'EMAIL', filtertype: 'input', datafield: 'email', width: 200 },
+                    //{ text: 'REMARKS', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'APPROVED BY', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'DESIGNATION', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'BRANCH', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'DEPARTMENT', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'MATERIALSTATUS', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'EMAILPERSONAL', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'DATEOFJOINING', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'DATEOFBIRTH', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'DATEOFLEAVING', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'DEGREE', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'EMPLOYEE STATUS', filtertype: 'input', datafield: 'concode', width: 200 },
+                    //{ text: 'REPORT_TO', filtertype: 'input', datafield: 'concode', width: 200 },
+
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                ]
+            });
+        $("#ddlStatus").change(function () {
+            var value = "Y";
+            if ($(this).val() != "") {
+                value = $(this).val();
+            }
+            source.data = {
+                strstatus: value
+            };
+            $("#grid").jqxGrid({ source: source });
+        });
+    });
+
+</script>
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+
+                    <form>
+                        <br />
+                        <div class="row">
+                       <div class="col-md-2 ">
+                            @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
+                            { new SelectListItem() {Text = "Enabled", Value="Y"},
+                            new SelectListItem() {Text = "Disabled", Value="N"}},
+                            new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
+                        </div>
+                            <div class="col-md-9 ">
+                                <div class=" textalignright">
+                                    <a href="@Url.Action("Employee", "Employee")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Employee </a>
+                                    <br>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-md-12 ">
+                                <div id="grid">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function ConfirmDelete() {
+        return confirm("Are you sure you want to delete?");
+    }
+</script>
+
+

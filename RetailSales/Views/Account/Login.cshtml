@@ -1,0 +1,285 @@
+﻿@model RetailSales.Models.LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Riho admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Riho admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="~/assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/x-icon">
+    <title>Retail Sales</title>
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/font-awesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/icofont.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/feather-icon.css">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/echart.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/date-picker.css">
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <link id="color" rel="stylesheet" href="~/assets/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/sidebar.css">
+    <style>
+        .login-card {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            background: url('./assets/images/login/login_bg.jpg');
+            background-position: center;
+            padding: 30px 12px;
+            .logo
+
+        {
+            display: block;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .btn-showcase {
+            .btn
+
+        {
+            line-height: 1;
+            padding: 10px 13px;
+            margin: 0;
+            &+.btn
+
+        {
+            margin-left: 5px;
+        }
+
+        svg {
+            height: 16px;
+            vertical-align: bottom;
+        }
+
+        }
+        }
+
+        .login-main {
+            width: 450px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
+            margin: 0 auto;
+            background-color: $white;
+            .theme-form
+
+        {
+            h4
+
+        {
+            margin-bottom: 5px;
+        }
+
+        label {
+            font-size: 15px;
+            letter-spacing: 0.4px;
+        }
+
+        .checkbox label::before {
+            background-color: $card-body-color;
+            border: 1px solid #dfdfdf;
+        }
+
+        .or {
+            position: relative;
+            &:before
+
+        {
+            content: "";
+            position: absolute;
+            width: 65%;
+            height: 2px;
+            background-color: #f3f3ff;
+            top: 9px;
+            z-index: 0;
+            right: 0;
+        }
+
+        }
+
+        input {
+            background-color: rgba($primary-color, 0.1);
+            transition: all 0.3s ease;
+            &::-webkit-input-placeholder
+
+        {
+            color: $light-text;
+        }
+
+        &:hover,
+        &:focus {
+            border: 1px solid lighten($semi-dark, 35%);
+            box-shadow: none !important;
+            transition: all 0.3s ease;
+        }
+
+        }
+
+        p {
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: $dark-gray;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .link {
+            position: absolute;
+            top: 10px;
+            right: 0;
+        }
+
+        }
+        }
+        }
+
+        .show-hide {
+            position: absolute;
+            top: 52px;
+            right: 20px;
+            transform: translateY(-50%);
+            span
+
+        {
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--theme-deafult);
+            &.show
+
+        {
+            &:before
+
+        {
+            content: "show";
+        }
+
+        }
+
+        &:before {
+            content: "hide";
+        }
+
+        }
+        }
+
+        .needs-validation {
+            .invalid-feedback
+
+        {
+            color: $dark-gray;
+        }
+
+        .show-hide {
+            right: 30px;
+        }
+
+        .invalid-tooltip {
+            top: 10px;
+            right: 10px;
+        }
+
+        }
+    </style>
+</head>
+  @{
+        <script type="text/javascript">
+    @if (TempData["msg"] != null)
+    {
+        @:alert('@TempData["msg"]');
+    }
+
+        </script>
+    }
+
+<body>
+   
+    <!-- login page start-->
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-12 p-0">
+                <div class="login-card login-dark">
+                    <div>
+                        <div><a class="logo" href="index.html"><img class="img-fluid for-dark" src="~/assets/images/logo/ICanDlogo.png" alt="looginpage"><img class="img-fluid for-light" src="~/assets/images/logo/ICanDlogo.png" alt="looginpage"></a></div>
+                        <div class="login-main">
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <form class="theme-form">
+                                    <h4>Sign in to account </h4>
+                                    <p>Enter your email & password to login</p>
+                                    <div class="form-group">
+                                        <label class="col-form-label">User Name</label>
+                                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "User Name", @TabIndex = 2, @id = "UserName" })
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Password </label>
+                                        <div class="form-input position-relative">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @TabIndex = 3, @id = "Password" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <div class="text-end mt-3">
+                                            <button class="btn btn-primary btn-block w-100" type="submit">Sign in</button>
+                                        </div>
+                                    </div>
+                               
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- latest jquery-->
+        <script src="~/assets/js/jquery.min.js"></script>
+        <!-- Bootstrap js-->
+        <script src="~/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+        <!-- feather icon js-->
+        <script src="~/assets/js/icons/feather-icon/feather.min.js"></script>
+        <script src="~/assets/js/icons/feather-icon/feather-icon.js"></script>
+        <!-- scrollbar js-->
+        <!-- Sidebar jquery-->
+        <script src="~/assets/js/config.js"></script>
+        <!-- Plugins JS start-->
+        <!-- calendar js-->
+        <!-- Plugins JS Ends-->
+        <!-- Theme js-->
+        <script src="~/assets/js/script.js"></script>
+    </div>
+</body>
+
+</html>

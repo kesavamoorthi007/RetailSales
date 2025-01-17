@@ -1,0 +1,129 @@
+﻿@model RetailSales.Models.Master.Product
+
+@{
+    ViewData["Title"] = "Product";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-12 ">
+          
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Add Product </strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("Product", "Product", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                
+                               <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Product<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Products, new { @id = "txtConName", @class = "form-control", @TabIndex = 1 })<br />
+                                           @*  @Html.HiddenFor(C => C.ID) *@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Product Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.ProductName, new { @id = "txtConCode", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-success me-1" type="button" id="btnSave">Save</button>
+                                    <button type="submit" class="btn btn-success me-1" type="button" id="btnSave">Reset</button>
+                                    <button class="btn btn-danger" type="button" causesvalidation="false"  onclick="location.href='@Url.Action("ListProduct","Product")'">Cancel</button>
+
+                                </div>
+                                
+                            </div>
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("txtConName").value == "") {
+                isValid = false;
+                $(txtConName).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Product");
+                return false;
+            }
+            else {
+                $(txtConName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtConCode").value == "" ) {
+                isValid = false;
+                $(txtConCode).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Product Name");
+                return false;
+            }
+            else {
+                $(txtConCode).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>
