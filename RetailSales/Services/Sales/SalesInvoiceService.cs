@@ -16,6 +16,26 @@ namespace RetailSales.Services.Sales
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+        public DataTable GetItem()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,PRODUCT_NAME FROM ITEM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetItemDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ITEM.ID,VARIANT,BIN_NO,UOM,RATE FROM ITEM  Where ITEM.ID='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetAllSalesInvoice(string strStatus)
         {
             string SvSql = string.Empty;
@@ -39,6 +59,16 @@ namespace RetailSales.Services.Sales
         {
             string SvSql = string.Empty;
             SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,ADDRESS,MOBILE,REMARKS,DISCOUNT,TOTAL_AMOUNT from SALES_INV   where SALES_INV.ID =" + id + "";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetSalesInvoiceItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "  SELECT ID,INV_ID,ITEM,VARIENT,UOM,BIN_NO,QTY,RATE,AMOUNT,DISCOUNT,TOTAL FROM SAL_INV_DEATILS WHERE SAL_INV_DEATILS.INV_ID =" + id + "";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

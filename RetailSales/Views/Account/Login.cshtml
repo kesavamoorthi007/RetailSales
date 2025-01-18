@@ -232,14 +232,14 @@
             <div class="col-12 p-0">
                 <div class="login-card login-dark">
                     <div>
-                        <div><a class="logo" href="index.html"><img class="img-fluid for-dark" src="~/assets/images/logo/ICanDlogo.png" alt="looginpage"><img class="img-fluid for-light" src="~/assets/images/logo/ICanDlogo.png" alt="looginpage"></a></div>
+                        <div><a class="logo" href=@Url.Action("Index", "Home")"><img class="img-fluid for-dark" src="~/assets/images/logo/ICanDlogo.png" alt="looginpage"><img class="img-fluid for-light" src="~/assets/images/logo/ICanDlogo.png" alt="looginpage"></a></div>
                         <div class="login-main">
                             @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
                                 <form class="theme-form">
                                     <h4>Sign in to account </h4>
-                                    <p>Enter your email & password to login</p>
+                                    <p>Enter Your UserName & Password To Login</p>
                                     <div class="form-group">
                                         <label class="col-form-label">User Name</label>
                                         @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "User Name", @TabIndex = 2, @id = "UserName" })

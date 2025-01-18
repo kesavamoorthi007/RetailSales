@@ -28,11 +28,10 @@
     public class ListPurchaseordergrid
     {
         public string id { get; set; }
-        public string invno { get; set; }
-        public string invdate { get; set; }
-        public string customer { get; set; }
-        public string address { get; set; }
-        public string totalamount { get; set; }
+        public string doc { get; set; }
+        public string docdate { get; set; }
+        public string company { get; set; }
+        public string suppier { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
 
