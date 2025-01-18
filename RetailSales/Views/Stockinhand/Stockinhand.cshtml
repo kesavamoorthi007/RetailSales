@@ -1,0 +1,157 @@
+﻿@model RetailSales.Models.Stockinhand
+
+@{
+    ViewData["Title"] = "Stockinhand";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Stockinhand</strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("Stockinhand", "Stockinhand", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Product Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.ProductName, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-4 control-label">Variant<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Variant, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-4 control-label">Balance Quantity<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Balancequantity, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-4 control-label">Uom<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Uom, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-4 control-label">Unit Cost<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.UnitCost, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-4 control-label">Total Value<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Totalvalue, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-4 control-label">Is Active<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Isactive, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListCCategory", "CCategory")'">Cancel</button>
+
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("txtCategory").value == "") {
+                isValid = false;
+                $(txtCategory).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Customer Category");
+                return false;
+            }
+            else {
+                $(txtCategory).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>

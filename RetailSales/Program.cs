@@ -49,6 +49,8 @@ internal class Program
 
 		builder.Services.TryAddSingleton<ISalesInvoiceService, SalesInvoiceService>();
 
+		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
+
 		
 
         // adding UOM interface and services containers
