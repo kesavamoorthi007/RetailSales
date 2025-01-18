@@ -160,7 +160,7 @@
                             </li>
                            
                             <li class="sidebar-list">
-                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="@Url.Action("Index", "Home")">
+                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="#">
                                     <svg class="stroke-icon">
                                         <use href="../assets/svg/icon-sprite.svg#new-order"></use>
                                     </svg>
@@ -168,6 +168,9 @@
                                         <use href="../assets/svg/icon-sprite.svg#new-order"></use>
                                     </svg><span>Inventory</span>
                                 </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="@Url.Action("ListStockinhand", "Stockinhand")">Stock In Hand</a></li>
+                                </ul>
                             </li>
                             <li class="sidebar-list">
                                 <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
