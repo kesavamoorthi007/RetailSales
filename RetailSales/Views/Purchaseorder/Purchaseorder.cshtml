@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-5 control-label">Company Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Companyname, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.Companyname, new { @id = "txtCompanyname", @class = "form-control", @TabIndex = 1 })
 
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-4 control-label">Supplier Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Suppliername, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.Suppliername, new { @id = "txtSuppliername", @class = "form-control", @TabIndex = 1 })
 
                                         </div>
                                     </div>
@@ -176,7 +176,7 @@
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListCCategory", "CCategory")'">Cancel</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'">Cancel</button>
 
 
 
@@ -196,18 +196,18 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            if (document.getElementById("txtCategory").value == "") {
+            if (document.getElementById("txtCompanyname").value == "") {
                 isValid = false;
-                $(txtCategory).css({
+                $(txtCompanyname).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Customer Category");
+                alert("Please Enter CompanyName");
                 return false;
             }
             else {
-                $(txtCategory).css({
+                $(txtCompanyname).css({
                     "border": "",
                     "background": ""
                 });

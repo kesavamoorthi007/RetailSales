@@ -29,7 +29,7 @@
                         <div class="col-6">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="index.html">
+                                <a href="@Url.Action("Index", "Home")">
                                         <svg class="stroke-icon">
                                             <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
                                         </svg>
@@ -49,14 +49,14 @@
                             <div class="col-xl-3 col-sm-6">
                             <div class="card o-hidden small-widget">
                                 <div class="card-body total-upcoming">
-                                    <span class="f-w-500 f-14">Dashboard</span>
+                                    <span class="f-w-600 f-14">Dashboard</span>
                                     <div class="project-details">
                                         <div class="project-counter">
-                                            <h2 class="f-w-500 f-14">View Details</h2><span class="f-12 f-w-400">(This month) </span>
+                                            <h2 class="f-w-500 f-14"></h2>
                                         </div>
-                                        <div class="product-sub bg-light-light">
+                                        <div class="product-sub bg-primary-light">
                                             <svg class="invoice-icon">
-                                                <use href="../assets/svg/icon-sprite.svg#edit-2"></use>
+                                                <a href="@Url.Action("Index", "Home")"><use href="../assets/svg/icon-sprite.svg#fill-home"></use></a>
                                             </svg>
                                         </div>
                                     </div>
@@ -74,45 +74,45 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="card o-hidden small-widget">
-                                    <div class="card-body total-project border-b-primary border-2">
-                                        <span class="f-w-500 f-14">Purchase</span>
-                                        <div class="project-details">
-                                            <div class="project-counter">
-                                            <h1 class="f-w-500 f-14">View Details</h1><span class="f-12 f-w-400">(This month)</span>
-                                            </div>
-                                            <div class="product-sub bg-primary-light">
-                                                <svg class="invoice-icon">
-                                                    <use href="../assets/svg/icon-sprite.svg#color-swatch"></use>
-                                                </svg>
-                                            </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="card o-hidden small-widget">
+                                <div class="card-body total-Progress border-b-warning border-2">
+                                    <span class="f-w-600 f-14">Purchase</span>
+                                    <div class="project-details">
+                                        <div class="project-counter">
+                                            <a href="@Url.Action("ListPurchaseorder", "Purchaseorder")"><h2 class="f-w-600 f-14">18</h2></a>
                                         </div>
-                                        <ul class="bubbles">
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                        </ul>
+                                        <div class="product-sub bg-warning-light">
+                                            <svg class="invoice-icon">
+                                                <a href="@Url.Action("ListPurchaseorder", "Purchaseorder")"> <use href="../assets/svg/icon-sprite.svg#cart"></use></a>
+                                            </svg>
+                                        </div>
                                     </div>
+                                    <ul class="bubbles">
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                    </ul>
                                 </div>
                             </div>
+                        </div>
                             <div class="col-xl-3 col-sm-6">
                                 <div class="card o-hidden small-widget">
                                     <div class="card-body total-Progress border-b-warning border-2">
-                                    <span class="f-w-500 f-14">Inventory</span>
+                                    <span class="f-w-600 f-14">Inventory</span>
                                         <div class="project-details">
                                             <div class="project-counter">
-                                            <h2 class="f-w-500 f-14">View Details</h2><span class="f-12 f-w-400">(This month) </span>
+                                            <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><h2 class="f-w-600 f-14">15</h2></a>
                                             </div>
                                             <div class="product-sub bg-warning-light">
                                                 <svg class="invoice-icon">
-                                                    <use href="../assets/svg/icon-sprite.svg#tick-circle"></use>
+                                                <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><use href="../assets/svg/icon-sprite.svg#new-order"></use></a>
                                                 </svg>
                                             </div>
                                         </div>
@@ -133,14 +133,14 @@
                             <div class="col-xl-3 col-sm-6">
                                 <div class="card o-hidden small-widget">
                                     <div class="card-body total-Complete border-b-secondary border-2">
-                                    <span class="f-w-500 f-14">Sales</span>
+                                    <span class="f-w-600 f-14">Sales</span>
                                         <div class="project-details">
                                             <div class="project-counter">
-                                            <h2 class="f-w-500 f-14">View Details</h2><span class="f-12 f-w-400">(This month) </span>
+                                            <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><h2 class="f-w-600 f-14">22</h2></a>
                                             </div>
                                             <div class="product-sub bg-secondary-light">
                                                 <svg class="invoice-icon">
-                                                    <use href="../assets/svg/icon-sprite.svg#add-square"></use>
+                                                <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><use href="../assets/svg/icon-sprite.svg#sale"></use></a>
                                                 </svg>
                                             </div>
                                         </div>
@@ -161,14 +161,14 @@
                             <div class="col-xl-3 col-sm-6">
                             <div class="card o-hidden small-widget">
                                 <div class="card-body total-Complete border-b-secondary border-2">
-                                    <span class="f-w-500 f-14">Master</span>
+                                    <span class="f-w-600 f-14">Master</span>
                                     <div class="project-details">
                                         <div class="project-counter">
-                                            <h2 class="f-w-500 f-14">View Details</h2><span class="f-12 f-w-400">(This month) </span>
+                                            <a href="@Url.Action("ListEmployee", "Employee")"><h2 class="f-w-600 f-14"></h2></a>
                                         </div>
                                         <div class="product-sub bg-secondary-light">
                                             <svg class="invoice-icon">
-                                                <use href="../assets/svg/icon-sprite.svg#add-square"></use>
+                                                <a href="@Url.Action("ListEmployee", "Employee")"><use href="../assets/svg/icon-sprite.svg#add-square"></use></a>
                                             </svg>
                                         </div>
                                     </div>
