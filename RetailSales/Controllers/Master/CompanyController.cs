@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Interface.Master;
 using RetailSales.Models;
 using RetailSales.Services.Master;
@@ -16,6 +17,9 @@ namespace RetailSales.Controllers.Master
         public IActionResult Company(string id)
         {
             Company ic = new Company();
+            ic.Countrylst = BindCountry();
+            ic.Statelst = BindState();
+            ic.Citylst = BindCity();
             if (id == null)
             {
 
@@ -26,18 +30,20 @@ namespace RetailSales.Controllers.Master
                 dt = CompanyService.GetEditCompanyDetail(id);
                 if (dt.Rows.Count > 0)
                 {
+                    
                     ic.ID = dt.Rows[0]["ID"].ToString();
-                    ic.Code = dt.Rows[0]["COMPANY_CODE"].ToString();
                     ic.CompanyName = dt.Rows[0]["COMPANY_NAME"].ToString();
+                    ic.Address = dt.Rows[0]["ADDRESS"].ToString();
+                    ic.Mobile = dt.Rows[0]["MOBILE_NO"].ToString();
+                    ic.Countrylst = BindCountry();
                     ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                    ic.Statelst = BindState();
                     ic.State = dt.Rows[0]["STATE"].ToString();
+                    ic.Citylst = BindCity();
                     ic.City = dt.Rows[0]["CITY"].ToString();
-                    ic.Address = dt.Rows[0]["ADDRESS1"].ToString();
-                    ic.Mobile = dt.Rows[0]["TELEPHONE1"].ToString();
-                    ic.Landline = dt.Rows[0]["TELEPHONE2"].ToString();
-                    ic.Fax = dt.Rows[0]["FAX"].ToString();
-                    ic.Email = dt.Rows[0]["EMAIL"].ToString();
-                    ic.CST = dt.Rows[0]["CST"].ToString();
+                    ic.Email = dt.Rows[0]["EMAIL_ID"].ToString();
+                    ic.Landline = dt.Rows[0]["LAND_LINE"].ToString();
+                    ic.Website = dt.Rows[0]["WEBSITE"].ToString();
                 }
             }
             return View(ic);
@@ -83,6 +89,57 @@ namespace RetailSales.Controllers.Master
         {
             return View();
         }
+        public List<SelectListItem> BindCountry()
+        {
+            try
+            {
+                DataTable dtDesg = CompanyService.GetCountry();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["COUNTRY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindState()
+        {
+            try
+            {
+                DataTable dtDesg = CompanyService.GetState();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["STATE_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCity()
+        {
+            try
+            {
+                DataTable dtDesg = CompanyService.GetCity();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CITY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public ActionResult MyListCompanygrid(string strStatus)
         {
             List<Companygrid> Reg = new List<Companygrid>();
@@ -109,7 +166,7 @@ namespace RetailSales.Controllers.Master
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     coname = dtUsers.Rows[i]["COMPANY_NAME"].ToString(),
-                    concode = dtUsers.Rows[i]["COMPANY_CODE"].ToString(),
+                    address = dtUsers.Rows[i]["ADDRESS"].ToString(),
                     city = dtUsers.Rows[i]["CITY"].ToString(),
                     state = dtUsers.Rows[i]["STATE"].ToString(),
                     country = dtUsers.Rows[i]["COUNTRY"].ToString(),
