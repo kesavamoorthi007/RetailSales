@@ -184,6 +184,21 @@
                                 </ul>
 
                             </li>
+                             <li class="sidebar-list">
+                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                    <svg class="stroke-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#product-category"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#product-category"></use>
+                                    </svg><span>Product</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="@Url.Action("ListProduct", "Product")">Product Category</a></li>
+                                    <li><a href="@Url.Action("Productdetail", "Productdetail")">Product</a></li>
+                                </ul>
+
+                            </li>
                             <li class="sidebar-list">
                                 <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
                                     <svg class="stroke-icon">
@@ -196,13 +211,14 @@
                                 <ul class="sidebar-submenu">
                                     @* <li><a href="@Url.Action("ListCountry", "Country")">Country</a></li> *@
 
+                                    <li><a href="@Url.Action("Supplier", "Supplier")">Supplier</a></li>
                                     <li><a href="@Url.Action("ListEmployee", "Employee")">Employee</a></li>
-                                    <li><a href="@Url.Action("Product","Product")">Product</a></li>
+                                  
                                      <li><a href="@Url.Action("Customer", "Customer")">Customer</a></li>
                                       <li><a href="@Url.Action("ListCCategory", "CCategory")">Customer Category</a></li>
                                     <li><a href="@Url.Action("CGroup", "CGroup")">Customer Group</a></li>
                                     <li><a href="@Url.Action("UOM", "UOM")">UOM</a></li>
-                                     <li><a href="@Url.Action("Productdetail", "Productdetail")">Product Detail</a></li>
+                                     
                                     @* <li><a href="@Url.Action("ListState", "State")">State</a></li>
                                     <li><a href="@Url.Action("ListCity", "City")">City</a></li>   *@  
 

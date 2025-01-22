@@ -1,37 +1,34 @@
 ﻿@model RetailSales.Models.Master.Product
 
 @{
-    ViewData["Title"] = "ListProduct";
+    ViewData["Title"] = "Product Category";
 
 }
 <partial name="JqxGridPartial" />
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
-
 <script type="text/javascript">
     @if (TempData["notice"] != null)
     {
         @:alert('@TempData["notice"]');
     }
 </script>
-
-
+<div style="height:20px;"></div>
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Product</strong> </li>
+            <li class="active"> <strong>Product Category</strong> </li>
         </ol>
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var source =
         {
-        url: "/Product/MyListProductgrid",
+            url: "MyListProductgrid",
             data: {
                 strstatus: ""
             },
@@ -40,8 +37,7 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'coname', type: 'string' },
-                { name: 'concode', type: 'string' },
+                { name: 'product', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
@@ -80,8 +76,7 @@
 
                 columns: [
 
-                    { text: 'Product', filtertype: 'checkedlist', datafield: 'coname', width: 200 },
-                    { text: 'Product Name', filtertype: 'input', datafield: 'concode', width: 200 },
+                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'product', width: 300 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
@@ -115,22 +110,22 @@
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
                                          new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
-                            @* <div class="col-md-9 ">
+                            <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("ListProduct", "Product")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Country </a>
+                                    <a href="@Url.Action("Product", "Product")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Product Category </a>
                                     <br>
                                 </div>
 
-                            </div> *@
+                            </div>
                         </div>
                         <br />
-                        <div class="row">
+                        @* <div class="row"> *@
 
                             <div class="col-md-12 ">
                                 <div id="grid">
                                 </div>
                             </div>
-                        </div>
+                       @*  </div> *@
 
                     </form>
                 </div>
