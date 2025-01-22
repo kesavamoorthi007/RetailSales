@@ -10,5 +10,9 @@ namespace RetailSales.Interface.Master
         DataTable GetEditCompanyDetail(string id);
         string StatusChange(string tag, string id);
         string RemoveChange(string tag, string id);
+      
+        DataTable GetCountry();
+        DataTable GetState();
+        DataTable GetCity();
     }
 }
