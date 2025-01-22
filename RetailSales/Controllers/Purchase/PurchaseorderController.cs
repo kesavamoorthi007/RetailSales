@@ -67,18 +67,17 @@ namespace RetailSales.Controllers.Purchase
                 }
                 else
                 {
-                    EditRow = "";
-                    DeleteRow = "<a><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    EditRow = "<a><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                    DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
 
                 }
                 Reg.Add(new ListPurchaseordergrid
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
-                    invno = dtUsers.Rows[i]["INVOICE_NO"].ToString(),
-                    invdate = dtUsers.Rows[i]["INV_DATE"].ToString(),
-                    customer = dtUsers.Rows[i]["CUSTOMER"].ToString(),
-                    address = dtUsers.Rows[i]["ADDRESS"].ToString(),
-                    totalamount = dtUsers.Rows[i]["TOTAL_AMOUNT"].ToString(),
+                    doc = dtUsers.Rows[i]["DOC_NO"].ToString(),
+                    docdate = dtUsers.Rows[i]["DOC_DATE"].ToString(),
+                    company = dtUsers.Rows[i]["COMPANY_NAME"].ToString(),
+                    suppier = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
 

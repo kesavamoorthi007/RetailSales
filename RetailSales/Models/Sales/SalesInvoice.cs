@@ -17,20 +17,30 @@ namespace RetailSales.Models
         public string Total { get; set; }
         public string TotDis { get; set; }
         public string total { get; set; }
+        public string Tot { get; set; }
+        public string Return { get; set; }
+       
         public string ddlStatus { get; set; }
         public List<SalesInvoiceItem> SalesInvoiceLst { get; set; }
     }
     public class SalesInvoiceItem
     {
         public string Isvalid { get; set; }
+        public List<SelectListItem> Itemlst { get; set; }
+        public string saveItemId { get; set; }
         public string Item { get; set; }
         public string Description { get; set; }
         public string UOM { get; set; }
+        public string Bin { get; set; }
         public string Qty { get; set; }
         public string Discount { get; set; }
         public string Rate { get; set; }
         public string Amount { get; set; }
-       
+        public string Total { get; set; }
+        public string ID { get; set; }
+        public string ReturnQty { get; set; }
+
+
     }
     public class SalesInvoicegrid
     {

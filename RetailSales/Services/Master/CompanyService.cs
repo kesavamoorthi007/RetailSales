@@ -19,13 +19,44 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT COMPANY.ID,COMPANY_CODE,COMPANY_NAME,CITY,STATE,COUNTRY,COMPANY.IS_ACTIVE FROM COMPANY WHERE COMPANY.IS_ACTIVE = 'Y' ORDER BY COMPANY.ID DESC";
+                SvSql = "SELECT COMPANY.ID,COMPANY_NAME,ADDRESS,CITY,STATE,COUNTRY,COMPANY.IS_ACTIVE FROM COMPANY WHERE COMPANY.IS_ACTIVE = 'Y' ORDER BY COMPANY.ID DESC";
             }
             else
             {
-                SvSql = "SELECT COMPANY.ID,COMPANY_CODE,COMPANY_NAME,CITY,STATE,COUNTRY,COMPANY.IS_ACTIVE FROM COMPANY WHERE COMPANY.IS_ACTIVE = 'N' ORDER BY COMPANY.ID DESC";
+                SvSql = "SELECT COMPANY.ID,COMPANY_NAME,ADDRESS,CITY,STATE,COUNTRY,COMPANY.IS_ACTIVE FROM COMPANY WHERE COMPANY.IS_ACTIVE = 'N' ORDER BY COMPANY.ID DESC";
 
             }
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCountry()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select COUNTRY_NAME,ID from COUNTRY";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        
+        public DataTable GetState()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select STATE_NAME,ID from STATE";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCity()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,ID from CITY";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -35,7 +66,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditCompanyDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT COMPANY_CODE,COMPANY_NAME,ADDRESS1,CITY,STATE,COUNTRY,TELEPHONE1,TELEPHONE2,FAX,EMAIL,CST FROM COMPANY WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,COMPANY_NAME,ADDRESS,MOBILE_NO,COUNTRY,STATE,CITY,EMAIL_ID,LAND_LINE,WEBSITE FROM COMPANY WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -53,7 +84,7 @@ namespace RetailSales.Services.Master
                 if (cy.ID == null)
                 {
 
-                    svSQL = "SELECT Count(COMPANY_CODE) as cnt FROM COMPANY WHERE COMPANY_CODE = LTRIM(RTRIM('" + cy.Code + "')) and COMPANY_NAME = LTRIM(RTRIM('" + cy.CompanyName + "'))";
+                    svSQL = "SELECT Count(COMPANY_NAME) as cnt FROM COMPANY WHERE COMPANY_NAME = LTRIM(RTRIM('" + cy.CompanyName + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
                         msg = "Company Name Already Existed";
@@ -74,17 +105,15 @@ namespace RetailSales.Services.Master
                         StatementType = "Update";
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
-                    objCmd.Parameters.Add("@companycode", SqlDbType.NVarChar).Value = cy.Code;
                     objCmd.Parameters.Add("@companyname", SqlDbType.NVarChar).Value = cy.CompanyName;
-                    objCmd.Parameters.Add("@address1", SqlDbType.NVarChar).Value = cy.Address;
-                    objCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = cy.City;
-                    objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = cy.State;
-                    objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;
+                    objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@mobile", SqlDbType.NVarChar).Value = cy.Mobile;
-                    objCmd.Parameters.Add("@telephone", SqlDbType.NVarChar).Value = cy.Landline;
-                    objCmd.Parameters.Add("@fax", SqlDbType.NVarChar).Value = cy.Email;
-                    objCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = cy.Fax;
-                    objCmd.Parameters.Add("@Gst", SqlDbType.NVarChar).Value = cy.CST;
+                    objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;
+                    objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = cy.State;
+                    objCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = cy.City;
+                    objCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = cy.Email;
+                    objCmd.Parameters.Add("@landline", SqlDbType.NVarChar).Value = cy.Landline;
+                    objCmd.Parameters.Add("@website", SqlDbType.NVarChar).Value = cy.Website;
                     if (cy.ID == null)
                     {
                         objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = "CreateBy";
@@ -163,5 +192,7 @@ namespace RetailSales.Services.Master
             return "";
 
         }
+
+        
     }
 }
