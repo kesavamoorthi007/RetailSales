@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Master.Product
 
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "Product Category";
 }
 <style>
     .mandatory {
@@ -18,12 +18,12 @@
         @:alert('@TempData["notice"]');
     }
 </script>
-
+<div style="height:20px;"></div>
 <div class="row wrapper border-bottom page-heading">
     <div class="col-12 ">
           
         <ol class="breadcrumb">
-            <li class="active"> <strong>Add Product </strong> </li>
+            <li class="active"> <strong>Product Category</strong> </li>
         </ol>
     </div>
 </div>
@@ -38,40 +38,20 @@
                         <form>
                             <br />
                             <div class="row">
-                                
-                               <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Product<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Products, new { @id = "txtConName", @class = "form-control", @TabIndex = 1 })<br />
-                                           @*  @Html.HiddenFor(C => C.ID) *@
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Product Name<label class="mandatory">*</label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">Product Category<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.ProductName, new { @id = "txtConCode", @class = "form-control", @TabIndex = 1 })<br />
-
+                                            @Html.TextBoxFor(C => C.ProductName, new { @id = "txtProductName", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.HiddenFor(C => C.ID)
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                           
-
                             <div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-success me-1" type="button" id="btnSave">Save</button>
-                                    <button type="submit" class="btn btn-success me-1" type="button" id="btnSave">Reset</button>
-                                    <button class="btn btn-danger" type="button" causesvalidation="false"  onclick="location.href='@Url.Action("ListProduct","Product")'">Cancel</button>
-
-                                </div>
-                                
-                            </div>
-
+                            <div class="col-lg-8"></div>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListProduct", "Product")'">Cancel</button>
 
                         </form>
                     }
@@ -89,25 +69,9 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            if (document.getElementById("txtConName").value == "") {
+            if (document.getElementById("txtProductName").value == "") {
                 isValid = false;
-                $(txtConName).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Product");
-                return false;
-            }
-            else {
-                $(txtConName).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtConCode").value == "" ) {
-                isValid = false;
-                $(txtConCode).css({
+                $(txtProductName).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
@@ -116,7 +80,7 @@
                 return false;
             }
             else {
-                $(txtConCode).css({
+                $(txtProductName).css({
                     "border": "",
                     "background": ""
                 });
