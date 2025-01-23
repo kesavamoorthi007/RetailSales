@@ -12,6 +12,9 @@ using RetailSales.Controllers.Purchase;
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
 
+using RetailSales.Interface.Accounts;
+using RetailSales.Services.Accounts;
+
 
 internal class Program
 {
@@ -51,11 +54,14 @@ internal class Program
 
 		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
 
-		
+
 
         // adding UOM interface and services containers
         //builder.Services.TryAddSingleton<IUOMService, UOMService>();
 
+
+        // adding Account Group interface and services containers
+        builder.Services.TryAddSingleton<IAccountGroupService, AccountGroupService>();
 
 
 
