@@ -56,6 +56,16 @@ internal class Program
 
 
 
+
+		builder.Services.TryAddSingleton<IBankaccountsService, BankaccountsService>();
+
+		builder.Services.TryAddSingleton<ISupplierService, SupplierService>();
+		builder.Services.TryAddSingleton<IProductService, ProductService>();
+
+
+		
+
+
         // adding UOM interface and services containers
         //builder.Services.TryAddSingleton<IUOMService, UOMService>();
 
