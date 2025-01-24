@@ -6,6 +6,7 @@ namespace RetailSales.Interface.Accounts
     {
         public DataTable GetEditAccountGroupDetail(string id);
         public DataTable GetAllAccountGroupGRID(string strStatus);
+        public DataTable GetDaydet();
 
 
         DataTable GetAccountClass();

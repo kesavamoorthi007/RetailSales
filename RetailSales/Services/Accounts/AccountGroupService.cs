@@ -27,7 +27,17 @@ namespace RetailSales.Services.Accounts
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
-        }                                     
+        }
+        public DataTable GetDaydet()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT VOUCH_NO,  FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME AS MID, DEBIT_AMT AS DBAMOUNT, CREDIT_AMT AS CRAMOUNT, CASE WHEN TRANS_TYPE = 'Credit' THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1 WHERE T1.TRANS_STATUS='OPEN'  ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
 
         // used for Account Type binding and retrieving from database
 
