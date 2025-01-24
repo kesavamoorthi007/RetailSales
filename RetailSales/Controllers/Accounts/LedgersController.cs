@@ -132,7 +132,7 @@ namespace RetailSales.Controllers.Accounts
                 Reg.Add(new ledgergrid
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
-                    accountname = dtUsers.Rows[i]["ACC_GRP_CODE"].ToString(),
+                    accountname = dtUsers.Rows[i]["ACC_GRP_NAME"].ToString(),
                     ledgername = dtUsers.Rows[i]["LEDGER_NAME"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
