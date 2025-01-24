@@ -11,6 +11,8 @@ using RetailSales.Interface.Sales;
 using RetailSales.Controllers.Purchase;
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
+using RetailSales.Interface.Accounts;
+using RetailSales.Services.Accounts;
 
 
 internal class Program
@@ -55,6 +57,7 @@ internal class Program
 
 		builder.Services.TryAddSingleton<ISupplierService, SupplierService>();
 		builder.Services.TryAddSingleton<IProductService, ProductService>();
+		builder.Services.TryAddSingleton<IDebitNoteService, DebitNoteService>();
 
 
 		
