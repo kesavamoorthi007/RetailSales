@@ -21,7 +21,7 @@ namespace RetailSales.Services.Accounts
         public DataTable GetAccountClass()
         {
             string SvSql = string.Empty;
-            SvSql = "select ACC_GROUP.ID,ACC_GROUP.ACC_CLASS,ACC_GROUP.ACC_TYPE_CODE,ACC_GROUP.IS_ACTIVE from ACC_GROUP  WHERE ACC_GROUP.IS_ACTIVE='Y' ";
+            SvSql = "select ACC_GROUP.ACC_CLASS from ACC_GROUP  WHERE ACC_GROUP.IS_ACTIVE='Y' GROUP BY  ACC_GROUP.ACC_CLASS ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
