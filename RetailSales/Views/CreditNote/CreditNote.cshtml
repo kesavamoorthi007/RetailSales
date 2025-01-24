@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.DebitNote
+﻿@model RetailSales.Models.CreditNote
 
 @{
-    ViewData["Title"] = "Debit Note";
+    ViewData["Title"] = "Credit Note";
 }
 <style>
     .mandatory {
@@ -22,7 +22,7 @@
     <div class="col-lg-12">
 
         <ol class="breadcrumb">
-            <li class="active"> <strong>Debit Note</strong> </li>
+            <li class="active"> <strong>Credit Note</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="widgets-container">
-                    @using (Html.BeginForm("DebitNote", "DebitNote", FormMethod.Post))
+                    @using (Html.BeginForm("CreditNote", "CreditNote", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <form>
@@ -44,8 +44,8 @@
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
                                             @Html.HiddenFor(C => C.ID)
-                                            
-                                           
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -88,13 +88,13 @@
                                                 @Html.TextBoxFor(C => C.RefDate, new { @id = "txtRefDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px", @readonly = "readonly" })
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
-                                         
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                         <label for="inputName3" class="col-sm-4 control-label">Currency<label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">Currency<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Currency, new { @id = "txtCurrency", @class = "form-control", @TabIndex = 2 })
                                         </div>
@@ -133,38 +133,38 @@
 
                                                 int i = 0;
 
-                                                foreach (var item in Model.DebitNotelst.ToList())
+                                                foreach (var item in Model.CreditNotelst.ToList())
                                                 {
                                                     <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
 
 
 
                                                         <td>
-                                                            @Html.RadioButtonFor(o => o.DebitNotelst[i].DBCR, "Dr", new { @id = "txtDBCR", @TabIndex = 2, @onchange = "changeentry(this.value," + i + ")" })
+                                                            @Html.RadioButtonFor(o => o.CreditNotelst[i].DBCR, "Dr", new { @id = "txtDBCR", @TabIndex = 2, @onchange = "changeentry(this.value," + i + ")" })
                                                             <label id="mt-radio">Dr</label>
-                                                            @Html.RadioButtonFor(o => o.DebitNotelst[i].DBCR, "Cr", new { @id = "txtDBCR", @TabIndex = 3, @onchange = "changeentry(this.value," + i + ")" })
+                                                            @Html.RadioButtonFor(o => o.CreditNotelst[i].DBCR, "Cr", new { @id = "txtDBCR", @TabIndex = 3, @onchange = "changeentry(this.value," + i + ")" })
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.DebitNotelst[i].AccName, Model.DebitNotelst[i].AccNamelst, "Please Select", new { @class = "form-control _select newcss", @id = "txtAccName" + i, style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.CreditNotelst[i].AccName, Model.CreditNotelst[i].AccNamelst, "---Please Select---", new { @class = "form-control _select newcss", @id = "txtAccName" + i, style = "width: 200px;" })
 
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
                                                         </td>
 
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
 
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
 
                                                         </td>
 
                                                         <td>
-                                                            @Html.HiddenFor(o => o.DebitNotelst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                            <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="Conlst.Index" type="hidden" value="@(i)" />
+                                                            @Html.HiddenFor(o => o.CreditNotelst[i].Isvalid, new { @id = "Isvalid" + i })
+                                                            <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="CreditNotelst.Index" type="hidden" value="@(i)" />
                                                         </td>
 
 
@@ -249,8 +249,6 @@
 </div>
 
 <script>
-
-    
     $('.form_time').datetimepicker({
         weekStart: 1,
         todayBtn: 1,
@@ -261,7 +259,6 @@
         maxView: 1,
         forceParse: 0
     });
-
 
     $('.to_date').datetimepicker({
         //   language:  'fr',
@@ -301,7 +298,6 @@
             return whole;
         }
     }
-
 
     function convertNumberToWords(amount) {
         var words = new Array();
@@ -456,13 +452,6 @@
         }
 
     }
-    
-</script>
-
-
-<script>
-
- 
 
     $('.form_time').datetimepicker({
         weekStart: 1,
@@ -474,7 +463,6 @@
         maxView: 1,
         forceParse: 0
     });
-
 
     $('.to_date').datetimepicker({
         //   language:  'fr',
@@ -505,26 +493,8 @@
 
     });
 
-    function changeItem(ItemId, i) {
+    
 
-        $.ajax({
-            url: 'GetCurDetails',
-            data: { "ItemId": ItemId },
-            type: "GET",
-            success: function (result) {
-
-                document.getElementById("txtExcRate" + i).value = result.emp;
-
-            },
-            error: function () {
-                alert("Data Not Found");
-            }
-        });
-    }
-</script>
-
-
-<script>
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
@@ -665,13 +635,6 @@
     });
 
 
-
-
-
-
-</script>
-
-<script>
     $(function () {
         $('._select').select2();
     });
@@ -696,9 +659,6 @@
         minView: 2,
         forceParse: 0
     });
-
-
-
     function removeRow(id) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
@@ -717,11 +677,6 @@
             alert("Cannot delete all the rows.")
         }
     }
-
-
-
-
-
     function AddRow() {
         var opt = "";
         var remopt = "";
@@ -782,90 +737,48 @@
         });
 
     });
-    function totdeAmount(_this, i) {
-        try {
-
-            var tdr = 0;
-            var j = 0;
-            var tcr = 0;
-            var dqty = 0;
-            var cqty = 0;
-            var tot = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-                    var dr = $(this).find('#txtDebitAmt' + j.toString()).val();
-
-                    if (dr == "")
-                        dr = 0;
+    
+   
+   
 
 
-                    tdr += eval(dr);
+    $(function () {
+        $('._select').select2();
+    });
+    function AppendRow(opt, remopt) {
+        var index = $("#tbBooks").children("tr").length;
+
+        var db = "<td><input id='txtDBCR" + index + "' name='CreditNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='CreditNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
+        var acnam = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='CreditNotelst[" + index + "].AccName'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
+        var damo = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='CreditNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
+        var camo = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='CreditNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
+        var bal = "<td><input class='form-control' id='txtBalance" + index + "' name='CreditNotelst[" + index + "].Balance'  style='width: 150px;' type='text' /></td>";
 
 
 
+        var removeCell = "<td><input id='Isvalid" + index + "' name='CreditNotelst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='CreditNotelst.Index' type='hidden' value='" + index + "'  /></td>";
 
-                }
-                j += 1;
-            });
-            document.getElementById("totdeb").value = tdr.toFixed(2);
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + db + acnam + damo + camo + bal + removeCell + "</tr>";
+        $("#tbBooks").append(newRow);
 
-            document.getElementById("txtAmtWd").value = withDecimal(tdr.toFixed(2));
-            // document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
+        $(".chosen-select").chosen();
+        $(function () {
+            $('._select').select2();
+        });
 
+        function withDecimal(n) {
+            var nums = n.toString().split('.')
+            var whole = convertNumberToWords(nums[0])
+            if (nums.length == 2) {
+                var fraction = convertNumberToWords(nums[1])
+                return whole + ' ' + fraction;
+            } else {
+                return whole;
+            }
         }
-        catch (ex) {
-            alert(ex.message);
-        }
 
+      
     }
-    function totcrAmount(_this, i) {
-        try {
-
-            var tdr = 0;
-            var j = 0;
-            var tcr = 0;
-            var dqty = 0;
-            var cqty = 0;
-            var tot = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-
-                    var cr = $(this).find('#txtCreditAmt' + j.toString()).val();
-
-                    if (cr == "")
-                        cr = 0;
-
-
-                    tcr += eval(cr);
-
-
-
-                }
-                j += 1;
-            });
-
-            document.getElementById("totcri").value = tcr.toFixed(2);
-            document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
-            // document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
-
-        }
-        catch (ex) {
-            alert(ex.message);
-        }
-
-    }
-    function withDecimal(n) {
-        var nums = n.toString().split('.')
-        var whole = convertNumberToWords(nums[0])
-        if (nums.length == 2) {
-            var fraction = convertNumberToWords(nums[1])
-            return whole + ' ' + fraction;
-        } else {
-            return whole;
-        }
-    }
-
-
     function convertNumberToWords(amount) {
         var words = new Array();
         words[0] = '';
@@ -947,26 +860,87 @@
         }
         return words_string;
     }
-    function AppendRow(opt, remopt) {
-        var index = $("#tbBooks").children("tr").length;
+    function totdeAmount(_this, i) {
+        try {
 
-        var db = "<td><input id='txtDBCR" + index + "' name='DebitNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='DebitNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
-        var acnam = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='DebitNotelst[" + index + "].AccName'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
-        var damo = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='DebitNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
-        var camo = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='DebitNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
-        var bal = "<td><input class='form-control' id='txtBalance" + index + "' name='DebitNotelst[" + index + "].Balance'  style='width: 150px;' type='text' /></td>";
+            var tdr = 0;
+            var j = 0;
+            var tcr = 0;
+            var dqty = 0;
+            var cqty = 0;
+            var tot = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    var dr = $(this).find('#txtDebitAmt' + j.toString()).val();
+
+                    if (dr == "")
+                        dr = 0;
+
+
+                    tdr += eval(dr);
 
 
 
-        var removeCell = "<td><input id='Isvalid" + index + "' name='DebitNotelst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='DebitNotelst.Index' type='hidden' value='" + index + "'  /></td>";
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + db + acnam + damo + camo + bal + removeCell + "</tr>";
-        $("#tbBooks").append(newRow);
+                }
+                j += 1;
+            });
+            document.getElementById("totdeb").value = tdr.toFixed(2);
 
-        $(".chosen-select").chosen();
-        $(function () {
-            $('._select').select2();
-        });
+            document.getElementById("txtAmtWd").value = withDecimal(tdr.toFixed(2));
+            // document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
+
+    }
+    function changeentry(typeid, i) {
+        if (typeid == "Dr") {
+            document.getElementById("txtCreditAmt" + i).readOnly = true;
+            document.getElementById("txtDebitAmt" + i).readOnly = false;
+        }
+
+        else {
+            document.getElementById("txtDebitAmt" + i).readOnly = true;
+            document.getElementById("txtCreditAmt" + i).readOnly = false;
+        }
+    }
+    function totcrAmount(_this, i) {
+        try {
+
+            var tdr = 0;
+            var j = 0;
+            var tcr = 0;
+            var dqty = 0;
+            var cqty = 0;
+            var tot = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+                    var cr = $(this).find('#txtCreditAmt' + j.toString()).val();
+
+                    if (cr == "")
+                        cr = 0;
+
+
+                    tcr += eval(cr);
+
+
+
+                }
+                j += 1;
+            });
+
+            document.getElementById("totcri").value = tcr.toFixed(2);
+            document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
+            // document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
 
     }
 </script>
