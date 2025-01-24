@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.Accounts.AccountGroup;
+﻿@model RetailSales.Models.Accounts.AccountGroup
 
 @{
-    ViewData["Title"] = "ListAccountsGroup ";
+    ViewData["Title"] = "Day Book ";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>List Account Group </strong> </li>
+            <li class="active"> <strong>Day Book </strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-        url: "MyListAccountGroupgrid",
+            url: "/AccountGroup/MyListDayBookgrid",
             data: {
                 strstatus: ""
             },
@@ -40,11 +40,15 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'accclass', type: 'string' },
-                { name: 'acctype', type: 'string' },
-                { name: 'accgrpname', type: 'string' },
-                { name: 'edit', type: 'string' },
-                { name: 'delete', type: 'string' },
+                { name: 'vocherno', type: 'string' },
+                { name: 'vocherdate', type: 'string' },
+                { name: 'tratype', type: 'string' },
+                { name: 'vocmemo', type: 'string' },
+                { name: 'vtype', type: 'string' },
+                { name: 'ledgercode', type: 'string' },
+                { name: 'debitamount', type: 'string' },
+                { name: 'creditamount', type: 'string' },
+                { name: 'type', type: 'string' },
 
             ],
             id: 'id',
@@ -70,7 +74,7 @@
                 pageable: true,
                 showfilterbar: true,
                 //showfilterrow: true,
-                //theme: 'fresh',
+               // theme: 'fresh',
                 autorowheight: true,
                 filterbarmode: 'simple',
                 enablebrowserselection: true,
@@ -80,11 +84,17 @@
 
                 columns: [
 
-                    { text: 'Account Class', filtertype: 'checkedlist', datafield: 'accclass', width: 200 },
-                   { text: 'Account Type', filtertype: 'checkedlist', datafield: 'acctype', width: 200 },
-                    { text: 'Account Group', filtertype: 'input', datafield: 'accgrpname', width: 200 },
-                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
+                    { text: 'Voucher  No', filtertype: 'checkedlist', datafield: 'vocherno', width: 85 },
+                    { text: 'Voucher  Date', datafield: 'vocherdate', width: 100, align: 'center' },
+                    { text: 'Trans Type', filtertype: 'checkedlist', datafield: 'tratype', align: 'center', width: 80 },
+     { text: 'Type ', datafield: 'type', width: 60, align: 'center' },
+                    { text: 'Ledger', datafield: 'ledgercode', width: 200, align: 'center' },
+                    
+                    { text: 'Debit', datafield: 'debitamount', width: 70, align: 'left', cellsformat: 'c2', aggregates: ['sum'] },
+                    { text: 'Credit', datafield: 'creditamount', width: 70, align: 'left', cellsformat: 'c2', aggregates: ['sum', 'avg'] },
+                     { text: 'Voucher Memo', filtertype: 'input', datafield: 'vocmemo', width: 350, align: 'center' },
+                     //{ text: 'Vocher Type', datafield: 'vtype', width: 80, align: 'center' },
+                    
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -109,21 +119,7 @@
 
                     <form>
                         <br />
-                        <div class="row">
-                            <div class="col-md-2 ">
-                                @Html.DropDownListFor(n => n.ddlstatus, new SelectListItem[]
-                                         { new SelectListItem() {Text = "Enabled", Value="Y"},
-                                new SelectListItem() {Text = "Disabled", Value="N"}},
-                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
-                            </div>
-                            <div class="col-md-9 ">
-                                <div class=" textalignright">
-                                    <a href="@Url.Action("AccountGroup", "AccountGroup")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Account Group </a>
-                                    <br>
-                                </div>
 
-                            </div>
-                        </div>
                         <br />
                         <div class="row">
 

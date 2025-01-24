@@ -7,6 +7,7 @@ using RetailSales.Models.Accounts;
 using RetailSales.Services;
 using RetailSales.Services.Accounts;
 using System.Data;
+using System.Data.SqlClient;
 using AccountGroup = RetailSales.Models.Accounts.AccountGroup;
 
 namespace RetailSales.Controllers.Accounts
@@ -58,7 +59,7 @@ namespace RetailSales.Controllers.Accounts
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["ACC_CLASS"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["ACC_CLASS"].ToString(), Value = dtDesg.Rows[i]["ACC_CLASS"].ToString() });
                 }
                 return lstdesg;
             }
@@ -77,7 +78,7 @@ namespace RetailSales.Controllers.Accounts
                 List<SelectListItem> lstdesg1 = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg1.Rows.Count; i++)
                 {
-                    lstdesg1.Add(new SelectListItem() { Text = dtDesg1.Rows[i]["ACC_TYPE_CODE"].ToString(), Value = dtDesg1.Rows[i]["ID"].ToString() });
+                    lstdesg1.Add(new SelectListItem() { Text = dtDesg1.Rows[i]["ACC_TYPE_NAME"].ToString(), Value = dtDesg1.Rows[i]["ACC_TYPE_CODE"].ToString() });
                 }
                 return lstdesg1;
             }
@@ -113,10 +114,10 @@ namespace RetailSales.Controllers.Accounts
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     accclass = dtUsers.Rows[i]["ACC_CLASS"].ToString(),
-                    acctype = dtUsers.Rows[i]["ACC_TYPE_CODE"].ToString(),
+                    acctype = dtUsers.Rows[i]["ACC_TYPE_NAME"].ToString(),
                     accgrpname = dtUsers.Rows[i]["ACC_GRP_NAME"].ToString(),
-                    //edit = Edit,
-                    //delete = Delete,
+                    edit = Edit,
+                    delete = Delete,
 
                 });
             }
@@ -133,5 +134,43 @@ namespace RetailSales.Controllers.Accounts
         {
             return View();
         }
+
+        public IActionResult Daybook()
+        {
+            return View();
+        }
+
+        public ActionResult MyListDayBookgrid(string strfrom, string strTo)
+        {
+            List<ListDayItems> Reg = new List<ListDayItems>();
+            DataTable dtUsers = new DataTable();
+            dtUsers = AccountGroupService.GetDaydet();
+            DataTable dt = new DataTable();
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+                // dt = (DataTable)ledger.GetAllListDayBookItems(dtUsers.Rows[i]["MID"].ToString());
+
+                Reg.Add(new ListDayItems
+                {
+                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    vocherno = dtUsers.Rows[i]["VOUCH_NO"].ToString(),
+                    vocherdate = dtUsers.Rows[i]["VOUCH_DATE"].ToString(),
+                    tratype = dtUsers.Rows[i]["REF_TYPE"].ToString(),
+                    vocmemo = dtUsers.Rows[i]["VOUCH_MEMO"].ToString(),
+                    vtype = dtUsers.Rows[i]["MID"].ToString(),
+                    type = dtUsers.Rows[i]["TRANS_TYPE"].ToString(),
+                    ledgercode = dtUsers.Rows[i]["ledger"].ToString(),
+                    debitamount = dtUsers.Rows[i]["DBAMOUNT"].ToString(),
+                    creditamount = dtUsers.Rows[i]["CRAMOUNT"].ToString(),
+                });
+            }
+
+            return Json(new
+            {
+                Reg
+            });
+
+        }
+
     }
 }
