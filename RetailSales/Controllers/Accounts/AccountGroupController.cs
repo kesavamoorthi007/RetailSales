@@ -77,7 +77,7 @@ namespace RetailSales.Controllers.Accounts
                 List<SelectListItem> lstdesg1 = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg1.Rows.Count; i++)
                 {
-                    lstdesg1.Add(new SelectListItem() { Text = dtDesg1.Rows[i]["ACC_TYPE_CODE"].ToString(), Value = dtDesg1.Rows[i]["ID"].ToString() });
+                    lstdesg1.Add(new SelectListItem() { Text = dtDesg1.Rows[i]["ACC_TYPE_NAME"].ToString(), Value = dtDesg1.Rows[i]["ACC_TYPE_CODE"].ToString() });
                 }
                 return lstdesg1;
             }
@@ -113,10 +113,10 @@ namespace RetailSales.Controllers.Accounts
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     accclass = dtUsers.Rows[i]["ACC_CLASS"].ToString(),
-                    acctype = dtUsers.Rows[i]["ACC_TYPE_CODE"].ToString(),
+                    acctype = dtUsers.Rows[i]["ACC_TYPE_NAME"].ToString(),
                     accgrpname = dtUsers.Rows[i]["ACC_GRP_NAME"].ToString(),
-                    //edit = Edit,
-                    //delete = Delete,
+                    edit = Edit,
+                    delete = Delete,
 
                 });
             }

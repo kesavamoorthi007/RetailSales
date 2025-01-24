@@ -27,8 +27,8 @@ namespace RetailSales.Models.Accounts
         public string accclass { get; set; }
         public string acctype { get; set; }
         public string accgrpname { get; set; }
-        //public string edit { get; set; }
-        //public string delete { get; set; }
+        public string edit { get; set; }
+        public string delete { get; set; }
         
     }
 }
