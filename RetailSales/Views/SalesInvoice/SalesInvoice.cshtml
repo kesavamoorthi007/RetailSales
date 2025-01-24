@@ -49,13 +49,13 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-4 control-label">Invoice Date<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                       @* <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.InvoiceDate, new { @id = "txtInvoiceDate", @class = "form-control", @TabIndex = 1, @readonly = true })
-                                        </div>
-                                        @* <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
-                                            @Html.TextBoxFor(C => C.InvoiceDate, new { @id = "InvoiceDate", @class = "form-control", @TabIndex = 2, @size = "20", @readonly = true })
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div> *@
+                                        </div>*@
+                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
+                                            @Html.TextBoxFor(C => C.InvoiceDate, new { @id = "InvoiceDate", @class = "form-control", @TabIndex = 2, @size = "20", style = "width: 170px", @readonly = true })
+                                           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div> 
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -222,6 +222,46 @@
     </div>
 </div>
 <script>
+    $('.form_time').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+
+
+    $('.to_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+
+    });
+
+    $('.form_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+    }).on('changeDate', function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $('.to_date').datetimepicker('setStartDate', minDate);
+
+    });
     $(function () {
         $('._select').select2();
     });
