@@ -1,5 +1,4 @@
 ﻿@model RetailSales.Models.Bankaccounts
-
 @{
     ViewData["Title"] = "Bankaccounts";
 }
@@ -11,19 +10,16 @@
         left: 5px;
     }
 </style>
-
 <script type="text/javascript">
     @if (TempData["notice"] != null)
     {
         @:alert('@TempData["notice"]');
     }
 </script>
-
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
-
         <ol class="breadcrumb">
-            <li class="active"> <strong>Bankaccounts</strong> </li>
+            <li class="active"> <strong>Bank Accounts</strong> </li>
         </ol>
     </div>
 </div>
@@ -38,7 +34,7 @@
                         <form>
                             <br />
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-5 control-label">Account Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
@@ -46,69 +42,69 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Bankname, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Account Type<label class="mandatory">*</label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Account Type<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Accounttype, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.Accounttype, Model.Accounttypelst, "--Please Select--", new { @id = "ddlAccounttype", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Branch Name<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Branch Name<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Branchname, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-4 control-label">Branch Address<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Branch Address<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextAreaFor(C => C.Branchaddress, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Country<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Country<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Country, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.Country, Model.Countrylst, "--Please Select--", new { @id = "ddlCountry", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.State, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.City, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Bsrcode, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
@@ -116,25 +112,25 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Ifsccode, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-4 control-label">Is Default<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Is Default<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Isdefault, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.CheckBoxFor(C => C.Isdefault, new { @id = "txtIsdefault", @class = "form-check-input" })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Opening Balance<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Opening Balance<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Openingbalance, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
                                         </div>
@@ -142,24 +138,19 @@
                                 </div>
                             </div>
                             @*<div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-4 control-label">UOM<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Uom, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>*@
-
+                        <div class="col-lg-6">
+                        <div class="form-group">
+                        <br> <label for="inputName3" class="col-sm-4 control-label">UOM<label class="mandatory">*</label></label>
+                        <div class="col-sm-8">
+                        @Html.TextBoxFor(C => C.Uom, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                        </div>
+                        </div>
+                        </div>
+                        </div>*@
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListCCategory", "CCategory")'">Cancel</button>
-
-
-
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("Bankaccounts", "Bankaccounts")'">Cancel</button>
                         </form>
                     }
                 </div>
@@ -171,23 +162,185 @@
     $(function () {
         $('._select').select2();
     });
-
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
-
-            if (document.getElementById("txtCategory").value == "") {
+            if (document.getElementById("ddlAccountname").value == "") {
                 isValid = false;
-                $(txtCategory).css({
+                $(ddlAccountname).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
-
-                alert("Please Enter Customer Category");
+                alert("Please Enter Account Name");
                 return false;
             }
             else {
-                $(txtCategory).css({
+                $(ddlAccountname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtBankname").value == "") {
+                isValid = false;
+                $(txtBankname).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Bank Name");
+                return false;
+            }
+            else {
+                $(txtBankname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtAccounttype").value == "") {
+                isValid = false;
+                $(txtAccounttype).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Account Type");
+                return false;
+            }
+            else {
+                $(txtAccounttype).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtBranchname").value == "") {
+                isValid = false;
+                $(txtBranchname).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Branch Name");
+                return false;
+            }
+            else {
+                $(txtBranchname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtBranchaddress").value == "") {
+                isValid = false;
+                $(txtBranchaddress).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Branch Address");
+                return false;
+            }
+            else {
+                $(txtBranchaddress).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlCountry").value == "") {
+                isValid = false;
+                $(ddlCountry).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Country");
+                return false;
+            }
+            else {
+                $(ddlCountry).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlState").value == "") {
+                isValid = false;
+                $(ddlState).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter State");
+                return false;
+            }
+            else {
+                $(ddlState).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlCity").value == "") {
+                isValid = false;
+                $(ddlCity).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter City");
+                return false;
+            }
+            else {
+                $(ddlCity).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtBsrcode").value == "") {
+                isValid = false;
+                $(txtBsrcode).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter BSR Code");
+                return false;
+            }
+            else {
+                $(txtBsrcode).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtIfsccode").value == "") {
+                isValid = false;
+                $(txtIfsccode).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter IFSC Code");
+                return false;
+            }
+            else {
+                $(txtIfsccode).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtIsdefault").value == "") {
+                isValid = false;
+                $(txtIsdefault).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Is Default");
+                return false;
+            }
+            else {
+                $(txtIsdefault).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtOpeningbalance").value == "") {
+                isValid = false;
+                $(txtOpeningbalance).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please EnterOpening Balance");
+                return false;
+            }
+            else {
+                $(txtOpeningbalance).css({
                     "border": "",
                     "background": ""
                 });
@@ -195,6 +348,5 @@
             if (isValid == false)
                 e.preventDefault();
         });
-
     });
 </script>
