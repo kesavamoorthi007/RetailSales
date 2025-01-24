@@ -13,7 +13,7 @@ namespace RetailSales.Services.Accounts
         public AccountGroupService(IConfiguration _configuratio)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
-            datatrans = new DataTransactions(_connectionString);
+            datatrans = new DataTransactions(_connectionString); 
         }
 
         // used for Account Class binding and retrieving from database
