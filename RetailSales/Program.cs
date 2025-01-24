@@ -14,6 +14,10 @@ using RetailSales.Services.Purchase;
 using RetailSales.Interface.Accounts;
 using RetailSales.Services.Accounts;
 
+using RetailSales.Interface.Accounts;
+using RetailSales.Services.Accounts;
+
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -33,37 +37,34 @@ internal class Program
         builder.Services.TryAddSingleton<IProductdetailService, ProductdetailService>();
         builder.Services.TryAddSingleton<IPurchaseorderService, PurchaseorderService>();
         builder.Services.TryAddSingleton<ISalesReturnService, SalesReturnService>();
-
-
-
-
         builder.Services.TryAddSingleton<ICityService, CityServices>();
-
         builder.Services.TryAddSingleton<IStateService, StateService>();
-
 		builder.Services.TryAddSingleton<ICCategoryService, CCategoryService>();
 		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
-
         builder.Services.TryAddSingleton<IProductService, ProductService>();
 
 		builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
-
 		builder.Services.TryAddSingleton<ISalesInvoiceService, SalesInvoiceService>();
-
 		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
-
 		builder.Services.TryAddSingleton<IBankaccountsService, BankaccountsService>();
-
 		builder.Services.TryAddSingleton<ISupplierService, SupplierService>();
 		builder.Services.TryAddSingleton<IProductService, ProductService>();
+		builder.Services.TryAddSingleton<IDebitNoteService, DebitNoteService>();
+		builder.Services.TryAddSingleton<ICreditNoteService, CreditNoteService>();
+		builder.Services.TryAddSingleton<IContraVoucherService, ContraVoucherService>();
+		builder.Services.TryAddSingleton<IJournalVoucherService, JournalVoucherService>();
 
        
         builder.Services.TryAddSingleton<ILedgersServices, LedgersService>();
 
 
+
         // adding UOM interface and services containers
         //builder.Services.TryAddSingleton<IUOMService, UOMService>();
 
+
+        // adding Account Group interface and services containers
+        builder.Services.TryAddSingleton<IAccountGroupService, AccountGroupService>();
 
 
 
