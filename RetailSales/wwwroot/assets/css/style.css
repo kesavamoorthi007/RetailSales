@@ -2587,7 +2587,7 @@ svg.f-light {
 }
 
 /*======= Table-Border-Bottom-color css starts  ======= */
-table thead .border-bottom-primary th,
+/*table thead .border-bottom-primary th,
 table tbody .border-bottom-primary th,
 table tbody .border-bottom-primary td {
   border-bottom: 1px solid #006666 !important;
@@ -2633,11 +2633,11 @@ table thead .border-bottom-warning th,
 table tbody .border-bottom-warning th,
 table tbody .border-bottom-warning td {
   border-bottom: 1px solid #FFAE1A !important;
-}
+}*/
 
 /*======= Table-Border-Bottom-color css ends  ======= */
 /*======= Table styling css starts  ======= */
-.table-styling .table-primary,
+/*.table-styling .table-primary,
 .table-styling.table-primary {
   background-color: #006666;
   color: #fff;
@@ -2779,7 +2779,7 @@ table tbody .border-bottom-warning td {
 .table-styling.table-warning th,
 .table-styling.table-warning td {
   background-color: transparent;
-}
+}*/
 
 /*======= Table styling css ends  ======= */
 /*======= Svg stroke css start  ======= */
@@ -12364,7 +12364,7 @@ textarea {
 ==========================**/
 .switch {
   position: relative;
-  display: inline-block;
+ /* display: inline-block;*/
   width: 60px;
   height: 34px;
 }
