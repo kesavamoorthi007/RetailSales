@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>ListAccountsGroup </strong> </li>
+            <li class="active"> <strong>List Account Group </strong> </li>
         </ol>
     </div>
 </div>
@@ -81,8 +81,8 @@
                 columns: [
 
                     { text: 'Account Class', filtertype: 'checkedlist', datafield: 'accclass', width: 200 },
-                    { text: 'Account Type', filtertype: 'checkedlist', datafield: 'acctype', width: 200 },
-                    { text: 'Account Group Name', filtertype: 'input', datafield: 'accgrpname', width: 200 },
+                   { text: 'Account Type', filtertype: 'checkedlist', datafield: 'acctype', width: 200 },
+                    { text: 'Account Group', filtertype: 'input', datafield: 'accgrpname', width: 200 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("AccountGroup", "AccountGroup")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Data </a>
+                                    <a href="@Url.Action("AccountGroup", "AccountGroup")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Account Group </a>
                                     <br>
                                 </div>
 
