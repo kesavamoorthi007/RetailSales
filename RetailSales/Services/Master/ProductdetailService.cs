@@ -25,5 +25,25 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
+        public DataTable GetUom()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,UOM_CODE FROM UOM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetAllProductDeatilsGRID()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,PRODUCT_NAME,VARIANT,UOM,RATE FROM ITEM ORDER BY ITEM.ID DESC";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
     }
 }
