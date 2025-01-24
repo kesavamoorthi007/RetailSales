@@ -41,16 +41,16 @@
     <!-- Plugins css Ends-->
 
     <!-- Bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.css">
     <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-    <link href="~/assets/css/jquery-ui.css" rel="stylesheet">
+   @* <link href="~/assets/css/jquery-ui.css" rel="stylesheet">*@
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
     <link id="color" rel="stylesheet" href="~/assets/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="~/assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="~/assets/css/sidebar.css">
-
+     
     <!-- theme css -->
     <link href="~/jqwidgets/styles/jqx.fresh.css" rel="stylesheet">
   </head>
@@ -202,7 +202,7 @@
                                 </a>
 
                                 <ul class="sidebar-submenu">
-                                    <li><a href="@Url.Action("AccountGroup", "AccountGroup")">Account Group</a></li>
+                                    <li><a href="@Url.Action("ListAccountGroup", "AccountGroup")">Account Group</a></li>
                                     <li><a href="@Url.Action("DebitNote", "DebitNote")">Debit Note</a></li>
                                 </ul>
                             </li>
@@ -242,7 +242,7 @@
                                     <li><a href="@Url.Action("UOM", "UOM")">UOM</a></li>
 
                                      <li><a href="@Url.Action("Productdetail", "Productdetail")">Product Detail</a></li>
-                                    <li><a href="@Url.Action("Bankaccounts", "Bankaccounts")">Bank Accounts</a></li>
+                                   
 
                                      
 
@@ -257,23 +257,19 @@
                             </li>
 
 
-                            
-
-                            <li class="sidebar-list">
-                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
-                                    <svg class="stroke-icon">
-                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
-                                    </svg><span>Accounts</span>
-                                </a>
-
                                 <ul class="sidebar-submenu">
-                                    <li><a href="@Url.Action("ListAccountGroup", "AccountGroup")">Account Group</a></li>
+                 <li><a href="@Url.Action("ListAccountGroup", "AccountGroup")">Account Group</a></li>
                                     <li><a href="@Url.Action("Daybook", "AccountGroup")">Day Book</a></li>
+ 
+                                    <li><a href="@Url.Action("AccountGroup", "AccountGroup")">Account Group</a></li>
+                                    <li><a href="@Url.Action("Bankaccounts", "Bankaccounts")">Bank Accounts</a></li>
+ 
                                 </ul>
                             </li>
+
+                            
+
+                          
 
 
                         </ul>
