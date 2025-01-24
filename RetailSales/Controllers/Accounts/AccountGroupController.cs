@@ -7,6 +7,7 @@ using RetailSales.Models.Accounts;
 using RetailSales.Services;
 using RetailSales.Services.Accounts;
 using System.Data;
+using System.Data.SqlClient;
 using AccountGroup = RetailSales.Models.Accounts.AccountGroup;
 
 namespace RetailSales.Controllers.Accounts
@@ -133,5 +134,43 @@ namespace RetailSales.Controllers.Accounts
         {
             return View();
         }
+
+        public IActionResult Daybook()
+        {
+            return View();
+        }
+
+        public ActionResult MyListDayBookgrid(string strfrom, string strTo)
+        {
+            List<ListDayItems> Reg = new List<ListDayItems>();
+            DataTable dtUsers = new DataTable();
+            dtUsers = AccountGroupService.GetDaydet();
+            DataTable dt = new DataTable();
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+                // dt = (DataTable)ledger.GetAllListDayBookItems(dtUsers.Rows[i]["MID"].ToString());
+
+                Reg.Add(new ListDayItems
+                {
+                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    vocherno = dtUsers.Rows[i]["VOUCH_NO"].ToString(),
+                    vocherdate = dtUsers.Rows[i]["VOUCH_DATE"].ToString(),
+                    tratype = dtUsers.Rows[i]["REF_TYPE"].ToString(),
+                    vocmemo = dtUsers.Rows[i]["VOUCH_MEMO"].ToString(),
+                    vtype = dtUsers.Rows[i]["MID"].ToString(),
+                    type = dtUsers.Rows[i]["TRANS_TYPE"].ToString(),
+                    ledgercode = dtUsers.Rows[i]["ledger"].ToString(),
+                    debitamount = dtUsers.Rows[i]["DBAMOUNT"].ToString(),
+                    creditamount = dtUsers.Rows[i]["CRAMOUNT"].ToString(),
+                });
+            }
+
+            return Json(new
+            {
+                Reg
+            });
+
+        }
+
     }
 }
