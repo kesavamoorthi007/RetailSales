@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace RetailSales.Models
 {
-    public class DebitNote
+    public class CreditNote
     {
         public string VocNo { get; set; }
         public string ID { get; set; }
@@ -14,12 +15,9 @@ namespace RetailSales.Models
         public string totcri { get; set; }
         public string AmtWd { get; set; }
         public string Narr { get; set; }
-        public string Bname { get; set; }
-        public List<DebitNoteItem> DebitNotelst { get; set; }
-      
-
+        public List<CreditNoteItem> CreditNotelst { get; set; }
     }
-    public class DebitNoteItem
+    public class CreditNoteItem
     {
         public string Isvalid { get; set; }
         public List<SelectListItem> DBCRlst { get; set; }
@@ -29,6 +27,5 @@ namespace RetailSales.Models
         public double DebitAmt { get; set; }
         public double CreditAmt { get; set; }
         public string Balance { get; set; }
-
     }
 }

@@ -1,8 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace RetailSales.Models
 {
-    public class DebitNote
+    public class JournalVoucher
     {
+        public JournalVoucher()
+        {
+           
+            this.SecIDLst = new List<SelectListItem>();
+           
+
+        }
+        public string SecID { get; set; }
+        public List<SelectListItem> SecIDLst;
         public string VocNo { get; set; }
         public string ID { get; set; }
         public string VocDate { get; set; }
@@ -15,11 +25,15 @@ namespace RetailSales.Models
         public string AmtWd { get; set; }
         public string Narr { get; set; }
         public string Bname { get; set; }
-        public List<DebitNoteItem> DebitNotelst { get; set; }
-      
-
+        public string SSP { get; set; }
+        public string Expensive { get; set; }
+        public string ICredit { get; set; }
+        public string Per { get; set; }
+        public string Amt { get; set; }
+        public string DueDate { get; set; }
+        public List<JournalVoucherItem> JournalVoucherlst { get; set; }
     }
-    public class DebitNoteItem
+    public class JournalVoucherItem
     {
         public string Isvalid { get; set; }
         public List<SelectListItem> DBCRlst { get; set; }
@@ -29,6 +43,5 @@ namespace RetailSales.Models
         public double DebitAmt { get; set; }
         public double CreditAmt { get; set; }
         public string Balance { get; set; }
-
     }
 }
