@@ -1,0 +1,222 @@
+﻿@model RetailSales.Models.Accounts.Ledgers;
+@{
+    ViewData["Title"] = "Ledgers";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Ledgers </strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("Ledgers", "Ledgers", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Account Group<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.AccountGroup, Model.AccountGroupList, "---Plaese Select---", new { @id = "txtAccountGroup", @class = "form-control _select", @TabIndex = 1 })<br />
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Ledger Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.LedgerName, new { @id = "txtLedgerName", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Allow Zero Value<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                           @* @Html.DropDownListFor(C => C.AllowZeroValue, Model.AllowZeroValueList, "---Plaese Select---", new { @id = "txtAllowZeroValue", @class = "form-control _select", @TabIndex = 1 })<br />*@
+                                            <form asp-action="SomeAction" asp-controller="SomeController">
+                                                <label>
+                                                    <input type="radio" name="MyRadioField" value="Yes" checked /> Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="MyRadioField" value="No" /> No
+                                                </label>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Total Opening Balance<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.TotalOpeningBalance, new { @id = "txtTotalOpeningBalance", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Ledger Notes<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.LedgerNotes, new { @id = "txtLedgerNotes", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button type="submit" class="btn btn-info" type="button" onclick="location.href='@Url.Action("Ledgers", "Ledgers")'">Reset</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListLedgers", "Ledgers")'">Cancel</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    // i/p validation purpose
+
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+            if (document.getElementById("txtAccountGroup").value == "") {
+                isValid = false;
+                $(txtAccountGroup).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Account Group");
+                return false;
+            }
+            else {
+                $(txtAccountGroup).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtLedgerName").value == "") {
+                isValid = false;
+                $(txtLedgerName).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Ledger Name");
+                return false;
+            }
+            else {
+                $(txtLedgerName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtAllowZeroValue").value == "") {
+                isValid = false;
+                $(txtAllowZeroValue).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Allow Zero Value");
+                return false;
+            }
+            else {
+                $(txtCityName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtTotalOpeningBalance").value == "") {
+                isValid = false;
+                $(txtTotalOpeningBalance).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Total Opening Balance");
+                return false;
+            }
+            else {
+                $(txtCityName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtLedgerNotes").value == "") {
+                isValid = false;
+                $(txtLedgerNotes).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Ledger Notes");
+                return false;
+            }
+            else {
+                $(txtCityName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>

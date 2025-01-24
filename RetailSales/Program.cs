@@ -54,8 +54,9 @@ internal class Program
 		builder.Services.TryAddSingleton<IContraVoucherService, ContraVoucherService>();
 		builder.Services.TryAddSingleton<IJournalVoucherService, JournalVoucherService>();
 
+       
+        builder.Services.TryAddSingleton<ILedgersServices, LedgersService>();
 
-		
 
 
         // adding UOM interface and services containers
