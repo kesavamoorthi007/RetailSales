@@ -30,13 +30,20 @@
     <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/animate.css">
     <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/echart.css">
-    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/date-picker.css">
+   @*  <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/date-picker.css"> *@
     <link rel="stylesheet" type="text/css" href="~/assets/css/select2.min.css" />
+
+
+   
+
+   
 
     <!-- Plugins css Ends-->
 
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">
+    <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link href="~/assets/css/jquery-ui.css" rel="stylesheet">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
     <link id="color" rel="stylesheet" href="~/assets/css/color-1.css" media="screen">
@@ -184,6 +191,21 @@
                                 </ul>
 
                             </li>
+                            <li class="sidebar-list">
+                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                    <svg class="stroke-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
+                                    </svg><span>Accounts</span>
+                                </a>
+
+                                <ul class="sidebar-submenu">
+                                    <li><a href="@Url.Action("AccountGroup", "AccountGroup")">Account Group</a></li>
+                                    <li><a href="@Url.Action("DebitNote", "DebitNote")">Debit Note</a></li>
+                                </ul>
+                            </li>
                              <li class="sidebar-list">
                                 <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
                                     <svg class="stroke-icon">
@@ -234,6 +256,9 @@
                                 
                             </li>
 
+
+                            
+
                             <li class="sidebar-list">
                                 <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
                                     <svg class="stroke-icon">
@@ -248,6 +273,7 @@
                                     <li><a href="@Url.Action("ListAccountGroup", "AccountGroup")">Account Group</a></li>
                                 </ul>
                             </li>
+
 
                         </ul>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
@@ -270,6 +296,8 @@
 
         </script>
           <!-- latest jquery-->
+       
+
     <script src="~/assets/js/jquery.min.js"></script>
         <script src="~/assets/js/select2.min.js"></script>
     <!-- Bootstrap js-->
@@ -306,14 +334,16 @@
     <!-- Theme js-->
     <script src="~/assets/js/script.js"></script>
   @*  <script src="~/assets/js/theme-customizer/customizer.js"></script>*@
-        
 
+        <script type="text/javascript" src="~/assets/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="~/assets/js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
 
         <div class="page-body">
             <div class="container">
                 <main role="main" class="pb-3">
+                        @await RenderSectionAsync("Scripts", required: false)
                     @RenderBody()
                 </main>
             </div>
