@@ -7,3 +7,5 @@ namespace RetailSales.Interface.Master
         DataTable GetCategory();
     }
 }
+
+
