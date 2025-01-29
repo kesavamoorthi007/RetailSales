@@ -9,3 +9,5 @@ namespace RetailSales.Interface.Master
         DataTable GetUom();
     }
 }
+
+
