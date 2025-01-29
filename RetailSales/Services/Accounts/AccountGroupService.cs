@@ -28,6 +28,8 @@ namespace RetailSales.Services.Accounts
             adapter.Fill(dtt);
             return dtt;
         }
+
+        // used for Daydet binding and retrieving from database
         public DataTable GetDaydet()
         {
             string SvSql = string.Empty;
