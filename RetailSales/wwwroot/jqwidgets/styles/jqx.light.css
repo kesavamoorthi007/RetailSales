@@ -1664,8 +1664,8 @@ jqx-grid-column-filterbutton-light,
 .jqx-widget-light .jqx-grid-column-header,
 .jqx-widget-light .jqx-grid-group-cell {
     border-color: var(--jqx-border);
-    color: var(--jqx-surface-color);
-    background: var(--jqx-surface);
+    color:#f5f5f5 ;/*var(--jqx-surface-color);*/
+    /*background-color: #a3e4d7*/ /*var(--jqx-surface);*/
 }
 
 .jqx-widget-light .jqx-grid-column-header-light {
