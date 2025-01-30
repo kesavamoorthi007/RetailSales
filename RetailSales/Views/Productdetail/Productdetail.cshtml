@@ -55,13 +55,13 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-6 control-label">Product Description<label class="mandatory"></label></label>
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">UOM<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Productdescription, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
-
+                                            @Html.DropDownListFor(C => C.Uom, Model.Uomlst, "---Please Select---", new { @id = "ddlUom", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
+                              
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
@@ -73,26 +73,38 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-5 control-label">UOM<label class="mandatory"></label></label>
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">Minimum Qty<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.Uom, Model.Uomlst, "---Please Select---", new { @id = "ddlUom", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.minqty, new { @id = "txtminqty", @class = "form-control", @TabIndex = 1 ,onkeydown = "return isNumeric2(event.keyCode,this.value)"})<br />
+
                                         </div>
                                     </div>
                                 </div>
+                               
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-5 control-label">Rate<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Rate, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.Rate, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 ,onkeydown = "return isNumeric2(event.keyCode,this.value)"})<br />
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                           
+                            <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <br><label for="inputName3" class="col-sm-4 control-label">Product Description<label class="mandatory"></label></label>
+                                    <div class="col-sm-8">
+                                        @Html.TextAreaFor(C => C.Productdescription, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
 
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
