@@ -45,6 +45,9 @@
                 { name: 'delivery', type: 'string' },
                 { name: 'days', type: 'string' },
                 { name: 'city', type: 'string' },
+                { name: 'state', type: 'string'},
+                { name: 'country', type: 'string'},
+                { name: 'gst', type: 'string'},
                 { name: 'mobile', type: 'string' },
                 { name: 'landline', type: 'string' },
                 { name: 'email', type: 'string' },
@@ -89,7 +92,7 @@
                     { text: 'Supplier Name', filtertype: 'input', datafield: 'supp', width: 200 },
                     { text: 'Supplier Category', filtertype: 'input', datafield: 'category', width: 200 },
                     { text: 'Delivery Lead Time', filtertype: 'input', datafield: 'delivery', width: 200 },
-                    { text: 'Mobile No', filtertype: 'input', datafield: 'mobile', width: 200 },
+                    { text: 'Credit Days', filtertype: 'input', datafield: 'days', width: 200 },
                     // { text: 'Days', filtertype: 'input', datafield: 'days', width: 100 },
                     // { text: 'City', filtertype: 'input', datafield: 'city', width: 100 },        
                     // { text: 'Landline', filtertype: 'input', datafield: 'landline', width: 100 },
@@ -99,7 +102,7 @@
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},
                 ]
             });
-        $("#ddlStatus").change(function () {
+        $("#ddlstatus").change(function () {
             var value = "Y";
             if ($(this).val() != "") {
                 value = $(this).val();
