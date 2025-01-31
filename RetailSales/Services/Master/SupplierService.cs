@@ -15,27 +15,16 @@ namespace RetailSales.Services.Master
             datatrans = new DataTransactions(_connectionString);
         }
 
-        public DataTable GetEditSupplier(string id)
-        {
-            string SvSql = string.Empty;
-            SvSql = "SELECT ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,MOBILE_NO,ADDRESS,CITY,EMAIL_ID,LANDLINE_NO FROM SUPPLIER WHERE ID = '" + id + "' ";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-
         public DataTable GetAllSupplierGRID(string strStatus)
         {
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,MOBILE_NO,ADDRESS,CITY,EMAIL_ID,LANDLINE_NO,SUPPLIER.IS_ACTIVE FROM SUPPLIER WHERE SUPPLIER.IS_ACTIVE = 'Y' ORDER BY SUPPLIER.ID DESC";
+                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,SUPPLIER.IS_ACTIVE FROM SUPPLIER WHERE SUPPLIER.IS_ACTIVE = 'Y' ORDER BY SUPPLIER.ID DESC";
             }
             else
             {
-                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,MOBILE_NO,ADDRESS,CITY,EMAIL_ID,LANDLINE_NO,SUPPLIER.IS_ACTIVE FROM SUPPLIER WHERE SUPPLIER.IS_ACTIVE = 'N' ORDER BY SUPPLIER.ID DESC";
+                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,SUPPLIER.IS_ACTIVE FROM SUPPLIER WHERE SUPPLIER.IS_ACTIVE = 'N' ORDER BY SUPPLIER.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -44,6 +33,48 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetState()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select STATE_NAME,ID from STATE";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCity()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,ID from CITY";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCategory()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CATGRY_NAME,ID from SUPPL_CATGRY";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetEditSupplier(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,MOBILE_NO,ADDRESS,CITY,STATE,COUNTRY,GST_NO,EMAIL_ID,LANDLINE_NO FROM SUPPLIER WHERE ID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        } 
 
         public string SupplierCRUD(Supplier cy)
         {
@@ -73,6 +104,9 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@mobilenumber", SqlDbType.NVarChar).Value = cy.Mobile;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = cy.City;
+                    objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = cy.State;
+                    objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;
+                    objCmd.Parameters.Add("@gst", SqlDbType.NVarChar).Value = cy.Gst;
                     objCmd.Parameters.Add("@emailid", SqlDbType.NVarChar).Value = cy.Email;
                     objCmd.Parameters.Add("@landlineno", SqlDbType.NVarChar).Value = cy.Landline;
                     objCmd.Parameters.Add("@creditdays", SqlDbType.NVarChar).Value = cy.Days;
@@ -132,28 +166,7 @@ namespace RetailSales.Services.Master
 
         }
 
-        //public string StatusDeleteMR(string tag, String id)
-        //{
-
-        //    try
-        //    {
-        //        string svSQL = string.Empty;
-        //        using (SqlConnection objConnT = new SqlConnection(_connectionString))
-        //        {
-        //            svSQL = "UPDATE SUPPLIER SET deletenews ='N' WHERE I_Id='" + id + "'";
-        //            SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
-        //            objConnT.Open();
-        //            objCmds.ExecuteNonQuery();
-        //            objConnT.Close();
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    return "";
-        //}
+        
         public string RemoveChange(string tag, string id)
         {
 
@@ -162,7 +175,7 @@ namespace RetailSales.Services.Master
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE Supplier SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE SUPPLIER SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
