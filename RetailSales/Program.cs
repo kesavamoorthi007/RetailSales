@@ -71,6 +71,7 @@ internal class Program
         builder.Services.TryAddSingleton<IBINService, BINService>();
         // adding Account Group interface and services containers
         builder.Services.TryAddSingleton<IAccountGroupService, AccountGroupService>();
+        builder.Services.TryAddSingleton<ITaxMasterService, TaxMasterService>();
 
 
 

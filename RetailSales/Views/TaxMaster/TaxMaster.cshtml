@@ -1,0 +1,140 @@
+﻿@model RetailSales.Models.Master.TaxMaster
+
+@{
+    ViewData["Title"] = "Tax";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Tax</strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("TaxMaster", "TaxMaster", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <!--<div class="col-lg-3"></div>-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Tax Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.TaxName, new { @id = "txtTaxName", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Percentage<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Percentage, new { @id = "txtPercentage", @class = "form-control", @TabIndex = 1 })<br />
+                                        </div>
+                                    </div>
+                                </div>                             
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Tax description</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Taxdescription, new { @id = "txtTaxdescription", @class = "form-control", @TabIndex = 1 })<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9">
+                                    <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
+                                    <button type="reset" class="btn btn-warning" type="button" onclick="location.href='@Url.Action("TaxMaster", "TaxMaster")'">Reset</button>
+                                    <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListTaxMaster", "TaxMaster")'">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("txtTaxName").value == "") {
+                isValid = false;
+                $(txtTaxName).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Tax Name");
+                return false;
+            }
+            else {
+                $(txtTaxName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtPercentage").value == "") {
+                isValid = false;
+                $(txtPercentage).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Percentage");
+                return false;
+            }
+            else {
+                $(txtPercentage).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>
+
+
+
+
+
