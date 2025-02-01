@@ -20,7 +20,11 @@ namespace RetailSales.Models
         public string Uom { get; set; }
         public string Rate { get; set; }
         public string ddlStatus { get; set; }
+
         public string? ID { get; internal set; }
+
+        public string minqty { get; set; }
+
     }
     public class Productdetailgrid
     {

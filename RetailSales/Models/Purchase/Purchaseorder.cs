@@ -1,16 +1,28 @@
-﻿namespace RetailSales.Models
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace RetailSales.Models
 {
     public class Purchaseorder
     {
+        public Purchaseorder()
+        {
+            this.Suplst = new List<SelectListItem>();
+        }
         public string Companyname { get; set; }
-        public string Suppliername { get; set; }
-        public string Deliveryaddress { get; set; }
-        public string Supplierlocation { get; set; }
-        public string Purchaseorderdate { get; set; }
+        public string Suppid { get; set; }
+        public List<SelectListItem> Suplst { get; set; }
+        public string refno { get; set; }
+        public string refdate { get; set; }
+        public string Podate { get; set; }
         public string Supplieraddress { get; set; }
 
         public string ddlStatus { get; set; }
         public List<PurchaseorderItem> PurchaseorderLst { get; set; }
+        public string Narration { get; set; }
+        public string Amountinwords { get; set; }
+        public string TotDis { get; set; }
+        public string Total { get; set; }
+        public string Tot { get; set; }
 
     }
     public class PurchaseorderItem

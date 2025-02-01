@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using RetailSales.Interface.Purchase;
 using RetailSales.Models;
 
@@ -11,15 +13,20 @@ namespace RetailSales.Controllers.Purchase
     public class PurchaseorderController : Controller
     {
         IPurchaseorderService PurchaseorderService;
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
 
-        public PurchaseorderController(IPurchaseorderService _PurchaseorderService)
+        public PurchaseorderController(IPurchaseorderService _PurchaseorderService, IConfiguration _configuratio)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             PurchaseorderService = _PurchaseorderService;
         }
         public IActionResult Purchaseorder(string id)
         {
             Purchaseorder ic = new Purchaseorder();
-
+            ic.Suplst= BindSupplier();
             List<PurchaseorderItem> TData = new List<PurchaseorderItem>();
             PurchaseorderItem tda = new PurchaseorderItem();
 
@@ -89,6 +96,23 @@ namespace RetailSales.Controllers.Purchase
                 Reg
             });
 
+        }
+        public List<SelectListItem> BindSupplier()
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("select ID,SUPPLIER_NAME from SUPPLIER where IS_ACTIVE='Y'");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["SUPPLIER_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
