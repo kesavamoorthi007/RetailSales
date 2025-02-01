@@ -64,7 +64,7 @@ internal class Program
         builder.Services.TryAddSingleton<IHSNcodeService, HSNcodeService>();
 
         // adding UOM interface and services containers
-        //builder.Services.TryAddSingleton<IUOMService, UOMService>();
+        builder.Services.TryAddSingleton<IUOMService, UOMService>();
 
 
         // adding Account Group interface and services containers
