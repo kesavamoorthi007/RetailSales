@@ -47,7 +47,7 @@ namespace RetailSales.Controllers.Master
                     ic.mobile = dt.Rows[0]["MOBILE"].ToString();
                     ic.Email = dt.Rows[0]["EMAIL"].ToString();
                     ic.Remark = dt.Rows[0]["REMARKS"].ToString();
-                    ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString();
+                    /*ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString()*/;
                     ic.Designation = dt.Rows[0]["DESIGNATION"].ToString();
                     ic.Branch = dt.Rows[0]["BRANCH"].ToString();
                     ic.Department = dt.Rows[0]["DEPARTMENT"].ToString();
@@ -131,8 +131,8 @@ namespace RetailSales.Controllers.Master
                 Reg.Add(new Employeegrid
                 {
                 id = dtUsers.Rows[i]["ID"].ToString(),
-                empid = dtUsers.Rows[i]["EMPLOYEE_ID"].ToString(),
-                fname = dtUsers.Rows[i]["FNAME"].ToString(),
+                    empid = dtUsers.Rows[i]["EMPLOYEE_ID"].ToString(),
+                    fname = dtUsers.Rows[i]["FNAME"].ToString(),
                 gender = dtUsers.Rows[i]["GENDER"].ToString(),
                     //address = dtUsers.Rows[i]["ADDRESS"].ToString(),
                     //cityid = dtUsers.Rows[i]["CITY_ID"].ToString(),

@@ -39,20 +39,11 @@
                             <br />
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-6 control-label">Customer Category<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Category, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-                                            @Html.HiddenFor(C => C.ID)
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
 
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Customer Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Customername, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.Customername, new { @id = "txtCustomername", @class = "form-control", @TabIndex = 1 })
 
                                         </div>
                                     </div>
@@ -62,7 +53,17 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Customer Code<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.CustomerCode, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.CustomerCode, new { @id = "txtCustomerCode", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-6 control-label">Customer Group<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.Customergroup, Model.Customergrouplst, "--Please Select--", new { @id = "ddlCustomergroup", @Class = "form-control _select", @TabIndex = 1 })
 
                                         </div>
                                     </div>
@@ -72,20 +73,10 @@
                                 <div class="col-lg-4">
 
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-6 control-label">Customer Group<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Customergroup, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-
-                                    <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Description<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Description, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
                                     </div>
@@ -96,7 +87,17 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Address<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-6 control-label">Phone No<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.PhoneNo, new { @id = "txtPhoneNo", @class = "form-control", @TabIndex = 1 })
 
                                         </div>
                                     </div>
@@ -108,8 +109,8 @@
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-6 control-label">Country<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Country, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-                                          
+                                            @Html.DropDownListFor(C => C.Country, Model.Countrylst, "--Please Select--", new { @id = "ddlCountry", @Class = "form-control _select", @TabIndex = 1 })
+
                                         </div>
                                     </div>
                                 </div>
@@ -118,7 +119,7 @@
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-6 control-label">State<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.State, new { @id = "txtState", @class = "form-control", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
 
                                         </div>
                                     </div>
@@ -127,29 +128,28 @@
                                     <div class="form-group">
                                             <br> <label for="inputName3" class="col-sm-6 control-label">City<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.City, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-                                       
+                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
+
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div>
                             <div class="row">
+                               
                                 <div class="col-lg-4">
-
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-6 control-label">Phone No<label class="mandatory">*</label></label>
+                                        <br><label for="inputName3" class="col-sm-6 control-label">E-Mail<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.PhoneNo, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-6 control-label">E-Mail<label class="mandatory"></label></label>
+                                        <br><label for="inputName3" class="col-sm-6 control-label">GST No<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.Gst, new { @id = "txtGst", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
@@ -178,22 +178,184 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            if (document.getElementById("txtCategory").value == "") {
+            if (document.getElementById("txtCustomername").value == "") {
                 isValid = false;
-                $(txtCategory).css({
+                $(txtCustomername).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Customer Category");
+                alert("Please Enter Customer Name");
                 return false;
             }
             else {
-                $(txtCategory).css({
+                $(txtCustomername).css({
                     "border": "",
                     "background": ""
                 });
             }
+            if (document.getElementById("txtCustomerCode").value == "") {
+                isValid = false;
+                $(txtCustomerCode).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Customer Code");
+                return false;
+            }
+            else {
+                $(txtCustomerCode).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlCustomergroup").value == "") {
+                isValid = false;
+                $(ddlCustomergroup).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Customer Group");
+                return false;
+            }
+            else {
+                $(ddlCustomergroup).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtDescription").value == "") {
+                isValid = false;
+                $(txtDescription).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Description");
+                return false;
+            }
+            else {
+                $(txtDescription).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtAddress").value == "") {
+                isValid = false;
+                $(txtAddress).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Address");
+                return false;
+            }
+            else {
+                $(txtAddress).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtPhoneNo").value == "") {
+                isValid = false;
+                $(txtPhoneNo).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Phone No");
+                return false;
+            }
+            else {
+                $(txtPhoneNo).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlCountry").value == "") {
+                isValid = false;
+                $(ddlCountry).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Country");
+                return false;
+            }
+            else {
+                $(ddlCountry).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            if (document.getElementById("ddlState").value == "") {
+                isValid = false;
+                $(ddlState).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select State");
+                return false;
+            }
+            else {
+                $(ddlState).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlCity").value == "") {
+                isValid = false;
+                $(ddlCity).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select City");
+                return false;
+            }
+            else {
+                $(ddlCity).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtEmail").value == "") {
+                isValid = false;
+                $(txtEmail).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Email");
+                return false;
+            }
+            else {
+                $(txtEmail).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtGst").value == "") {
+                isValid = false;
+                $(txtGst).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Gst");
+                return false;
+            }
+            else {
+                $(txtGst).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
             if (isValid == false)
                 e.preventDefault();
         });

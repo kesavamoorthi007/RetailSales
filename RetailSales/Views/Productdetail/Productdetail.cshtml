@@ -55,6 +55,16 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Varint Nickname<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Varintnic, new { @id = "txtVarintnic", @class = "form-control", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-5 control-label">UOM<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.Uom, Model.Uomlst, "---Please Select---", new { @id = "ddlUom", @Class = "form-control _select", @TabIndex = 1 })
@@ -83,6 +93,15 @@
                                         </div>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <br> <label for="inputName3" class="col-sm-5 control-label">Rate<label class="mandatory"></label></label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(C => C.Rate, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+
                                
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -90,10 +109,13 @@
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Rate, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 ,onkeydown = "return isNumeric2(event.keyCode,this.value)"})<br />
 
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
+                            </div>
+
+                           
                             <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -161,6 +183,87 @@
                     "background": ""
                 });
             }
+            if (document.getElementById("txtVarintnicname").value == "") {
+                isValid = false;
+                $(txtVarintnicname).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Product Varint Nicname");
+                return false;
+            }
+            else {
+                $(txtVarintnicname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtProductdescription").value == "") {
+                isValid = false;
+                $(txtProductdescription).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Product Productdescription");
+                return false;
+            }
+            else {
+                $(txtVarint).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtHsncode").value == "") {
+                isValid = false;
+                $(txtHsncode).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Hsncode");
+                return false;
+            }
+            else {
+                $(txtHsncode).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("ddlUom").value == "") {
+                isValid = false;
+                $(ddlUom).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Uom");
+                return false;
+            }
+            else {
+                $(ddlUom).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtRate").value == "") {
+                isValid = false;
+                $(txtRate).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Product Rate");
+                return false;
+            }
+            else {
+                $(txtRate).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            
             if (isValid == false)
                 e.preventDefault();
         });

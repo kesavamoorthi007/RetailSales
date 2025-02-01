@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.CGroup
+﻿@model RetailSales.Models.Customer
 
 @{
-    ViewData["Title"] = "Customer Group";
+    ViewData["Title"] = "Customer";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Customer Group </strong> </li>
+            <li class="active"> <strong>Customer</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/CGroup/MyListCGroupgrid",
+            url: "/Customer/MyListCustomergrid",
             data: {
                 strstatus: ""
             },
@@ -40,8 +40,9 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'group', type: 'string' },
-                { name: 'des', type: 'string' },
+                { name: 'ctname', type: 'string' },
+                { name: 'ctcode', type: 'string' },
+                { name: 'ctgroup', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
@@ -80,8 +81,9 @@
 
                 columns: [
 
-                    { text: 'Customer Group', filtertype: 'checkedlist', datafield: 'group', width: 200 },
-                    { text: 'Description', filtertype: 'input', datafield: 'des', width: 200 },
+                    { text: 'Customer Name', filtertype: 'checkedlist', datafield: 'ctname', width: 200 },
+                    { text: 'Customer Code', filtertype: 'checkedlist', datafield: 'ctcode', width: 200 },
+                    { text: 'Customer Group', filtertype: 'checkedlist', datafield: 'ctgroup', width: 200 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
@@ -117,7 +119,7 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("CGroup", "CGroup")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Customer Group </a>
+                                    <a href="@Url.Action("Customer", "Customer")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Customer</a>
                                     <br>
                                 </div>
 

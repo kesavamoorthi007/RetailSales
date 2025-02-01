@@ -18,7 +18,36 @@
         @:alert('@TempData["notice"]');
     }
 </script>
+<style>
+    .tab-content > .tab-pane {
+        display: none;
+        padding: 10px !important;
+    }
 
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+
+    .preview {
+        display: inline-block;
+        margin: 10px;
+        padding-left: 900px;
+    }
+
+        .preview img {
+            width: 70px;
+            height: 70px;
+            margin-right: 10px;
+        }
+
+    input[type=file] {
+        display: block;
+        padding-left: 700px;
+    }
+</style>
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
@@ -36,7 +65,17 @@
                     {
                         @Html.AntiForgeryToken()
                         <form>
-                            <br />
+
+                            <div class="tabs-container">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab-1" data-toggle="tab">Employee Details</a></li>
+                                    <li><a href="#tab-3" data-toggle="tab">Education Details</a></li>
+                                    <li><a href="#tab-4" data-toggle="tab">Employee Login</a></li>
+                               </ul>
+                              </div>
+                         <div class="tab-content">
+                          <div class="tab-pane" id="tab-1">
+                            
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -237,15 +276,133 @@
                                     </div>
                                 </div>
                             </div>
+                      </div>
+
+                                <div class="tab-pane" id="tab-2">
+                               @* <div class="row">*@
+
+                                   @* <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label for="inputName3" class="col-sm-4 control-label"> User Name <label class="mandatory"></label></label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(C => C.UserName, new { @id = "txtuse ", @class = "form-control", @TabIndex = 10})<br />
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label for="inputName3" class="col-sm-4 control-label">Password<label class="mandatory"></label></label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(C => C.Password, new { @id = "Password ", @class = "form-control", @TabIndex = 11})<br />
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>*@
+                                @*       <div class="row">
+                            <div class="col-md-6">
+                            <div class="form-group">
+
+                            <label for="inputName3" class="col-sm-4 control-label">EMP Department<label class="mandatory">*</label></label>
+                            <div class="col-sm-8">
+                            @Html.DropDownListFor(C => C.EMPDeptment, Model.EMPDeptlst,"Please Select", new { @id = "ddlEMPDeptment", @Class = "form-control _select", @TabIndex = 6 ,style = "width: 350px;"})<br />
+                            </div>
+
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+
+                            <label for="inputName3" class="col-sm-4 control-label">EMP Design<label class="mandatory">*</label></label>
+                            <div class="col-sm-8">
+                            @Html.DropDownListFor(C => C.EMPDesign, Model.EMPDesignlst,"Please Select", new { @id = "ddlEMPDesign", @Class = "form-control _select newcss", @TabIndex = 6,style = "width: 350px;"})
+                            <br /><br>
+                            </div>
+
+                            </div>
+                            </div>
+                            </div>*@
+
+                                @*<div class="row">
+
+                            <div class="col-md-6">
+                            <div class="form-group">
+
+                            <label for="inputName3" class="col-sm-4 control-label"> EMP Department<label class="Mandatory"></label></label>
+
+                            <div class="col-sm-8">
+                            @Html.DropDownListFor(C => C.EMPDeptment, Model.EMPDeptlst,"Please Select", new { @id = "ddlEMPDeptment", @Class = "form-control _select", @TabIndex = 1 })<br />
+                            </div>
+
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+
+                            <label for="inputName3" class="col-sm-4 control-label">EMP Design<label class="Mandatory"></label></label>
+
+                            <div class="col-sm-8">
+                            @Html.DropDownListFor(C => C.EMPDesign, Model.EMPDesignlst,"Please Select", new { @id = "ddlEMPDesign", @Class = "form-control _select", @TabIndex = 1 })<br /><br>
+                            </div>
+
+                            </div>
+                            </div>
+                            </div>*@
+                            </div>
+
+
+
+
+                                @* 3rd tab*@
+                                        <div class="tab-pane" id="tab-3">
+
+                                            @*3rd tab*@
+
+                                           @* <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+
+                                                        <label for="inputName3" class="col-sm-4 control-label"> User Name <label class="mandatory"></label></label>
+                                                        <div class="col-sm-8">
+                                                            @Html.TextBoxFor(C => C.UserName, new { @id = "txtuse ", @class = "form-control", @TabIndex = 10})<br />
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+
+                                                        <label for="inputName3" class="col-sm-4 control-label">Password<label class="mandatory"></label></label>
+                                                        <div class="col-sm-8">
+                                                            @Html.TextBoxFor(C => C.Password, new { @id = "Password ", @class = "form-control", @TabIndex = 11})<br />
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                        </div>
                            
+                                
+                    </div>
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
                             <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListEmployee", "Employee")'">Cancel</button>
-
-
-
-                        </form>
+                       
+                        
+                        
+                        
+                         </form>
                     }
                 </div>
             </div>
@@ -253,9 +410,9 @@
     </div>
 </div>
 <script>
-    $(function () {
-        $('._select').select22();
-    });
+    //$(function () {
+    //    $('._select').select2();
+    //});
 
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
