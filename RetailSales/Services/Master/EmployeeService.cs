@@ -84,11 +84,11 @@ namespace RetailSales.Services.Master
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
                  
-                    objCmd.Parameters.Add("@EmpId", SqlDbType.NVarChar).Value = cy.EmpId;
+                    //objCmd.Parameters.Add("@EmpId", SqlDbType.NVarChar).Value = cy.EmpId;
                     objCmd.Parameters.Add("@fname", SqlDbType.NVarChar).Value = cy.Fname;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
-                    objCmd.Parameters.Add("@branchid", SqlDbType.NVarChar).Value = cy.Branch;
-                    objCmd.Parameters.Add("@Departmentid", SqlDbType.NVarChar).Value = cy.Department;
+                    //objCmd.Parameters.Add("@branchid", SqlDbType.NVarChar).Value = cy.Branch;
+                    //objCmd.Parameters.Add("@Departmentid", SqlDbType.NVarChar).Value = cy.Department;
                     objCmd.Parameters.Add("@Desig", SqlDbType.NVarChar).Value = cy.Designation;
                     objCmd.Parameters.Add("@gender", SqlDbType.NVarChar).Value = cy.Gender;
                     objCmd.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar).Value = cy.Maritalstatus;

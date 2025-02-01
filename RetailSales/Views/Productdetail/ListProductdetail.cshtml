@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Productdetail
 
 @{
-    ViewData["Title"] = "Company ";
+    ViewData["Title"] = "Product Detail";
 
 }
 <partial name="JqxGridPartial" />
@@ -42,6 +42,7 @@
             datafields: [
                 { name: 'product', type: 'string' },
                 { name: 'varint', type: 'string' },
+                { name: 'varintnic', type: 'string' },
                 { name: 'uom', type: 'string' },
                 { name: 'rate', type: 'string' },
                 { name: 'editrow', type: 'string' },
@@ -84,6 +85,7 @@
 
                     { text: 'Product Name', filtertype: 'checkedlist', datafield: 'product', width: 200 },
                     { text: 'Variant', filtertype: 'input', datafield: 'varint', width: 200 },
+                    { text: 'Varintnic', filtertype: 'input', datafield: 'varintnic', width: 200 },
                     { text: 'UOM', filtertype: 'input', datafield: 'uom', width: 150 },
                     { text: 'Rate', filtertype: 'input', datafield: 'rate', width: 150 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
