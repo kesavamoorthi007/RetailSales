@@ -61,7 +61,7 @@ internal class Program
        
         builder.Services.TryAddSingleton<ILedgersServices, LedgersService>();
 
-
+        builder.Services.TryAddSingleton<IHSNcodeService, HSNcodeService>();
 
         // adding UOM interface and services containers
         //builder.Services.TryAddSingleton<IUOMService, UOMService>();
