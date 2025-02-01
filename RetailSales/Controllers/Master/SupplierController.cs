@@ -22,6 +22,11 @@ namespace RetailSales.Controllers.Master
         public IActionResult Supplier(String id)
         {
             Supplier ic = new Supplier();
+            
+            ic.Statelst = BindState();
+            ic.Citylst = BindCity();
+            ic.Categorylst = BindCategory();
+            
             if (id == null)
             {
 
@@ -38,6 +43,9 @@ namespace RetailSales.Controllers.Master
                     ic.Delivery = dt.Rows[0]["DEL_LEAD_TIME"].ToString();
                     ic.Days = dt.Rows[0]["CR_DAYS"].ToString();
                     ic.City = dt.Rows[0]["CITY"].ToString();
+                    ic.State = dt.Rows[0]["STATE"].ToString();
+                    ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                    ic.Gst = dt.Rows[0]["GST_NO"].ToString();
                     ic.Mobile = dt.Rows[0]["MOBILE_NO"].ToString();
                     ic.Landline = dt.Rows[0]["LANDLINE_NO"].ToString();
                     ic.Email = dt.Rows[0]["EMAIL_ID"].ToString();
@@ -88,6 +96,58 @@ namespace RetailSales.Controllers.Master
             return View();
         }
 
+        public List<SelectListItem> BindState()
+        {
+            try
+            {
+                DataTable dtDesg = SupplierService.GetState();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["STATE_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCity()
+        {
+            try
+            {
+                DataTable dtDesg = SupplierService.GetCity();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CITY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCategory()
+        {
+            try
+            {
+                DataTable dtDesg = SupplierService.GetCategory();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CATGRY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ActionResult MyListSuppliergrid(string strStatus)
         {
             List<ListSuppliergrid> Reg = new List<ListSuppliergrid>();
@@ -102,16 +162,12 @@ namespace RetailSales.Controllers.Master
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    //Edit = "<a><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
-                    //Delete = "<a><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
 
                     Edit = "<a href=Supplier?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
                     Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
-                {
-                    //Edit = "";
-                    //Delete = "<a><img src='../Images/reactive.png' alt='Reactive' width='20' /></a>";
+                {                   
 
                     Edit = "";
                     Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
@@ -122,7 +178,7 @@ namespace RetailSales.Controllers.Master
                     supp = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
                     category = dtUsers.Rows[i]["SUPP_CAT"].ToString(),
                     delivery = dtUsers.Rows[i]["DEL_LEAD_TIME"].ToString(),
-                    mobile = dtUsers.Rows[i]["MOBILE_NO"].ToString(),
+                    days = dtUsers.Rows[i]["CR_DAYS"].ToString(),
                     edit = Edit,
                     delete = Delete,
 

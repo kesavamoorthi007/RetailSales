@@ -9,7 +9,11 @@ namespace RetailSales.Interface.Master
         public DataTable GetAllSupplierGRID(string strStatus);
         string SupplierCRUD(Supplier cy);
         string StatusChange(string tag, string id);
-        //public string StatusDeleteMR(string tag, String id);
         string RemoveChange(string tag, string id);
+
+       
+        DataTable GetState();
+        DataTable GetCity();
+        DataTable GetCategory();
     }
 }
