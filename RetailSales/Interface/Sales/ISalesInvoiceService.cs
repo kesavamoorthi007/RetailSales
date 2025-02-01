@@ -11,5 +11,6 @@ namespace RetailSales.Interface.Sales
         string InvoicetoReturn(string id);
         DataTable GetItemDetails(string id);
         DataTable GetSalesInvoiceItem(string id);
+        DataTable GetVariant();
     }
 }

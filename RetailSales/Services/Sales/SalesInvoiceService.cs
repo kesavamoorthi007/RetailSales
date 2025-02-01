@@ -26,6 +26,16 @@ namespace RetailSales.Services.Sales
             adapter.Fill(dtt);
             return dtt;
         }
+        public DataTable GetVariant()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,VARIANT FROM ITEM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetItemDetails(string ItemId)
         {
             string SvSql = string.Empty;

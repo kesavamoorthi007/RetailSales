@@ -27,6 +27,7 @@ namespace RetailSales.Models
     {
         public string Isvalid { get; set; }
         public List<SelectListItem> Itemlst { get; set; }
+        public List<SelectListItem> Variantlst { get; set; }
         public string saveItemId { get; set; }
         public string Item { get; set; }
         public string Description { get; set; }

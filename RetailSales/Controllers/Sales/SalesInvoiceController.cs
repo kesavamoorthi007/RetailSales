@@ -30,6 +30,7 @@ namespace RetailSales.Controllers.Sales
                 {
                     tda = new SalesInvoiceItem();
                     tda.Itemlst = BindItem();
+                    tda.Variantlst = BindVariant();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -52,6 +53,12 @@ namespace RetailSales.Controllers.Sales
             model.Itemlst = BindItem();
             return Json(BindItem());
         }
+        //public JsonResult GetItemGrpJSON()
+        //{
+        //    SalesInvoiceItem model = new SalesInvoiceItem();
+        //    model.Itemlst = BindItem();
+        //    return Json(BindItem());
+        //}
         public List<SelectListItem> BindItem()
         {
             try
@@ -61,6 +68,23 @@ namespace RetailSales.Controllers.Sales
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
                     lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindVariant()
+        {
+            try
+            {
+                DataTable dtDesg = SalesInvoiceService.GetVariant();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
