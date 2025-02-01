@@ -73,7 +73,7 @@
                 pageable: true,
                 showfilterbar: true,
                 //showfilterrow: true,
-                theme: 'fresh',
+                //theme: 'fresh',
                 autorowheight: true,
                 filterbarmode: 'simple',
                 enablebrowserselection: true,
@@ -83,11 +83,12 @@
 
                 columns: [
 
-                    { text: 'DocId', filtertype: 'checkedlist', datafield: 'doc', width: 200 },
-                    { text: 'Doc Date', filtertype: 'input', datafield: 'date', width: 200 },
-                    { text: 'Invoice No', filtertype: 'input', datafield: 'invno', width: 120 },
-                    { text: 'Invoice Date', filtertype: 'input', datafield: 'invdate', width: 200 },
-                    { text: 'Customer', filtertype: 'input', datafield: 'customer', width: 100 },
+                    { text: 'DocId', filtertype: 'checkedlist', datafield: 'doc', width: 180 },
+                    { text: 'Doc Date', filtertype: 'input', datafield: 'date', width: 100 },
+                    { text: 'Customer', filtertype: 'input', datafield: 'customer', width: 250 },
+                    { text: 'Invoice No', filtertype: 'input', datafield: 'invno', width: 150 },
+                    { text: 'Invoice Date', filtertype: 'input', datafield: 'invdate', width: 100 },
+                    
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
