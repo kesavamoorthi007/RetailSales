@@ -69,6 +69,7 @@ internal class Program
 
         // adding Account Group interface and services containers
         builder.Services.TryAddSingleton<IAccountGroupService, AccountGroupService>();
+        builder.Services.TryAddSingleton<ITaxMasterService, TaxMasterService>();
 
 
 
