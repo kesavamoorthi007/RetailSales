@@ -116,9 +116,9 @@
                                                 <th> UOM </th>
                                                 <th> BIN No </th>
                                                 <th> Qty </th>
+                                                <th> Discount (%) </th>
                                                 <th>Rate </th>
                                                 <th>Amount </th>
-                                                <th> Discount (%) </th>
                                                 <th>Total Amount</th>
                                                 <th></th>
                                         </thead>
@@ -136,7 +136,8 @@
                                                             @Html.HiddenFor(o => o.SalesInvoiceLst[i].saveItemId)
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Description, new { @id = "txtDescription" + i, @class = "form-control", style = "width: 200px;", @readonly = "readonly" })
+                                                            @Html.DropDownListFor(o => o.SalesInvoiceLst[i].Description, Model.SalesInvoiceLst[i].Variantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDescription" + i, style = "width: 220px;", onchange = "changeItemDetails(this.value," + i + ")" })
+                                                            @Html.HiddenFor(o => o.SalesInvoiceLst[i].saveItemId)
                                                         </td>
                                                         <td>
 
@@ -149,17 +150,17 @@
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number" ,onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
-                                                        
+                                                        <td>
+                                                            @Html.HiddenFor(o => o.SalesInvoiceLst[i].Isvalid, new { @id = "Isvalid" + i })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Discount, new { @id = "txtDiscount" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "limit(this);", @onkeyup = "changeQty(this," + i + ")" })
+                                                        </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
                                                         </td>
-                                                        <td>
-                                                            @Html.HiddenFor(o => o.SalesInvoiceLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Discount, new { @id = "txtDiscount" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "limit(this);" , @onkeyup = "changeQty(this," + i + ")" })
-                                                        </td>
+                                                      
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Total, new { @id = "txtTotalAmount" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
                                                         </td>
@@ -437,6 +438,7 @@
     }
     function AddRow() {
         var opt = "";
+        var remopt = "";
         $.ajax({
             type: "POST",
             url: 'GetItemGrpJSON',
@@ -445,7 +447,18 @@
                 $.each(data, function () {
                     opt += "<option value=" + this.value + ">" + this.text + "</option>";
                 });
-                AppendRow(opt);
+                $.ajax({
+                    type: "POST",
+                    url: 'GetJSON',
+                    success: function (data) {
+
+                        $.each(data, function () {
+                            remopt += "<option value=" + this.value + ">" + this.text + "</option>";
+                        });
+
+                        AppendRow(opt, remopt);
+                    }
+                })
             }
         })
     }
