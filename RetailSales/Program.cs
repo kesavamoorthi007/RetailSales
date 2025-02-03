@@ -37,6 +37,7 @@ internal class Program
         builder.Services.TryAddSingleton<IProductdetailService, ProductdetailService>();
         builder.Services.TryAddSingleton<IPurchaseorderService, PurchaseorderService>();
         builder.Services.TryAddSingleton<ISalesReturnService, SalesReturnService>();
+        builder.Services.TryAddSingleton<ISequenceService, SequenceService>();
 
         // adding City interface and services containers
         builder.Services.TryAddSingleton<ICityService, CityServices>();
