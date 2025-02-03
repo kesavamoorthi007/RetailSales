@@ -10,6 +10,7 @@ namespace RetailSales.Interface.Master
         DataTable GetCategory();
         DataTable GetEditProductdetail(string id);
         DataTable GetUom();
+        DataTable GetHsn();
         string ProductdetailCRUD(Productdetail cy);
         string RemoveChange(string tag, string id);
         string StatusChange(string tag, string id);

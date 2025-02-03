@@ -8,9 +8,11 @@ namespace RetailSales.Models
         {
             this.Categorylst = new List<SelectListItem>();
             this.Uomlst = new List<SelectListItem>();
+            this.Hsnlst = new List<SelectListItem>();
         }
         public List<SelectListItem> Categorylst;
         public List<SelectListItem> Uomlst;
+        public List<SelectListItem> Hsnlst;
         public string Product { get; set; }
         public string Varint { get; set; }
         public string Varintnic { get; set; }
