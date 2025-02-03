@@ -1,0 +1,139 @@
+﻿@model RetailSales.Models.Location
+
+@{
+    ViewData["Title"] = "Location";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Location </strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("Location", "Location", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-6 control-label">Location Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Locationname, new { @id = "txtLocationname", @class = "form-control", @TabIndex = 1 })
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                           
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-6 control-label">Address<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                          
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label">Bin<label class="Mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+
+                                                @Html.RadioButtonFor(C => C.Bin, "Yes", new { @TabIndex = 2 })
+                                                <label id="mt-radio">Yes</label>&emsp;
+                                                @Html.RadioButtonFor(C => C.Bin, "No", new { @TabIndex = 3 })
+                                                <label id="mt-radio">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                             </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListLocation", "Location")'">Cancel</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("txtLocationname").value == "") {
+                isValid = false;
+                $(txtLocationname).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Location Name");
+                return false;
+            }
+            else {
+                $(txtLocationname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtAddress").value == "") {
+                isValid = false;
+                $(txtAddress).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Address");
+                return false;
+            }
+            else {
+                $(txtAddress).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>

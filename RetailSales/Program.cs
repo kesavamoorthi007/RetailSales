@@ -33,6 +33,7 @@ internal class Program
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
         builder.Services.TryAddSingleton<IEmployeeService, EmployeeService>();
         builder.Services.TryAddSingleton<ICustomerService, CustomerService>();
+        builder.Services.TryAddSingleton<ILocationService, LocationService>();
         builder.Services.TryAddSingleton<IProductdetailService, ProductdetailService>();
         builder.Services.TryAddSingleton<IPurchaseorderService, PurchaseorderService>();
         builder.Services.TryAddSingleton<ISalesReturnService, SalesReturnService>();

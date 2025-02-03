@@ -22,6 +22,7 @@ namespace RetailSales.Controllers.Master
 
             ic.Categorylst = BindCategory();
             ic.Uomlst = BindUOM();
+            ic.Hsnlst = BindHsn();
 
             if (id == null)
             {
@@ -110,6 +111,23 @@ namespace RetailSales.Controllers.Master
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
                     lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindHsn()
+        {
+            try
+            {
+                DataTable dtDesg = ProductdetailService.GetHsn();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["HSCODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
