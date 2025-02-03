@@ -8,6 +8,7 @@ namespace RetailSales.Interface.Master
         string BINCRUD(BIN cy);
         public DataTable GetAllBINGRID(string strStatus);
         DataTable GetEditBIN(string id);
+        DataTable GetLocation();
         string RemoveChange(string tag, string id);
         string StatusChange(string tag, string id);
     }

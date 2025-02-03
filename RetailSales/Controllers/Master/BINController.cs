@@ -5,6 +5,7 @@ using System.Data;
 using RetailSales.Models.Master;
 using RetailSales.Interface.Master;
 using RetailSales.Services.Master;
+using RetailSales.Services.Accounts;
 
 namespace RetailSales.Controllers.Master
 {
@@ -19,7 +20,7 @@ namespace RetailSales.Controllers.Master
         public IActionResult BIN(string id)
         {
             BIN ic = new BIN();
-            //ic.locationlist = BindLocation();
+            ic.locationlist = BindLocation();
 
             if (id == null)
             {
@@ -81,10 +82,23 @@ namespace RetailSales.Controllers.Master
             return View();
         }
 
-        //private List<SelectListItem> BindLocation()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public List<SelectListItem> BindLocation()
+        {
+            try
+            {
+                DataTable dtDesg = BINService.GetLocation();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i<dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public ActionResult MyListBINgrid(string strStatus)
         {

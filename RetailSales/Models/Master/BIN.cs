@@ -5,11 +5,11 @@ namespace RetailSales.Models.Master
     public class BIN
     {
 
-        //public BIN()
-        //{
-        //    this.locationlist = new List<SelectListItem>();
-        //}
-        //public List<SelectListItem> locationlist;
+        public BIN()
+        {
+            this.locationlist = new List<SelectListItem>();
+        }
+        public List<SelectListItem> locationlist;
 
         public string ID { get; set; }
         public string BINID { get; set; }
