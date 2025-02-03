@@ -28,6 +28,7 @@ namespace RetailSales.Controllers.Master
             }
             else
             {
+
                 DataTable dt = new DataTable();
                 dt = BINService.GetEditBIN(id);
                 if (dt.Rows.Count > 0)
