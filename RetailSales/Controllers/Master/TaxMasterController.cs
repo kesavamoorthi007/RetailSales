@@ -4,6 +4,7 @@ using RetailSales.Models.Master;
 using RetailSales.Services.Master;
 using System.Data;
 
+
 namespace RetailSales.Controllers.Master
 {
     public class TaxMasterController : Controller
