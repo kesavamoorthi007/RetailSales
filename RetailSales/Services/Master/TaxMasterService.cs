@@ -59,7 +59,7 @@ namespace RetailSales.Services.Master
                     objConn.Open();
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into TAXMASTER (TAX_NAME,PERCENTAGE,TAX_DESC) VALUES ('" + cy.TaxName + "','" + cy.Percentage + "','" + cy.Taxdescription + "')";
+                        svSQL = "Insert into TAXMASTER (TAX_NAME,PERCENTAGE,TAX_DESC,CREATED_ON) VALUES ('" + cy.TaxName + "','" + cy.Percentage + "','" + cy.Taxdescription + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
@@ -67,8 +67,9 @@ namespace RetailSales.Services.Master
                         //objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
                     }
                     else
+
                     {
-                        svSQL = "Update TAXMASTER set TAX_NAME = '" + cy.TaxName + "',PERCENTAGE = '" + cy.Percentage + "',TAX_DESC = '" + cy.Taxdescription + "' WHERE TAXMASTER.ID ='" + cy.ID + "'";
+                        svSQL = "Update TAXMASTER set TAX_NAME = '" + cy.TaxName + "',PERCENTAGE = '" + cy.Percentage + "',TAX_DESC = '" + cy.Taxdescription + "',UPDATED_ON ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE TAXMASTER.ID ='" + cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
