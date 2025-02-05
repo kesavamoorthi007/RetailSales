@@ -12,5 +12,9 @@ namespace RetailSales.Interface.Master
         string StatusDeleteMR(string tag, int id);
         string StatusChange(string tag, string id);
         string RemoveChange(string tag, string id);
+
+        DataTable GetCountry();
+        DataTable GetState();
+        DataTable GetCity();
     }
 }
