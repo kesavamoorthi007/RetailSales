@@ -127,7 +127,7 @@ namespace RetailSales.Controllers.Master
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["HSCODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["HSCODE"].ToString(), Value = dtDesg.Rows[i]["HSNMASTID"].ToString() });
                 }
                 return lstdesg;
             }

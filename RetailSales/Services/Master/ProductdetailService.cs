@@ -19,11 +19,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM,HSNMAST,RATE,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL WHERE PRO_DETAIL.IS_ACTIVE = 'Y' ORDER BY PRO_DETAIL.ID DESC";
+                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM,RATE,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL WHERE PRO_DETAIL.IS_ACTIVE = 'Y' ORDER BY PRO_DETAIL.ID DESC";
             }
             else
             {
-                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM,HSNMAST,RATE,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL WHERE PRO_DETAIL.IS_ACTIVE = 'N' ORDER BY PRO_DETAIL.ID DESC";
+                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM,RATE,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL WHERE PRO_DETAIL.IS_ACTIVE = 'N' ORDER BY PRO_DETAIL.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -127,7 +127,7 @@ namespace RetailSales.Services.Master
         public DataTable GetHsn()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,HSCODE FROM HSNMAST";
+            SvSql = "SELECT HSNMASTID,HSCODE FROM HSNMAST";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
