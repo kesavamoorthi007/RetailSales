@@ -93,7 +93,7 @@ namespace RetailSales.Controllers
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["TARIFFID"].ToString(), Value = dtDesg.Rows[i]["TARIFFMASTERID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["TAX_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
@@ -275,28 +275,7 @@ namespace RetailSales.Controllers
             });
 
         }
-        public ActionResult ListMyhsncodegrid(string PRID, string strStatus)
-        {
-            List<HsnRowList> EnqChkItem = new List<HsnRowList>();
-            DataTable dtEnq = new DataTable();
-            strStatus = strStatus == "" ? "Y" : strStatus;
-
-            dtEnq = HSNcodeService.Gethsnitem(PRID, strStatus);
-            for (int i = 0; i < dtEnq.Rows.Count; i++)
-            {
-                EnqChkItem.Add(new HsnRowList
-                {
-                    id = Convert.ToInt64(dtEnq.Rows[i]["HSNCODEID"].ToString()),
-                    tariff = dtEnq.Rows[i]["TARIFFID"].ToString(),
-
-                });
-            }
-
-            return Json(new
-            {
-                EnqChkItem
-            });
-        }
+        
 
        
     }

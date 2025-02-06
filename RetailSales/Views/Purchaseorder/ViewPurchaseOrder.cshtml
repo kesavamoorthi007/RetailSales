@@ -1,0 +1,203 @@
+﻿@model RetailSales.Models.Purchaseorder
+@{
+    ViewData["Title"] = "PurchasOrder";
+}
+<style>
+    .newwidth {
+        width: 120px;
+    }
+</style>
+
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("ViewPurchaseOrder", "Purchaseorder", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label">PO No<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.HiddenFor(C => C.ID)
+                                            @Html.DisplayFor(C => C.po)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">PO Date<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.Podate)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.Suppid)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label">Supplier Address<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.Supplieraddress)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.State)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.City)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Ref No<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.refno)
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Ref Date<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.refdate)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <table id="example7" class="display nowrap table  responsive nowrap table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Variant</th>
+                                                <th> UOM </th>
+                                                <th> HSN Code </th>
+                                                <th> Qty </th>
+                                                <th> Return Qty </th>
+                                                <th>Rate </th>
+                                                <th>Amount </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @{
+                                                int i = 0;
+
+                                                foreach (var item in Model.PurchaseorderLst.ToList())
+                                                {
+
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Varient)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].UOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Hsn)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Qty)</td>
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].ReturnQty, new { @id = "txtReturnQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", })
+                                                        </td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Rate)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Amount)</td>
+
+                                                    </tr>
+                                                    //i = i + 1;
+                                                    i++;
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Amount<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.Total)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
+                                        <div class="col-sm-10">
+                                            @Html.DisplayFor(C => C.Amountinwords)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-2 control-label">Narration<label class="Mandatory"></label></label>
+                                        <div class="col-sm-10">
+                                            @Html.DisplayFor(C => C.Narration)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Sales Return</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'">Cancel</button>
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

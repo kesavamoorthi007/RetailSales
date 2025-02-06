@@ -44,10 +44,10 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetCity()
+        public DataTable GetCity(string cityid)
         {
             string SvSql = string.Empty;
-            SvSql = "select CITY_NAME,ID from CITY";
+            SvSql = "select CITY_NAME,ID from CITY WHERE STATE_ID = '" + cityid + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

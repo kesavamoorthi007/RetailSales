@@ -13,7 +13,7 @@ namespace RetailSales.Interface.Master
 
        
         DataTable GetState();
-        DataTable GetCity();
+        DataTable GetCity(string cityid);
         DataTable GetCategory();
     }
 }

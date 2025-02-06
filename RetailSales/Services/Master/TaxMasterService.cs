@@ -53,6 +53,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                string Tax = cy.TaxName + " " + cy.Percentage + "%";
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
