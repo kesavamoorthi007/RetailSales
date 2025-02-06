@@ -24,7 +24,7 @@ namespace RetailSales.Controllers.Master
             Supplier ic = new Supplier();
             
             ic.Statelst = BindState();
-            ic.Citylst = BindCity();
+            ic.Citylst = BindCity("");
             ic.Categorylst = BindCategory();
             
             if (id == null)
@@ -95,7 +95,12 @@ namespace RetailSales.Controllers.Master
         {
             return View();
         }
-
+        public JsonResult GetCityJSON(string cityid)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindCity(cityid));
+        }
         public List<SelectListItem> BindState()
         {
             try
@@ -113,11 +118,11 @@ namespace RetailSales.Controllers.Master
                 throw ex;
             }
         }
-        public List<SelectListItem> BindCity()
+        public List<SelectListItem> BindCity(string cityid)
         {
             try
             {
-                DataTable dtDesg = SupplierService.GetCity();
+                DataTable dtDesg = SupplierService.GetCity(cityid);
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {

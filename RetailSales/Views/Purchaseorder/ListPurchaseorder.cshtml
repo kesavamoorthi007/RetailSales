@@ -40,10 +40,10 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'doc', type: 'string' },
-                { name: 'docdate', type: 'string' },
-                { name: 'company', type: 'string' },
-                { name: 'suppier', type: 'string' },
+                { name: 'po', type: 'string' },
+                { name: 'podate', type: 'string' },
+                { name: 'sup', type: 'string' },
+                { name: 'refno', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
@@ -82,10 +82,10 @@
 
                 columns: [
 
-                    { text: 'Doc No', filtertype: 'checkedlist', datafield: 'doc', width: 200 },
-                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 200 },
-                    { text: 'Company Name', filtertype: 'input', datafield: 'company', width: 120 },
-                    { text: 'Location', filtertype: 'input', datafield: 'suppier', width: 200 },
+                    { text: 'Po No', filtertype: 'checkedlist', datafield: 'po', width: 200 },
+                    { text: 'Po Date', filtertype: 'input', datafield: 'podate', width: 200 },
+                    { text: 'Supplier Name', filtertype: 'input', datafield: 'sup', width: 120 },
+                    { text: 'Ref No', filtertype: 'input', datafield: 'refno', width: 200 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]

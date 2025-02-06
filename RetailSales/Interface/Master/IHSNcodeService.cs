@@ -25,7 +25,7 @@ namespace RetailSales.Interface.Master
         string RemoveChange(string tag, string id);
 
         DataTable GetAllhsncode(string strStatus);
-        DataTable Gethsnitem(string PRID, string strStatus);
+       
         DataTable Gettariff();
 
     }
