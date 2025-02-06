@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.Master.TaxMaster;
+﻿@model RetailSales.Models.Sequence
 
 @{
-    ViewData["Title"] = "List Tax";
+    ViewData["Title"] = "Sequence";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>List Tax</strong> </li>
+            <li class="active"> <strong>Sequence</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "MyListTaxMaster",
+            url: "/Sequence/MyListSequencegrid",
             data: {
                 strstatus: ""
             },
@@ -40,10 +40,14 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'taxname', type: 'string' },
-                { name: 'percentage', type: 'string' },
-                { name: 'edit', type: 'string' },
-                { name: 'delete', type: 'string' },
+                { name: 'transection', type: 'string' },
+                { name: 'prefix', type: 'string' },
+                { name: 'suffix', type: 'string' },
+                { name: 'lnumber', type: 'string' },
+                { name: 'number', type: 'string' },
+                { name: 'editrow', type: 'string' },
+                { name: 'delrow', type: 'string' },
+
 
             ],
             id: 'id',
@@ -79,10 +83,13 @@
 
                 columns: [
 
-                    { text: 'Tax Name', filtertype: 'input', datafield: 'taxname', width: 200 },
-                    { text: 'Percentage', filtertype: 'input', datafield: 'percentage', width: 200 },
-                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
+                    { text: 'Transection', filtertype: 'checkedlist', datafield: 'transection', width: 200 },
+                    { text: 'Prefix', filtertype: 'checkedlist', datafield: 'prefix', width: 200 },
+                    { text: 'Suffix', filtertype: 'checkedlist', datafield: 'suffix', width: 200 },
+                    { text: 'Lnumber', filtertype: 'checkedlist', datafield: 'lnumber', width: 200 },
+                    { text: 'Number', filtertype: 'checkedlist', datafield: 'number', width: 200 },
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -109,14 +116,14 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2 ">
-                                @Html.DropDownListFor(n => n.ddlstatus, new SelectListItem[]
+                                @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
                                 { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
                                 new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("TaxMaster", "TaxMaster")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Tax</a>
+                                    <a href="@Url.Action("Sequence", "Sequence")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Sequence</a>
                                     <br>
                                 </div>
 
@@ -142,3 +149,5 @@
         return confirm("Are you sure you want to delete?");
     }
 </script>
+
+

@@ -85,7 +85,7 @@ namespace RetailSales.Services.Master
                     }
                  
                     //objCmd.Parameters.Add("@EmpId", SqlDbType.NVarChar).Value = cy.EmpId;
-                    objCmd.Parameters.Add("@fname", SqlDbType.NVarChar).Value = cy.Fname;
+                    objCmd.Parameters.Add("@fname", SqlDbType.NVarChar).Value = cy.Ename;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     //objCmd.Parameters.Add("@branchid", SqlDbType.NVarChar).Value = cy.Branch;
                     //objCmd.Parameters.Add("@Departmentid", SqlDbType.NVarChar).Value = cy.Department;
@@ -134,6 +134,36 @@ namespace RetailSales.Services.Master
         {
             string SvSql = string.Empty;
             SvSql = "SELECT ID,EMPLOYEE_ID,FNAME,GENDER,ADDRESS,CITY_ID,STATE_ID,COUNTRY_ID,MOBILE,EMAIL,REMARKS,APPROVED_BY,BRANCH,DEPARTMENT,MATERIALSTATUS,EMAILPERSONAL,DATEOFJOINING,DATEOFBIRTH,DATEOFLEAVING,DEGREE,EMPLOYEE_STATUS,REPORT_TO FROM Employee WHERE ID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCountry()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select COUNTRY_NAME,ID from COUNTRY";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetState()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select STATE_NAME,ID from STATE";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCity()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,ID from CITY";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
