@@ -8,14 +8,11 @@ using RetailSales.Services.Master;
 using RetailSales.Services.Sales;
 using RetailSales.Interface.Sales;
 
-using RetailSales.Controllers.Purchase;
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
 using RetailSales.Interface.Accounts;
 using RetailSales.Services.Accounts;
-
-
-
+using RetailSales;
 
 internal class Program
 {
@@ -52,6 +49,7 @@ internal class Program
 
 		builder.Services.TryAddSingleton<ISalesInvoiceService, SalesInvoiceService>();
 		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
+		builder.Services.TryAddSingleton<IStockTransferService, StockTransferService>();
 		builder.Services.TryAddSingleton<IBankaccountsService, BankaccountsService>();
 
         // adding Supplier interface and services containers
