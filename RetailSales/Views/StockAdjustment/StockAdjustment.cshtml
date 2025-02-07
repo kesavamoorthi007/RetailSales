@@ -139,11 +139,11 @@
                                                 {
                                                     <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Item, Model.StockAdjustmentList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeItemDetails(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Item, Model.StockAdjustmentList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeVariantDetails(this.value," + i + ")" })
                                                             @Html.HiddenFor(o => o.StockAdjustmentList[i].saveItemId)
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].ItemVariant, Model.StockAdjustmentList[i].ItemVariantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItemVariant" + i, style = "width: 220px;", onchange = "changeItemDetails(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Variant, Model.StockAdjustmentList[i].Variantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVariantItem(this.value," + i + ")" })
                                                             
                                                         </td>                                                        
                                                         <td>
@@ -195,203 +195,29 @@
     </div>
 </div>
 <script>
-
-    // i/p validation purpose
-    $('.form_time').datetimepicker({
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
-
-
-    $('.to_date').datetimepicker({
-        //   language:  'fr',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        endDate: new Date(),
-        forceParse: 0
-
-    });
-
-    $('.form_date').datetimepicker({
-        //   language:  'fr',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        endDate: new Date(),
-        forceParse: 0
-    }).on('changeDate', function (selected) {
-        var minDate = new Date(selected.date.valueOf());
-        $('.to_date').datetimepicker('setStartDate', minDate);
-
-    });
-
     $(function () {
         $('._select').select2();
     });
-
-    $(document).ready(function () {
-        $('#btnSave').click(function (e) {
-            var isValid = true;
-            if (document.getElementById("txtLocation").value == "") {
-                isValid = false;
-                $(txtLocation).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Location");
-                return false;
-            }
-            else {
-                $(txtLocation).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtDocId").value == "") {
-                isValid = false;
-                $(txtDocId).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Doc ID");
-                return false;
-            }
-            else {
-                $(txtDocId).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtDocDate").value == "") {
-                isValid = false;
-                $(txtDocDate).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Doc Date");
-                return false;
-            }
-            else {
-                $(txtDocDate).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtReason").value == "") {
-                isValid = false;
-                $(txtReason).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Valid Reason");
-                return false;
-            }
-            else {
-                $(txtReason).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            
-            var j = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-
-
-                    if ($(this).find('#ddlItem' + j.toString()).val() != "" || $(this).find('#ddlItem' + j.toString()).val() != "0") {
-
-                        if ($(this).find('#ddlItem' + j.toString()).val() == "" || $(this).find('#ddlItem' + j.toString()).val() == 0) {
-                            isValid = false;
-                            $(this).find('#ddlItem' + j.toString()).css({
-                                "border": "1px solid red",
-                                "background": "#FFCECE"
-                            });
-                            alert("Please Select Item");
-                            $(this).find('#ddlItem' + j.toString()).focus();
-                            return false;
-                        }
-                        else {
-                            $(this).find('#ddlItem' + j.toString()).css({
-                                "border": "",
-                                "background": ""
-                            });
-                        }
-                    }
-                    if ($(this).find('#ddlItemVariant' + j.toString()).val() != "" || $(this).find('#ddlItemVariant' + j.toString()).val() != "0") {
-
-                        if ($(this).find('#ddlItemVariant' + j.toString()).val() == "" || $(this).find('#ddlItemVariant' + j.toString()).val() == 0) {
-                            isValid = false;
-                            $(this).find('#ddlItemVariant' + j.toString()).css({
-                                "border": "1px solid red",
-                                "background": "#FFCECE"
-                            });
-                            alert("Please Select Item Variant");
-                            $(this).find('#ddlItemVariant' + j.toString()).focus();
-                            return false;
-                        }
-                        else {
-                            $(this).find('#ddlItemVariant' + j.toString()).css({
-                                "border": "",
-                                "background": ""
-                            });
-                        }
-                    }
-                    if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
-                        isValid = false;
-                        $(this).find('#txtQty' + j.toString()).css({
-                            "border": "1px solid red",
-                            "background": "#FFCECE"
-                        });
-
-                        alert("Please Enter Qty");
-                        $(this).find('#txtQty' + j.toString()).focus();
-                        return false;
-
-                    }
-                    else {
-                        $(this).find('#txtQty' + j.toString()).css({
-                            "border": "",
-                            "background": ""
-                        });
-                    }
-
-                }
-                j += 1;
+    function PopulateDropDown(dropDownId, list) {
+        //alert(list);
+        $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
             });
-
-            if (isValid == false)
-                e.preventDefault();
-        });
-
-    });
-
-    function changeItemDetails(ItemId, i) {
+        }
+        $(dropDownId).trigger("liszt:updated");
+    }
+    function changeVariantItem(ItemId, i) {
         $.ajax({
             url: 'GetItemDetails',
             data: { "ItemId": ItemId },
             type: "GET",
             success: function (result) {
                 document.getElementById("txtUnit" + i).value = result.unit;
-                document.getElementById("txtStockQty" + i).value = result.stockqty;
                 document.getElementById("txtRate" + i).value = result.rate;
-                
+
 
             },
             error: function () {
@@ -399,7 +225,22 @@
             }
         });
     }
-    function changeQty(_this, i) {
+     function changeVariantDetails(id, i) {
+        $.ajax({
+            url: 'GetVarientJSON',
+            type: "post",
+            data: { 'id': id },
+            cache: false,
+            success: function (response) {
+                PopulateDropDown("#ddlVarient" + i, response);
+            },
+            error: function () {
+                debugger;
+                alert("Please Select Product");
+            }
+        });
+    }
+     function changeQty(_this, i) {
         try {
 
             var j = 0;
@@ -407,7 +248,7 @@
             var tot = 0;
             var totamt = 0;
             var totamount = 0;
-            var disamount = 0;
+           
             var qty = document.getElementById("txtQty" + i).value;
             var up = document.getElementById("txtRate" + i).value;
 
@@ -422,11 +263,7 @@
             var tot = eval(qty) * eval(up);
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
 
-            var discount = document.getElementById("txtDiscount" + i).value;
-
-            var dis = (tot  / 100) * discount;
-            var discountedTotal = tot - dis;
-            document.getElementById("txtTotalAmount" + i).value = discountedTotal.toFixed(2);
+            
 
 
             $('tr.chkitemlst').each(function () {
@@ -437,31 +274,10 @@
 
                     tot += eval(sqty);
 
-                    var amt = $(this).find('#txtAmount' + j.toString()).val();
-                    if (amt == "")
-                        amt = 0;
-
-                    totamt += eval(amt);
-
-                    var tamt = $(this).find('#txtTotalAmount' + j.toString()).val();
-                    if (tamt == "")
-                        tamt = 0;
-
-                    totamount += eval(tamt);
-
-                    var damt = $(this).find('#txtDiscount' + j.toString()).val();
-                    if (damt == "")
-                        damt = 0;
-                        var distt = (amt  / 100) * damt;
-                        disamount += eval(distt);
 
                 }
                 j += 1;
             });
-
-            document.getElementById("txtTotDis").value = disamount.toFixed(2);
-            document.getElementById("txtTotal").value = totamt.toFixed(2);
-            document.getElementById("txtTot").value = totamount.toFixed(2);
 
         }
         catch (ex) {
@@ -507,25 +323,13 @@
             alert("Cannot delete all the rows.")
         }
     }
-    function PopulateDropDownn(dropDownId, list) {
-        //alert(list);
-        $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
-        if (list != null && list.length > 0) {
-            $(dropDownId).removeAttr("disabled");
-            $.each(list, function () {
-                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
-            });
-        }
-        $(dropDownId).trigger("liszt:updated");
-    }
-
-    function AppendRow(opt) {
+     function AppendRow(opt) {
         var index = $("#tbBooks").children("tr").length;
 
-        var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='StockAdjustmentList[" + index + "].ItemId' onchange = 'changeItemDetails(this.value," + index + ")'><option value=''>---Please select---</option>" + opt + "</select></td>";
+        var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='Itemlst[" + index + "].ItemId' onchange = 'changeVariantDetails(this.value," + index + ")'><option value=''>---Please select---</option>" + opt + "</select></td>";
 
-        var ItemVariant = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItemVariant" + index + "' name='StockAdjustmentList[" + index + "].ItemVariant' onchange = 'changeItemDetails(this.value," + index + ")'><option value=''>---Please select---</option>" + opt + "</select></td>";
-
+        var Variant = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlVarient" + index + "' name='Variantlst[" + index + "].Variant' onchange = 'changeVariantItem(this.value," + index + ")'><option value=''>--Please select--</option></select></td>";
+       
         var Unit = "<td><input class='form-control' id='txtUnit" + index + "' name='StockAdjustmentList[" + index + "].Unit'  style='width: 80px;' type='text'  readonly='True' /></td>";
 
         var StockQty = "<td><input class='form-control' id='txtStockQty" + index + "' name='StockAdjustmentList[" + index + "].StockQty'  style='width: 80px;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text' /></td>";
@@ -536,14 +340,14 @@
 
         var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='StockAdjustmentList[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 80px;' type='text' readonly='True' /></td>";
 
-       @*  var Discount = "<td><input class='form-control' id='txtDiscount" + index + "' name='SalesInvoiceLst[" + index + "].Discount'  type = 'number'  onkeydown = 'limit(this)' style='width: 80px;'  onkeyup = 'changeQty(this," + index + ")' /></td>";
+    @*  var Discount = "<td><input class='form-control' id='txtDiscount" + index + "' name='SalesInvoiceLst[" + index + "].Discount'  type = 'number'  onkeydown = 'limit(this)' style='width: 80px;'  onkeyup = 'changeQty(this," + index + ")' /></td>";
 
         var Total = "<td><input class='form-control' id='txtTotalAmount" + index + "' name='SalesInvoiceLst[" + index + "].Total'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 80px;' type='text' readonly='True' /></td>"; *@
 
         var removeCell = "<td><input id='Isvalid" + index + "' name='StockAdjustmentList[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='StockAdjustmentList.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + ItemVariant + Unit + StockQty + Qty + Rate + Amount + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Variant + Unit + StockQty + Qty + Rate + Amount + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
@@ -551,5 +355,4 @@
             $('._select').select2();
         });
     }
-
 </script>

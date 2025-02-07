@@ -30,7 +30,7 @@ namespace RetailSales.Controllers.Inventory
                 {
                     tda = new StockAdjustmentItem();
                     tda.Itemlst = BindItem();
-                    tda.ItemVariantlst = BindItemVariant();
+                    tda.Variantlst = BindVariant("");
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -44,6 +44,26 @@ namespace RetailSales.Controllers.Inventory
             return View(ic);
         }
 
+        private List<SelectListItem> BindVariant(string id)
+        {
+            try
+            {
+                DataTable dtDesg = StockAdjustmentService.GetVariant(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+
         public JsonResult GetItemGrpJSON()
         {
             StockAdjustmentItem model = new StockAdjustmentItem();
@@ -51,11 +71,11 @@ namespace RetailSales.Controllers.Inventory
             return Json(BindItem());
         }
 
-        public JsonResult GetItemVariantGrpJSON()
+        public JsonResult GetVarientJSON(string id)
         {
-            StockAdjustmentItem model = new StockAdjustmentItem();
-            model.ItemVariantlst = BindItemVariant();
-            return Json(BindItemVariant());
+            //StockAdjustmentItem model = new StockAdjustmentItem();
+            //model.ItemVariantlst = BindItemVariant();
+            return Json(BindVariant(id));
         }
 
         private List<SelectListItem> BindItem()
@@ -76,23 +96,7 @@ namespace RetailSales.Controllers.Inventory
             }
         }
 
-        private List<SelectListItem> BindItemVariant()
-        {
-            try
-            {
-                DataTable dtDesg = StockAdjustmentService.GetItemVariant();
-                List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-                }
-                return lstdesg;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         public ActionResult GetItemDetails(string ItemId)
         {
@@ -100,20 +104,18 @@ namespace RetailSales.Controllers.Inventory
             {
                 DataTable dt = new DataTable();
                 string unit = "";
-                string stockqty = "";                
                 string rate = "";
-                dt = StockAdjustmentService.GetItemDetails(ItemId);
+                dt = StockAdjustmentService.GetVariantDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
                 {
-                    unit = dt.Rows[0]["UOM"].ToString();
-                    stockqty = dt.Rows[0]["BALANCE_QUANTITY"].ToString();
-                    rate = dt.Rows[0]["UNIT_COST"].ToString();
+                    unit = dt.Rows[0]["UOM_CODE"].ToString();
+                    rate = dt.Rows[0]["RATE"].ToString();
 
 
                 }
 
-                var result = new { unit = unit, stockqty = stockqty, rate = rate };
+                var result = new { unit = unit, rate = rate };
                 return Json(result);
             }
             catch (Exception ex)
