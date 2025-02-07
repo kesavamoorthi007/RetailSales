@@ -12,6 +12,12 @@ using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
 using RetailSales.Interface.Accounts;
 using RetailSales.Services.Accounts;
+
+using RetailSales.Services.Inventory;
+using RetailSales.Interface.Inventory;
+
+
+
 using RetailSales;
 
 internal class Program
@@ -71,6 +77,8 @@ internal class Program
         builder.Services.TryAddSingleton<IBINService, BINService>();
         // adding Account Group interface and services containers
         builder.Services.TryAddSingleton<IAccountGroupService, AccountGroupService>();
+        // adding Stock Adjustment interface and services containers
+        builder.Services.TryAddSingleton<IStockAdjustmentService, StockAdjustmentService>();
         builder.Services.TryAddSingleton<ITaxMasterService, TaxMasterService>();
         builder.Services.TryAddSingleton<IRateService, RateService>();
 
