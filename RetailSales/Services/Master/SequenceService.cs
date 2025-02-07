@@ -1,42 +1,33 @@
-﻿using RetailSales.Interface.Master;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Nest;
+using RetailSales.Interface;
 using RetailSales.Models;
 using RetailSales.Models.Master;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
-namespace RetailSales.Services.Master
+namespace RetailSales.Services
 {
-    public class TaxMasterService : ITaxMasterService
+    public class SequenceService : ISequenceService
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public TaxMasterService(IConfiguration _configuratio)
+        public SequenceService(IConfiguration _configuratio)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
-
-        public DataTable GetEditTaxMaster(string id)
-        {
-            string SvSql = string.Empty;
-            SvSql = "SELECT ID,TAX_NAME,PERCENTAGE,TAX_DESC FROM TAXMASTER WHERE ID = '" + id + "' ";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-
-        public DataTable GetAllTaxMaster(string strStatus)
+        public DataTable GetAllSequenceGRID(string strStatus)
         {
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT TAXMASTER.ID,TAX_NAME,PERCENTAGE,TAXMASTER.IS_ACTIVE FROM TAXMASTER WHERE TAXMASTER.IS_ACTIVE = 'Y' ORDER BY TAXMASTER.ID DESC";
+                SvSql = "  SELECT ID,TRANSECTION_TYPE,PREFIX,SUFFIX,LAST_NUMBER,NUMBER_LENGTH,SEQUENCE.IS_ACTIVE FROM SEQUENCE WHERE SEQUENCE.IS_ACTIVE = 'Y' ORDER BY SEQUENCE.ID DESC";
             }
             else
             {
-                SvSql = "SELECT TAXMASTER.ID,TAX_NAME,PERCENTAGE,TAXMASTER.IS_ACTIVE FROM TAXMASTER WHERE TAXMASTER.IS_ACTIVE = 'N' ORDER BY TAXMASTER.ID DESC";
+                SvSql = "  SELECT ID,TRANSECTION_TYPE,PREFIX,SUFFIX,LAST_NUMBER,NUMBER_LENGTH,SEQUENCE.IS_ACTIVE FROM SEQUENCE WHERE SEQUENCE.IS_ACTIVE = 'N' ORDER BY SEQUENCE.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -45,37 +36,55 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
+        public DataTable GetEditSequence(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,TRANSECTION_TYPE,PREFIX,SUFFIX,LAST_NUMBER,NUMBER_LENGTH FROM SEQUENCE WHERE ID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
 
-        public string TaxMasterCRUD(TaxMaster cy)
+        public string SequenceCRUD(Sequence cy)
         {
             string msg = "";
             try
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-                string Tax = cy.TaxName + " " + cy.Percentage + "%";
+
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    objConn.Open();
+                    SqlCommand objCmd = new SqlCommand("sequecneProc", objConn);
+                    objCmd.CommandType = CommandType.StoredProcedure;
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into TAXMASTER (TAX_NAME,PERCENTAGE,TAX_DESC,CREATED_ON) VALUES ('" + cy.TaxName + "','" + cy.Percentage + "','" + cy.Taxdescription + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
-                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                        objCmds.ExecuteNonQuery();
-
-                        //StatementType = "Insert";
-                        //objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
+                        StatementType = "Insert";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
                     }
                     else
-
                     {
-                        svSQL = "Update TAXMASTER set TAX_NAME = '" + cy.TaxName + "',PERCENTAGE = '" + cy.Percentage + "',TAX_DESC = '" + cy.Taxdescription + "',UPDATED_ON ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE TAXMASTER.ID ='" + cy.ID + "'";
-                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                        objCmds.ExecuteNonQuery();
+                        StatementType = "Update";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
+                    }
+                    objCmd.Parameters.Add("@transectiontype", SqlDbType.NVarChar).Value = cy.Transection;
+                    objCmd.Parameters.Add("@prefix", SqlDbType.NVarChar).Value = cy.Prefix;
+                    objCmd.Parameters.Add("@suffix", SqlDbType.NVarChar).Value = cy.Suffix;
+                    objCmd.Parameters.Add("@lastnumber", SqlDbType.NVarChar).Value = cy.Lnumber;
+                    objCmd.Parameters.Add("@numberlength", SqlDbType.NVarChar).Value = cy.Number;
+                    objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
+                    try
+                    {
+                        objConn.Open();
+                        objCmd.ExecuteNonQuery();
 
-                        //StatementType = "Update";
-                        //objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
                     }
                     objConn.Close();
                 }
@@ -88,15 +97,15 @@ namespace RetailSales.Services.Master
 
             return msg;
         }
-
         public string StatusChange(string tag, string id)
         {
+
             try
             {
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE TAXMASTER SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE SEQUENCE SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -109,16 +118,17 @@ namespace RetailSales.Services.Master
                 throw ex;
             }
             return "";
-        }
 
+        }
         public string RemoveChange(string tag, string id)
         {
+
             try
             {
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE TAXMASTER SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE SEQUENCE SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -131,7 +141,8 @@ namespace RetailSales.Services.Master
                 throw ex;
             }
             return "";
-        }
 
+        }
     }
+
 }

@@ -40,7 +40,7 @@ namespace RetailSales.Services.Master
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    SqlCommand objCmd = new SqlCommand("HSNPROC", objConn);
+                    SqlCommand objCmd = new SqlCommand("HsnProc", objConn);
                     /*objCmd.Connection = objConn;
                     objCmd.CommandText = "HSNPROC";*/
 
@@ -56,67 +56,67 @@ namespace RetailSales.Services.Master
                         objCmd.Parameters.Add("ID", SqlDbType.NVarChar).Value = ss.ID;
                     }
 
-                    objCmd.Parameters.Add("HSCODE", SqlDbType.NVarChar).Value = ss.HCode;
-                    objCmd.Parameters.Add("HSDESC", SqlDbType.NVarChar).Value = ss.Dec;
-                    objCmd.Parameters.Add("GSTP", SqlDbType.NVarChar).Value = ss.Per;
+                    objCmd.Parameters.Add("@hcode", SqlDbType.NVarChar).Value = ss.HCode;
+                    objCmd.Parameters.Add("@dec", SqlDbType.NVarChar).Value = ss.Dec;
+                    objCmd.Parameters.Add("@per", SqlDbType.NVarChar).Value = ss.Per;
 
 
                     if (ss.ID == null)
                     {
                        
-                        objCmd.Parameters.Add("CREATED_ON", SqlDbType.Date).Value = DateTime.Now;
-                        objCmd.Parameters.Add("CREATED_BY", SqlDbType.NVarChar).Value = ss.createby;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = "createby";
                     }
                     else
                     {
-                        objCmd.Parameters.Add("UPDATED_ON", SqlDbType.Date).Value = DateTime.Now;
-                        objCmd.Parameters.Add("UPDATED_BY", SqlDbType.NVarChar).Value = ss.createby;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = "createby";
                     }
                    
                     objCmd.Parameters.Add("StatementType", SqlDbType.NVarChar).Value = StatementType;
-                    objCmd.Parameters.Add("OUTID", SqlDbType.Int).Direction = ParameterDirection.Output;
                     try
                     {
                         objConn.Open();
-                        objCmd.ExecuteNonQuery();
-                        Object Pid = objCmd.Parameters["OUTID"].Value;
+                        Object Pid = objCmd.ExecuteScalar();
+                        if (ss.ID != null)
+                        {
+                            Pid = ss.ID;
+                        }
+
                         if (ss.hsnlst != null)
                         {
-                            if (ss.ID != null)
+                            if (ss.ID == null)
                             {
-                                Pid = ss.ID;
-
-                                sv = "DELETE HSNROW WHERE HSNCODEID = '" + Pid + "' ";
-                                SqlCommand objCmdd = new SqlCommand(sv, objConn);
-                                objCmdd.ExecuteNonQuery();
-                            }
-                            foreach (HSNItem cp in ss.hsnlst)
-                            {
-                                if (cp.Isvalid == "Y" && cp.tariff != "0")
+                                foreach (HSNItem cp in ss.hsnlst)
                                 {
-                                    using (SqlConnection objConns = new SqlConnection(_connectionString))
+
+                                    if (cp.Isvalid == "Y")
                                     {
-                                        SqlCommand objCmds = new SqlCommand("HSNROWPROC", objConns);
-
-                                        StatementType = "Insert";
-                                        objCmds.Parameters.Add("ID", SqlDbType.NVarChar).Value = DBNull.Value;
-
-                                        objCmds.CommandType = CommandType.StoredProcedure;
-                                        objCmds.Parameters.Add("HSNCODEID", SqlDbType.NVarChar).Value = Pid;
-                                        objCmds.Parameters.Add("TARIFFID", SqlDbType.NVarChar).Value = cp.tariff;
-                                        objCmds.Parameters.Add("IS_ACTIVE", SqlDbType.NVarChar).Value = 'Y';
-
-
-                                        objCmds.Parameters.Add("StatementType", SqlDbType.NVarChar).Value = StatementType;
-                                        objConns.Open();
+                                        svSQL = "Insert into HSNROW (HSNCODEID,TARIFFID,IS_ACTIVE) VALUES ('" + Pid + "','" + cp.tariff + "','Y')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
-                                        objConns.Close();
                                     }
-
                                 }
-
                             }
+                            else
+                            {
+                                svSQL = "Delete HSNROW WHERE HSNCODEID='" + ss.ID + "'";
+                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                objCmdd.ExecuteNonQuery();
+                                foreach (HSNItem cp in ss.hsnlst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into HSNROW (HSNCODEID,TARIFFID,IS_ACTIVE) VALUES ('" + Pid + "','" + cp.tariff + "','Y')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
                         }
+
                     }
                     catch (Exception ex)
                     {
@@ -147,7 +147,7 @@ namespace RetailSales.Services.Master
         public DataTable Gettariff()
         {
             string SvSql = string.Empty;
-            SvSql = "select TARIFFID,TARIFFMASTERID from TARIFFMASTER";
+            SvSql = "select TAX_NAME,ID from TAXMASTER";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -184,80 +184,7 @@ namespace RetailSales.Services.Master
             return dtt;
         }
 
-        //public DataTable GetAllhsncode()
-        //{
-        //    string SvSql = string.Empty;
-
-
-        //    SvSql = "Select HSNCODEID,HSNCODE,DESCRIPTION from HSNCODE WHERE ISACTIVE='Y' Order by HSNCODEID DESC  ";
-
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
-        public DataTable Gethsnitem(string PRID, string strStatus)
-        {
-            string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
-            {
-                SvSql = "select TARIFFMASTER.TARIFFID,HSNROW.HSNCODEID from HSNROW  LEFT OUTER JOIN TARIFFMASTER ON TARIFFMASTER.TARIFFMASTERID = HSNROW.TARIFFID   Order by HSNCODEID DESC ";
-            }
-            else
-            {
-                SvSql = "select TARIFFMASTER.TARIFFID,HSNROW.HSNCODEID from HSNROW  LEFT OUTER JOIN TARIFFMASTER ON TARIFFMASTER.TARIFFMASTERID = HSNROW.TARIFFID   Order by HSNCODEID DESC ";
-
-            } 
-
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-
-        //public DataTable Gethsnitem(string PRID)
-        //{
-        //    string SvSql = string.Empty;
-        //    SvSql = "select TARIFFMASTER.TARIFFID,HSNROW.HSNCODEID from HSNROW  LEFT OUTER JOIN TARIFFMASTER ON TARIFFMASTER.TARIFFMASTERID = HSNROW.TARIFFID WHERE HSNROW.IS_ACTIVE ='Y' Order by HSNCODEID DESC ";
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
-
-        //public DataTable GetCGst()
-        //{
-        //    string SvSql = string.Empty;
-        //    SvSql = "select * from TAXMAST where TAX='CGST' AND STATUS= 'ACTIVE'  ";
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
-        //public DataTable GetSGst()
-        //{
-        //    string SvSql = string.Empty; n
-        //    SvSql = "select * from TAXMAST where TAX='SGST' AND STATUS= 'ACTIVE'  ";
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
-        //public DataTable GetIGst()
-        //{
-        //    string SvSql = string.Empty;
-        //    SvSql = "select * from TAXMAST where TAX='IGST' AND STATUS= 'ACTIVE'  ";
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
+       
 
         public string StatusChange(string tag, string id)
         {

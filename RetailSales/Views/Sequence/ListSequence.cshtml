@@ -1,13 +1,12 @@
-﻿@model RetailSales.Models.HSNcode
+﻿@model RetailSales.Models.Sequence
 
 @{
-    ViewData["Title"] = "Purchase Order";
+    ViewData["Title"] = "Sequence";
 
 }
 <partial name="JqxGridPartial" />
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
-
 
 <script type="text/javascript">
     @if (TempData["notice"] != null)
@@ -15,14 +14,15 @@
         @:alert('@TempData["notice"]');
     }
 </script>
-<div style="height:25px;"></div>
+
+
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>HSN Code </strong> </li>
+            <li class="active"> <strong>Sequence</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/HSNcode/Myhsncodegrid",
+            url: "/Sequence/MyListSequencegrid",
             data: {
                 strstatus: ""
             },
@@ -40,13 +40,13 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'id', type: 'string' },
-                { name: 'hcode', type: 'string' },
-                { name: 'dec', type: 'string' },
-                { name: 'per', type: 'string' },
+                { name: 'transection', type: 'string' },
+                { name: 'prefix', type: 'string' },
+                { name: 'suffix', type: 'string' },
+                { name: 'lnumber', type: 'string' },
+                { name: 'number', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
-
 
 
             ],
@@ -83,9 +83,11 @@
 
                 columns: [
 
-                    { text: 'HSN Code', filtertype: 'checkedlist', datafield: 'hcode', width: 200 },
-                    { text: 'Description', filtertype: 'input', datafield: 'dec', width: 200 },
-                    { text: 'Percentage', filtertype: 'input', datafield: 'per', width: 120 },
+                    { text: 'Transection', filtertype: 'checkedlist', datafield: 'transection', width: 200 },
+                    { text: 'Prefix', filtertype: 'checkedlist', datafield: 'prefix', width: 200 },
+                    { text: 'Suffix', filtertype: 'checkedlist', datafield: 'suffix', width: 200 },
+                    { text: 'Lnumber', filtertype: 'checkedlist', datafield: 'lnumber', width: 200 },
+                    { text: 'Number', filtertype: 'checkedlist', datafield: 'number', width: 200 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
@@ -115,13 +117,13 @@
                         <div class="row">
                             <div class="col-md-2 ">
                                 @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
-                                         { new SelectListItem() {Text = "Enabled", Value="Y"},
+                                { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
-                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
+                                new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("HSNcode", "HSNcode")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add HSN Code </a>
+                                    <a href="@Url.Action("Sequence", "Sequence")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Sequence</a>
                                     <br>
                                 </div>
 
@@ -142,6 +144,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    function ConfirmDelete() {
+        return confirm("Are you sure you want to delete?");
+    }
+</script>
 
 
