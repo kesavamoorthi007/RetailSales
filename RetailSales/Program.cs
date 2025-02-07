@@ -80,6 +80,8 @@ internal class Program
         // adding Stock Adjustment interface and services containers
         builder.Services.TryAddSingleton<IStockAdjustmentService, StockAdjustmentService>();
         builder.Services.TryAddSingleton<ITaxMasterService, TaxMasterService>();
+        builder.Services.TryAddSingleton<IDirectPurchaseService, DirectPurchaseService>();
+
         builder.Services.TryAddSingleton<IRateService, RateService>();
 
 

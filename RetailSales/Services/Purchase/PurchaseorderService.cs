@@ -22,11 +22,11 @@ namespace RetailSales.Services.Purchase
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT POBASICID,PONO,PODATE,SUP_NAME,REF_NO,IS_ACTIVE FROM POBASIC  WHERE POBASIC.IS_ACTIVE = 'Y' ORDER BY POBASIC.POBASICID DESC";
+                SvSql = "SELECT POBASICID,PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,REF_NO,POBASIC.IS_ACTIVE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME  WHERE POBASIC.IS_ACTIVE = 'Y' ORDER BY POBASIC.POBASICID DESC";
             }
             else
             {
-                SvSql = "SELECT POBASICID,PONO,PODATE,SUP_NAME,REF_NO,IS_ACTIVE FROM POBASIC  WHERE POBASIC.IS_ACTIVE = 'N' ORDER BY POBASIC.POBASICID DESC";
+                SvSql = "SELECT POBASICID,PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,REF_NO,POBASIC.IS_ACTIVE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME  WHERE POBASIC.IS_ACTIVE = 'N' ORDER BY POBASIC.POBASICID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -58,7 +58,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetSupplierDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE.STATE_NAME,CITY.CITY_NAME,SUPPLIER.ID from SUPPLIER  LEFT OUTER JOIN STATE ON STATE.ID=SUPPLIER.STATE LEFT OUTER JOIN CITY ON CITY.ID=SUPPLIER.CITY WHERE SUPPLIER.ID='" + ItemId + "'";
+            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE,CITY,SUPPLIER.ID from SUPPLIER  WHERE SUPPLIER.ID='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -68,7 +68,38 @@ namespace RetailSales.Services.Purchase
         public DataTable GetVarientDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "  SELECT PRODUCT_DESCRIPTION,UOM.UOM_CODE,HSN_CODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM WHERE PRO_DETAIL.ID='" + ItemId + "'";
+            SvSql = "    SELECT PRODUCT_DESCRIPTION,UOM.UOM_CODE,HSNMAST.HSCODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE\r\n WHERE PRO_DETAIL.ID='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+       
+        public DataTable GetHsn(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "select HSN_CODE,ID from PRO_DETAIL WHERE ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GethsnDetails(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "Select HSNMASTID from HSNMAST where HSCODE='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetgstDetails(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "select TAXMASTER.TAX_NAME from HSNROW LEFT OUTER JOIN TAXMASTER ON TAXMASTER.ID=HSNROW.TARIFFID where HSNCODEID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -78,7 +109,17 @@ namespace RetailSales.Services.Purchase
         public DataTable GetPurchasOrder(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT POBASICID,PONO,PODATE,SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,AMOUNT,AMTINWORDS,NARRATION,IS_ACTIVE FROM POBASIC WHERE POBASIC.POBASICID='" + id + "'";
+            SvSql = "SELECT PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,CONVERT(varchar, POBASIC.REF_DATE, 106) AS REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,CONVERT(varchar, POBASIC.LR_DATE, 106) AS LR_DATE,PLACE_DIS FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME WHERE POBASIC.POBASICID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetEditPurchasOrder(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUP_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,CONVERT(varchar, POBASIC.REF_DATE, 106) AS REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,CONVERT(varchar, POBASIC.LR_DATE, 106) AS LR_DATE,PLACE_DIS FROM POBASIC WHERE POBASIC.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -88,7 +129,17 @@ namespace RetailSales.Services.Purchase
         public DataTable GetPurchasOrderItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT POBASICID,ITEM,VARIANT,UOM,HSN,QTY,BIN_NO,RATE,AMOUNT FROM PODETAIL WHERE PODETAIL.POBASICID='" + id + "'";
+            SvSql = "SELECT POBASICID,PODETAILID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,HSN,PODETAIL.TARIFF,PODETAIL.UOM,QTY,PODETAIL.RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT\r\n WHERE PODETAIL.POBASICID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetEditPurchasOrderItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT POBASICID,PODETAILID,ITEM,VARIANT,HSN,PODETAIL.TARIFF,PODETAIL.UOM,QTY,PODETAIL.RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL  WHERE PODETAIL.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -103,16 +154,25 @@ namespace RetailSales.Services.Purchase
                 string StatementType = string.Empty;
                 string svSQL = "";
 
-                //if (cy.ID == null)
-                //{
+                if (cy.ID == null)
+                {
+                    datatrans = new DataTransactions(_connectionString);
 
-                //    svSQL = "SELECT Count(COMPANY_NAME) as cnt FROM COMPANY WHERE COMPANY_NAME = LTRIM(RTRIM('" + cy.CompanyName + "'))";
-                //    if (datatrans.GetDataId(svSQL) > 0)
-                //    {
-                //        msg = "Company Name Already Existed";
-                //        return msg;
-                //    }
-                //}
+
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'SI' AND IS_ACTIVE = 'Y'");
+                    string po = string.Format("{0}{1}{2}", "SI/", "24-25/" , (idc + 1).ToString());
+
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='SI' AND IS_ACTIVE ='Y'";
+                    try
+                    {
+                        datatrans.UpdateStatus(updateCMd);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    cy.po = po;
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("PoBasicProc", objConn);
@@ -128,17 +188,23 @@ namespace RetailSales.Services.Purchase
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
                     objCmd.Parameters.Add("@po", SqlDbType.NVarChar).Value = cy.po;
-                    objCmd.Parameters.Add("@podate", SqlDbType.NVarChar).Value = cy.Podate;
+                    objCmd.Parameters.AddWithValue("@podate", cy.Podate);
+                    //objCmd.Parameters.Add("@podate", SqlDbType.NVarChar).Value = cy.Podate;
                     objCmd.Parameters.Add("@Suppid", SqlDbType.Int).Value = cy.Suppid;
                     objCmd.Parameters.Add("@Supplieraddress", SqlDbType.NVarChar).Value = cy.Supplieraddress;
                     objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = "India";
                     objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = cy.State;
                     objCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = cy.City;
                     objCmd.Parameters.Add("@refno", SqlDbType.NVarChar).Value = cy.refno;
-                    objCmd.Parameters.Add("@refdate", SqlDbType.NVarChar).Value = cy.refdate;
-                    objCmd.Parameters.Add("@total", SqlDbType.Float).Value = cy.Total;
+                    objCmd.Parameters.AddWithValue("@refdate", cy.refdate);
+                    //objCmd.Parameters.Add("@refdate", SqlDbType.NVarChar).Value = cy.refdate;
                     objCmd.Parameters.Add("@amountinwords", SqlDbType.NVarChar).Value = cy.Amountinwords;
                     objCmd.Parameters.Add("@narration", SqlDbType.NVarChar).Value = cy.Narration;
+                    objCmd.Parameters.Add("@trans", SqlDbType.NVarChar).Value = cy.drivername;
+                    objCmd.Parameters.Add("@lrno", SqlDbType.NVarChar).Value = cy.LRno;
+                    //objCmd.Parameters.Add("@lrdate", SqlDbType.NVarChar).Value = cy.LRdate;
+                    objCmd.Parameters.AddWithValue("@lrdate", cy.LRdate);
+                    objCmd.Parameters.Add("@place", SqlDbType.NVarChar).Value = cy.dispatchname;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {
@@ -159,7 +225,7 @@ namespace RetailSales.Services.Purchase
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,UOM,HSN,QTY,BIN_NO,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Hsn + "','" + cp.Qty + "','145','" + cp.Amount + "')";
+                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -175,7 +241,7 @@ namespace RetailSales.Services.Purchase
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,UOM,HSN,QTY,BIN_NO,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Hsn + "','" + cp.Qty + "','145','" + cp.Amount + "')";
+                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
