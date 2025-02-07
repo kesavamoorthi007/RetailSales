@@ -161,6 +161,7 @@
                                 
                                 <ul class="sidebar-submenu">
                                     <li><a href="@Url.Action("ListPurchaseorder", "Purchaseorder")">Purchase Order</a></li>
+                                    <li><a href="@Url.Action("DirectPurchase", "DirectPurchase")">Direct Purchase</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
@@ -339,6 +340,34 @@
             });
 
 
+        </script>
+        <script type="text/javascript">
+            jQuery.browser = {};
+            (function () {
+                jQuery.browser.msie = false;
+                jQuery.browser.version = 0;
+                if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+                    jQuery.browser.msie = true;
+                    jQuery.browser.version = RegExp.$1;
+                }
+            })();
+
+
+            $(".chosen-select").chosen();
+            function isNumeric(keyCode) {
+                return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || (keyCode >= 96 && keyCode <= 105));
+            }
+
+            function isNumeric2(keyCode, e) {
+                //alert(keyCode);
+                return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || keyCode == 190 || keyCode == 110 || (keyCode >= 96 && keyCode <= 105));
+            }
+
+            function checkLength(el) {
+                if (el.value.length != 10) {
+                    alert("Length must be exactly 10 characters")
+                }
+            }
         </script>
         <!-- latest jquery-->
       <!-- Page Body Start-->
