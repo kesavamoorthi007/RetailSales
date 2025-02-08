@@ -72,4 +72,17 @@ namespace RetailSales.Models
         public string IGST { get; set; }
         public string Total { get; set; }
     }
+    public class ListDirectPurchasegrid
+    {
+        public string id { get; set; }
+        public string doc { get; set; }
+        public string docdate { get; set; }
+        public string sup { get; set; }
+        public string refno { get; set; }
+        public string net { get; set; }
+        public string editrow { get; set; }
+        public string view { get; set; }
+        public string delrow { get; set; }
+
+    }
 }

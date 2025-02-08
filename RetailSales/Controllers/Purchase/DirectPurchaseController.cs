@@ -29,10 +29,10 @@ namespace RetailSales.Controllers.Purchase
             ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
             DataTable dtv = datatrans.GetSequence("Sales");
-            //if (dtv.Rows.Count > 0)
-            //{
-            //    ic.po = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
-            //}
+            if (dtv.Rows.Count > 0)
+            {
+                ic.doc = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
 
             List<DirectPurchaseItem> TData = new List<DirectPurchaseItem>();
             DirectPurchaseItem tda = new DirectPurchaseItem();
@@ -50,8 +50,261 @@ namespace RetailSales.Controllers.Purchase
 
 
             }
+            else
+            {
+                DataTable dt = new DataTable();
+                dt = DirectPurchaseService.GetEditDirectPurchase(id);
+                if (dt.Rows.Count > 0)
+                {
+                    ic.doc = dt.Rows[0]["DOC_NO"].ToString();
+                    ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString();
+                    ic.Suplst = BindSupplier();
+                    ic.Suppid = dt.Rows[0]["SUP_NAME"].ToString();
+                    ic.Supplieraddress = dt.Rows[0]["ADDRESS"].ToString();
+                    ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                    ic.State = dt.Rows[0]["STATE"].ToString();
+                    ic.City = dt.Rows[0]["CITY"].ToString();
+                    ic.refno = dt.Rows[0]["REF_NO"].ToString();
+                    ic.refdate = dt.Rows[0]["REF_DATE"].ToString();
+                    ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
+                    ic.Narration = dt.Rows[0]["NARRATION"].ToString();
+                    ic.drivername = dt.Rows[0]["TRANS_SPORTER"].ToString();
+                    ic.LRno = dt.Rows[0]["LR_NO"].ToString();
+                    ic.LRdate = dt.Rows[0]["LR_DATE"].ToString();
+                    ic.dispatchname = dt.Rows[0]["PLACE_DIS"].ToString();
+                    ic.Gross = dt.Rows[0]["GROSS"].ToString();
+                    ic.Net = dt.Rows[0]["NET"].ToString();
+                    ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                    ic.CGST = dt.Rows[0]["CGST"].ToString();
+                    ic.SGST = dt.Rows[0]["SGST"].ToString();
+                    ic.IGST = dt.Rows[0]["IGST"].ToString();
+                    ic.Round = dt.Rows[0]["ROUNT_OFF"].ToString();
+                    ic.ID = id;
+
+                }
+                DataTable dtt = new DataTable();
+                dtt = DirectPurchaseService.GetEditDirectPurchaseItem(id);
+                if (dtt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    {
+                        tda = new DirectPurchaseItem();
+                        tda.Itemlst = BindItem();
+                        tda.Item = dtt.Rows[i]["ITEM"].ToString();
+                        tda.Varientlst = BindVarient(tda.Item);
+                        tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
+                        tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                        tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
+                        tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                        tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                        tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                        tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                        tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
+                        tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
+                        tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
+                        tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
+                        tda.CGST = dtt.Rows[i]["CGST"].ToString();
+                        tda.SGST = dtt.Rows[i]["SGST"].ToString();
+                        tda.IGST = dtt.Rows[i]["IGST"].ToString();
+                        tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
+                        tda.ID = id;
+                        TData.Add(tda);
+                    }
+                }
+
+            }
             ic.DirectPurchaseLst = TData;
             return View(ic);
+        }
+        [HttpPost]
+        public ActionResult DirectPurchase(DirectPurchase cy, string id)
+        {
+
+            try
+            {
+                cy.ID = id;
+                string Strout = DirectPurchaseService.DirectPurchaseCRUD(cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "DirectPurchase Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "DirectPurchase Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListDirectPurchase");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit DirectPurchase";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(cy);
+        }
+        public IActionResult ListDirectPurchase()
+        {
+            return View();
+        }
+        public ActionResult MyListDirectPurchasergrid(string strStatus)
+        {
+            List<ListDirectPurchasegrid> Reg = new List<ListDirectPurchasegrid>();
+            DataTable dtUsers = new DataTable();
+            strStatus = strStatus == "" ? "Y" : strStatus;
+            dtUsers = DirectPurchaseService.GetAllListDirectPurchase(strStatus);
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+
+
+                string EditRow = string.Empty;
+                string View = string.Empty;
+                string DeleteRow = string.Empty;
+
+                if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
+                {
+                    View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
+                    EditRow = "<a href=DirectPurchase?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                }
+                else
+                {
+                    View = "";
+                    EditRow = "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                }
+
+                Reg.Add(new ListDirectPurchasegrid
+                {
+                    id = dtUsers.Rows[i]["DPBASICID"].ToString(),
+                    doc = dtUsers.Rows[i]["DOC_NO"].ToString(),
+                    docdate = dtUsers.Rows[i]["DOC_DATE"].ToString(),
+                    sup = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
+                    refno = dtUsers.Rows[i]["REF_NO"].ToString(),
+                    net = dtUsers.Rows[i]["NET"].ToString(),
+                    editrow = EditRow,
+                    view = View,
+                    delrow = DeleteRow,
+
+                });
+            }
+
+            return Json(new
+            {
+                Reg
+            });
+
+        }
+        public IActionResult ViewDirectPurchase(string id)
+        {
+            DirectPurchase ic = new DirectPurchase();
+
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = DirectPurchaseService.GetDirectPurchase(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.doc = dt.Rows[0]["DOC_NO"].ToString();
+                ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString();
+                ic.Suppid = dt.Rows[0]["SUPPLIER_NAME"].ToString();
+                ic.Supplieraddress = dt.Rows[0]["ADDRESS"].ToString();
+                ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                ic.State = dt.Rows[0]["STATE"].ToString();
+                ic.City = dt.Rows[0]["CITY"].ToString();
+                ic.refno = dt.Rows[0]["REF_NO"].ToString();
+                ic.refdate = dt.Rows[0]["REF_DATE"].ToString();
+                ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
+                ic.Narration = dt.Rows[0]["NARRATION"].ToString();
+                ic.drivername = dt.Rows[0]["TRANS_SPORTER"].ToString();
+                ic.LRno = dt.Rows[0]["LR_NO"].ToString();
+                ic.LRdate = dt.Rows[0]["LR_DATE"].ToString();
+                ic.dispatchname = dt.Rows[0]["PLACE_DIS"].ToString();
+                ic.Gross = dt.Rows[0]["GROSS"].ToString();
+                ic.Net = dt.Rows[0]["NET"].ToString();
+                ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.CGST = dt.Rows[0]["CGST"].ToString();
+                ic.SGST = dt.Rows[0]["SGST"].ToString();
+                ic.IGST = dt.Rows[0]["IGST"].ToString();
+                ic.Round = dt.Rows[0]["ROUNT_OFF"].ToString();
+                ic.ID = id;
+
+            }
+
+            List<DirectPurchaseItem> TData = new List<DirectPurchaseItem>();
+            DirectPurchaseItem tda = new DirectPurchaseItem();
+
+
+
+
+            dtt = DirectPurchaseService.GetDirectPurchaseItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new DirectPurchaseItem();
+                    tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
+                    tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                    tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
+                    tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
+                    tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
+                    tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
+                    tda.CGST = dtt.Rows[i]["CGST"].ToString();
+                    tda.SGST = dtt.Rows[i]["SGST"].ToString();
+                    tda.IGST = dtt.Rows[i]["IGST"].ToString();
+                    tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
+                    tda.ID = id;
+                    TData.Add(tda);
+                }
+            }
+            ic.DirectPurchaseLst = TData;
+            return View(ic);
+        }
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = DirectPurchaseService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListDirectPurchase");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListDirectPurchase");
+            }
+        }
+        public ActionResult Remove(string tag, string id)
+        {
+
+            string flag = DirectPurchaseService.RemoveChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListDirectPurchase");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListDirectPurchase");
+            }
         }
         public List<SelectListItem> BindItem()
         {
