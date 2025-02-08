@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using RetailSales.Models;
+using System.Data;
 
 namespace RetailSales.Interface.Purchase
 {
@@ -11,5 +12,14 @@ namespace RetailSales.Interface.Purchase
         DataTable GetHsn(string id);
         DataTable GethsnDetails(string id);
         DataTable GetgstDetails(string id);
+        string DirectPurchaseCRUD(DirectPurchase cy);
+
+        DataTable GetAllListDirectPurchase(string strStatus);
+        string StatusChange(string tag, string id);
+        string RemoveChange(string tag, string id);
+        DataTable GetEditDirectPurchase(string id);
+        DataTable GetEditDirectPurchaseItem(string id);
+        DataTable GetDirectPurchase(string id);
+        DataTable GetDirectPurchaseItem(string id);
     }
 }

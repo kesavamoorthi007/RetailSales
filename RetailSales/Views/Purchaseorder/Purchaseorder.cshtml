@@ -61,7 +61,7 @@
                                     <div class="form-group">
                                          <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.Suppid, Model.Suplst, new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
+                                            @Html.DropDownListFor(C => C.Suppid, Model.Suplst," -- Please Select -- ", new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
                                         </div>
                                     </div>
                                 </div>
