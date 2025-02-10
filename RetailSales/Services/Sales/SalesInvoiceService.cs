@@ -1,4 +1,5 @@
-﻿using Irony.Parsing.Construction;
+﻿using Dapper;
+using Irony.Parsing.Construction;
 using RetailSales.Interface.Master;
 using RetailSales.Interface.Sales;
 using RetailSales.Models;
@@ -116,6 +117,21 @@ namespace RetailSales.Services.Sales
             }
 
             return msg;
+        }
+
+        public async Task<IEnumerable<ExinvBasicItem>> GetBasicItem(string id)
+        {
+            using (SqlConnection db = new SqlConnection(_connectionString))
+            {
+                return await db.QueryAsync<ExinvBasicItem>("SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, TOTAL, TOTAL_AMOUNT, IS_ACTIVE, STATUS FROM  SALES_INV  WHERE ID='" + id + "'", commandType: CommandType.Text);
+            }
+        }
+        public async Task<IEnumerable<ExinvDetailitem>> GetExinvItemDetail(string id)
+        {
+            using (SqlConnection db = new SqlConnection(_connectionString))
+            {
+                return await db.QueryAsync<ExinvDetailitem>(" SELECT ID, INV_ID, ITEM, VARIENT, UOM, BIN_NO, QTY, RATE, AMOUNT, DISCOUNT, TOTAL FROM SAL_INV_DEATILS where  INV_ID='" + id + "'", commandType: CommandType.Text);
+            }
         }
     }
 }
