@@ -8,14 +8,16 @@ using RetailSales.Services.Master;
 using RetailSales.Services.Sales;
 using RetailSales.Interface.Sales;
 
+ 
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
 using RetailSales.Interface.Accounts;
 using RetailSales.Services.Accounts;
 
+ 
 using RetailSales.Services.Inventory;
 using RetailSales.Interface.Inventory;
-
+ 
 
 
 using RetailSales;
@@ -123,6 +125,28 @@ internal class Program
     }
 
 
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+
+        }
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "defalut",
+                pattern: "{controller=Report}/(action=Print}/{id?})");
+        });
+
+    }
+    public void ConfigureServices(IServiceCollection service)
+    {
+        service.AddMvc();
+        service.AddOptions();
+       
+         
+    }
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
@@ -142,4 +166,5 @@ internal class Program
 
         // More configurations...
     }
+
 }

@@ -53,6 +53,35 @@ namespace RetailSales.Models
         public string editrow { get; set; }
         public string move { get; set; }
         public string delrow { get; set; }
+        public string report { get; set; }
+
+    }
+
+    public class ExinvBasicItem
+    {
+        public string INVOICE_NO { get; set; }
+        public string INV_DATE { get; set; }
+        public string CUSTOMER { get; set; }
+        public string ADDRESS { get; set; }
+      
+        public string STATE { get; set; }
+        public string GSTNO { get; set; }
+      
+        public double TOTAL { get; set; }
+        public double TOTAL_AMOUNT { get; set; }
+        public double DISCOUNT { get; set; }
+        
+    }
+    public class ExinvDetailitem
+    {
+        public string ITEM { get; set; }
+        public string VARIENT { get; set; }
+        public string UOM { get; set; }
+       
+        public double DISCOUNT { get; set; }
+        public double QTY { get; set; }
+        public double RATE { get; set; }
+        public double AMOUNT { get; set; }
 
     }
 }
