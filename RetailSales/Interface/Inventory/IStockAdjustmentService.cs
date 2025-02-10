@@ -7,5 +7,6 @@ namespace RetailSales.Interface.Inventory
         DataTable GetItem();
         DataTable GetVariantDetails(string id);
         DataTable GetVariant(string id);
+        DataTable GetLocation();
     }
 }

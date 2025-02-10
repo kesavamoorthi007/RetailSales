@@ -6,9 +6,9 @@ namespace RetailSales.Models.Inventory
     {
         public StockAdjustment()
         {
-            this.Locationlist = new List<SelectListItem>();
+            this.Locationlst = new List<SelectListItem>();
         }
-        public List<SelectListItem> Locationlist;
+        public List<SelectListItem> Locationlst;
 
         public string ID { get; set; }
         public string Location { get; set; }

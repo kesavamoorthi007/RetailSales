@@ -5,6 +5,7 @@ using RetailSales.Interface.Inventory;
 using RetailSales.Interface.Sales;
 using RetailSales.Models;
 using RetailSales.Models.Inventory;
+using RetailSales.Services.Master;
 using RetailSales.Services.Sales;
 
 namespace RetailSales.Controllers.Inventory
@@ -19,6 +20,7 @@ namespace RetailSales.Controllers.Inventory
         public IActionResult StockAdjustment(string id)
         {
             StockAdjustment ic = new StockAdjustment();
+            ic.Locationlst = BindLocation();
             ic.Type = "Addition";
             ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
 
@@ -42,6 +44,24 @@ namespace RetailSales.Controllers.Inventory
             }
             ic.StockAdjustmentList = TData;
             return View(ic);
+        }
+
+        private List<SelectListItem> BindLocation()
+        {
+            try
+            {
+                DataTable dtDesg = StockAdjustmentService.GetLocation();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private List<SelectListItem> BindVariant(string id)
