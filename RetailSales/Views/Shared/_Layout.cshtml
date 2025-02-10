@@ -33,7 +33,7 @@
    @*  <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/date-picker.css"> *@
     <link rel="stylesheet" type="text/css" href="~/assets/css/select2.min.css" />
 
-
+   @* <link rel="stylesheet" type="text/css" href="~/assets/css/Tab.css" />*@
    
 
    
@@ -161,6 +161,7 @@
                                 
                                 <ul class="sidebar-submenu">
                                     <li><a href="@Url.Action("ListPurchaseorder", "Purchaseorder")">Purchase Order</a></li>
+                                    <li><a href="@Url.Action("ListDirectPurchase", "DirectPurchase")">Direct Purchase</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-list">
@@ -174,6 +175,11 @@
                                 </a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="@Url.Action("ListStockinhand", "Stockinhand")">Stock In Hand</a></li>
+
+                                    <li><a href="@Url.Action("StockAdjustment", "StockAdjustment")">Stock Adjustment</a></li>
+
+                                    <li><a href="@Url.Action("StockTransfer", "StockTransfer")">Stock Transfer</a></li>
+
                                 </ul>
                             </li>
                             <li class="sidebar-list">
@@ -194,15 +200,16 @@
                             <li class="sidebar-list">
                                 <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
                                     <svg class="stroke-icon">
-                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
+                                        <use href="../assets/svg/icon-sprite.svg#profit"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
+                                        <use href="../assets/svg/icon-sprite.svg#profit"></use>
                                     </svg><span>Accounts</span>
                                 </a>
 
                                 <ul class="sidebar-submenu">
                                     <li><a href="@Url.Action("ListAccountGroup", "AccountGroup")">Account Group</a></li>
+                                    <li><a href="@Url.Action("ListLedgers", "Ledgers")">Ledger</a></li>
                                     <li><a href="@Url.Action("Bankaccounts", "Bankaccounts")">Bank Accounts</a></li>
                                     <li><a href="@Url.Action("DebitNote", "DebitNote")">Debit Note</a></li>
                                     <li><a href="@Url.Action("CreditNote", "CreditNote")">Credit Note</a></li>
@@ -224,7 +231,7 @@
                                 </a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="@Url.Action("ListProduct", "Product")">Product Category</a></li>
-                                    <li><a href="@Url.Action("Productdetail", "Productdetail")">Product</a></li>
+                                    <li><a href="@Url.Action("ListProductdetail", "Productdetail")">Product</a></li>
                                 </ul>
 
                             </li>
@@ -240,46 +247,41 @@
                                 <ul class="sidebar-submenu">
                                     @* <li><a href="@Url.Action("ListCountry", "Country")">Country</a></li> *@
 
-                                    <li><a href="@Url.Action("Supplier", "Supplier")">Supplier</a></li>
+                                    <li><a href="@Url.Action("ListSupplier", "Supplier")">Supplier</a></li>
+                                    <li><a href="@Url.Action("ListUOM", "UOM")">UOM</a></li>
+                                    <li><a href="@Url.Action("ListBIN", "BIN")">BIN</a></li>
                                     <li><a href="@Url.Action("ListEmployee", "Employee")">Employee</a></li>
+                                    <li><a href="@Url.Action("ListLocation", "Location")">Location</a></li>
+                                    <li><a href="@Url.Action("ListSequence", "Sequence")">Sequence</a></li>
                                   
-                                     <li><a href="@Url.Action("Customer", "Customer")">Customer</a></li>
-                                      <li><a href="@Url.Action("ListCCategory", "CCategory")">Customer Category</a></li>
+                                     <li><a href="@Url.Action("ListCustomer", "Customer")">Customer</a></li>
+                                      @* <li><a href="@Url.Action("ListCCategory", "CCategory")">Customer Category</a></li> *@
                                     <li><a href="@Url.Action("CGroup", "CGroup")">Customer Group</a></li>
-                                    <li><a href="@Url.Action("UOM", "UOM")">UOM</a></li>
 
                                     @* <li><a href="@Url.Action("Productdetail", "Productdetail")">Product Detail</a></li>
                                    *@
+
+
+                                    <li><a href="@Url.Action("ListCompany", "Company")">Company</a></li>
+                                    <li><a href="@Url.Action("TaxMaster", "TaxMaster")">Tax</a></li>
+                                    <li><a href="@Url.Action("ListHSNcode", "HSNcode")">HSN Code</a></li>
+                                    <li><a href="@Url.Action("ListState", "State")">State</a></li>
+                                    <li><a href="@Url.Action("ListCity", "City")">City</a></li>
 
                                      
 
                                     @* <li><a href="@Url.Action("ListState", "State")">State</a></li>
                                     <li><a href="@Url.Action("ListCity", "City")">City</a></li>     *@
 
-                                     <li><a href="@Url.Action("ListCompany", "Company")">Company</a></li> 
+                                     <li><a href="@Url.Action("ListCompany", "Company")">Company</a></li>
+                                    <li><a href="@Url.Action("ListTaxMaster", "TaxMaster")">Tax</a></li>
+                                    <li><a href="@Url.Action("Rate", "Rate")">Rate</a></li>
                                    
+
 
                                 </ul>
                                 
                             </li>
-
-
-
-                                <ul class="sidebar-submenu">
-                                    <li><a href="@Url.Action("AccountGroup", "AccountGroup")">Account Group</a></li>
-                                    <li><a href="@Url.Action("ListLedgers", "Ledgers")">Ledgers</a></li>
-                                </ul>
-                            </li>
-
-                             
-                           
-
-
-                            
-
-                          
-
-
 
                         </ul>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
@@ -287,26 +289,13 @@
                 </nav>
             </div>
         </div>
-        <script type="text/javascript">
-            $('.form_date').datetimepicker({
-                //language:  'fr',
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                forceParse: 0,
-                showMeridian: 1
-            });
-
-
-        </script>
-          <!-- latest jquery-->
        
+
 
     <script src="~/assets/js/jquery.min.js"></script>
         <script src="~/assets/js/select2.min.js"></script>
     <!-- Bootstrap js-->
+        <script src="~/assets/js/bootstrap.min.js"></script>
     <script src="~/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
     <!-- feather icon js-->
     <script src="~/assets/js/icons/feather-icon/feather.min.js"></script>
@@ -343,6 +332,50 @@
 
         <script type="text/javascript" src="~/assets/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
         <script type="text/javascript" src="~/assets/js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+
+        <script type="text/javascript">
+            $('.form_date').datetimepicker({
+                //language:  'fr',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
+
+
+        </script>
+        <script type="text/javascript">
+            jQuery.browser = {};
+            (function () {
+                jQuery.browser.msie = false;
+                jQuery.browser.version = 0;
+                if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+                    jQuery.browser.msie = true;
+                    jQuery.browser.version = RegExp.$1;
+                }
+            })();
+
+
+            $(".chosen-select").chosen();
+            function isNumeric(keyCode) {
+                return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || (keyCode >= 96 && keyCode <= 105));
+            }
+
+            function isNumeric2(keyCode, e) {
+                //alert(keyCode);
+                return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || keyCode == 190 || keyCode == 110 || (keyCode >= 96 && keyCode <= 105));
+            }
+
+            function checkLength(el) {
+                if (el.value.length != 10) {
+                    alert("Length must be exactly 10 characters")
+                }
+            }
+        </script>
+        <!-- latest jquery-->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
 
@@ -360,7 +393,7 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-12 footer-copyright text-center">
-                <p class="mb-0"> © Copyright 2024 iCanD All Rights Reserved </p>
+                <p class="mb-0"> © Copyright 2025 iCanD All Rights Reserved </p>
               </div>
             </div>
           </div>

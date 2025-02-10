@@ -8,7 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+ 
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+ 
+    <Compile Remove="Views\Bankaccount\**" />
+    <Content Remove="Views\Bankaccount\**" />
+    <EmbeddedResource Remove="Views\Bankaccount\**" />
+    <None Remove="Views\Bankaccount\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+ 
     <PackageReference Include="ClosedXML" Version="0.102.2" />
     <PackageReference Include="Dapper" Version="2.0.143" />
     <PackageReference Include="jsTree" Version="3.1.1.2" />
@@ -24,6 +34,7 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
+ 
   <ItemGroup>
     <Folder Include="Views\Bankaccount\" />
   </ItemGroup>
@@ -58,4 +69,5 @@
     </None>
   </ItemGroup>
 
+ 
 </Project>

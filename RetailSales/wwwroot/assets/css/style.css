@@ -3681,10 +3681,10 @@ table tbody .border-bottom-warning td {
     1.2 Typography CSS start
 ==========================**/
 body {
-  font-size: 14px;
-  overflow-x: hidden;
-  font-family: "Montserrat", sans-serif;
-  color: #051A1A;
+    font-size: 14px;
+    overflow-x: hidden;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #051A1A;
 }
 
 h1,
@@ -3745,7 +3745,7 @@ ul {
 }
 
 a {
-  font-size: 0.875rem;
+  font-size: 0.915rem;
   text-decoration: none;
   color: var(--theme-deafult);
 }
@@ -3830,7 +3830,7 @@ input:focus {
 
 label {
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .media-widgets .media-body {
@@ -13605,7 +13605,7 @@ tbody tr:last-child {
 }
 .table th,
 .table td {
-  padding: 0.75rem;
+  padding: 0.39rem;
 }
 .table.table-primary th {
   color: #fff;
@@ -13613,10 +13613,12 @@ tbody tr:last-child {
 .table thead.bg-primary tr th {
   color: #fff;
 }
-.table th {
-  color: #051A1A;
-  font-weight: 500;
-}
+    .table th {
+        color: #FFFFFF;
+        font-weight: 500;
+        /* text-align: center; */
+        background-color: #71797E;
+    }
 .table th.f-light {
   color: var(--chart-text-color);
   opacity: 0.8;
@@ -27965,10 +27967,10 @@ footer.blockquote-footer {
 }
 
 .select2-container .select2-selection--single {
-  border-radius: 0.25rem !important;
-  border-color: #efefef;
-  height: 47px !important;
-  padding: 10px;
+    border-radius: 0.25rem !important;
+    border-color: #c3e1ad;
+    height: 47px !important;
+    padding: 10px;
 }
 
 .job-pagination {
@@ -49692,3 +49694,4 @@ html[dir=rtl] body.dark-only .page-wrapper .page-body-wrapper .page-body .card:n
   5.9 Box-layout CSS Ends
 ==========================**/
 /*# sourceMappingURL=style.css.map */
+

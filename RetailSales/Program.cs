@@ -8,14 +8,19 @@ using RetailSales.Services.Master;
 using RetailSales.Services.Sales;
 using RetailSales.Interface.Sales;
 
-  
+ 
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
 using RetailSales.Interface.Accounts;
 using RetailSales.Services.Accounts;
 
  
+using RetailSales.Services.Inventory;
+using RetailSales.Interface.Inventory;
+ 
 
+
+using RetailSales;
 
 internal class Program
 {
@@ -33,20 +38,30 @@ internal class Program
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
         builder.Services.TryAddSingleton<IEmployeeService, EmployeeService>();
         builder.Services.TryAddSingleton<ICustomerService, CustomerService>();
+        builder.Services.TryAddSingleton<ILocationService, LocationService>();
         builder.Services.TryAddSingleton<IProductdetailService, ProductdetailService>();
         builder.Services.TryAddSingleton<IPurchaseorderService, PurchaseorderService>();
         builder.Services.TryAddSingleton<ISalesReturnService, SalesReturnService>();
+        builder.Services.TryAddSingleton<ISequenceService, SequenceService>();
+
+        // adding City interface and services containers
         builder.Services.TryAddSingleton<ICityService, CityServices>();
         builder.Services.TryAddSingleton<IStateService, StateService>();
 		builder.Services.TryAddSingleton<ICCategoryService, CCategoryService>();
 		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
         builder.Services.TryAddSingleton<IProductService, ProductService>();
 
-		builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
+        
+        builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
+
+
 		builder.Services.TryAddSingleton<ISalesInvoiceService, SalesInvoiceService>();
 		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
+		builder.Services.TryAddSingleton<IStockTransferService, StockTransferService>();
 		builder.Services.TryAddSingleton<IBankaccountsService, BankaccountsService>();
-		builder.Services.TryAddSingleton<ISupplierService, SupplierService>();
+
+        // adding Supplier interface and services containers
+        builder.Services.TryAddSingleton<ISupplierService, SupplierService>();
 		builder.Services.TryAddSingleton<IProductService, ProductService>();
 		builder.Services.TryAddSingleton<IDebitNoteService, DebitNoteService>();
 		builder.Services.TryAddSingleton<ICreditNoteService, CreditNoteService>();
@@ -56,14 +71,20 @@ internal class Program
        
         builder.Services.TryAddSingleton<ILedgersServices, LedgersService>();
 
-
+        builder.Services.TryAddSingleton<IHSNcodeService, HSNcodeService>();
 
         // adding UOM interface and services containers
-        //builder.Services.TryAddSingleton<IUOMService, UOMService>();
-
-
+        builder.Services.TryAddSingleton<IUOMService, UOMService>();
+        // adding BIN interface and services containers
+        builder.Services.TryAddSingleton<IBINService, BINService>();
         // adding Account Group interface and services containers
         builder.Services.TryAddSingleton<IAccountGroupService, AccountGroupService>();
+        // adding Stock Adjustment interface and services containers
+        builder.Services.TryAddSingleton<IStockAdjustmentService, StockAdjustmentService>();
+        builder.Services.TryAddSingleton<ITaxMasterService, TaxMasterService>();
+        builder.Services.TryAddSingleton<IDirectPurchaseService, DirectPurchaseService>();
+
+        builder.Services.TryAddSingleton<IRateService, RateService>();
 
 
 

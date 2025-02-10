@@ -9,6 +9,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Net;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RetailSales.Controllers.Master
 {
@@ -25,7 +26,11 @@ namespace RetailSales.Controllers.Master
         public IActionResult Employee(string id)
         {
             Employee ic = new Employee();
-
+            ic.Gender = "Male";
+            //ic.Materialstatuslst = BindMaterialstatus();
+            ic.Countrylst = BindCountry();
+            ic.Statelst = BindState();
+            ic.Citylst = BindCity();
             if (id == null)
             {
 
@@ -38,7 +43,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.EmpId = dt.Rows[0]["EMPLOYEE_ID"].ToString();
-                    ic.Fname = dt.Rows[0]["FNAME"].ToString();
+                    ic.Ename = dt.Rows[0]["FNAME"].ToString();
                     ic.Gender = dt.Rows[0]["GENDER"].ToString();
                     ic.Address = dt.Rows[0]["ADDRESS"].ToString();
                     ic.Cityid = dt.Rows[0]["CITY_ID"].ToString();
@@ -47,7 +52,7 @@ namespace RetailSales.Controllers.Master
                     ic.mobile = dt.Rows[0]["MOBILE"].ToString();
                     ic.Email = dt.Rows[0]["EMAIL"].ToString();
                     ic.Remark = dt.Rows[0]["REMARKS"].ToString();
-                    ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString();
+                    /*ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString()*/;
                     ic.Designation = dt.Rows[0]["DESIGNATION"].ToString();
                     ic.Branch = dt.Rows[0]["BRANCH"].ToString();
                     ic.Department = dt.Rows[0]["DEPARTMENT"].ToString();
@@ -102,6 +107,73 @@ namespace RetailSales.Controllers.Master
 
             return View(Ic);
         }
+        public List<SelectListItem> BindCountry()
+        {
+            try
+            {
+                DataTable dtDesg = EmployeeService.GetCountry();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["COUNTRY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindState()
+        {
+            try
+            {
+                DataTable dtDesg = EmployeeService.GetState();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["STATE_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCity()
+        {
+            try
+            {
+                DataTable dtDesg = EmployeeService.GetCity();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CITY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //public List<SelectListItem> BindMaterialstatus()
+        //{
+        //    try
+        //    {
+        //        List<SelectListItem> lstdesg = new List<SelectListItem>();
+        //        lstdesg.Add(new SelectListItem() { Text = "MARRIED", Value = "1" });
+        //        lstdesg.Add(new SelectListItem() { Text = "UNMARRIED", Value = "2" });
+                
+
+        //        return lstdesg;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
         public IActionResult ListEmployee()
         {
             return View();
@@ -131,9 +203,9 @@ namespace RetailSales.Controllers.Master
                 Reg.Add(new Employeegrid
                 {
                 id = dtUsers.Rows[i]["ID"].ToString(),
-                empid = dtUsers.Rows[i]["EMPLOYEE_ID"].ToString(),
-                fname = dtUsers.Rows[i]["FNAME"].ToString(),
-                gender = dtUsers.Rows[i]["GENDER"].ToString(),
+                    empid = dtUsers.Rows[i]["EMPLOYEE_ID"].ToString(),
+                    ename = dtUsers.Rows[i]["FNAME"].ToString(),
+                    gender = dtUsers.Rows[i]["GENDER"].ToString(),
                     //address = dtUsers.Rows[i]["ADDRESS"].ToString(),
                     //cityid = dtUsers.Rows[i]["CITY_ID"].ToString(),
                     //stateid = dtUsers.Rows[i]["STATE_ID"].ToString(),

@@ -1,0 +1,145 @@
+﻿@model RetailSales.Models.Master.BIN
+
+@{
+    ViewData["Title"] = "BIN";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>BIN</strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("BIN", "BIN", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">BIN ID<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+
+                                            @Html.TextBoxFor(C => C.BINID, new { @id = "txtBINID", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Location<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.Location, Model.locationlist, "---Plaese Select---", new { @id = "txtlocation", @class = "form-control _select", @TabIndex = 1 })<br />
+                                            @* @Html.TextBoxFor(C => C.Location, new { @id = "txtlocation", @class = "form-control", @TabIndex = 1 })<br /> *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Description</label> <br />
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9">
+                                    <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
+
+
+                                    <button type="reset" class="btn btn-warning" type="button" id="btnReset" onclick="location.href='@Url.Action("BIN", "BIN")'">Reset</button>
+                                    <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListBIN", "BIN")'">Cancel</button>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("txtBINID").value == "") {
+                isValid = false;
+                $(txtBINID).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter BIN ID");
+                return false;
+            }
+            else {
+                $(txtBINID).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtlocation").value == "" ) {
+                isValid = false;
+                $(txtlocation).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Location");
+                return false;
+            }
+            else {
+                $(txtlocation).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>

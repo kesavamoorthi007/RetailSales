@@ -45,6 +45,7 @@ namespace RetailSales.Controllers.Sales
             ic.SalesInvoiceLst = TData;
             return View(ic);
         }
+
         public IActionResult ListSalesInvoice()
         {
             return View();
