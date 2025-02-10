@@ -177,6 +177,7 @@ namespace RetailSales.Controllers.Purchase
                 ic.dispatchname = dt.Rows[0]["PLACE_DIS"].ToString();
                 ic.ID = id;
 
+
             }
 
             List<PurchaseorderItem> TData = new List<PurchaseorderItem>();
