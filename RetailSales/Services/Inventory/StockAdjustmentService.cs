@@ -28,6 +28,17 @@ namespace RetailSales.Services.Inventory
             return dtt;
         }
 
+        public DataTable GetLocation()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select LOCATION_NAME,ID from LOCATION";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
