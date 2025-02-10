@@ -55,7 +55,7 @@ namespace RetailSales.Models
         public DataTable GetSequence(string vtype)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT  TRIM(PREFIX) AS PREFIX,SUFFIX,LAST_NUMBER +1 AS last FROM SEQUENCE  WHERE TRANSECTION_TYPE='" + vtype + "' AND IS_ACTIVE='Y'";
+            SvSql = "SELECT  PREFIX AS PREFIX,SUFFIX,LAST_NUMBER +1 AS last FROM SEQUENCE  WHERE TRANSECTION_TYPE='" + vtype + "' AND IS_ACTIVE='Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
