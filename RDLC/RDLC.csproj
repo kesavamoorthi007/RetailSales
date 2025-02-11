@@ -1,0 +1,113 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>c:\program files\microsoft visual studio\2022\professional\common7\ide\extensions\lcvgzgtb.juz\Assemblies\DataProviders\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DataSet1.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="DataSet3.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataSet3.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="GRNBasic.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GRNBasic.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="GRNDetail.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GRNDetail.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Qrcode.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Qrcode.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="QuoImport.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QuoImport.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="QuotationImport.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QuotationImport.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="ReceiptDataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReceiptDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="RetDataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RetDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Returns.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Returns.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="DataSet3.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet3.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="GRNBasic.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GRNBasic.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="GRNDetail.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GRNDetail.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Qrcode.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Qrcode.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="QuoImport.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>QuoImport.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="QuotationImport.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>QuotationImport.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="ReceiptDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReceiptDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="RetDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RetDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Returns.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Returns.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

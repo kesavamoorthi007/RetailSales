@@ -34,8 +34,34 @@ namespace RetailSales.Models
             }
             return _Dt;
         }
+        public bool UpdateStatus(string query)
+        {
+            bool Saved = true;
+            try
+            {
+                SqlConnection objConn = new SqlConnection(_connectionString);
+                SqlCommand objCmd = new SqlCommand(query, objConn);
+                objCmd.Connection.Open();
+                objCmd.ExecuteNonQuery();
+                objCmd.Connection.Close();
+            }
+            catch (Exception ex)
+            {
 
-      
+                Saved = false;
+            }
+            return Saved;
+        }
+        public DataTable GetSequence(string vtype)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT  PREFIX AS PREFIX,SUFFIX,LAST_NUMBER +1 AS last FROM SEQUENCE  WHERE TRANSECTION_TYPE='" + vtype + "' AND IS_ACTIVE='Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public int GetFinancialYear(DateTime Date1)
         {
             if (Date1.Year > 2000)

@@ -2,26 +2,24 @@
 
 namespace RetailSales.Models
 {
-    public class Purchaseorder
+    public class DirectPurchase
     {
-        public Purchaseorder()
+        public DirectPurchase()
         {
             this.Suplst = new List<SelectListItem>();
         }
-        public string Companyname { get; set; }
         public string Suppid { get; set; }
         public List<SelectListItem> Suplst { get; set; }
         public string refno { get; set; }
-        public string po { get; set; }
+        public string DocDate { get; set; }
+        public string doc { get; set; }
         public string Country { get; set; }
         public string State { get; set; }
         public string City { get; set; }
         public string refdate { get; set; }
-        public string Podate { get; set; }
         public string Supplieraddress { get; set; }
 
         public string ddlStatus { get; set; }
-        public List<PurchaseorderItem> PurchaseorderLst { get; set; }
         public string Narration { get; set; }
         public string Amountinwords { get; set; }
         public string TotDis { get; set; }
@@ -40,8 +38,9 @@ namespace RetailSales.Models
         public string LRno { get; set; }
         public string dispatchname { get; set; }
         public string LRdate { get; set; }
+        public List<DirectPurchaseItem> DirectPurchaseLst { get; set; }
     }
-    public class PurchaseorderItem
+    public class DirectPurchaseItem
     {
         public List<SelectListItem> Itemlst { get; set; }
         public string saveItemId { get; set; }
@@ -54,7 +53,9 @@ namespace RetailSales.Models
         public string Qty { get; set; }
         public string Discount { get; set; }
         public string Rate { get; set; }
+        public string Disc { get; set; }
         public string Amount { get; set; }
+        public string DiscAmount { get; set; }
         public string Cf { get; set; }
         public string Hsn { get; set; }
         public string ID { get; set; }
@@ -70,16 +71,15 @@ namespace RetailSales.Models
         public string SGST { get; set; }
         public string IGST { get; set; }
         public string Total { get; set; }
-       
-
     }
-    public class ListPurchaseordergrid
+    public class ListDirectPurchasegrid
     {
         public string id { get; set; }
-        public string po { get; set; }
-        public string podate { get; set; }
+        public string doc { get; set; }
+        public string docdate { get; set; }
         public string sup { get; set; }
         public string refno { get; set; }
+        public string net { get; set; }
         public string editrow { get; set; }
         public string view { get; set; }
         public string delrow { get; set; }

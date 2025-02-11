@@ -2,18 +2,21 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Interface.Sales;
 using RetailSales.Models;
-using RetailSales.Services.Master;
-using RetailSales.Services.Sales;
 using System.Data;
+using AspNetCore.Reporting;
 
 namespace RetailSales.Controllers.Sales
 {
     public class SalesInvoiceController : Controller
     {
         ISalesInvoiceService SalesInvoiceService;
-        public SalesInvoiceController(ISalesInvoiceService _SalesInvoiceService)
+        private readonly IWebHostEnvironment _WebHostEnvironment;
+        IConfiguration? _configuratio;
+        public SalesInvoiceController(ISalesInvoiceService _SalesInvoiceService, IConfiguration _configuratio, IWebHostEnvironment WebHostEnvironment)
         {
             SalesInvoiceService = _SalesInvoiceService;
+            this._WebHostEnvironment = WebHostEnvironment;
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
         public IActionResult SalesInvoice(string id)
         {
@@ -111,6 +114,7 @@ namespace RetailSales.Controllers.Sales
                 string DeleteRow = string.Empty;
                 string EditRow = string.Empty;
                 string GoToSales = string.Empty;
+                string report = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
@@ -119,11 +123,14 @@ namespace RetailSales.Controllers.Sales
                     {
                         GoToSales = "<img src='../Images/tick.png' alt='Moved to Quote' width='20' />";
                         EditRow = "";
+                        report = "<a href=Invoice?id=" + dtUsers.Rows[i]["ID"].ToString() + " target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+
                     }
                     else
                     {
                         GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["ID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/back.png' alt='View Details' width='20' /></a>";
                         EditRow = "<a><img src='../Images/edit.png' alt='Edit' /></a>";
+                        report = "<a href=Invoice?id=" + dtUsers.Rows[i]["ID"].ToString() + " target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
 
 
                     }
@@ -145,6 +152,7 @@ namespace RetailSales.Controllers.Sales
                     editrow = EditRow,
                     move = GoToSales,
                     delrow = DeleteRow,
+                    report = report,
 
                 });
             }
@@ -236,6 +244,31 @@ namespace RetailSales.Controllers.Sales
             }
 
             return RedirectToAction("ListSalesEnquiry");
+        }
+        public async Task<IActionResult> Invoice(string id)
+        {
+            string mimtype = "";
+            int extension = 1;
+
+            System.Data.DataSet ds = new System.Data.DataSet();
+            var path = $"{this._WebHostEnvironment.WebRootPath}\\Reports\\SalesInv.rdlc";
+            Dictionary<string, string> Parameters = new Dictionary<string, string>();
+            //  Parameters.Add("rp1", " Hi Everyone");
+            var basic = await SalesInvoiceService.GetBasicItem(id);
+           // var Detail = await SalesInvoiceService.GetExinvItemDetail(id);
+            //var terms = await ProFormaInvoiceService.GetPinvtermsDetail(id);
+
+          
+
+
+             LocalReport localReport = new  LocalReport(path);
+            localReport.AddDataSource("salesinv", basic);
+            //localReport.AddDataSource("InvDet", Detail);
+           
+
+
+            var result = localReport.Execute(RenderType.Pdf, extension, Parameters, mimtype);
+            return File(result.MainStream, "application/Pdf");
         }
     }
 }

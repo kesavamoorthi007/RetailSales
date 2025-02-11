@@ -14,6 +14,11 @@ namespace RetailSales.Interface.Purchase
         string StatusChange(string tag, string id);
         string RemoveChange(string tag, string id);
         DataTable GetPurchasOrder(string id);
+        DataTable GetEditPurchasOrder(string id);
         DataTable GetPurchasOrderItem(string id);
+        DataTable GetEditPurchasOrderItem(string id);
+        DataTable GetHsn(string id);
+        DataTable GethsnDetails(string id);
+        DataTable GetgstDetails(string id);
     }
 }

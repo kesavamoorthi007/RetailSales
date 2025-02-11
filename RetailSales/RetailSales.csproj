@@ -1,12 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>WinExe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
+ 
+    <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+ 
     <Compile Remove="Views\Bankaccount\**" />
     <Content Remove="Views\Bankaccount\**" />
     <EmbeddedResource Remove="Views\Bankaccount\**" />
@@ -14,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+ 
     <PackageReference Include="ClosedXML" Version="0.102.2" />
     <PackageReference Include="Dapper" Version="2.0.143" />
     <PackageReference Include="jsTree" Version="3.1.1.2" />
@@ -28,4 +33,43 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
+ 
+  <ItemGroup>
+    <Folder Include="Views\Bankaccount\" />
+  </ItemGroup>
+
+ 
+  <ItemGroup>
+    <Compile Update="salesinv.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>salesinv.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Reports\SalesInv.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\SalesInvoice.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="salesinv.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>salesinv.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Salinv.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Salinv.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="SalinvDet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalinvDet.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+ 
 </Project>
