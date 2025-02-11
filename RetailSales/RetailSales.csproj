@@ -28,7 +28,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
-    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.WebForms" Version="150.1652.0" />
     <PackageReference Include="NEST" Version="7.17.5" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
@@ -39,26 +38,29 @@
     <Folder Include="Views\Bankaccount\" />
   </ItemGroup>
 
+ 
   <ItemGroup>
-    <Compile Update="Salinv.Designer.cs">
+    <Compile Update="salesinv.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Salinv.xsd</DependentUpon>
-    </Compile>
-    <Compile Update="SalinvDet.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SalinvDet.xsd</DependentUpon>
+      <DependentUpon>salesinv.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\Reports\SalesInv.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Reports\SalesInvoice.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="salesinv.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>salesinv.Designer.cs</LastGenOutput>
+    </None>
     <None Update="Salinv.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Salinv.Designer.cs</LastGenOutput>
