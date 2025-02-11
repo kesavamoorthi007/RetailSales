@@ -20,9 +20,9 @@ namespace RetailSales {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("Salinv")]
+    [global::System.Xml.Serialization.XmlRootAttribute("salesinv")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class Salinv : global::System.Data.DataSet {
+    public partial class salesinv : global::System.Data.DataSet {
         
         private SALES_INVDataTable tableSALES_INV;
         
@@ -30,7 +30,7 @@ namespace RetailSales {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public Salinv() {
+        public salesinv() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace RetailSales {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        protected Salinv(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected salesinv(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -127,7 +127,7 @@ namespace RetailSales {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            Salinv cln = ((Salinv)(base.Clone()));
+            salesinv cln = ((salesinv)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -199,9 +199,9 @@ namespace RetailSales {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "Salinv";
+            this.DataSetName = "salesinv";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/Salinv.xsd";
+            this.Namespace = "http://tempuri.org/salesinv.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableSALES_INV = new SALES_INVDataTable();
@@ -225,7 +225,7 @@ namespace RetailSales {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            Salinv ds = new Salinv();
+            salesinv ds = new salesinv();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -636,7 +636,7 @@ namespace RetailSales {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                Salinv ds = new Salinv();
+                salesinv ds = new salesinv();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1064,7 +1064,7 @@ namespace RetailSales {
         }
     }
 }
-namespace RetailSales.SalinvTableAdapters {
+namespace RetailSales.salesinvTableAdapters {
     
     
     /// <summary>
@@ -1290,8 +1290,8 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = "Data Source=192.168.0.21;Initial Catalog=RetailSales;Persist Security Info=True;U" +
-                "ser ID=sanew;TrustServerCertificate=True";
+            this._connection.ConnectionString = "Data Source=192.168.0.16;Initial Catalog=RetailSales;Persist Security Info=True;U" +
+                "ser ID=sanew;Encrypt=True;TrustServerCertificate=True";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1309,7 +1309,7 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(Salinv.SALES_INVDataTable dataTable) {
+        public virtual int Fill(salesinv.SALES_INVDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1322,9 +1322,9 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual Salinv.SALES_INVDataTable GetData() {
+        public virtual salesinv.SALES_INVDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            Salinv.SALES_INVDataTable dataTable = new Salinv.SALES_INVDataTable();
+            salesinv.SALES_INVDataTable dataTable = new salesinv.SALES_INVDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1332,14 +1332,14 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(Salinv.SALES_INVDataTable dataTable) {
+        public virtual int Update(salesinv.SALES_INVDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(Salinv dataSet) {
+        public virtual int Update(salesinv dataSet) {
             return this.Adapter.Update(dataSet, "SALES_INV");
         }
         
@@ -1879,7 +1879,7 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private int UpdateUpdatedRows(Salinv dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(salesinv dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             if ((this._sALES_INVTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.SALES_INV.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
@@ -1898,7 +1898,7 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private int UpdateInsertedRows(Salinv dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(salesinv dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             if ((this._sALES_INVTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.SALES_INV.Select(null, null, global::System.Data.DataViewRowState.Added);
@@ -1916,7 +1916,7 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private int UpdateDeletedRows(Salinv dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(salesinv dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             if ((this._sALES_INVTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.SALES_INV.Select(null, null, global::System.Data.DataViewRowState.Deleted);
@@ -1958,7 +1958,7 @@ SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, REMARKS, DISCOUNT, T
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public virtual int UpdateAll(Salinv dataSet) {
+        public virtual int UpdateAll(salesinv dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

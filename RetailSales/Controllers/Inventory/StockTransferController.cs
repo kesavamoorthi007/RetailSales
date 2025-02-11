@@ -3,7 +3,7 @@ using RetailSales.Models;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Services;
-
+using static RetailSales.Models.StockTransferItem;
 
 namespace RetailSales.Controllers
 {
@@ -24,8 +24,8 @@ namespace RetailSales.Controllers
             List<StockTransferItem> TData = new List<StockTransferItem>();
             StockTransferItem tda = new StockTransferItem();
 
-            ic.Flocationlst = BindFlocation();
-            ic.Tlocationlst = BindTlocation();
+            ic.Flocation = "Gudown";
+            ic.Tlocation = "Store";
             ic.FBinlst = BindFBin();
             ic.TBinlst = BindTBin();
             if (id == null)
@@ -34,6 +34,7 @@ namespace RetailSales.Controllers
                 {
                     tda = new StockTransferItem();
                     tda.Itemlst = BindItem();
+                    tda.Varientlst = BindVarient("");
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -41,9 +42,81 @@ namespace RetailSales.Controllers
             else
 
             {
+                DataTable dt = new DataTable();
+                dt = StockTransferService.GetEditStockTransferDetail1(id);
+                if (dt.Rows.Count > 0)
+                {
+                    //ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.Documentid = dt.Rows[0]["STOCK_TRANSFER_ID"].ToString();
+                    ic.DocumentDate = dt.Rows[0]["STOCK_TRANSFER_DATE"].ToString();
+                    ic.Flocation = dt.Rows[0]["FROM_LOCATION"].ToString();
+                    ic.Tlocation = dt.Rows[0]["TO_LOCATION"].ToString();
+                    ic.FBin = dt.Rows[0]["FROM_BIN_ID"].ToString();
+                    ic.TBin = dt.Rows[0]["TO_BIN_ID"].ToString();
+                    ic.Order = dt.Rows[0]["BROWSE_ORDER"].ToString();
+                   
+
+
+                }
+                //DataTable dt1 = new DataTable();
+                //dt1 = StockTransferService.GetEditStockTransferDetail1(id);
+                //if (dt.Rows.Count > 0)
+                //{
+
+                //    //ic.ID = dt.Rows[0]["ID"].ToString();
+
+                //    tda.Item = dt.Rows[0]["ITEM"].ToString();
+                //    tda.Variant = dt.Rows[0]["VARIANT"].ToString();
+                //    tda.Unit = dt.Rows[0]["UNIT"].ToString();
+                //    tda.Stock = dt.Rows[0]["STOCK"].ToString();
+                //    tda.Qty = dt.Rows[0]["QUANTITY"].ToString();
+                //    tda.Rate = dt.Rows[0]["RATE"].ToString();
+                //    tda.Amount = dt.Rows[0]["AMOUNT"].ToString();
+
+
+                //}
+
             }
             ic.StockTransferItemLst = TData;
             return View(ic);
+
+        }
+        [HttpPost]
+        public ActionResult StockTransfer(StockTransfer Ic, string id)
+        {
+
+            try
+            {
+                Ic.ID = id;
+                string Strout = StockTransferService.StockTransferCRUD(Ic);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (Ic.ID == null)
+                    {
+                        TempData["notice"] = "StockTransfer Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "StockTransfer Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListStockTransfer");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit StockTransfer";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(Ic);
         }
         public IActionResult ListStockTransfer()
         {
@@ -82,6 +155,7 @@ namespace RetailSales.Controllers
                 string uom = "";
                 string bin = "";
                 string rate = "";
+
                 dt = StockTransferService.GetItemDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
@@ -96,6 +170,57 @@ namespace RetailSales.Controllers
 
                 var result = new { var = var, uom = uom, bin = bin, rate = rate };
                 return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetVarientDetails(string ItemId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                string uom = "";
+                string rate = "";
+                string amount = "";
+                dt = StockTransferService.GetVarientDetails(ItemId);
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    uom = dt.Rows[0]["UOM_CODE"].ToString();
+                    rate = dt.Rows[0]["RATE"].ToString();
+
+
+                }
+
+                var result = new { uom = uom, rate = rate };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public JsonResult GetVarientJSON(string id)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindVarient(id));
+        }
+        public List<SelectListItem> BindVarient(string id)
+        {
+            try
+            {
+                DataTable dtDesg = StockTransferService.GetVariant(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
             }
             catch (Exception ex)
             {
@@ -120,40 +245,40 @@ namespace RetailSales.Controllers
                 throw ex;
             }
         }
-        public List<SelectListItem> BindFlocation()
-        {
-            try
-            {
-                DataTable dtDesg = StockTransferService.GetFlocation();
-                List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-                }
-                return lstdesg;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public List<SelectListItem> BindTlocation()
-        {
-            try
-            {
-                DataTable dtDesg = StockTransferService.GetTlocation();
-                List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-                }
-                return lstdesg;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //public List<SelectListItem> BindFlocation()
+        //{
+        //    try
+        //    {
+        //        DataTable dtDesg = StockTransferService.GetFlocation();
+        //        List<SelectListItem> lstdesg = new List<SelectListItem>();
+        //        for (int i = 0; i < dtDesg.Rows.Count; i++)
+        //        {
+        //            lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+        //        }
+        //        return lstdesg;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+        //public List<SelectListItem> BindTlocation()
+        //{
+        //    try
+        //    {
+        //        DataTable dtDesg = StockTransferService.GetTlocation();
+        //        List<SelectListItem> lstdesg = new List<SelectListItem>();
+        //        for (int i = 0; i < dtDesg.Rows.Count; i++)
+        //        {
+        //            lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+        //        }
+        //        return lstdesg;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
         public List<SelectListItem> BindFBin()
         {
             try
@@ -189,5 +314,81 @@ namespace RetailSales.Controllers
             }
         }
 
+        public ActionResult MyListStockTransfergrid(string strStatus)
+        {
+            List<StockTransfergrid> Reg = new List<StockTransfergrid>();
+            DataTable dtUsers = new DataTable();
+            strStatus = strStatus == "" ? "Y" : strStatus;
+            dtUsers = StockTransferService.GetAllStockTransferGRID(strStatus);
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+
+                string DeleteRow = string.Empty;
+                string EditRow = string.Empty;
+
+                if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
+                {
+                    EditRow = "<a href=StockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/view.png' alt='Edit' width='28' /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='28' /></a>";
+                }
+                else
+                {
+                    EditRow = "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='28' /></a>";
+                }
+                Reg.Add(new StockTransfergrid
+                {
+                    id = dtUsers.Rows[i]["ST_BASIC_ID"].ToString(),
+                    documentid = dtUsers.Rows[i]["STOCK_TRANSFER_ID"].ToString(),
+                    stocktransferdate = dtUsers.Rows[i]["STOCK_TRANSFER_DATE"].ToString(),
+                    fromLoc = dtUsers.Rows[i]["FROM_LOCATION"].ToString(),
+                    toLoc = dtUsers.Rows[i]["TO_LOCATION"].ToString(),
+                    fBin = dtUsers.Rows[i]["FBIN"].ToString(),
+                    tBin = dtUsers.Rows[i]["TOBIN"].ToString(),
+                    editrow = EditRow,
+                    delrow = DeleteRow,
+
+                });
+            }
+            return Json(new
+            {
+                Reg
+            });
+        }
+
+
+        //public ActionResult DeleteMR(string tag, string id)
+        //{
+
+        //    string flag = StockTransferService.StatusChange(tag, id);
+        //    if (string.IsNullOrEmpty(flag))
+        //    {
+
+        //        return RedirectToAction("ListStockTransfer");
+        //    }
+        //    else
+        //    {
+        //        TempData["notice"] = flag;
+        //        return RedirectToAction("ListStockTransfer");
+        //    }
+        //}
+        //public ActionResult Remove(string tag, string id)
+        //{
+
+        //    string flag = StockTransferService.RemoveChange(tag, id);
+        //    if (string.IsNullOrEmpty(flag))
+        //    {
+
+        //        return RedirectToAction("ListStockTransfer");
+        //    }
+        //    else
+        //    {
+        //        TempData["notice"] = flag;
+        //        return RedirectToAction("ListStockTransfer");
+        //    }
+        //}
+
     }
+
+
 }

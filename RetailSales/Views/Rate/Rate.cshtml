@@ -44,6 +44,7 @@
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Doc No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.DocNo, new { @id = "txtDocNo", @class = "form-control", @TabIndex = 1})
+                                            @Html.HiddenFor(C => C.ID)
                                         </div>
                                     </div>
                                 </div>
@@ -100,6 +101,7 @@
                                             <tr>
 
                                                 <th>Item</th>
+                                                <th>Varient</th>
                                                 <th>Unit</th>
                                                 <th>Rate </th>                                 
                                                 <th></th>
@@ -116,15 +118,18 @@
                                                         
                                                         
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.RateList[i].Item, Model.RateList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeItemDetails(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.RateList[i].Item, Model.RateList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeVariantDetails(this.value," + i + ")" })
                                                             @Html.HiddenFor(o => o.RateList[i].saveItemId)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DropDownListFor(o => o.RateList[i].Varient, Model.RateList[i].Variantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeItemDetails(this.value," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.RateList[i].Unit, new { @id = "txtUnit" + i, @class = "form-control", style = "width: 200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.RateList[i].Rate1, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.RateList[i].Rate1, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px;" })
                                                         </td> 
                                                         <td>
                                                             @Html.HiddenFor(o => o.RateList[i].Isvalid, new { @id = "Isvalid" + i })
@@ -144,7 +149,7 @@
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("Rate", "Rate")'">Cancel</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListRate", "Rate")'">Cancel</button>
 
                         </form>
                         
@@ -297,14 +302,39 @@
             data: { "ItemId": ItemId },
             type: "GET",
             success: function (result) {
-                document.getElementById("txtUnit" + i).value = result.unit;
-                document.getElementById("txtRate" + i).value = result.rate;
-
+                document.getElementById("txtUnit" + i).value = result.unit;               
             },
             error: function () {
                 alert("Data Not Found");
             }
         });
+    }
+
+    function changeVariantDetails(id, i) {
+        $.ajax({
+            url: 'GetVarientJSON',
+            type: "post",
+            data: { 'id': id },
+            cache: false,
+            success: function (response) {
+                PopulateDropDown("#ddlVarient" + i, response);
+            },
+            error: function () {
+                debugger;
+                alert("Please Select Product");
+            }
+        });
+    }
+    function PopulateDropDownn(dropDownId, list) {
+        //alert(list);
+        $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+        $(dropDownId).trigger("liszt:updated");
     }
     function limit(element) {
         var max_chars = 1;
@@ -345,32 +375,24 @@
             alert("Cannot delete all the rows.")
         }
     }
-    function PopulateDropDownn(dropDownId, list) {
-        //alert(list);
-        $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
-        if (list != null && list.length > 0) {
-            $(dropDownId).removeAttr("disabled");
-            $.each(list, function () {
-                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
-            });
-        }
-        $(dropDownId).trigger("liszt:updated");
-    }
+   
 
     function AppendRow(opt) {
         var index = $("#tbBooks").children("tr").length;
 
-        var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='RateList[" + index + "].Item' onchange = 'changeItemDetails(this.value," + index + ")'><option value=''>---Please select---</option>" + opt + "</select></td>";
+        var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='RateList[" + index + "].Item' onchange = 'changeVariantDetails(this.value," + index + ")'><option value=''>---Please select---</option>" + opt + "</select></td>";
 
-          var UOM = "<td><input class='form-control' id='txtUnit" + index + "' name='RateList[" + index + "].Unit'  style='width: 200px;' type='text'  readonly='True' /></td>";
+        var Varient = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem1" + index + "' name='RateList[" + index + "].Item' onchange = 'changeItemDetails(this.value," + index + ")'><option value=''>---Please select---</option>" + opt + "</select></td>";
 
-         var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='RateList[" + index + "].Rate1'  style='width: 80px;' type='text'  readonly='True' /></td>";
+        var UOM = "<td><input class='form-control' id='txtUnit" + index + "' name='RateList[" + index + "].Unit'  style='width: 200px;' type='text'  readonly='True' /></td>";
+
+        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='RateList[" + index + "].Rate1'  style='width: 80px;' type='text'  /></td>";
 
 
-             var removeCell = "<td><input id='Isvalid" + index + "' name='RateList[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='RateList.Index' type='hidden' value='" + index + "'  /></td>";
+          var removeCell = "<td><input id='Isvalid" + index + "' name='RateList[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='RateList.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + UOM  + Rate + removeCell +  "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient + UOM  + Rate + removeCell +  "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
@@ -385,7 +407,7 @@
                 type: "GET",
                 success: function (result) {
                     document.getElementById("txtUnit" + i).value = result.unit;
-                    document.getElementById("txtRate" + i).value = result.rate;
+                    @*document.getElementById("txtRate" + i).value = result.rate;*@
 
                 },
                 error: function () {
