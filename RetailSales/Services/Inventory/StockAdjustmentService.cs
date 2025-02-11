@@ -17,10 +17,18 @@ namespace RetailSales.Services.Inventory
             datatrans = new DataTransactions(_connectionString);
         }
 
-        public DataTable GetItem()
+        public DataTable GetAllStockAdjustment(string strStatus)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME FROM PRODUCT";
+            if (strStatus == "Y" || strStatus == null)
+            {
+                SvSql = "SELECT STKADJBASICID,LOCATION.LOCATION_NAME,TYPE,DOCID,DOCDATE,CONVERT(varchar, STKADJBASIC.DOCDATE, 106) AS DOCDATE,STKADJBASIC.IS_ACTIVE FROM STKADJBASIC LEFT OUTER JOIN LOCATION ON LOCATION.ID=STKADJBASIC.LOCATION  WHERE STKADJBASIC.IS_ACTIVE = 'Y' ORDER BY STKADJBASIC.STKADJBASICID DESC";
+            }
+            else
+            {
+                SvSql = "SELECT STKADJBASICID,LOCATION.LOCATION_NAME,TYPE,DOCID,DOCDATE,CONVERT(varchar, STKADJBASIC.DOCDATE, 106) AS DOCDATE,STKADJBASIC.IS_ACTIVE FROM STKADJBASIC LEFT OUTER JOIN LOCATION ON LOCATION.ID=STKADJBASIC.LOCATION  WHERE STKADJBASIC.IS_ACTIVE = 'N' ORDER BY STKADJBASIC.STKADJBASICID DESC";
+
+            }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -32,6 +40,17 @@ namespace RetailSales.Services.Inventory
         {
             string SvSql = string.Empty;
             SvSql = "select LOCATION_NAME,ID from LOCATION";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetItem()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME FROM PRODUCT";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -61,5 +80,16 @@ namespace RetailSales.Services.Inventory
             return dtt;
         }
 
+        public DataTable GetEditStockAdjustmentItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT PRODUCT_DESCRIPTION,UOM.UOM_CODE,HSN_CODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM ;";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+       
     }
 }
