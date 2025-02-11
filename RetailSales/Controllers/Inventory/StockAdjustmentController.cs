@@ -6,6 +6,7 @@ using RetailSales.Interface.Sales;
 using RetailSales.Models;
 using RetailSales.Models.Inventory;
 using RetailSales.Services.Master;
+using RetailSales.Services.Purchase;
 using RetailSales.Services.Sales;
 
 namespace RetailSales.Controllers.Inventory
@@ -13,8 +14,13 @@ namespace RetailSales.Controllers.Inventory
     public class StockAdjustmentController : Controller
     {
         IStockAdjustmentService StockAdjustmentService;
-        public StockAdjustmentController(IStockAdjustmentService _StockAdjustmentService)
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
+        public StockAdjustmentController(IStockAdjustmentService _StockAdjustmentService, IConfiguration _configuratio)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             StockAdjustmentService = _StockAdjustmentService;
         }
         public IActionResult StockAdjustment(string id)
@@ -39,11 +45,92 @@ namespace RetailSales.Controllers.Inventory
             }
             else
             {
+                DataTable dt = new DataTable();
+                dt = StockAdjustmentService.GetEditStockAdjustmentItem(id);
+                if (dt.Rows.Count > 0)
+                {
+                    ic.Locationlst = BindLocation();
+                    ic.Location = dt.Rows[0]["LOCATION_NAME"].ToString();
+                    ic.Type = dt.Rows[0]["TYPE"].ToString();
+                    ic.DocId = dt.Rows[0]["DOCID"].ToString();
+                    ic.DocDate = dt.Rows[0]["DOCDATE"].ToString();
+                    ic.Reason = dt.Rows[0]["REASON"].ToString();
+                    ic.ID = id;
 
-
+                }
+                DataTable dtt = new DataTable();
+                dtt = StockAdjustmentService.GetEditStockAdjustmentItem(id);
+                if (dtt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    {
+                        tda = new StockAdjustmentItem();
+                        tda.Itemlst = BindItem();
+                        tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                        tda.Variantlst = BindVariant(tda.Item);
+                        tda.Variant = dtt.Rows[i]["VARIANT"].ToString();
+                        tda.Unit = dtt.Rows[i]["UOM"].ToString();
+                        tda.StockQty = dtt.Rows[i]["STOCKQTY"].ToString();
+                        tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                        tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                        tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                        tda.ID = id;
+                        TData.Add(tda);
+                    }
+                }
             }
             ic.StockAdjustmentList = TData;
             return View(ic);
+        }
+       
+
+        public IActionResult ListStockAdjustment()
+        {
+            return View();
+        }
+
+        public ActionResult MyListStockAdjustmentgrid(string strStatus)
+        {
+            List<ListStockAdjustmentgrid> Reg = new List<ListStockAdjustmentgrid>();
+            DataTable dtUsers = new DataTable();
+            strStatus = strStatus == "" ? "Y" : strStatus;
+            dtUsers = StockAdjustmentService.GetAllStockAdjustment(strStatus);
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+
+
+                string Edit = string.Empty;
+                string Delete = string.Empty;
+
+                if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
+                {                    
+                    Edit = "<a href=StockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                }
+                else
+                {
+                    Edit = "";
+                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                }
+
+                Reg.Add(new ListStockAdjustmentgrid
+                {
+                    id = dtUsers.Rows[i]["STKADJBASICID"].ToString(),
+                    location = dtUsers.Rows[i]["LOCATION_NAME"].ToString(),
+                    type = dtUsers.Rows[i]["TYPE"].ToString(),
+                    docid = dtUsers.Rows[i]["DOCID"].ToString(),
+                    docdate = dtUsers.Rows[i]["DOCDATE"].ToString(),
+                    edit = Edit,
+                    delete = Delete,
+
+                });
+            }
+
+            return Json(new
+            {
+                Reg
+            });
+
         }
 
         private List<SelectListItem> BindLocation()
@@ -63,26 +150,6 @@ namespace RetailSales.Controllers.Inventory
                 throw ex;
             }
         }
-
-        private List<SelectListItem> BindVariant(string id)
-        {
-            try
-            {
-                DataTable dtDesg = StockAdjustmentService.GetVariant(id);
-                List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-                }
-                return lstdesg;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        [HttpPost]
 
         public JsonResult GetItemGrpJSON()
         {
@@ -116,7 +183,23 @@ namespace RetailSales.Controllers.Inventory
             }
         }
 
-        
+        private List<SelectListItem> BindVariant(string id)
+        {
+            try
+            {
+                DataTable dtDesg = StockAdjustmentService.GetVariant(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public ActionResult GetItemDetails(string ItemId)
         {

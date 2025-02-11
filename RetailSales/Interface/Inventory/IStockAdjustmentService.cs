@@ -4,9 +4,14 @@ namespace RetailSales.Interface.Inventory
 {
     public interface IStockAdjustmentService
     {
-        DataTable GetItem();
-        DataTable GetVariantDetails(string id);
-        DataTable GetVariant(string id);
         DataTable GetLocation();
+        DataTable GetItem();
+        DataTable GetVariant(string id);
+        DataTable GetVariantDetails(string id);
+        DataTable GetEditStockAdjustmentItem(string id);
+        DataTable GetAllStockAdjustment(string strStatus);
+        //DataTable GetAllStockAdjustment(string strStatus);
+        //DataTable GetEditStockAdjustment(string id);
+        //DataTable GetEditStockAdjustmentItem(string id);
     }
 }
