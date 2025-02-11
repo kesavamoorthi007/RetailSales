@@ -6,14 +6,12 @@ namespace RetailSales.Models
     {
         public StockTransfer()
         {
-            this.Flocationlst = new List<SelectListItem>();
-            this.Tlocationlst = new List<SelectListItem>();
+
             this.FBinlst = new List<SelectListItem>();
             this.TBinlst = new List<SelectListItem>();
 
         }
-        public List<SelectListItem> Flocationlst;
-        public List<SelectListItem> Tlocationlst;
+
         public List<SelectListItem> FBinlst;
         public List<SelectListItem> TBinlst;
         public string Documentid { get; set; }
@@ -26,7 +24,7 @@ namespace RetailSales.Models
         public string ddlStatus { get; set; }
 
         public List<StockTransferItem> StockTransferItemLst { get; set; }
-
+        public string ID { get; internal set; }
     }
     public class StockTransferItem
     {
@@ -34,15 +32,32 @@ namespace RetailSales.Models
         public List<SelectListItem> Itemlst { get; set; }
         public string Item { get; set; }
         public string saveItemId { get; set; }
-        public string Description { get; set; }
-        public string UOM { get; set; }
-        public string Bin { get; set; }
+        public string Varient { get; set; }
+
+
+        public string Unit { get; set; }
+        public string Stock { get; set; }
         public string Qty { get; set; }
-        public string Discount { get; set; }
+
         public string Rate { get; set; }
         public string Amount { get; set; }
-        public string Total { get; set; }
+
+        public List<SelectListItem> Varientlst { get; internal set; }
         //public string ID { get; set; }
         //public string ReturnQty { get; set; }
+
+
+        public class StockTransfergrid
+        {
+            public string id { get; set; }
+            public string documentid { get; set; }
+            public string stocktransferdate { get; set; }
+            public string fromLoc { get; set; }
+            public string toLoc { get; set; }
+            public string fBin { get; set; }
+            public string tBin { get; set; }
+            public string editrow { get; set; }
+            public string delrow { get; set; }
+        }
     }
 }
