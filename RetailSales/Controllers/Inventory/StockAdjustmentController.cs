@@ -27,7 +27,6 @@ namespace RetailSales.Controllers.Inventory
             ic.Locationlst = BindLocation();
             ic.Type = "Addition";
             ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
-
             List<StockAdjustmentItem> TData = new List<StockAdjustmentItem>();
             StockAdjustmentItem tda = new StockAdjustmentItem();
             if (id == null)
