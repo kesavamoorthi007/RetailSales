@@ -1,12 +1,13 @@
-﻿@model RetailSales.Models.Master.TaxMaster;
+﻿@model RetailSales.Models.Inventory.StockAdjustment
 
 @{
-    ViewData["Title"] = "Tax";
+    ViewData["Title"] = "ListStockAdjustment";
 
 }
 <partial name="JqxGridPartial" />
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
+
 
 <script type="text/javascript">
     @if (TempData["notice"] != null)
@@ -14,15 +15,14 @@
         @:alert('@TempData["notice"]');
     }
 </script>
-
-
+<div style="height:25px;"></div>
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>List Tax</strong> </li>
+            <li class="active"> <strong>Stock Adjustment</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "MyListTaxMaster",
+            url: "/StockAdjustment/MyListStockAdjustmentgrid",
             data: {
                 strstatus: ""
             },
@@ -40,10 +40,13 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'taxname', type: 'string' },
-                { name: 'percentage', type: 'string' },
+                { name: 'location', type: 'string' },
+                { name: 'type', type: 'string' },
+                { name: 'docid', type: 'string' },
+                { name: 'docdate', type: 'string' },
                 { name: 'edit', type: 'string' },
                 { name: 'delete', type: 'string' },
+
 
             ],
             id: 'id',
@@ -79,10 +82,12 @@
 
                 columns: [
 
-                    { text: 'Tax Name', filtertype: 'input', datafield: 'taxname', width: 200 },
-                    { text: 'Percentage', filtertype: 'input', datafield: 'percentage', width: 200 },
-                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
+                    { text: 'Location', filtertype: 'checkedlist', datafield: 'location', width: 200 },
+                    { text: 'Type', filtertype: 'input', datafield: 'type', width: 200 },
+                    { text: 'Doc ID', filtertype: 'input', datafield: 'docid', width: 200 },
+                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 200 },
+                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -109,14 +114,14 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2 ">
-                                @Html.DropDownListFor(n => n.ddlstatus, new SelectListItem[]
-                                { new SelectListItem() {Text = "Enabled", Value="Y"},
+                                @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
+                                         { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
-                                new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
+                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("TaxMaster", "TaxMaster")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Tax</a>
+                                    <a href="@Url.Action("StockAdjustment", "StockAdjustment")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Stock Adjustment </a>
                                     <br>
                                 </div>
 
@@ -142,3 +147,6 @@
         return confirm("Are you sure you want to delete?");
     }
 </script>
+
+
+

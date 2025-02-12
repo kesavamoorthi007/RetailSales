@@ -53,10 +53,10 @@ namespace RetailSales.Controllers.Master
                     ic.Email = dt.Rows[0]["EMAIL"].ToString();
                     ic.Remark = dt.Rows[0]["REMARKS"].ToString();
                     /*ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString()*/;
-                    ic.Designation = dt.Rows[0]["DESIGNATION"].ToString();
+                   // ic.Designation = dt.Rows[0]["DESIGNATION"].ToString();
                     ic.Branch = dt.Rows[0]["BRANCH"].ToString();
                     ic.Department = dt.Rows[0]["DEPARTMENT"].ToString();
-                    ic.Maritalstatus = dt.Rows[0]["MATERIALSTATUS"].ToString();
+                    ic.Maritalstatus = dt.Rows[0]["MARITALSTATUS"].ToString();
                     ic.Emailpersonal = dt.Rows[0]["EMAILPERSONAL"].ToString();
                     ic.Djoining = dt.Rows[0]["DATEOFJOINING"].ToString();
                     ic.Dbirth = dt.Rows[0]["DATEOFBIRTH"].ToString();
@@ -64,6 +64,9 @@ namespace RetailSales.Controllers.Master
                     ic.Degree = dt.Rows[0]["DEGREE"].ToString();
                     ic.EmployeeStatus = dt.Rows[0]["EMPLOYEE_STATUS"].ToString();
                     ic.Report = dt.Rows[0]["REPORT_TO"].ToString();
+                    ic.Bank = dt.Rows[0]["BANK"].ToString();
+                    ic.AccNumber = dt.Rows[0]["ACCNUMBER"].ToString();
+                    ic.AadharNumber = dt.Rows[0]["AANUMBER"].ToString();
 
                 }
 
