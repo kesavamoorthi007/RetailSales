@@ -56,7 +56,7 @@ namespace RetailSales.Models
             public string toLoc { get; set; }
             public string fBin { get; set; }
             public string tBin { get; set; }
-            public string editrow { get; set; }
+            public string view { get; set; }
             public string delrow { get; set; }
         }
     }
