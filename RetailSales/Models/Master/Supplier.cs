@@ -18,11 +18,10 @@ namespace RetailSales.Models
         public string ID { get; set; }
         public string Supp { get; set; }
         public string Category { get; set; }
-        public string Delivery { get; set; }
+       
         public string Days { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public string Country { get; set; } = "INDIA";
         public string Gst { get; set; }
         public string Mobile { get; set; }
         public string Landline { get; set; }
@@ -36,11 +35,11 @@ namespace RetailSales.Models
         public string id { get; set; }
         public string supp { get; set; }
         public string category { get; set; }
-        public string delivery { get; set; }
+        
         public string days { get; set; }
         public string city { get; set; }
         public string state { get; set; }
-        public string country { get; set; }
+       
         public string gst { get; set; }
         public string mobile { get; set; }
         public string landline { get; set; }

@@ -18,7 +18,7 @@ namespace RetailSales.Controllers.Master
         public IActionResult Customer(string id)
         {
             Customer ic = new Customer();
-            ic.Customergrouplst = BindCustomergroup();
+            ic.Customercategorylst = BindCustomercategory();
             ic.Countrylst = BindCountry();
             ic.Statelst = BindState();
             ic.Citylst = BindCity();
@@ -36,8 +36,8 @@ namespace RetailSales.Controllers.Master
                     ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.Customername = dt.Rows[0]["CUSTOMER_NAME"].ToString();
                     ic.CustomerCode = dt.Rows[0]["CUSTOMER_CODE"].ToString();
-                    ic.Customergrouplst = BindCustomergroup();
-                    ic.Customergroup = dt.Rows[0]["CUSTOMER_GROUP"].ToString();
+                    ic.Customercategorylst = BindCustomercategory();
+                    ic.Customercategory = dt.Rows[0]["CUSTOMER_CATEGORY"].ToString();
                     ic.Description = dt.Rows[0]["DESCRIPTION"].ToString();
                     ic.Address = dt.Rows[0]["ADDRESS"].ToString();
                     ic.Countrylst = BindCountry();
@@ -98,15 +98,15 @@ namespace RetailSales.Controllers.Master
             return View();
         }
         
-        public List<SelectListItem> BindCustomergroup()
+        public List<SelectListItem> BindCustomercategory()
         {
             try
             {
-                DataTable dtDesg = CustomerService.GetCustomergroup();
+                DataTable dtDesg = CustomerService.GetCustomercategory();
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CUSTOMER_GROUP"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CUSTOMER_CATEGORY"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
@@ -193,7 +193,7 @@ namespace RetailSales.Controllers.Master
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     ctname = dtUsers.Rows[i]["CUSTOMER_NAME"].ToString(),
                     ctcode = dtUsers.Rows[i]["CUSTOMER_CODE"].ToString(),
-                    ctgroup = dtUsers.Rows[i]["CUSTOMER_GROUP"].ToString(),
+                    category = dtUsers.Rows[i]["CUSTOMER_CATEGORY"].ToString(),
                     address = dtUsers.Rows[i]["ADDRESS"].ToString(),
                     city = dtUsers.Rows[i]["CITY"].ToString(),
                     state = dtUsers.Rows[i]["STATE"].ToString(),

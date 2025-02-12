@@ -39,7 +39,15 @@
                             <br />
                             <div class="row">
                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-6 control-label">Customer Category<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.Customercategory, Model.Customercategorylst, "--Please Select--", new { @id = "ddlCustomergroup", @Class = "form-control _select", @TabIndex = 1 })
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Customer Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
@@ -49,7 +57,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Customer Code<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
@@ -58,32 +65,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-
-                                    <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-6 control-label">Customer Group<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.Customergroup, Model.Customergrouplst, "--Please Select--", new { @id = "ddlCustomergroup", @Class = "form-control _select", @TabIndex = 1 })
-
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+                            <br />
                             <div class="row">
                                 <div class="col-lg-4">
-
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-6 control-label">Description<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
-
-                                            @Html.HiddenFor(C => C.ID)
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">Address<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
@@ -93,7 +78,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-6 control-label">Phone No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
@@ -102,20 +86,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-lg-4">
-                              
-                                    <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-6 control-label">Country<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.Country, Model.Countrylst, "--Please Select--", new { @id = "ddlCountry", @Class = "form-control _select", @TabIndex = 1 })
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-6 control-label">State<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
@@ -124,6 +95,9 @@
                                         </div>
                                     </div>
                                 </div>
+                           </div>
+                            <br />
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                             <br> <label for="inputName3" class="col-sm-6 control-label">City<label class="mandatory"></label></label>
@@ -134,9 +108,6 @@
                                     </div>
                                 </div>
                                 
-                            </div>
-                            <div class="row">
-                               
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">E-Mail<label class="mandatory"></label></label>
@@ -153,12 +124,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-6 control-label">Description<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("Customer", "Customer")'">Cancel</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListCustomer", "Customer")'">Cancel</button>
 
 
 
@@ -210,18 +194,18 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("ddlCustomergroup").value == "") {
+            if (document.getElementById("ddlCustomercategory").value == "") {
                 isValid = false;
-                $(ddlCustomergroup).css({
+                $(ddlCustomercategory).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Select Customer Group");
+                alert("Please Select Customer Category");
                 return false;
             }
             else {
-                $(ddlCustomergroup).css({
+                $(ddlCustomercategory).css({
                     "border": "",
                     "background": ""
                 });

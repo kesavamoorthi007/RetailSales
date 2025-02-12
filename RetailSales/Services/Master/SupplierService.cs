@@ -20,11 +20,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,SUPPLIER.IS_ACTIVE FROM SUPPLIER WHERE SUPPLIER.IS_ACTIVE = 'Y' ORDER BY SUPPLIER.ID DESC";
+                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPPL_CATGRY.CATGRY_NAME,CR_DAYS,SUPPLIER.IS_ACTIVE FROM SUPPLIER LEFT OUTER JOIN SUPPL_CATGRY ON CAST(SUPPL_CATGRY.ID AS NVARCHAR) = SUPPLIER.SUPP_CAT WHERE SUPPLIER.IS_ACTIVE = 'Y' ORDER BY SUPPLIER.ID DESC";
             }
             else
             {
-                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,SUPPLIER.IS_ACTIVE FROM SUPPLIER WHERE SUPPLIER.IS_ACTIVE = 'N' ORDER BY SUPPLIER.ID DESC";
+                SvSql = "SELECT SUPPLIER.ID,SUPPLIER_NAME,SUPPL_CATGRY.CATGRY_NAME,CR_DAYS,SUPPLIER.IS_ACTIVE FROM SUPPLIER LEFT OUTER JOIN SUPPL_CATGRY ON CAST(SUPPL_CATGRY.ID AS NVARCHAR) = SUPPLIER.SUPP_CAT WHERE SUPPLIER.IS_ACTIVE = 'N' ORDER BY SUPPLIER.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -68,7 +68,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditSupplier(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,SUPPLIER_NAME,SUPP_CAT,DEL_LEAD_TIME,CR_DAYS,MOBILE_NO,ADDRESS,CITY,STATE,COUNTRY,GST_NO,EMAIL_ID,LANDLINE_NO FROM SUPPLIER WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,SUPPLIER_NAME,SUPP_CAT,CR_DAYS,MOBILE_NO,ADDRESS,CITY,STATE,GST_NO,EMAIL_ID,LANDLINE_NO FROM SUPPLIER WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -100,12 +100,12 @@ namespace RetailSales.Services.Master
                     }
                     objCmd.Parameters.Add("@suppliername", SqlDbType.NVarChar).Value = cy.Supp;
                     objCmd.Parameters.Add("@suppliercategory", SqlDbType.NVarChar).Value = cy.Category;
-                    objCmd.Parameters.Add("@deliveryleadtime", SqlDbType.NVarChar).Value = cy.Delivery;
+                    //objCmd.Parameters.Add("@deliveryleadtime", SqlDbType.NVarChar).Value = cy.Delivery;
                     objCmd.Parameters.Add("@mobilenumber", SqlDbType.NVarChar).Value = cy.Mobile;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = cy.City;
                     objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = statename;
-                    objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;
+                    //objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;
                     objCmd.Parameters.Add("@gst", SqlDbType.NVarChar).Value = cy.Gst;
                     objCmd.Parameters.Add("@emailid", SqlDbType.NVarChar).Value = cy.Email;
                     objCmd.Parameters.Add("@landlineno", SqlDbType.NVarChar).Value = cy.Landline;

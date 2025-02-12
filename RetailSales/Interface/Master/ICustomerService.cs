@@ -13,7 +13,7 @@ namespace RetailSales.Interface.Master
 
 
         //DataTable GetCustomercategory();
-        DataTable GetCustomergroup();
+        DataTable GetCustomercategory();
         DataTable GetCountry();
         DataTable GetState();
         DataTable GetCity();

@@ -19,12 +19,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT Customer.ID,CUSTOMER_NAME,CUSTOMER_CODE,CUSTOMER_GROUP,DESCRIPTION,ADDRESS,COUNTRY,STATE,CITY,PHONE_NO,E_MAIL,GST_NO,CUSTOMER.IS_ACTIVE FROM CUSTOMER WHERE CUSTOMER.IS_ACTIVE = 'Y' ORDER BY CUSTOMER.ID DESC";
+                SvSql = "  SELECT Customer.ID,CUSTOMER_NAME,CUSTOMER_CODE,CUSTOMER_CATEGORY_MASTER.CUSTOMER_CATEGORY,CUSTOMER.DESCRIPTION,ADDRESS,COUNTRY,STATE,CITY,PHONE_NO,E_MAIL,GST_NO,CUSTOMER.IS_ACTIVE  FROM CUSTOMER LEFT OUTER JOIN CUSTOMER_CATEGORY_MASTER ON CUSTOMER_CATEGORY_MASTER.ID = CUSTOMER.CUSTOMER_CATEGORY   WHERE CUSTOMER.IS_ACTIVE = 'Y' ORDER BY CUSTOMER.ID DESC";
             }
             else
             {
-                SvSql = "SELECT Customer.ID,CUSTOMER_NAME,CUSTOMER_CODE,CUSTOMER_GROUP,DESCRIPTION,ADDRESS,COUNTRY,STATE,CITY,PHONE_NO,E_MAIL,GST_NO,CUSTOMER.IS_ACTIVE FROM CUSTOMER WHERE CUSTOMER.IS_ACTIVE = 'N' ORDER BY CUSTOMER.ID DESC";
-
+                SvSql = "   SELECT Customer.ID,CUSTOMER_NAME,CUSTOMER_CODE,CUSTOMER_CATEGORY_MASTER.CUSTOMER_CATEGORY,CUSTOMER.DESCRIPTION,ADDRESS,COUNTRY,STATE,CITY,PHONE_NO,E_MAIL,GST_NO,CUSTOMER.IS_ACTIVE  FROM CUSTOMER LEFT OUTER JOIN CUSTOMER_CATEGORY_MASTER ON CUSTOMER_CATEGORY_MASTER.ID = CUSTOMER.CUSTOMER_CATEGORY   WHERE CUSTOMER.IS_ACTIVE = 'N' ORDER BY CUSTOMER.ID DESC";
             }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
@@ -53,10 +52,10 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetCustomergroup()
+        public DataTable GetCustomercategory()
         {
             string SvSql = string.Empty;
-            SvSql = "select CUSTOMER_GROUP,ID from CUSTOMER_GROUP_MASTER";
+            SvSql = "select CUSTOMER_CATEGORY,ID from CUSTOMER_CATEGORY_MASTER";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -76,7 +75,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditCustomerDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,CUSTOMER_NAME,CUSTOMER_CODE,CUSTOMER_GROUP,DESCRIPTION,ADDRESS,COUNTRY,STATE,CITY,PHONE_NO,E_MAIL,GST_NO FROM CUSTOMER WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,CUSTOMER_NAME,CUSTOMER_CODE,CUSTOMER_CATEGORY,DESCRIPTION,ADDRESS,COUNTRY,STATE,CITY,PHONE_NO,E_MAIL,GST_NO FROM CUSTOMER WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -117,7 +116,7 @@ namespace RetailSales.Services.Master
                     }
                     objCmd.Parameters.Add("@customername", SqlDbType.NVarChar).Value = cy.Customername;
                     objCmd.Parameters.Add("@customercode", SqlDbType.NVarChar).Value = cy.CustomerCode;
-                    objCmd.Parameters.Add("@customergroup", SqlDbType.NVarChar).Value = cy.Customergroup;
+                    objCmd.Parameters.Add("@customercategory", SqlDbType.NVarChar).Value = cy.Customercategory;
                     objCmd.Parameters.Add("@description", SqlDbType.NVarChar).Value = cy.Description;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;

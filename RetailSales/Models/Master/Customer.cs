@@ -6,15 +6,13 @@ namespace RetailSales.Models
     {
         public Customer()
         {
-            //this.Customercategorylst = new List<SelectListItem>();
-            this.Customergrouplst = new List<SelectListItem>();
+            this.Customercategorylst = new List<SelectListItem>();
             this.Countrylst = new List<SelectListItem>();
             this.Statelst = new List<SelectListItem>();
             this.Citylst = new List<SelectListItem>();
 
         }
-        //public List<SelectListItem> Customercategorylst;
-        public List<SelectListItem> Customergrouplst;
+        public List<SelectListItem> Customercategorylst;
         public List<SelectListItem> Countrylst;
         public List<SelectListItem> Statelst;
         public List<SelectListItem> Citylst;
@@ -22,7 +20,7 @@ namespace RetailSales.Models
         public string Category { get; set; }
         public string Customername { get; set; }
         public string CustomerCode { get; set; }
-        public string Customergroup { get; set; }
+        public string Customercategory { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
         
@@ -33,7 +31,7 @@ namespace RetailSales.Models
         public string Email { get; set; }
         public string Gst { get; set; }
         public object CustomerName { get; internal set; }
-        public object CustomerGroup { get; internal set; }
+        //public object Customercategory { get; internal set; }
         public string ddlStatus { get; set; }
     }
     public class Customergrid
@@ -41,7 +39,7 @@ namespace RetailSales.Models
         public string id { get; set; }
         public string ctname { get; set; }
         public string ctcode { get; set; }
-        public string ctgroup { get; set; }
+        public string category { get; set; }
         public string address { get; set; }
         public string city { get; set; }
         public string state { get; set; }

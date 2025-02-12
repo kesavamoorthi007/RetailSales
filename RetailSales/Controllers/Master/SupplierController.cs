@@ -40,11 +40,11 @@ namespace RetailSales.Controllers.Master
                     ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.Supp = dt.Rows[0]["SUPPLIER_NAME"].ToString();
                     ic.Category = dt.Rows[0]["SUPP_CAT"].ToString();
-                    ic.Delivery = dt.Rows[0]["DEL_LEAD_TIME"].ToString();
+                    //ic.Delivery = dt.Rows[0]["DEL_LEAD_TIME"].ToString();
                     ic.Days = dt.Rows[0]["CR_DAYS"].ToString();
                     ic.City = dt.Rows[0]["CITY"].ToString();
                     ic.State = dt.Rows[0]["STATE"].ToString();
-                    ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                    //ic.Country = dt.Rows[0]["COUNTRY"].ToString();
                     ic.Gst = dt.Rows[0]["GST_NO"].ToString();
                     ic.Mobile = dt.Rows[0]["MOBILE_NO"].ToString();
                     ic.Landline = dt.Rows[0]["LANDLINE_NO"].ToString();
@@ -181,8 +181,7 @@ namespace RetailSales.Controllers.Master
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     supp = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
-                    category = dtUsers.Rows[i]["SUPP_CAT"].ToString(),
-                    delivery = dtUsers.Rows[i]["DEL_LEAD_TIME"].ToString(),
+                    category = dtUsers.Rows[i]["CATGRY_NAME"].ToString(),
                     days = dtUsers.Rows[i]["CR_DAYS"].ToString(),
                     edit = Edit,
                     delete = Delete,
