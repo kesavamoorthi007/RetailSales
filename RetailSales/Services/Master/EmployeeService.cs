@@ -75,7 +75,7 @@ namespace RetailSales.Services.Master
                     objCmd.CommandType = CommandType.StoredProcedure;
                     if (cy.ID == null)
                     {
-                        StatementType = "Insert";
+                         StatementType = "Insert";
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
                     }
                     else
@@ -102,7 +102,7 @@ namespace RetailSales.Services.Master
                       objCmd.Parameters.Add("@DateOfJoin", SqlDbType.NVarChar).Value = cy.Djoining;
                         objCmd.Parameters.Add("@DateOfLeave", SqlDbType.NVarChar).Value = cy.Dleaving;
                     objCmd.Parameters.Add("@DateOfBirth", SqlDbType.NVarChar).Value = cy.Dbirth;
-                    objCmd.Parameters.Add("@EmployeeStatus", SqlDbType.NVarChar).Value = cy.EmployeeStatus;
+                   // objCmd.Parameters.Add("@EmployeeStatus", SqlDbType.NVarChar).Value = cy.EmployeeStatus;
                     objCmd.Parameters.Add("@aadharnumber", SqlDbType.NVarChar).Value = cy.AadharNumber;
                     objCmd.Parameters.Add("@bank", SqlDbType.NVarChar).Value = cy.Bank;
                     objCmd.Parameters.Add("@accnumber", SqlDbType.NVarChar).Value = cy.AccNumber;
@@ -113,7 +113,7 @@ namespace RetailSales.Services.Master
                     //objCmd.Parameters.Add("@Approved", SqlDbType.NVarChar).Value = cy.Approved;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
-                    {
+                     {
                         objConn.Open();
                         objCmd.ExecuteNonQuery();
 
@@ -204,7 +204,7 @@ namespace RetailSales.Services.Master
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE Employee SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE USER_REGIST SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();

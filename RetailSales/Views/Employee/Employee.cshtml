@@ -86,6 +86,7 @@
                                                 <br /> <label for="inputName3" class="col-sm-4 control-label">Emp Id<label class="mandatory">*</label></label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(C => C.EmpId, new { @id = "txtEmpId", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.HiddenFor(C => C.ID)
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +143,7 @@
                                         <div class="form-group">
                                             <br /><label for="inputName3" class="col-sm-4 control-label">Aadhar Number</label>
                                             <div class="col-sm-8" >
-                                                    @Html.TextBoxFor(C => C.Aadhar, new { @id = "txtAadhar", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextBoxFor(C => C.AadharNumber, new { @id = "txtAadhar", @class = "form-control", @TabIndex = 1 })
                                             </div>
                                         </div>
                                     </div>
@@ -307,13 +308,13 @@
                                             <div class="form-group">
                                                 <br /><label for="inputName3" class="col-sm-5 control-label">Account Number</label>
                                                 <div class="col-sm-7">
-                                                    @Html.TextBoxFor(C => C.Account, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextBoxFor(C => C.AccNumber, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Joining<label class="mandatory">*</label></label>
+                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Joining<label class="mandatory"></label></label>
 
                                                 <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
                                                     @Html.TextBoxFor(C => C.Djoining, new { @id = "Djoining", @class = "form-control", @readonly = true })
@@ -576,9 +577,9 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtDbirth").value == "") {
+            if (document.getElementById("Dbirth").value == "") {
                 isValid = false;
-                $(txtDbirth).css({
+                $(Dbirth).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
@@ -587,7 +588,7 @@
                 return false;
             }
             else {
-                $(txtDbirth).css({
+                $(Dbirth).css({
                     "border": "",
                     "background": ""
                 });

@@ -27,6 +27,7 @@ namespace RetailSales.Controllers.Master
         {
             Employee ic = new Employee();
             ic.Gender = "Male";
+            ic.Maritalstatus = "Married";
             //ic.Materialstatuslst = BindMaterialstatus();
             ic.Countrylst = BindCountry();
             ic.Statelst = BindState();
@@ -51,8 +52,8 @@ namespace RetailSales.Controllers.Master
                     ic.Countryid = dt.Rows[0]["COUNTRY_ID"].ToString();
                     ic.mobile = dt.Rows[0]["MOBILE"].ToString();
                     ic.Email = dt.Rows[0]["EMAIL"].ToString();
-                    ic.Remark = dt.Rows[0]["REMARKS"].ToString();
-                    /*ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString()*/;
+                    //ic.Remark = dt.Rows[0]["REMARKS"].ToString();
+                    /*ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString()*/
                    // ic.Designation = dt.Rows[0]["DESIGNATION"].ToString();
                     ic.Branch = dt.Rows[0]["BRANCH"].ToString();
                     ic.Department = dt.Rows[0]["DEPARTMENT"].ToString();
