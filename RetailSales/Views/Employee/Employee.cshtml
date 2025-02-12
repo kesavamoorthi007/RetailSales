@@ -97,11 +97,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Qualification<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Qualification, new { @id = "txtQualification", @class = "form-control", @TabIndex = 1 })
+                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Birth<label class="mandatory">*</label></label>
+
+                                                <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
+                                                    @Html.TextBoxFor(C => C.Dbirth, new { @id = "Dbirth", @class = "form-control", @readonly = true })
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,7 +140,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                         <div class="form-group">
-                                            <br /><label for="inputName3" class="col-sm-4 control-label">Aadhar Number<label class="mandatory">*</label></label>
+                                            <br /><label for="inputName3" class="col-sm-4 control-label">Aadhar Number</label>
                                             <div class="col-sm-8" >
                                                     @Html.TextBoxFor(C => C.Aadhar, new { @id = "txtAadhar", @class = "form-control", @TabIndex = 1 })
                                             </div>
@@ -150,7 +152,7 @@
                                           <div class="form-group">
                                             <br /><label for="inputName3" class="col-sm-4 control-label">Address<label class="mandatory">*</label></label>
                                             <div class="col-sm-8">
-                                                @Html.TextBoxFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
                                             </div>
                                           </div>
                                         </div>
@@ -193,33 +195,23 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
+                                                <br /><label for="inputName3" class="col-sm-4 control-label">Bank</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(C => C.Bank, new { @id = "txtBank", @class = "form-control", @TabIndex = 1 })
+                                                </div>
+                                            </div>
+                                        </div>
+                  @*                       <div class="col-lg-4">
+                                            <div class="form-group">
                                                 <br><label for="inputName3" class="col-sm-4 control-label">Employee Status<label class="mandatory"></label></label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(C => C.EmployeeStatus, new { @id = "txtEmployeeStatus", @class = "form-control", @TabIndex = 1 })
 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> *@
                                     </div>
-                                    <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <br /><label for="inputName3" class="col-sm-4 control-label">Bank<label class="mandatory">*</label></label>
-                                            <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Bank, new { @id = "txtBank", @class = "form-control", @TabIndex = 1 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /><label for="inputName3" class="col-sm-5 control-label">Account Number<label class="mandatory">*</label></label>
-                                                <div class="col-sm-7">
-                                                    @Html.TextBoxFor(C => C.Account, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                   
-                                    </div>
+                                 
                                       
                                         @*<div class="col-lg-4">
                                             <div class="form-group">
@@ -313,6 +305,14 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
+                                                <br /><label for="inputName3" class="col-sm-5 control-label">Account Number</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(C => C.Account, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
                                                 <br><label for="inputName3" class="col-sm-4 control-label">Date Of Joining<label class="mandatory">*</label></label>
 
                                                 <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
@@ -331,16 +331,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                         <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Birth<label class="mandatory">*</label></label>
-
-                                                <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
-                                                    @Html.TextBoxFor(C => C.Dbirth, new { @id = "Dbirth", @class = "form-control", @readonly = true })
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                            </div>
-                                        </div>
+                             
                                     </div>
                                     @* <div class="col-lg-4">
                                             <div class="form-group">
@@ -533,22 +524,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtAadhar").value == "") {
-                isValid = false;
-                $(txtAadhar).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Aadhar Number");
-                return false;
-            }
-            else {
-                $(txtAadhar).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+      
                          
             if (document.getElementById("txtmobile").value == "") {
                 isValid = false;
@@ -566,22 +542,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtAccount").value == "") {
-                isValid = false;
-                $(txtAccount).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Account Number");
-                return false;
-            }
-            else {
-                $(txtAccount).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+       
             if (document.getElementById("txtMaritalstatus").value == "") {
                 isValid = false;
                 $(txtMaritalstatus).css({
@@ -598,22 +559,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtBank").value == "") {
-                isValid = false;
-                $(txtBank).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Bank");
-                return false;
-            }
-            else {
-                $(txtBank).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+  
             if (document.getElementById("txtDjoining").value == "") {
                 isValid = false;
                 $(txtDjoining).css({
