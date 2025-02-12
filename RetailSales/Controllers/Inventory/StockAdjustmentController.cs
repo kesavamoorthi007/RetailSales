@@ -17,10 +17,8 @@ namespace RetailSales.Controllers.Inventory
         IConfiguration? _configuratio;
         private string? _connectionString;
         DataTransactions datatrans;
-        public StockAdjustmentController(IStockAdjustmentService _StockAdjustmentService, IConfiguration _configuratio)
-        {
-            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
-            datatrans = new DataTransactions(_connectionString);
+        public StockAdjustmentController(IStockAdjustmentService _StockAdjustmentService)
+        {           
             StockAdjustmentService = _StockAdjustmentService;
         }
         public IActionResult StockAdjustment(string id)
@@ -46,11 +44,11 @@ namespace RetailSales.Controllers.Inventory
             else
             {
                 DataTable dt = new DataTable();
-                dt = StockAdjustmentService.GetEditStockAdjustmentItem(id);
+                dt = StockAdjustmentService.GetEditStockAdjustment(id);
                 if (dt.Rows.Count > 0)
                 {
                     ic.Locationlst = BindLocation();
-                    ic.Location = dt.Rows[0]["LOCATION_NAME"].ToString();
+                    ic.Location = dt.Rows[0]["LOCATION"].ToString();
                     ic.Type = dt.Rows[0]["TYPE"].ToString();
                     ic.DocId = dt.Rows[0]["DOCID"].ToString();
                     ic.DocDate = dt.Rows[0]["DOCDATE"].ToString();
@@ -74,6 +72,7 @@ namespace RetailSales.Controllers.Inventory
                         tda.Qty = dtt.Rows[i]["QTY"].ToString();
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                        tda.Isvalid = "Y";
                         tda.ID = id;
                         TData.Add(tda);
                     }
@@ -82,7 +81,44 @@ namespace RetailSales.Controllers.Inventory
             ic.StockAdjustmentList = TData;
             return View(ic);
         }
-       
+        [HttpPost]
+        public ActionResult StockAdjustment(StockAdjustment cy, string id)
+        {
+
+            try
+            {
+                cy.ID = id;
+                string Strout = StockAdjustmentService.StockAdjustmentCRUD(cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "StockAdjustment Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "StockAdjustment Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListStockAdjustment");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit StockAdjustment";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(cy);
+        }
+
 
         public IActionResult ListStockAdjustment()
         {
@@ -224,6 +260,37 @@ namespace RetailSales.Controllers.Inventory
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = StockAdjustmentService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListStockAdjustment");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListStockAdjustment");
+            }
+        }
+        public ActionResult Remove(string tag, string id)
+        {
+
+            string flag = StockAdjustmentService.RemoveChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListStockAdjustment");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListStockAdjustment");
             }
         }
 
