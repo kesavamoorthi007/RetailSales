@@ -195,9 +195,176 @@
     </div>
 </div>
 <script>
+    $('.form_time').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+
+
+    $('.to_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+
+    });
+
+    $('.form_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+    }).on('changeDate', function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $('.to_date').datetimepicker('setStartDate', minDate);
+
+    });
     $(function () {
         $('._select').select2();
     });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("txtLocation").value == "") {
+                isValid = false;
+                $(txtLocation).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Location");
+                return false;
+            }
+            else {
+                $(txtLocation).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtDocId").value == "") {
+                isValid = false;
+                $(txtDocId).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Doc ID");
+                return false;
+            }
+            else {
+                $(txtDocId).css({
+                    "border": "",
+                    "background": ""
+                });
+            }           
+            if (document.getElementById("txtReason").value == "") {
+                isValid = false;
+                $(txtReason).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Valid Reason");
+                return false;
+            }
+            else {
+                $(txtReason).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+
+                    if ($(this).find('#ddlItem' + j.toString()).val() != "" || $(this).find('#ddlItem' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlItem' + j.toString()).val() == "" || $(this).find('#ddlItem' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlItem' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Item");
+                            $(this).find('#ddlItem' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlItem' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#ddlVarient' + j.toString()).val() != "" || $(this).find('#ddlVarient' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlVarient' + j.toString()).val() == "" || $(this).find('#ddlVarient' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlVarient' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Variant");
+                            $(this).find('#ddlVarient' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlVarient' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtQty' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Qty");
+                        $(this).find('#txtQty' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtQty' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+
+                }
+                j += 1;
+            });
+
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+            
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
         $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
@@ -221,7 +388,7 @@
 
             },
             error: function () {
-                alert("Data Not Found");
+                alert("please Select Item");
             }
         });
     }
@@ -236,7 +403,7 @@
             },
             error: function () {
                 debugger;
-                alert("Please Select Product");
+                alert("Please Select Variant");
             }
         });
     }
@@ -351,4 +518,5 @@
             $('._select').select2();
         });
     }
+
 </script>
