@@ -65,7 +65,7 @@ namespace RetailSales.Services.Master
                 string svSQL = "";
 
                 if (cy.ID == null)
-                {
+                {                            
 
                    
                 }
@@ -84,27 +84,30 @@ namespace RetailSales.Services.Master
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
                  
-                    //objCmd.Parameters.Add("@EmpId", SqlDbType.NVarChar).Value = cy.EmpId;
+                    objCmd.Parameters.Add("@EmpId", SqlDbType.NVarChar).Value = cy.EmpId;
                     objCmd.Parameters.Add("@fname", SqlDbType.NVarChar).Value = cy.Ename;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     //objCmd.Parameters.Add("@branchid", SqlDbType.NVarChar).Value = cy.Branch;
                     //objCmd.Parameters.Add("@Departmentid", SqlDbType.NVarChar).Value = cy.Department;
-                    objCmd.Parameters.Add("@Desig", SqlDbType.NVarChar).Value = cy.Designation;
+                    //objCmd.Parameters.Add("@Desig", SqlDbType.NVarChar).Value = cy.Designation;
                     objCmd.Parameters.Add("@gender", SqlDbType.NVarChar).Value = cy.Gender;
                     objCmd.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar).Value = cy.Maritalstatus;
-                    //objCmd.Parameters.Add("@CITY_ID", SqlDbType.NVarChar).Value = cy.Cityid;
-                    //objCmd.Parameters.Add("@STATE_ID", SqlDbType.NVarChar).Value = cy.Stateid;
+                    objCmd.Parameters.Add("@cityname", SqlDbType.NVarChar).Value = cy.Cityid;
+                     objCmd.Parameters.Add("@statename", SqlDbType.NVarChar).Value = cy.Stateid;
                     //objCmd.Parameters.Add("@Countryid", SqlDbType.NVarChar).Value = cy.Stateid;
-                    objCmd.Parameters.Add("@mobile", SqlDbType.NVarChar).Value = cy.mobile;
-                    objCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = cy.Email;
-                    objCmd.Parameters.Add("@emailpersonal", SqlDbType.NVarChar).Value = cy.Emailpersonal;
+                     objCmd.Parameters.Add("@mobile", SqlDbType.NVarChar).Value = cy.mobile;
+                     objCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = cy.Email;
+                    //objCmd.Parameters.Add("@emailpersonal", SqlDbType.NVarChar).Value = cy.Emailpersonal;
                     objCmd.Parameters.Add("@Degree", SqlDbType.NVarChar).Value = cy.Degree;
-                    //objCmd.Parameters.Add("@DateOfJoin", SqlDbType.NVarChar).Value = cy.Djoining;
-                    //objCmd.Parameters.Add("@DateOfLeave", SqlDbType.NVarChar).Value = cy.Dleaving;
-                    //objCmd.Parameters.Add("@DateOfBirth", SqlDbType.NVarChar).Value = cy.Dbirth;
+                      objCmd.Parameters.Add("@DateOfJoin", SqlDbType.NVarChar).Value = cy.Djoining;
+                        objCmd.Parameters.Add("@DateOfLeave", SqlDbType.NVarChar).Value = cy.Dleaving;
+                    objCmd.Parameters.Add("@DateOfBirth", SqlDbType.NVarChar).Value = cy.Dbirth;
                     objCmd.Parameters.Add("@EmployeeStatus", SqlDbType.NVarChar).Value = cy.EmployeeStatus;
-                    
-                    objCmd.Parameters.Add("@ReportTo", SqlDbType.NVarChar).Value = cy.Report;
+                    objCmd.Parameters.Add("@aadharnumber", SqlDbType.NVarChar).Value = cy.AadharNumber;
+                    objCmd.Parameters.Add("@bank", SqlDbType.NVarChar).Value = cy.Bank;
+                    objCmd.Parameters.Add("@accnumber", SqlDbType.NVarChar).Value = cy.AccNumber;
+
+                    //objCmd.Parameters.Add("@ReportTo", SqlDbType.NVarChar).Value = cy.Report;
 
                     //objCmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = cy.Remark;
                     //objCmd.Parameters.Add("@Approved", SqlDbType.NVarChar).Value = cy.Approved;
@@ -115,7 +118,7 @@ namespace RetailSales.Services.Master
                         objCmd.ExecuteNonQuery();
 
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) 
                     {
                         System.Console.WriteLine("Exception: {0}", ex.ToString());
                     }
@@ -133,7 +136,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditEmployeeDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,EMPLOYEE_ID,FNAME,GENDER,ADDRESS,CITY_ID,STATE_ID,COUNTRY_ID,MOBILE,EMAIL,REMARKS,APPROVED_BY,BRANCH,DEPARTMENT,MATERIALSTATUS,EMAILPERSONAL,DATEOFJOINING,DATEOFBIRTH,DATEOFLEAVING,DEGREE,EMPLOYEE_STATUS,REPORT_TO FROM Employee WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,EMPLOYEE_ID,FNAME,GENDER,ADDRESS,CITY_ID,STATE_ID,COUNTRY_ID,MOBILE,EMAIL,REMARKS,APPROVED_BY,BRANCH,DEPARTMENT,MARITALSTATUS,EMAILPERSONAL,DATEOFJOINING,DATEOFBIRTH,DATEOFLEAVING,DEGREE,EMPLOYEE_STATUS,REPORT_TO,AANUMBER,ACCNUMBER,BANK FROM USER_REGIST WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

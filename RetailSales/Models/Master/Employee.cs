@@ -57,6 +57,10 @@ namespace RetailSales.Models
         public string Uname { get; set; }
         public string Pass { get; set; }
 
+        public string AadharNumber { get; set; }
+
+        public string AccNumber { get; set; }
+
     }
     public class Employeegrid
     {
