@@ -39,10 +39,9 @@ namespace RetailSales.Services
             return dtt;
         }
 
-        public DataTable Item
+        public DataTable GetItem()
         {
-            get
-            {
+           
                 string SvSql = string.Empty;
                 SvSql = "SELECT ID,PRODUCT_NAME FROM PRODUCT";
                 DataTable dtt = new DataTable();
@@ -50,7 +49,7 @@ namespace RetailSales.Services
                 SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
                 adapter.Fill(dtt);
                 return dtt;
-            }
+            
         }
         public DataTable GetVariant(string id)
         {
@@ -125,6 +124,25 @@ namespace RetailSales.Services
                 string StatementType = string.Empty;
                 string svSQL = "";
 
+                if (cy.ID == null)
+                {
+                    datatrans = new DataTransactions(_connectionString);
+
+
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'ST' AND IS_ACTIVE = 'Y'");
+                    string Documentid = string.Format("{0}{1}{2}", "ST/", "24-25/", (idc + 1).ToString());
+
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='ST' AND IS_ACTIVE ='Y'";
+                    try
+                    {
+                        datatrans.UpdateStatus(updateCMd);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    cy.Documentid = Documentid;
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     // Set the connection in the constructor

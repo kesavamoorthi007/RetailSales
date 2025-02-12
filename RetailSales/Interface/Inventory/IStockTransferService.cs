@@ -7,7 +7,7 @@ namespace RetailSales
         
         DataTable GetFBin();
         DataTable GetTBin();
-        DataTable Item { get; }
+     
 
         string StockTransferCRUD(StockTransfer ic);
         DataTable GetAllStockTransferGRID(string strStatus);
@@ -17,6 +17,7 @@ namespace RetailSales
         DataTable GetEditStockTransferDetail1(string id);
         //DataTable GetStockTransferItem(string id);
         string StatusChange(string tag, string id);
+        DataTable GetItem();
         //string StatusChange(string tag, string id);
         //string RemoveChange(string tag, string id);
         //string StatusDeleteMR(string tag, int id);

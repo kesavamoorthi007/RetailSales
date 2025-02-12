@@ -43,26 +43,12 @@
                 { name: 'documentid', type: 'string' },
                 { name: 'stocktransferdate', type: 'string' },
                 { name: 'fromLoc', type: 'string' },
-                //{ name: 'Address', type: 'string' },
-                //{ name: 'Cityid', type: 'string' },
-                //{ name: 'Stateid', type: 'string' },
-                //{ name: 'Countryid', type: 'string' },
+              
                 { name: 'toLoc', type: 'string' },
                 { name: 'fBin', type: 'string' },
                 { name: 'tBin', type: 'string' },
-                //{ name: 'Approved', type: 'string' },
-                //{ name: 'Designation', type: 'string' },
-                //{ name: 'Branch', type: 'string' },
-                //{ name: 'Department', type: 'string' },
-                //{ name: 'Maritalstatus', type: 'string' },
-                //{ name: 'Emailpersonal', type: 'string' },
-                //{ name: 'Djoining', type: 'string' },
-                //{ name: 'Dbirth', type: 'string' },
-                //{ name: 'Dleaving', type: 'string' },
-                //{ name: 'Degree', type: 'string' },
-                //{ name: 'EmployeeStatus', type: 'string' },
-                //{ name: 'Report', type: 'string' },
-                { name: 'editrow', type: 'string' },
+               
+                { name: 'view', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
             ],
@@ -107,7 +93,7 @@
                     { text: 'To Bin', filtertype: 'input', datafield: 'tBin', width: 100 },
                  
 
-                    { text: 'View', datafield: 'ViewRow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });

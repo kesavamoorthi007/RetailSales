@@ -4,27 +4,36 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Services;
 using static RetailSales.Models.StockTransferItem;
+using RetailSales.Interface.Purchase;
 
 namespace RetailSales.Controllers
 {
     public class StockTransferController : Controller
     {
         IStockTransferService StockTransferService;
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
 
-        private object grid;
-
-        public StockTransferController(IStockTransferService _StockTransferService)
+        public StockTransferController(IStockTransferService _StockTransferService, IConfiguration _configuratio)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             StockTransferService = _StockTransferService;
         }
         public IActionResult StockTransfer(string id)
         {
             StockTransfer ic = new StockTransfer();
 
+            DataTable dtv = datatrans.GetSequence("StockTransfor");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.Documentid = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
             List<StockTransferItem> TData = new List<StockTransferItem>();
             StockTransferItem tda = new StockTransferItem();
 
-            ic.Flocation = "Gudown";
+            ic.Flocation = "Godown";
             ic.Tlocation = "Store";
             ic.FBinlst = BindFBin();
             ic.TBinlst = BindTBin();
@@ -132,7 +141,7 @@ namespace RetailSales.Controllers
         {
             try
             {
-                DataTable dtDesg = StockTransferService.Item;
+                DataTable dtDesg = StockTransferService.GetItem();
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -228,23 +237,7 @@ namespace RetailSales.Controllers
             }
         }
 
-        public List<SelectListItem> Binditem()
-        {
-            try
-            {
-                DataTable dtDesg = StockTransferService.Item;
-                List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-                }
-                return lstdesg;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+      
         //public List<SelectListItem> BindFlocation()
         //{
         //    try
@@ -324,17 +317,17 @@ namespace RetailSales.Controllers
             {
 
                 string DeleteRow = string.Empty;
-                string EditRow = string.Empty;
+                string View = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    EditRow = "<a href=StockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/view.png' alt='Edit' width='28' /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='28' /></a>";
+                    View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
                 }
                 else
                 {
-                    EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='28' /></a>";
+                    View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
                 Reg.Add(new StockTransfergrid
                 {
@@ -345,7 +338,7 @@ namespace RetailSales.Controllers
                     toLoc = dtUsers.Rows[i]["TO_LOCATION"].ToString(),
                     fBin = dtUsers.Rows[i]["FBIN"].ToString(),
                     tBin = dtUsers.Rows[i]["TOBIN"].ToString(),
-                    editrow = EditRow,
+                    view = View,
                     delrow = DeleteRow,
 
                 });
