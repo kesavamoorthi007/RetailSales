@@ -67,7 +67,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">Doc ID<label class="mandatory">*</label></label>
+                                        <br /><label for="inputName3" class="col-sm-5 control-label">Stock Adjustment Number<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.DocId, new { @id = "txtDocId", @class = "form-control", @TabIndex = 1 })<br />
                                             
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Doc Date<label class="mandatory">*</label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">Date<label class="mandatory">*</label></label>
                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
                                             @Html.TextBoxFor(C => C.DocDate, new { @id = "txtDocDate", @class = "form-control", @TabIndex = 2, @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -86,22 +86,6 @@
                                 </div>
                             </div>
 
-
-
-                            <div class="row">
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Reason<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Reason, new { @id = "txtReason", @class = "form-control", @TabIndex = 1 }) <br />
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @* <div style="height:30px;"></div> *@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="btn-group">
@@ -179,6 +163,19 @@
 
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Reason<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Reason, new { @id = "txtReason", @class = "form-control", @TabIndex = 1 }) <br />
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -266,7 +263,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Doc ID");
+                alert("Please Enter Stock Adjustment Number");
                 return false;
             }
             else {
@@ -274,23 +271,7 @@
                     "border": "",
                     "background": ""
                 });
-            }           
-            if (document.getElementById("txtReason").value == "") {
-                isValid = false;
-                $(txtReason).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Valid Reason");
-                return false;
-            }
-            else {
-                $(txtReason).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            }                     
 
             var j = 0;
             $('tr.chkitemlst').each(function () {
@@ -357,6 +338,23 @@
                 }
                 j += 1;
             });
+
+            if (document.getElementById("txtReason").value == "") {
+                isValid = false;
+                $(txtReason).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Valid Reason");
+                return false;
+            }
+            else {
+                $(txtReason).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
 
 
             if (isValid == false)
