@@ -34,7 +34,7 @@ namespace RetailSales.Controllers.Purchase
             ic.Podate= DateTime.Now.ToString("dd-MMM-yyyy");
             ic.refdate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("Sales");
+            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
             if (dtv.Rows.Count > 0)
             {
                 ic.po = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
@@ -78,6 +78,14 @@ namespace RetailSales.Controllers.Purchase
                     ic.LRno = dt.Rows[0]["LR_NO"].ToString();
                     ic.LRdate = dt.Rows[0]["LR_DATE"].ToString();
                     ic.dispatchname = dt.Rows[0]["PLACE_DIS"].ToString();
+                    ic.Gross = dt.Rows[0]["GROSS"].ToString();
+                    ic.Net = dt.Rows[0]["NET"].ToString();
+                    ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                    ic.Frieghtcharge = dt.Rows[0]["FRIGHTCHARGE"].ToString();
+                    ic.CGST = dt.Rows[0]["CGST"].ToString();
+                    ic.SGST = dt.Rows[0]["SGST"].ToString();
+                    ic.IGST = dt.Rows[0]["IGST"].ToString();
+                    ic.Round = dt.Rows[0]["ROUNT_OFF"].ToString();
                     ic.ID = id;
 
                 }
@@ -98,6 +106,8 @@ namespace RetailSales.Controllers.Purchase
                         tda.Qty = dtt.Rows[i]["QTY"].ToString();
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                        tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
+                        tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                         tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                         tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
                         tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
@@ -106,6 +116,7 @@ namespace RetailSales.Controllers.Purchase
                         tda.IGST = dtt.Rows[i]["IGST"].ToString();
                         tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
                         tda.ID = id;
+                        tda.Isvalid = "Y";
                         TData.Add(tda);
                     }
                 }
@@ -175,6 +186,14 @@ namespace RetailSales.Controllers.Purchase
                 ic.LRno = dt.Rows[0]["LR_NO"].ToString();
                 ic.LRdate = dt.Rows[0]["LR_DATE"].ToString();
                 ic.dispatchname = dt.Rows[0]["PLACE_DIS"].ToString();
+                ic.Gross = dt.Rows[0]["GROSS"].ToString();
+                ic.Net = dt.Rows[0]["NET"].ToString();
+                ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.Frieghtcharge = dt.Rows[0]["FRIGHTCHARGE"].ToString();
+                ic.CGST = dt.Rows[0]["CGST"].ToString();
+                ic.SGST = dt.Rows[0]["SGST"].ToString();
+                ic.IGST = dt.Rows[0]["IGST"].ToString();
+                ic.Round = dt.Rows[0]["ROUNT_OFF"].ToString();
                 ic.ID = id;
 
 
@@ -199,6 +218,8 @@ namespace RetailSales.Controllers.Purchase
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                    tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
+                    tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                     tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                     tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
                     tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
@@ -207,7 +228,9 @@ namespace RetailSales.Controllers.Purchase
                     tda.IGST = dtt.Rows[i]["IGST"].ToString();
                     tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
                     tda.ID = id;
+                    tda.Isvalid = "Y";
                     TData.Add(tda);
+
                 }
             }
             ic.PurchaseorderLst = TData;
@@ -381,20 +404,35 @@ namespace RetailSales.Controllers.Purchase
 
                
                 string EditRow = string.Empty;
+                string GoToGRN = string.Empty;
                 string View = string.Empty;
                 string DeleteRow = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
-                    EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    if (dtUsers.Rows[i]["STATUS"].ToString() == "GRN Generated")
+                    {
+                        EditRow = "";
+                        GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='25' />";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+
+
+
+                    }
+                    else
+                    {
+                        EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='25'  /></a>";
+                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='25' /></a>";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+
+                    }
+                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='25' /></a>";
+
                 }
                 else
                 {
-                    View = "";
-                    EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                   
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='25' /></a>";
                 }
 
                 Reg.Add(new ListPurchaseordergrid
@@ -405,6 +443,7 @@ namespace RetailSales.Controllers.Purchase
                     sup = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
                     refno = dtUsers.Rows[i]["REF_NO"].ToString(),
                     editrow = EditRow,
+                    move = GoToGRN,
                     view = View,
                     delrow = DeleteRow,
 
@@ -416,6 +455,114 @@ namespace RetailSales.Controllers.Purchase
                 Reg
             });
 
+        }
+        public IActionResult MoveGRN(string id)
+        {
+            Purchaseorder ic = new Purchaseorder();
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = PurchaseorderService.GetPurchasOrder(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.po = dt.Rows[0]["PONO"].ToString();
+                ic.Podate = dt.Rows[0]["PODATE"].ToString();
+                ic.Suppid = dt.Rows[0]["SUPPLIER_NAME"].ToString();
+                ic.Supplieraddress = dt.Rows[0]["ADDRESS"].ToString();
+                ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                ic.State = dt.Rows[0]["STATE"].ToString();
+                ic.City = dt.Rows[0]["CITY"].ToString();
+                ic.refno = dt.Rows[0]["REF_NO"].ToString();
+                ic.refdate = dt.Rows[0]["REF_DATE"].ToString();
+                ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
+                ic.Narration = dt.Rows[0]["NARRATION"].ToString();
+                ic.drivername = dt.Rows[0]["TRANS_SPORTER"].ToString();
+                ic.LRno = dt.Rows[0]["LR_NO"].ToString();
+                ic.LRdate = dt.Rows[0]["LR_DATE"].ToString();
+                ic.dispatchname = dt.Rows[0]["PLACE_DIS"].ToString();
+                ic.Gross = dt.Rows[0]["GROSS"].ToString();
+                ic.Net = dt.Rows[0]["NET"].ToString();
+                ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.Frieghtcharge = dt.Rows[0]["FRIGHTCHARGE"].ToString();
+                ic.CGST = dt.Rows[0]["CGST"].ToString();
+                ic.SGST = dt.Rows[0]["SGST"].ToString();
+                ic.IGST = dt.Rows[0]["IGST"].ToString();
+                ic.Round = dt.Rows[0]["ROUNT_OFF"].ToString();
+                ic.ID = id;
+
+
+            }
+
+            List<PurchaseorderItem> TData = new List<PurchaseorderItem>();
+            PurchaseorderItem tda = new PurchaseorderItem();
+
+
+
+            dtt = PurchaseorderService.GetPurchasOrderItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new PurchaseorderItem();
+                    tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
+                    tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                    tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
+                    tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
+                    tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
+                    tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
+                    tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
+                    tda.CGST = dtt.Rows[i]["CGST"].ToString();
+                    tda.SGST = dtt.Rows[i]["SGST"].ToString();
+                    tda.IGST = dtt.Rows[i]["IGST"].ToString();
+                    tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
+                    tda.ID = id;
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+                }
+            }
+            ic.PurchaseorderLst = TData;
+            return View(ic);
+        }
+        [HttpPost]
+        public ActionResult MoveGRN(Purchaseorder Cy, string id)
+        {
+            try
+            {
+                Cy.ID = id;
+                string Strout = PurchaseorderService.OrderToGRN(Cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (Cy.ID == null)
+                    {
+                        TempData["notice"] = "GRN Generated Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "GRN Generated Successfully...!";
+                    }
+                    return RedirectToAction("ListPurchaseorder");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit Purchaseorder";
+                    TempData["notice"] = Strout;
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RedirectToAction("ListPurchaseorder");
         }
         public ActionResult DeleteMR(string tag, string id)
         {

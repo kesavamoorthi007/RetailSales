@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.DirectPurchase
+﻿@model RetailSales.Models.GRN
 
 @{
-    ViewData["Title"] = "DirectPurchase";
+    ViewData["Title"] = "GRN";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Direct Purchase</strong> </li>
+            <li class="active"> <strong>GRN</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/DirectPurchase/MyListDirectPurchasergrid",
+            url: "/GRN/MyListGRNgrid",
             data: {
                 strstatus: ""
             },
@@ -40,13 +40,12 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'doc', type: 'string' },
-                { name: 'docdate', type: 'string' },
+                { name: 'grn', type: 'string' },
+                { name: 'grndate', type: 'string' },
                 { name: 'sup', type: 'string' },
-                { name: 'refno', type: 'string' },
                 { name: 'net', type: 'string' },
-                { name: 'editrow', type: 'string' },
-                { name: 'view', type: 'string' },
+                // { name: 'editrow', type: 'string' },
+                // { name: 'view', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
 
@@ -84,13 +83,12 @@
 
                 columns: [
 
-                    { text: 'Inv No', filtertype: 'checkedlist', datafield: 'doc', width: 160 },
-                    { text: 'Inv Date', filtertype: 'input', datafield: 'docdate', width: 160 },
-                    { text: 'Supplier Name', filtertype: 'input', datafield: 'sup', width: 160 },
-                    { text: 'Ref No', filtertype: 'input', datafield: 'refno', width: 120 },
-                    { text: 'Total Amount', filtertype: 'input', datafield: 'net', width: 120 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'GRN No', filtertype: 'checkedlist', datafield: 'grn', width: 200 },
+                    { text: 'GRN Date', filtertype: 'input', datafield: 'grndate', width: 200 },
+                    { text: 'Supplier Name', filtertype: 'input', datafield: 'sup', width: 120 },
+                    { text: 'Net', filtertype: 'input', datafield: 'net', width: 200 },
+                    // { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    // { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                 ]
             });
@@ -115,22 +113,6 @@
                 <div class="widgets-container">
 
                     <form>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-2 ">
-                                @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
-                                         { new SelectListItem() {Text = "Enabled", Value="Y"},
-                                new SelectListItem() {Text = "Disabled", Value="N"}},
-                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
-                            </div>
-                            <div class="col-md-9 ">
-                                <div class=" textalignright">
-                                    <a href="@Url.Action("DirectPurchase", "DirectPurchase")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Direct Purchase </a>
-                                    <br>
-                                </div>
-
-                            </div>
-                        </div>
                         <br />
                         <div class="row">
 

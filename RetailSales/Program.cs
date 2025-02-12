@@ -85,6 +85,7 @@ internal class Program
         builder.Services.TryAddSingleton<IDirectPurchaseService, DirectPurchaseService>();
 
         builder.Services.TryAddSingleton<IRateService, RateService>();
+        builder.Services.TryAddSingleton<IGRNService, GRNService>();
 
 
 
