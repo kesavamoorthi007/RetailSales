@@ -28,7 +28,7 @@ namespace RetailSales.Controllers.Purchase
             ic.refdate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("Sales");
+            DataTable dtv = datatrans.GetSequence("DirectPurchase");
             if (dtv.Rows.Count > 0)
             {
                 ic.doc = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
@@ -75,6 +75,7 @@ namespace RetailSales.Controllers.Purchase
                     ic.Gross = dt.Rows[0]["GROSS"].ToString();
                     ic.Net = dt.Rows[0]["NET"].ToString();
                     ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                    ic.Frieghtcharge = dt.Rows[0]["FRIGHTCHARGE"].ToString();
                     ic.CGST = dt.Rows[0]["CGST"].ToString();
                     ic.SGST = dt.Rows[0]["SGST"].ToString();
                     ic.IGST = dt.Rows[0]["IGST"].ToString();
@@ -99,6 +100,7 @@ namespace RetailSales.Controllers.Purchase
                         tda.Qty = dtt.Rows[i]["QTY"].ToString();
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                        tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
                         tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                         tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                         tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
@@ -107,6 +109,7 @@ namespace RetailSales.Controllers.Purchase
                         tda.SGST = dtt.Rows[i]["SGST"].ToString();
                         tda.IGST = dtt.Rows[i]["IGST"].ToString();
                         tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
+                        tda.Isvalid = "Y";
                         tda.ID = id;
                         TData.Add(tda);
                     }
@@ -233,6 +236,7 @@ namespace RetailSales.Controllers.Purchase
                 ic.Gross = dt.Rows[0]["GROSS"].ToString();
                 ic.Net = dt.Rows[0]["NET"].ToString();
                 ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.Frieghtcharge = dt.Rows[0]["FRIGHTCHARGE"].ToString();
                 ic.CGST = dt.Rows[0]["CGST"].ToString();
                 ic.SGST = dt.Rows[0]["SGST"].ToString();
                 ic.IGST = dt.Rows[0]["IGST"].ToString();
@@ -261,6 +265,7 @@ namespace RetailSales.Controllers.Purchase
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                    tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
                     tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                     tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                     tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();

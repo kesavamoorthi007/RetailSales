@@ -20,5 +20,6 @@ namespace RetailSales.Interface.Purchase
         DataTable GetHsn(string id);
         DataTable GethsnDetails(string id);
         DataTable GetgstDetails(string id);
+        string OrderToGRN(Purchaseorder cy);
     }
 }

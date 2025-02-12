@@ -22,11 +22,11 @@ namespace RetailSales.Services.Purchase
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT POBASICID,PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,REF_NO,POBASIC.IS_ACTIVE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME  WHERE POBASIC.IS_ACTIVE = 'Y' ORDER BY POBASIC.POBASICID DESC";
+                SvSql = "SELECT POBASICID,PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,REF_NO,STATUS,POBASIC.IS_ACTIVE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME  WHERE POBASIC.IS_ACTIVE = 'Y' ORDER BY POBASIC.POBASICID DESC";
             }
             else
             {
-                SvSql = "SELECT POBASICID,PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,REF_NO,POBASIC.IS_ACTIVE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME  WHERE POBASIC.IS_ACTIVE = 'N' ORDER BY POBASIC.POBASICID DESC";
+                SvSql = "SELECT POBASICID,PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,REF_NO,STATUS,POBASIC.IS_ACTIVE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME  WHERE POBASIC.IS_ACTIVE = 'N' ORDER BY POBASIC.POBASICID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -109,7 +109,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetPurchasOrder(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,CONVERT(varchar, POBASIC.REF_DATE, 106) AS REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,CONVERT(varchar, POBASIC.LR_DATE, 106) AS LR_DATE,PLACE_DIS FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME WHERE POBASIC.POBASICID='" + id + "'";
+            SvSql = "SELECT PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUPPLIER.SUPPLIER_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,CONVERT(varchar, POBASIC.REF_DATE, 106) AS REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,CONVERT(varchar, POBASIC.LR_DATE, 106) AS LR_DATE,PLACE_DIS,GROSS,NET,CGST,SGST,IGST,ROUNT_OFF,DISCOUNT,FRIGHTCHARGE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME WHERE POBASIC.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -119,7 +119,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetEditPurchasOrder(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUP_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,CONVERT(varchar, POBASIC.REF_DATE, 106) AS REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,CONVERT(varchar, POBASIC.LR_DATE, 106) AS LR_DATE,PLACE_DIS FROM POBASIC WHERE POBASIC.POBASICID='" + id + "'";
+            SvSql = "SELECT PONO,CONVERT(varchar, POBASIC.PODATE, 106) AS PODATE,SUP_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,CONVERT(varchar, POBASIC.REF_DATE, 106) AS REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,CONVERT(varchar, POBASIC.LR_DATE, 106) AS LR_DATE,PLACE_DIS,GROSS,NET,CGST,SGST,IGST,ROUNT_OFF,DISCOUNT,FRIGHTCHARGE FROM POBASIC WHERE POBASIC.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -129,7 +129,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetPurchasOrderItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT POBASICID,PODETAILID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,HSN,PODETAIL.TARIFF,PODETAIL.UOM,QTY,PODETAIL.RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT\r\n WHERE PODETAIL.POBASICID='" + id + "'";
+            SvSql = "SELECT POBASICID,PODETAILID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,HSN,PODETAIL.TARIFF,PODETAIL.UOM,QTY,PODETAIL.RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT WHERE PODETAIL.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -139,7 +139,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetEditPurchasOrderItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT POBASICID,PODETAILID,ITEM,VARIANT,HSN,PODETAIL.TARIFF,PODETAIL.UOM,QTY,PODETAIL.RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL  WHERE PODETAIL.POBASICID='" + id + "'";
+            SvSql = "SELECT POBASICID,PODETAILID,ITEM,VARIANT,HSN,PODETAIL.TARIFF,PODETAIL.UOM,QTY,PODETAIL.RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL  WHERE PODETAIL.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -159,10 +159,10 @@ namespace RetailSales.Services.Purchase
                     datatrans = new DataTransactions(_connectionString);
 
 
-                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'SI' AND IS_ACTIVE = 'Y'");
-                    string po = string.Format("{0}{1}{2}", "SI/", "24-25/" , (idc + 1).ToString());
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'PO' AND IS_ACTIVE = 'Y'");
+                    string po = string.Format("{0}{1}{2}", "PO/", "24-25/" , (idc + 1).ToString());
 
-                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='SI' AND IS_ACTIVE ='Y'";
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='PO' AND IS_ACTIVE ='Y'";
                     try
                     {
                         datatrans.UpdateStatus(updateCMd);
@@ -205,6 +205,14 @@ namespace RetailSales.Services.Purchase
                     //objCmd.Parameters.Add("@lrdate", SqlDbType.NVarChar).Value = cy.LRdate;
                     objCmd.Parameters.AddWithValue("@lrdate", cy.LRdate);
                     objCmd.Parameters.Add("@place", SqlDbType.NVarChar).Value = cy.dispatchname;
+                    objCmd.Parameters.Add("@gross", SqlDbType.NVarChar).Value = cy.Gross;
+                    objCmd.Parameters.Add("@net", SqlDbType.NVarChar).Value = cy.Net;
+                    objCmd.Parameters.Add("@dis", SqlDbType.NVarChar).Value = cy.Disc;
+                    objCmd.Parameters.Add("@fright", SqlDbType.NVarChar).Value = cy.Frieghtcharge;
+                    objCmd.Parameters.Add("@cgst", SqlDbType.NVarChar).Value = cy.CGST;
+                    objCmd.Parameters.Add("@sgst", SqlDbType.NVarChar).Value = cy.SGST;
+                    objCmd.Parameters.Add("@igst", SqlDbType.NVarChar).Value = cy.IGST;
+                    objCmd.Parameters.Add("@round", SqlDbType.NVarChar).Value = cy.Round;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {
@@ -225,7 +233,7 @@ namespace RetailSales.Services.Purchase
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
+                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -241,7 +249,7 @@ namespace RetailSales.Services.Purchase
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
+                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -270,6 +278,77 @@ namespace RetailSales.Services.Purchase
 
             return msg;
         }
+
+        public string OrderToGRN(Purchaseorder cy)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty; string svSQL = "";
+                datatrans = new DataTransactions(_connectionString);
+
+
+                int idc = datatrans.GetDataId("SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'GRN' AND IS_ACTIVE = 'Y'");
+                string docno = string.Format("{0}{1}{2}", "GRN/", "24-25/", (idc + 1).ToString());
+
+                string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='GRN' AND IS_ACTIVE ='Y'";
+                try
+                {
+                    datatrans.UpdateStatus(updateCMd);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    svSQL = "Insert into GRN_BASIC (GRN_NO,GRN_DATE,SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,LR_DATE,PLACE_DIS,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF,POBASIC_ID,IS_ACTIVE) (Select '" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "',SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,LR_DATE,PLACE_DIS,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF,'" + cy.ID + "','Y' from POBASIC where POBASICID='" + cy.ID + "')";
+                    SqlCommand objCmd = new SqlCommand(svSQL, objConn);
+                    try
+                    {
+                        objConn.Open();
+                        objCmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        //System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
+                }
+
+                string quotid = datatrans.GetDataString("Select GRN_BASIC_ID from GRN_BASIC Where POBASIC_ID=" + cy.ID + "");
+                using (SqlConnection objConnT = new SqlConnection(_connectionString))
+
+                {
+                    string Sql = "Insert into GRN_DETAIL (GRN_BASIC_ID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) (Select '" + quotid + "',ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL WHERE POBASICID=" + cy.ID + ")";
+                    SqlCommand objCmds = new SqlCommand(Sql, objConnT);
+                    objConnT.Open();
+                    objCmds.ExecuteNonQuery();
+                    objConnT.Close();
+                }
+
+                using (SqlConnection objConnE = new SqlConnection(_connectionString))
+                {
+                    string Sql = "UPDATE POBASIC SET STATUS='GRN Generated' where POBASICID='" + cy.ID + "'";
+                    SqlCommand objCmds = new SqlCommand(Sql, objConnE);
+                    objConnE.Open();
+                    objCmds.ExecuteNonQuery();
+                    objConnE.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
+        }
+
+
+
         public string StatusChange(string tag, string id)
         {
 

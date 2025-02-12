@@ -55,6 +55,7 @@ namespace RetailSales.Models
         public string Rate { get; set; }
         public string Disc { get; set; }
         public string Amount { get; set; }
+        public string FrigCharge { get; set; }
         public string DiscAmount { get; set; }
         public string Cf { get; set; }
         public string Hsn { get; set; }
