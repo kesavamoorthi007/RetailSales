@@ -130,7 +130,7 @@ namespace RetailSales.Controllers.Master
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     binid = dtUsers.Rows[i]["BINID"].ToString(),
                     description = dtUsers.Rows[i]["BINDESC"].ToString(),
-                    location = dtUsers.Rows[i]["LOCID"].ToString(),
+                    location = dtUsers.Rows[i]["LOCATION_NAME"].ToString(),
                     edit = Edit,
                     delete = Delete,
 
