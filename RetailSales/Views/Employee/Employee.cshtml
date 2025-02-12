@@ -97,7 +97,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <br><label for="inputName3" class="col-sm-4 control-label">Date Of Birth<label class="mandatory">*</label></label>
 
@@ -126,7 +126,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <br /><label for="inputName3" class="col-sm-3 control-label">Marital status<label class="Mandatory"></label></label>
+                                                <br /><label for="inputName3" class="col-sm-4 control-label">Marital status<label class="Mandatory"></label></label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
 
@@ -138,21 +138,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <br /> <label for="inputName3" class="col-sm-4 control-label">Qualification<label class="mandatory">*</label></label>
-                                                    <div class="col-sm-8">
-                                                        @Html.TextBoxFor(C => C.Qualification, new { @id = "txtQualification", @class = "form-control", @TabIndex = 1 })
-                                                    </div>
-                                                </div>
+                                        <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <br /><label for="inputName3" class="col-sm-4 control-label">Aadhar Number</label>
+                                            <div class="col-sm-8" >
+                                                    @Html.TextBoxFor(C => C.Aadhar, new { @id = "txtAadhar", @class = "form-control", @TabIndex = 1 })
                                             </div>
+                                        </div>
+                                    </div>
                                      </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                           <div class="form-group">
                                             <br /><label for="inputName3" class="col-sm-4 control-label">Address<label class="mandatory">*</label></label>
                                             <div class="col-sm-8">
-                                                @Html.TextBoxFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
                                             </div>
                                           </div>
                                         </div>
@@ -195,40 +195,23 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
+                                                <br /><label for="inputName3" class="col-sm-4 control-label">Bank</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(C => C.Bank, new { @id = "txtBank", @class = "form-control", @TabIndex = 1 })
+                                                </div>
+                                            </div>
+                                        </div>
+                  @*                       <div class="col-lg-4">
+                                            <div class="form-group">
                                                 <br><label for="inputName3" class="col-sm-4 control-label">Employee Status<label class="mandatory"></label></label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(C => C.EmployeeStatus, new { @id = "txtEmployeeStatus", @class = "form-control", @TabIndex = 1 })
 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> *@
                                     </div>
-                                    <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <br /><label for="inputName3" class="col-sm-4 control-label">Bank<label class="mandatory">*</label></label>
-                                            <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Bank, new { @id = "txtBank", @class = "form-control", @TabIndex = 1 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /><label for="inputName3" class="col-sm-4 control-label">Account Number<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Account, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <br /><label for="inputName3" class="col-sm-4 control-label">Aadhar Number<label class="mandatory">*</label></label>
-                                            <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Aadhar, new { @id = "txtAadhar", @class = "form-control", @TabIndex = 1 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
+                                 
                                       
                                         @*<div class="col-lg-4">
                                             <div class="form-group">
@@ -320,9 +303,17 @@
                                         </div>*@
                                   @*  </div>*@
                                     <div class="row">
-                                        <div class="col-lg-5">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-3 control-label">Date Of Joining<label class="mandatory">*</label></label>
+                                                <br /><label for="inputName3" class="col-sm-5 control-label">Account Number</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(C => C.Account, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Joining<label class="mandatory">*</label></label>
 
                                                 <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
                                                     @Html.TextBoxFor(C => C.Djoining, new { @id = "Djoining", @class = "form-control", @readonly = true })
@@ -330,9 +321,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-5">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-3 control-label">Date Of Leaving<label class="mandatory"></label></label>
+                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Leaving<label class="mandatory"></label></label>
 
                                                 <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
                                                     @Html.TextBoxFor(C => C.Dleaving, new { @id = "Dleaving", @class = "form-control", @readonly = true })
@@ -340,8 +331,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                       @* <div class="col-lg-4">
+                             
+                                    </div>
+                                    @* <div class="col-lg-4">
                                             <div class="form-group">
                                                 <br> <label for="inputName3" class="col-sm-4 control-label">Degree<label class="mandatory"></label></label>
                                                 <div class="col-sm-8">
@@ -360,9 +352,7 @@
                                             </div>
                                         </div>
                                     </div>*@
-
-                                </div>
-                           </div>
+                           
                                 @*2rd tab*@
                                 @*<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
@@ -456,6 +446,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                        
                                     </div>
                             </div>
                             
@@ -492,7 +483,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter EMPLOYEE ID Name");
+                alert("Please Enter EMPLOYEE ID");
                 return false;
             }
             else {
@@ -501,102 +492,40 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtFname").value == "") {
+            if (document.getElementById("txtEname").value == "") {
                 isValid = false;
-                $(txtFname).css({
+                $(txtEname).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter FNAME");
+                alert("Please Enter Employee Name");
                 return false;
             }
             else {
-                $(txtFname).css({
+                $(txtEname).css({
                     "border": "",
                     "background": ""
                 });
             }
-            if (document.getElementById("txtGender").value == "") {
+            if (document.getElementById("txtQualification").value == "") {
                 isValid = false;
-                $(txtGender).css({
+                $(txtQualification).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter GENDER");
+                alert("Please Enter Qualification");
                 return false;
             }
             else {
-                $(txtGender).css({
+                $(txtQualification).css({
                     "border": "",
                     "background": ""
                 });
             }
-            if (document.getElementById("txtAddress").value == "") {
-                isValid = false;
-                $(txtAddress).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter ADDRESS");
-                return false;
-            }
-            else {
-                $(txtAddress).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtCityid").value == "") {
-                isValid = false;
-                $(txtCityid).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter CITY ID");
-                return false;
-            }
-            else {
-                $(txtCityid).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtStateid").value == "") {
-                isValid = false;
-                $(txtStateid).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter STATE ID");
-                return false;
-            }
-            else {
-                $(txtStateid).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtCountryid").value == "") {
-                isValid = false;
-                $(txtCountryid).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter COUNTRY ID");
-                return false;
-            }
-            else {
-                $(txtCountryid).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+      
+                         
             if (document.getElementById("txtmobile").value == "") {
                 isValid = false;
                 $(txtmobile).css({
@@ -604,7 +533,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter MOBILE");
+                alert("Please Enter MOBILE NUMBER");
                 return false;
             }
             else {
@@ -613,102 +542,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtEmail").value == "") {
-                isValid = false;
-                $(txtEmail).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter EMAIL");
-                return false;
-            }
-            else {
-                $(txtEmail).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtRemark").value == "") {
-                isValid = false;
-                $(txtRemark).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter REMARKS");
-                return false;
-            }
-            else {
-                $(txtRemark).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtApproved").value == "") {
-                isValid = false;
-                $(txtApproved).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter APPROVED BY");
-                return false;
-            }
-            else {
-                $(txtApproved).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtDesignation").value == "") {
-                isValid = false;
-                $(txtDesignation).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter DESIGNATION");
-                return false;
-            }
-            else {
-                $(txtDesignation).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtBranch").value == "") {
-                isValid = false;
-                $(txtBranch).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter BRANCH");
-                return false;
-            }
-            else {
-                $(txtBranch).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtDepartment").value == "") {
-                isValid = false;
-                $(txtDepartment).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter DEPARTMENT");
-                return false;
-            }
-            else {
-                $(txtDepartment).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+       
             if (document.getElementById("txtMaritalstatus").value == "") {
                 isValid = false;
                 $(txtMaritalstatus).css({
@@ -725,22 +559,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtEmailpersonal").value == "") {
-                isValid = false;
-                $(txtEmailpersonal).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter EMAILPERSONAL");
-                return false;
-            }
-            else {
-                $(txtEmailpersonal).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+  
             if (document.getElementById("txtDjoining").value == "") {
                 isValid = false;
                 $(txtDjoining).css({
@@ -789,54 +608,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtDegree").value == "") {
-                isValid = false;
-                $(txtDegree).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter DEGREE");
-                return false;
-            }
-            else {
-                $(txtDegree).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtEmployeeStatus").value == "") {
-                isValid = false;
-                $(txtEmployeeStatus).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter EMPLOYEE STATUS");
-                return false;
-            }
-            else {
-                $(txtEmployeeStatus).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtReport").value == "") {
-                isValid = false;
-                $(txtReport).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter REPORT TO");
-                return false;
-            }
-            else {
-                $(txtReport).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+                    
             if (isValid == false)
                 e.preventDefault();
         });

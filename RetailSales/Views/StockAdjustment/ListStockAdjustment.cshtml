@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.DirectPurchase
+﻿@model RetailSales.Models.Inventory.StockAdjustment
 
 @{
-    ViewData["Title"] = "DirectPurchase";
+    ViewData["Title"] = "ListStockAdjustment";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Direct Purchase</strong> </li>
+            <li class="active"> <strong>Stock Adjustment</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/DirectPurchase/MyListDirectPurchasergrid",
+            url: "/StockAdjustment/MyListStockAdjustmentgrid",
             data: {
                 strstatus: ""
             },
@@ -40,14 +40,12 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'doc', type: 'string' },
+                { name: 'location', type: 'string' },
+                { name: 'type', type: 'string' },
+                { name: 'docid', type: 'string' },
                 { name: 'docdate', type: 'string' },
-                { name: 'sup', type: 'string' },
-                { name: 'refno', type: 'string' },
-                { name: 'net', type: 'string' },
-                { name: 'editrow', type: 'string' },
-                { name: 'view', type: 'string' },
-                { name: 'delrow', type: 'string' },
+                { name: 'edit', type: 'string' },
+                { name: 'delete', type: 'string' },
 
 
             ],
@@ -84,14 +82,12 @@
 
                 columns: [
 
-                    { text: 'Inv No', filtertype: 'checkedlist', datafield: 'doc', width: 160 },
-                    { text: 'Inv Date', filtertype: 'input', datafield: 'docdate', width: 160 },
-                    { text: 'Supplier Name', filtertype: 'input', datafield: 'sup', width: 160 },
-                    { text: 'Ref No', filtertype: 'input', datafield: 'refno', width: 120 },
-                    { text: 'Total Amount', filtertype: 'input', datafield: 'net', width: 120 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'Location', filtertype: 'checkedlist', datafield: 'location', width: 200 },
+                    { text: 'Type', filtertype: 'input', datafield: 'type', width: 200 },
+                    { text: 'Doc ID', filtertype: 'input', datafield: 'docid', width: 200 },
+                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 200 },
+                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -125,7 +121,7 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("DirectPurchase", "DirectPurchase")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Direct Purchase </a>
+                                    <a href="@Url.Action("StockAdjustment", "StockAdjustment")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Stock Adjustment </a>
                                     <br>
                                 </div>
 
@@ -151,5 +147,6 @@
         return confirm("Are you sure you want to delete?");
     }
 </script>
+
 
 

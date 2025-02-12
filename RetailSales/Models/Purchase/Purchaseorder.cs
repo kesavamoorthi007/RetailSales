@@ -52,17 +52,15 @@ namespace RetailSales.Models
         public string Description { get; set; }
         public string UOM { get; set; }
         public string Qty { get; set; }
-        public string Discount { get; set; }
+        public string DiscAmount { get; set; }
+        public string FrigCharge { get; set; }
+        public string FrieghtAmt { get; set; }
         public string Rate { get; set; }
         public string Amount { get; set; }
-        public string Cf { get; set; }
         public string Hsn { get; set; }
         public string ID { get; set; }
-        public string ReturnQty { get; set; }
         public string Tariff { get; set; }
         public string Bin { get; set; }
-        public string Damount { get; set; }
-        public string Other { get; set; }
         public string CGSTP { get; set; }
         public string SGSTP { get; set; }
         public string IGSTP { get; set; }
@@ -81,6 +79,7 @@ namespace RetailSales.Models
         public string sup { get; set; }
         public string refno { get; set; }
         public string editrow { get; set; }
+        public string move { get; set; }
         public string view { get; set; }
         public string delrow { get; set; }
 
