@@ -45,7 +45,7 @@ namespace RetailSales.Controllers
             else
             {
                 DataTable dt = new DataTable();
-                double total = 0;
+              
                 dt = HSNcodeService.GetHSNcode(id);
 
                 if (dt.Rows.Count > 0)

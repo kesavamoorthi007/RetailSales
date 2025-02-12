@@ -40,7 +40,7 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'group', type: 'string' },
+                { name: 'category', type: 'string' },
                 { name: 'des', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
@@ -80,7 +80,7 @@
 
                 columns: [
 
-                    { text: 'Customer Group', filtertype: 'checkedlist', datafield: 'group', width: 200 },
+                    { text: 'Customer Category', filtertype: 'checkedlist', datafield: 'category', width: 200 },
                     { text: 'Description', filtertype: 'input', datafield: 'des', width: 200 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },

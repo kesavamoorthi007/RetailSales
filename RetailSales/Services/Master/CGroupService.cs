@@ -43,7 +43,7 @@ namespace RetailSales.Services.Master
                 if (Ic.ID == null)
                 {
 
-                    svSQL = "SELECT Count(CUSTOMER_GROUP) as cnt FROM CUSTOMER_GROUP_MASTER WHERE CUSTOMER_GROUP = LTRIM(RTRIM('" + Ic.CustomerGroup + "'))";
+                    svSQL = "SELECT Count(CUSTOMER_GROUP) as cnt FROM CUSTOMER_GROUP_MASTER WHERE CUSTOMER_GROUP = LTRIM(RTRIM('" + Ic.Customercategory + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
                         msg = "Customer Group Name Already Existed";
@@ -64,7 +64,7 @@ namespace RetailSales.Services.Master
                         StatementType = "Update";
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = Ic.ID;
                     }
-                    objCmd.Parameters.Add("@customergroup", SqlDbType.NVarChar).Value = Ic.CustomerGroup;
+                    objCmd.Parameters.Add("@customergroup", SqlDbType.NVarChar).Value = Ic.Customercategory;
                     objCmd.Parameters.Add("@description", SqlDbType.NVarChar).Value = Ic.Description;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try

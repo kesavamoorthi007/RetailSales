@@ -181,7 +181,7 @@
 
                                     <li><a href="@Url.Action("StockAdjustment", "StockAdjustment")">Stock Adjustment</a></li>
 
-                                    <li><a href="@Url.Action("StockTransfer", "StockTransfer")">Stock Transfer</a></li>
+                                    
 
 
                                 </ul>
@@ -236,6 +236,7 @@
                                 <ul class="sidebar-submenu">
                                     <li><a href="@Url.Action("ListProduct", "Product")">Product Category</a></li>
                                     <li><a href="@Url.Action("ListProductdetail", "Productdetail")">Product</a></li>
+                                    <li><a href="@Url.Action("ListRate", "Rate")">Rate</a></li>
                                 </ul>
 
                             </li>
@@ -251,40 +252,60 @@
                                 <ul class="sidebar-submenu">
                                     @* <li><a href="@Url.Action("ListCountry", "Country")">Country</a></li> *@
 
-                                    <li><a href="@Url.Action("ListSupplier", "Supplier")">Supplier</a></li>
-                                    <li><a href="@Url.Action("ListUOM", "UOM")">UOM</a></li>
-                                    <li><a href="@Url.Action("ListBIN", "BIN")">BIN</a></li>
                                     <li><a href="@Url.Action("ListEmployee", "Employee")">Employee</a></li>
+                                    <li><a href="@Url.Action("ListSupplier", "Supplier")">Supplier</a></li>
+                                     <li><a href="@Url.Action("ListCCategory", "CCategory")">Customer Category</a></li> 
+                                   @* <li><a href="@Url.Action("ListCGroup", "CGroup")">Customer Group</a></li>*@
+                                    <li><a href="@Url.Action("ListCustomer", "Customer")">Customer</a></li>
+                                     <li><a href="@Url.Action("ListBIN", "BIN")">BIN</a></li>
                                     <li><a href="@Url.Action("ListLocation", "Location")">Location</a></li>
-                                    <li><a href="@Url.Action("ListSequence", "Sequence")">Sequence</a></li>
+                                    <li><a href="@Url.Action("ListUOM", "UOM")">UOM</a></li>
+                                    <li><a href="@Url.Action("ListTaxMaster", "TaxMaster")">Tax</a></li>
+                                    <li><a href="@Url.Action("ListHSNcode", "HSNcode")">HSN Code</a></li>
+                                    <li><a href="@Url.Action("ListState", "State")">State</a></li>
+                                    <li><a href="@Url.Action("ListCity", "City")">City</a></li>
+                                   
                                   
-                                     <li><a href="@Url.Action("ListCustomer", "Customer")">Customer</a></li>
-                                      @* <li><a href="@Url.Action("ListCCategory", "CCategory")">Customer Category</a></li> *@
-                                    <li><a href="@Url.Action("CGroup", "CGroup")">Customer Group</a></li>
+                                  
+                                     
+                                      
+                                    
 
                                     @* <li><a href="@Url.Action("Productdetail", "Productdetail")">Product Detail</a></li>
                                    *@
 
 
-                                    <li><a href="@Url.Action("ListCompany", "Company")">Company</a></li>
-                                    <li><a href="@Url.Action("TaxMaster", "TaxMaster")">Tax</a></li>
-                                    <li><a href="@Url.Action("ListHSNcode", "HSNcode")">HSN Code</a></li>
-                                    <li><a href="@Url.Action("ListState", "State")">State</a></li>
-                                    <li><a href="@Url.Action("ListCity", "City")">City</a></li>
+                                   
+                                    
 
                                      
 
                                     @* <li><a href="@Url.Action("ListState", "State")">State</a></li>
                                     <li><a href="@Url.Action("ListCity", "City")">City</a></li>     *@
 
-                                     <li><a href="@Url.Action("ListCompany", "Company")">Company</a></li>
-                                    <li><a href="@Url.Action("ListTaxMaster", "TaxMaster")">Tax</a></li>
-                                    <li><a href="@Url.Action("ListRate", "Rate")">Rate</a></li>
+                                     
+                                    
+                                   
                                    
 
 
                                 </ul>
                                 
+                            </li>
+                            <li class="sidebar-list">
+                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                    <svg class="stroke-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#cart"></use>
+                                    </svg><span>Admin Settings</span>
+                                </a>
+
+                                <ul class="sidebar-submenu">
+                                    <li><a href="@Url.Action("ListSequence", "Sequence")">Sequence</a></li>
+                                    <li><a href="@Url.Action("ListCompany", "Company")">Company</a></li>
+                                </ul>
                             </li>
 
                         </ul>

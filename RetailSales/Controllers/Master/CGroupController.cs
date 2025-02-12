@@ -28,7 +28,7 @@ namespace RetailSales.Controllers.Master
                 if (dt.Rows.Count > 0)
                 {
                     cg.ID = dt.Rows[0]["ID"].ToString();
-                    cg.CustomerGroup = dt.Rows[0]["CUSTOMER_GROUP"].ToString();
+                    cg.Customercategory = dt.Rows[0]["CUSTOMER_CATEGORY"].ToString();
                     cg.Description = dt.Rows[0]["DESCRIPTION"].ToString();
 
                 }
@@ -102,7 +102,7 @@ namespace RetailSales.Controllers.Master
                 Reg.Add(new CGroupgrid
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
-                    group = dtUsers.Rows[i]["CUSTOMER_GROUP"].ToString(),
+                    category = dtUsers.Rows[i]["Customercategory"].ToString(),
                     des = dtUsers.Rows[i]["DESCRIPTION"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
