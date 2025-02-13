@@ -106,7 +106,7 @@
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Bsrcode, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.Bsrcode, new { @id = "txtBsrcode", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
@@ -116,26 +116,26 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Ifsccode, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.Ifsccode, new { @id = "txtIfsccode", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                               @* <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Is Default<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.CheckBoxFor(C => C.Isdefault, new { @id = "txtIsdefault", @class = "form-check-input" })
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
+                                </div>*@
+                                @*<div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Opening Balance<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Openingbalance, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                             @*<div class="row">
                         <div class="col-lg-6">
@@ -150,7 +150,7 @@
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("Bankaccounts", "Bankaccounts")'">Cancel</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListBankaccounts", "Bankaccounts")'">Cancel</button>
                         </form>
                     }
                 </div>

@@ -27,8 +27,29 @@ namespace RetailSales.Models
         public string Bsrcode { get; set; }
         public string Ifsccode { get; set; }
         public bool Isdefault { get; set; }
-        public string Openingbalance { get; set; }
-        
+        public string ID { get; internal set; }
+        //public string Openingbalance { get; set; }
+        public string ddlStatus { get; set; }
+
+
 
     }
+    public class Bankaccountsgrid
+    {
+        public string id { get; set; }
+        public string accname { get; set; }
+        public string bname { get; set; }
+        public string acctype { get; set; }
+        public string branch { get; set; }
+        public string badd { get; set; }
+        public string country { get; set; }
+        public string state { get; set; }
+        public string city { get; set; }
+        public string code { get; set; }
+        public string ifsc { get; set; }
+        public string isdefault { get; set; }
+        public string editrow { get; set; }
+        public string delrow { get; set; }
+    }
+       
 }

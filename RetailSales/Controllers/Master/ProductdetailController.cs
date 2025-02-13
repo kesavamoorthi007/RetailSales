@@ -165,11 +165,9 @@ namespace RetailSales.Controllers.Master
                 Reg.Add(new Productdetailgrid
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
-                    product = dtUsers.Rows[i]["PRODUCT_CATEGORY"].ToString(),
+                    product = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
                     varint = dtUsers.Rows[i]["PRODUCT_VARIANT"].ToString(),
-                    varintnic = dtUsers.Rows[i]["VARIANT_NICKNAME"].ToString(),
-                    uom = dtUsers.Rows[i]["UOM"].ToString(),
-                    rate = dtUsers.Rows[i]["RATE"].ToString(),
+                    uom = dtUsers.Rows[i]["UOM_CODE"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
 

@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.Productdetail
+﻿@model RetailSales.Models.Bankaccounts
 
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "Bankaccounts ";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Product</strong> </li>
+            <li class="active"> <strong>Bankaccounts </strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "MyListProductdetailgrid",
+            url: "/Bankaccounts/MyListBankaccountsgrid",
             data: {
                 strstatus: ""
             },
@@ -40,12 +40,16 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'product', type: 'string' },
-                { name: 'varint', type: 'string' },
-                { name: 'uom', type: 'string' },
-                { name: 'editrow', type: 'string' },
-                { name: 'delrow', type: 'string' },
+                { name: 'accname', type: 'string' },
+                { name: 'bname', type: 'string' },
+                { name: 'acctype', type: 'string' },
 
+                { name: 'branch', type: 'string' },
+                { name: 'badd', type: 'string' },
+                { name: 'state', type: 'string' },
+
+               
+               
 
             ],
             id: 'id',
@@ -81,12 +85,15 @@
 
                 columns: [
 
-                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'product', width: 300 },
-                    { text: 'Variant', filtertype: 'input', datafield: 'varint', width: 220 },
-                    //{ text: 'Product NickName', filtertype: 'input', datafield: 'varintnic', width: 200 },
-                    { text: 'UOM', filtertype: 'input', datafield: 'uom', width: 80 },
-                    //{ text: 'Rate', filtertype: 'input', datafield: 'rate', width: 150 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: ' Accountname', filtertype: 'checkedlist', datafield: 'accname', width: 100 },
+                    { text: 'Bankname', filtertype: 'input', datafield: 'bname', width: 200 },
+                    { text: 'Accounttype', filtertype: 'input', datafield: 'acctype', width: 150 },
+                    { text: 'Branchname', filtertype: 'input', datafield: 'branch', width: 150 },
+                    { text: 'Branchaddress', filtertype: 'input', datafield: 'badd', width: 100 },
+                    { text: 'State', filtertype: 'input', datafield: 'state', width: 100 },
+
+
+                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });
@@ -115,13 +122,13 @@
                         <div class="row">
                             <div class="col-md-2 ">
                                 @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
-                                         { new SelectListItem() {Text = "Enabled", Value="Y"},
+                                { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
-                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
+                                new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("Productdetail", "Productdetail")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Product</a>
+                                    <a href="@Url.Action("Bankaccounts", "Bankaccounts")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Bankaccounts </a>
                                     <br>
                                 </div>
 
@@ -130,7 +137,7 @@
                         <br />
                         <div class="row">
 
-                            <div class="col-md-8">
+                            <div class="col-md-12 ">
                                 <div id="grid">
                                 </div>
                             </div>
