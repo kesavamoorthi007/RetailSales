@@ -6,9 +6,10 @@ using RetailSales.Models;
 using RetailSales.Models.Accounts;
 using RetailSales.Services;
 using RetailSales.Services.Accounts;
+using RetailSales.Services.Master;
 using System.Data;
 using System.Data.SqlClient;
-using AccountGroup = RetailSales.Models.Accounts.AccountGroup;
+//using AccountGroup = RetailSales.Models.Accounts.AccountGroup;
 
 namespace RetailSales.Controllers.Accounts
 {
@@ -49,6 +50,42 @@ namespace RetailSales.Controllers.Accounts
             return View(ic);
         }
         [HttpPost]
+
+        public ActionResult AccountGroup(AccountGroup cy, string id)
+        {
+
+            try
+             {
+                cy.ID = id;
+                string Strout = AccountGroupService.AccountGroupCRUD(cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "Account Group Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "Account Group Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListAccountGroup");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit AccountGroup";
+                    TempData["notice"] = Strout;
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(cy);
+        }
 
         // Binding Account class
         public List<SelectListItem> BindAccClass()
@@ -102,13 +139,13 @@ namespace RetailSales.Controllers.Accounts
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    Edit = "<a><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
-                    Delete = "<a><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                    Edit = "<a href=AccountGroup?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
                     Edit = "";
-                    Delete = "<a><img src='../Images/reactive.png' alt='Reactive' width='20' /></a>";
+                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
                 Reg.Add(new ListAccountGroupgrid
                 {
@@ -170,6 +207,37 @@ namespace RetailSales.Controllers.Accounts
                 Reg
             });
 
+        }
+
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = AccountGroupService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListAccountGroup");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListAccountGroup");
+            }
+        }
+        public ActionResult Remove(string tag, string id)
+        {
+
+            string flag = AccountGroupService.RemoveChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListAccountGroup");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListAccountGroup");
+            }
         }
 
     }
