@@ -104,8 +104,7 @@
                             </div>
 
                             <div style="height:30px;"></div>
-                            <div class="col-lg-8"></div>
-                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
                             <button type="submit" class="btn btn-info" type="button" onclick="location.href='@Url.Action("Ledgers", "Ledgers")'">Reset</button>
                             <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListLedgers", "Ledgers")'">Cancel</button>
                         </form>
@@ -158,22 +157,6 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtAllowZeroValue").value == "") {
-                isValid = false;
-                $(txtAllowZeroValue).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Allow Zero Value");
-                return false;
-            }
-            else {
-                $(txtCityName).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
             if (document.getElementById("txtTotalOpeningBalance").value == "") {
                 isValid = false;
                 $(txtTotalOpeningBalance).css({
@@ -185,29 +168,12 @@
                 return false;
             }
             else {
-                $(txtCityName).css({
+                $(txtTotalOpeningBalance).css({
                     "border": "",
                     "background": ""
                 });
             }
-            if (document.getElementById("txtLedgerNotes").value == "") {
-                isValid = false;
-                $(txtLedgerNotes).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Ledger Notes");
-                return false;
-            }
-            else {
-                $(txtCityName).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-
-
+            
             if (isValid == false)
                 e.preventDefault();
         });
