@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Bankaccounts </strong> </li>
+            <li class="active"> <strong>Bankaccounts</strong> </li>
         </ol>
     </div>
 </div>
@@ -42,11 +42,11 @@
             datafields: [
                 { name: 'accname', type: 'string' },
                 { name: 'bname', type: 'string' },
-                { name: 'acctype', type: 'string' },
+                { name: 'accnum', type: 'string' },
 
-                { name: 'branch', type: 'string' },
-                { name: 'badd', type: 'string' },
-                { name: 'state', type: 'string' },
+                { name: 'editrow', type: 'string' },
+                { name: 'delrow', type: 'string' },
+               
 
                
                
@@ -85,16 +85,11 @@
 
                 columns: [
 
-                    { text: ' Accountname', filtertype: 'checkedlist', datafield: 'accname', width: 100 },
-                    { text: 'Bankname', filtertype: 'input', datafield: 'bname', width: 200 },
-                    { text: 'Accounttype', filtertype: 'input', datafield: 'acctype', width: 150 },
-                    { text: 'Branchname', filtertype: 'input', datafield: 'branch', width: 150 },
-                    { text: 'Branchaddress', filtertype: 'input', datafield: 'badd', width: 100 },
-                    { text: 'State', filtertype: 'input', datafield: 'state', width: 100 },
-
-
-                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: ' Account Name', filtertype: 'checkedlist', datafield: 'accname', width: 250 },
+                    { text: 'Bank Name', filtertype: 'input', datafield: 'bname', width: 250 },
+                    { text: 'Account Number', filtertype: 'input', datafield: 'accnum', width: 250 },
+                    { text: 'EditRow', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
                 ]
             });
         $("#ddlStatus").change(function () {
