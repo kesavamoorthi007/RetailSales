@@ -124,9 +124,6 @@
                                                 <th>Amount </th>
                                                 <th> Frieght charges</th>
                                                 <th> Disc amount</th>
-                                                <th>CGSTP</th>
-                                                <th>SGSTP</th>
-                                                <th>IGSTP</th>
                                                 <th>CGST</th>
                                                 <th>SGST</th>
                                                 <th>IGST</th>
@@ -152,10 +149,12 @@
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Amount)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].FrigCharge)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].DiscAmount)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].CGSTP)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].SGSTP)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].IGSTP)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].CGST)</td>
+                                                        <td>
+                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].CGSTP)
+                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].SGSTP)
+                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP)
+                                                            @Html.DisplayFor(o => o.PurchaseorderLst[i].CGST)
+                                                        </td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].SGST)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].IGST)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Total)</td>

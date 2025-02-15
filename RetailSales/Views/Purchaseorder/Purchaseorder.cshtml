@@ -747,10 +747,10 @@
         });
     }
 
-    function removeRow(id) {
+    function removeRow(i) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
-        var row = document.getElementById('trBook' + id);
+        var row = document.getElementById('trBook' + i);
         var j = 0;
         $('tr.chkitemlst').each(function () {
             if ($(this).css('display') !== 'none') {
@@ -759,7 +759,7 @@
         });
         if (j > 1) {
             row.style.display = "none";
-            document.getElementById('Isvalid' + id).value = "N";
+            document.getElementById('Isvalid' + i).value = "N";
         }
         else {
             alert("Cannot delete all the rows.")
