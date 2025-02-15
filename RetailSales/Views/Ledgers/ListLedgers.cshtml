@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.Employee
+﻿@model RetailSales.Models.Accounts.Ledgers
 
 @{
-    ViewData["Title"] = "Employee ";
+    ViewData["Title"] = "Ledgers";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>List Ledger </strong> </li>
+            <li class="active"> <strong>List Ledger</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/Ledgers/MyListLedgersgrid",
+            url: "MyListLedgersgrid",
             data: {
                 strstatus: ""
             },
@@ -44,8 +44,6 @@
                 { name: 'ledgername', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
-
-
             ],
             id: 'id',
         };
@@ -80,12 +78,16 @@
 
                 columns: [
 
-                    {
-                        text: 'Account Name', filtertype: 'checkedlist', datafield: 'accountname', width: 300 },
-                    {
-                            text: 'Ledger Name', filtertype: 'checkedlist', datafield: 'ledgername', width: 300 },
+
+                    { text: 'Account Name', filtertype: 'checkedlist', datafield: 'accountname', width: 300 },
+                    { text: 'Ledger Name', filtertype: 'checkedlist', datafield: 'ledgername', width: 300 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
+                    { text: 'Account Name', filtertype: 'checkedlist', datafield: 'accountname', width: 300 },
+                    { text: 'Ledger Name', filtertype: 'input', datafield: 'ledgername', width: 300 },
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+
                 ]
             });
         $("#ddlStatus").change(function () {

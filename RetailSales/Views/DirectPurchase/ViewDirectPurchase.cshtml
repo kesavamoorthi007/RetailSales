@@ -117,16 +117,13 @@
                                                 <th>Item</th>
                                                 <th>Variant</th>
                                                 <th> HSN Code </th>
-                                                <th>Tariff Id</th>
+                                                <th>Tax</th>
                                                 <th> Unit </th>
                                                 <th> Qty </th>
                                                 <th>Rate </th>
                                                 <th>Amount </th>
                                                <th> Frieght charges</th>
                                                 <th> Disc amount</th>
-                                                <th>CGSTP</th>
-                                                <th>SGSTP</th>
-                                                <th>IGSTP</th>
                                                 <th>CGST</th>
                                                 <th>SGST</th>
                                                 <th>IGST</th>
@@ -152,10 +149,12 @@
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Amount)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].FrigCharge)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].DiscAmount)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].CGSTP)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].SGSTP)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].IGSTP)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].CGST)</td>
+                                                        <td>
+                                                            @Html.HiddenFor(o => o.DirectPurchaseLst[i].CGSTP)
+                                                            @Html.HiddenFor(o => o.DirectPurchaseLst[i].SGSTP)
+                                                            @Html.HiddenFor(o => o.DirectPurchaseLst[i].IGSTP)
+                                                            @Html.DisplayFor(o => o.DirectPurchaseLst[i].CGST)
+                                                        </td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].SGST)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].IGST)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Total)</td>
