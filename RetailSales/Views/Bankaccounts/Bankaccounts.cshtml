@@ -36,25 +36,25 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Account Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Accountname, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Bankname, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Account Type<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.Accounttype, Model.Accounttypelst, "--Please Select--", new { @id = "ddlAccounttype", @Class = "form-control _select", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Account Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Accountname, new { @id = "txtAccountname", @class = "form-control", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Account Number<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Accountnumber, new { @id = "txtAccountnumber", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
@@ -62,9 +62,17 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Bankname, new { @id = "txtBankname", @class = "form-control", @TabIndex = 1 })<br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Branch Name<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Branchname, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.Branchname, new { @id = "txtBranchname", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
@@ -72,10 +80,12 @@
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Branch Address<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Branchaddress, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextAreaFor(C => C.Branchaddress, new { @id = "txtBranchaddress", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Country<label class="mandatory"></label></label>
@@ -84,8 +94,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
@@ -102,6 +110,8 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory">*</label></label>
@@ -110,16 +120,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Ifsccode, new { @id = "txtIfsccode", @class = "form-control", @TabIndex = 1 })
+                                            @Html.HiddenFor(C => C.ID)
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                                @* <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Is Default<label class="mandatory">*</label></label>
@@ -136,7 +146,7 @@
                                         </div>
                                     </div>
                                 </div>*@
-                            </div>
+                            
                             @*<div class="row">
                         <div class="col-lg-6">
                         <div class="form-group">
@@ -165,9 +175,24 @@
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
-            if (document.getElementById("ddlAccountname").value == "") {
+            if (document.getElementById("ddlAccounttype").value == "") {
                 isValid = false;
-                $(ddlAccountname).css({
+                $(ddlAccounttype).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Account Type");
+                return false;
+            }
+            else {
+                $(ddlAccounttype).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtAccountname").value == "") {
+                isValid = false;
+                $(txtAccountname).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
@@ -175,7 +200,22 @@
                 return false;
             }
             else {
-                $(ddlAccountname).css({
+                $(txtAccountname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtAccountnumber").value == "") {
+                isValid = false;
+                $(txtAccountnumber).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+                alert("Please Enter Account Number");
+                return false;
+            }
+            else {
+                $(txtAccountnumber).css({
                     "border": "",
                     "background": ""
                 });
@@ -191,21 +231,6 @@
             }
             else {
                 $(txtBankname).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtAccounttype").value == "") {
-                isValid = false;
-                $(txtAccounttype).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter Account Type");
-                return false;
-            }
-            else {
-                $(txtAccounttype).css({
                     "border": "",
                     "background": ""
                 });
@@ -315,36 +340,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtIsdefault").value == "") {
-                isValid = false;
-                $(txtIsdefault).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter Is Default");
-                return false;
-            }
-            else {
-                $(txtIsdefault).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtOpeningbalance").value == "") {
-                isValid = false;
-                $(txtOpeningbalance).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please EnterOpening Balance");
-                return false;
-            }
-            else {
-                $(txtOpeningbalance).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            
             if (isValid == false)
                 e.preventDefault();
         });
