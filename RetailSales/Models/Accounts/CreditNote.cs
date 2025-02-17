@@ -4,15 +4,17 @@ namespace RetailSales.Models
 {
     public class CreditNote
     {
-        public string VocNo { get; set; }
         public string ID { get; set; }
+        public string VocNo { get; set; }
         public string VocDate { get; set; }
+        public string exchangeRate { get; set; }
         public string RefNo { get; set; }
         public string ExcRate { get; set; }
         public string RefDate { get; set; }
         public string Currency { get; set; }
         public string totdeb { get; set; }
         public string totcri { get; set; }
+        public string totamt { get; set; }
         public string AmtWd { get; set; }
         public string Narr { get; set; }
         public List<CreditNoteItem> CreditNotelst { get; set; }

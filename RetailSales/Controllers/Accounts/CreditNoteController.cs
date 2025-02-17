@@ -4,6 +4,7 @@ using RetailSales.Interface.Accounts;
 using RetailSales.Models;
 using RetailSales.Models.Accounts;
 using RetailSales.Services.Accounts;
+using RetailSales.Services.Purchase;
 using System.Data;
 
 namespace RetailSales.Controllers.Accounts
@@ -87,6 +88,43 @@ namespace RetailSales.Controllers.Accounts
             CreditNoteItem model = new CreditNoteItem();
             return Json(BindAcc());
 
+        }     
+        [HttpPost]
+        public ActionResult CreditNote(CreditNote cy, string id)
+        {
+
+            try
+            {
+                cy.ID = id;
+                string Strout = CreditNoteService.CreditNoteCRUD(cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "CreditNote Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "CreditNote Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListPurchaseorder");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit CreditNote";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(cy);
         }
     }
 }
