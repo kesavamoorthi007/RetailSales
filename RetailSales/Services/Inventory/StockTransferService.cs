@@ -41,15 +41,15 @@ namespace RetailSales.Services
 
         public DataTable GetItem()
         {
-           
-                string SvSql = string.Empty;
-                SvSql = "SELECT ID,PRODUCT_NAME FROM PRODUCT";
-                DataTable dtt = new DataTable();
-                SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                adapter.Fill(dtt);
-                return dtt;
-            
+
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,PRODUCT_NAME FROM PRODUCT";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+
         }
         public DataTable GetVariant(string id)
         {
@@ -64,7 +64,7 @@ namespace RetailSales.Services
         public DataTable GetVarientDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "  SELECT UOM.UOM_CODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM WHERE PRO_DETAIL.ID='" + ItemId + "'";
+            SvSql = "  SELECT UOM.UOM_CODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM  WHERE PRO_DETAIL.ID='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -90,10 +90,10 @@ namespace RetailSales.Services
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
-            
+
         }
 
-       
+
 
         public DataTable GetTBin()
         {
@@ -105,16 +105,26 @@ namespace RetailSales.Services
             adapter.Fill(dtt);
             return dtt;
         }
-        //public DataTable GetStockTransferItem(string id)
-        //{
-        //    string SvSql = string.Empty;
-        //    SvSql = "SELECT ST_BASIC_ID,ITEM,VARIANT,UNIT,STOCK,QUANTITY,RATE,AMOUNT FROM STOCK_TRAN_DETAIL WHERE STOCK_TRAN_DETAIL.ST_BASIC_ID='" + id + "'";
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
+        public DataTable GetStockTransferItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ST_BASIC_ID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,UNIT,STOCK,QUANTITY,AMOUNT,STOCK_TRAN_DETAIL.RATE FROM STOCK_TRAN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STOCK_TRAN_DETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STOCK_TRAN_DETAIL.VARIANT   WHERE STOCK_TRAN_DETAIL.ST_BASIC_ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetStockTransfer(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID FROM STOCK_TRAN_BASICS WHERE STOCK_TRAN_BASICS.ST_BASIC_ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
 
         public string StockTransferCRUD(StockTransfer cy)
         {
@@ -168,7 +178,7 @@ namespace RetailSales.Services
                     objCmd.Parameters.Add("@tolocation", SqlDbType.VarChar).Value = cy.Tlocation;
                     objCmd.Parameters.Add("@frombinid", SqlDbType.VarChar).Value = cy.FBin;
                     objCmd.Parameters.Add("@tobinid", SqlDbType.VarChar).Value = cy.TBin;
-                   
+
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
 
                     try
@@ -217,13 +227,13 @@ namespace RetailSales.Services
 
 
 
-                    
+
                     }
                     catch (Exception ex)
                     {
                         System.Console.WriteLine("Exception: {0}", ex.ToString());
                     }
-                   
+
                 }
             }
             catch (Exception ex)
@@ -238,7 +248,17 @@ namespace RetailSales.Services
         public DataTable GetEditStockTransferDetail1(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID,BROWSE_ORDER,ITEM,VARIANT,UNIT,STOCK,QUANTITY,RATE,AMOUNT,IS_ACTIVE ,REPORT_TO FROM Stocktransfer WHERE ID = '" + id + "' ";
+            SvSql = "SELECT STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID,BROWSE_ORDER,IS_ACTIVE FROM Stocktransfer WHERE ID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetEditStockTransfer(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ITEM,VARIANT,UNIT,STOCK,QUANTITY,RATE,AMOUNT,IS_ACTIVE ,REPORT_TO FROM Stocktransfer WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -268,32 +288,30 @@ namespace RetailSales.Services
             return "";
 
         }
-        //public string RemoveChange(string tag, string id)
-        //{
+       
+        public string RemoveChange(string tag, string id)
+        {
 
-        //    try
-        //    {
-        //        string svSQL = string.Empty;
-        //        using (SqlConnection objConnT = new SqlConnection(_connectionString))
-        //        {
-        //            svSQL = "UPDATE StockTransfer SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
-        //            SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
-        //            objConnT.Open();
-        //            objCmds.ExecuteNonQuery();
-        //            objConnT.Close();
-        //        }
+            try
+            {
+                string svSQL = string.Empty;
+                using (SqlConnection objConnT = new SqlConnection(_connectionString))
+                {
+                    svSQL = "UPDATE POBASIC SET IS_ACTIVE = 'Y' WHERE POBASICID='" + id + "'";
+                    SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
+                    objConnT.Open();
+                    objCmds.ExecuteNonQuery();
+                    objConnT.Close();
+                }
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    return "";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return "";
 
-        //}
-
-
-
+        }
     }
-
+       
 }

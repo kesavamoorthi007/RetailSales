@@ -7,20 +7,23 @@ namespace RetailSales
         
         DataTable GetFBin();
         DataTable GetTBin();
-     
+        DataTable GetItem();
+        DataTable GetVariant(string id);
+
 
         string StockTransferCRUD(StockTransfer ic);
         DataTable GetAllStockTransferGRID(string strStatus);
         DataTable GetItemDetails(string itemId);
         DataTable GetVarientDetails(string itemId);
-        DataTable GetVariant(string id);
+        
         DataTable GetEditStockTransferDetail1(string id);
-        //DataTable GetStockTransferItem(string id);
+    
         string StatusChange(string tag, string id);
-        DataTable GetItem();
-        //string StatusChange(string tag, string id);
-        //string RemoveChange(string tag, string id);
-        //string StatusDeleteMR(string tag, int id);
+    
+        string RemoveChange(string tag, string id);
+        DataTable GetStockTransfer(string id);
+        DataTable GetStockTransferItem(string id);
+        DataTable GetEditStockTransfer(string id);
     }
 }
 

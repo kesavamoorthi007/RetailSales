@@ -26,7 +26,7 @@ namespace RetailSales.Models
         public string Cityid { get; set; }
         public string Stateid { get; set; }
         public string Countryid { get; set; }
-        public string mobile { get; set; }
+        public string Mobile { get; set; }
         public string Email { get; set; }
         public string Remark { get; set; }
         public string Approved { get; set; }

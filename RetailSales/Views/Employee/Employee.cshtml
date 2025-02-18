@@ -83,7 +83,7 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Emp Id<label class="mandatory">*</label></label>
+                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Employee No<label class="mandatory">*</label></label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(C => C.EmpId, new { @id = "txtEmpId", @class = "form-control", @TabIndex = 1 })
                                                     @Html.HiddenFor(C => C.ID)
@@ -151,7 +151,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                           <div class="form-group">
-                                            <br /><label for="inputName3" class="col-sm-4 control-label">Address<label class="mandatory">*</label></label>
+                                            <br /><label for="inputName3" class="col-sm-4 control-label">Address<label class="mandatory"></label></label>
                                             <div class="col-sm-8">
                                                     @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
                                             </div>
@@ -181,7 +181,7 @@
                                             <div class="form-group">
                                                 <br><label for="inputName3" class="col-sm-4 control-label">Mobile<label class="mandatory">*</label></label>
                                                 <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.mobile, new { @id = "txtmobile", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextBoxFor(C => C.Mobile, new { @id = "txtmobile", @class = "form-control", @TabIndex = 1,type="number" })
                                                 </div>
                                             </div>
                                         </div>
@@ -202,111 +202,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                  @*                       <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Employee Status<label class="mandatory"></label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.EmployeeStatus, new { @id = "txtEmployeeStatus", @class = "form-control", @TabIndex = 1 })
-
-                                                </div>
-                                            </div>
-                                        </div> *@
+                
                                     </div>
-                                 
                                       
-                                        @*<div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br>  <label for="inputName3" class="col-sm-4 control-label">Date Of Joining<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Djoining, new { @id = "txtDjoining", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                   
-                                   @* <div class="row">*@
-                                        @*<div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Remarks<label class="mandatory"></label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Remark, new { @id = "txtRemark", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br> <label for="inputName3" class="col-sm-4 control-label">Approved By<label class="mandatory"></label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Approved, new { @id = "txtApproved", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                        @*<div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br> <label for="inputName3" class="col-sm-4 control-label">Designation<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Designation, new { @id = "txtDesignation", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                   @* </div>*@
-
-                                    @*<div class="row">*@
-                                        @*<div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Branch<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Branch, new { @id = "txtBranch", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br> <label for="inputName3" class="col-sm-4 control-label">Department<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Department, new { @id = "txtDepartment", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                       @* <div class="col-md-4">
-                                                <div class="form-group">
-                                                <br> <label for="inputName3" class="col-sm-4 control-label">Maritalstatus<label class="mandatory">*</label></label>
-                                                    <div class="col-sm-8">
-                                                    @Html.DropDownListFor(C => C.Maritalstatus, Model.Materialstatuslst, "---Please Select---", new { @id = "ddlProduct", @Class = "form-control _select", @TabIndex = 1 })
-                                                    </div>
-                                                </div>
-                                         </div>*@
-                                  @*  </div>*@
-                                   @* <div class="row">*@
-                                       @* <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Email Personal<label class="mandatory"></label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Emailpersonal, new { @id = "txtEmailpersonal", @class = "form-control", @TabIndex = 1 })
-
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                        @*<div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br>  <label for="inputName3" class="col-sm-4 control-label">Date Of Joining<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Djoining, new { @id = "txtDjoining", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                        @*<div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Birth<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Dbirth, new { @id = "txtDbirth", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                  @*  </div>*@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br /><label for="inputName3" class="col-sm-5 control-label">Account Number</label>
+                                                <br /><label for="inputName3" class="col-sm-5 control-label">Account Number<label class="mandatory">*</label></label>
                                                 <div class="col-sm-7">
                                                     @Html.TextBoxFor(C => C.AccNumber, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
                                                 </div>
@@ -334,99 +236,10 @@
                                         </div>
                              
                                     </div>
-                                    @* <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br> <label for="inputName3" class="col-sm-4 control-label">Degree<label class="mandatory"></label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Degree, new { @id = "txtDegree", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                    @*</div>*@
-                                    @*<div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Report To<label class="mandatory"></label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Report, new { @id = "txtReport", @class = "form-control", @TabIndex = 1 })<br />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
+                                   
                            
                                 @*2rd tab*@
-                                @*<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Qualification<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Qualification, new { @id = "txtQualification", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">University<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.University, new { @id = "txtUniversity", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                  
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <br /> <label for="inputName3" class="col-sm-4 control-label">School<label class="mandatory">*</label></label>
-                                            <div class="col-sm-8">
-                                                @Html.TextBoxFor(C => C.School, new { @id = "txtSchool", @class = "form-control", @TabIndex = 1 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">College<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.College, new { @id = "txtCollege", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Place<label class="mandatory">*</label></label>
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Place, new { @id = "txtPlace", @class = "form-control", @TabIndex = 1 })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <br /> <label for="inputName3" class="col-sm-4 control-label">Obedient<label class="mandatory">*</label></label>
-                                                    <div class="col-sm-8">
-                                                        @Html.TextBoxFor(C => C.Obedient, new { @id = "txtObedient", @class = "form-control", @TabIndex = 1 })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                       
-                                </div>
-                                <div class="row">
-                                        <div class="col-lg-5">
-                                            <div class="form-group">
-                                                <br><label for="inputName4" class="col-sm-3 control-label">Year Of Passing<label class="mandatory"></label></label>
-
-                                                <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
-                                                    @Html.TextBoxFor(C => C.YPassing, new { @id = "YPassing", @class = "form-control", @readonly = true })
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                               </div>
-                            </div>*@
+                               
                                 @*3rd tab*@
                                 </div>
                             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -484,7 +297,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter EMPLOYEE ID");
+                alert("Please Enter Employee No");
                 return false;
             }
             else {
@@ -509,24 +322,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtQualification").value == "") {
-                isValid = false;
-                $(txtQualification).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Qualification");
-                return false;
-            }
-            else {
-                $(txtQualification).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-      
-                         
+            
             if (document.getElementById("txtmobile").value == "") {
                 isValid = false;
                 $(txtmobile).css({
@@ -534,7 +330,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter MOBILE NUMBER");
+                alert("Please Enter Mobile No");
                 return false;
             }
             else {
@@ -543,73 +339,26 @@
                     "background": ""
                 });
             }
+            if (document.getElementById("txtAccNumber").value == "") {
+                isValid = false;
+                $(txtAccNumber).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Acc Number");
+                return false;
+            }
+            else {
+                $(txtAccNumber).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+      
+                         
        
-            if (document.getElementById("txtMaritalstatus").value == "") {
-                isValid = false;
-                $(txtMaritalstatus).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter MATERIALSTATUS");
-                return false;
-            }
-            else {
-                $(txtMaritalstatus).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-  
-            if (document.getElementById("txtDjoining").value == "") {
-                isValid = false;
-                $(txtDjoining).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter DATEOFJOINING");
-                return false;
-            }
-            else {
-                $(txtDjoining).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("Dbirth").value == "") {
-                isValid = false;
-                $(Dbirth).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter DATEOFBIRTH");
-                return false;
-            }
-            else {
-                $(Dbirth).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtDleaving").value == "") {
-                isValid = false;
-                $(txtDleaving).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter DATEOFLEAVING");
-                return false;
-            }
-            else {
-                $(txtDleaving).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-                    
+       
             if (isValid == false)
                 e.preventDefault();
         });
