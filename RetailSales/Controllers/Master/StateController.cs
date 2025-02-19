@@ -113,13 +113,15 @@ namespace RetailSales.Controllers.Master
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    EditRow = "<a href=State?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit-color.png' alt='Edit' width='28' /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/trash-bin.png' alt='Deactivate' width='28' /></a>";
+                    EditRow = "<a href=State?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+
                 }
                 else
                 {
                     EditRow = "";
                     DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+
                 }
                 Reg.Add(new Stategrid
                 {
