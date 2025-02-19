@@ -1,8 +1,7 @@
-﻿
-@model RetailSales.Models.City
+﻿@model RetailSales.Models.Master.EmailConfig
 
 @{
-    ViewData["Title"] = "ListCity ";
+    ViewData["Title"] = "EmailConfig ";
 
 }
 <partial name="JqxGridPartial" />
@@ -23,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>ListCity </strong> </li>
+            <li class="active"> <strong>ListEmailConfig </strong> </li>
         </ol>
     </div>
 </div>
@@ -32,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-        url: "/City/MyListCitygrid",
+        url: "MyListEmailConfiggrid",
             data: {
                 strstatus: ""
             },
@@ -41,9 +40,9 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'ciname', type: 'string' },
-                { name: 'statid', type: 'string' },
-                { name: 'counid', type: 'string' },
+                { name: 'smtphost', type: 'string' },
+                { name: 'portno', type: 'string' },
+                { name: 'emailid', type: 'string' },
                 { name: 'edit', type: 'string' },
                 { name: 'delete', type: 'string' },
 
@@ -80,10 +79,10 @@
                 keyboardnavigation: false,
 
                 columns: [
-                  
-                    { text: 'Country Name', filtertype: 'input', datafield: 'counid', width: 200 },
-                    { text: 'State name', filtertype: 'input', datafield: 'statid', width: 200 },
-                    { text: 'City Name', filtertype: 'checkedlist', datafield: 'ciname', width: 200 },
+
+                    { text: 'SMTP HOST', filtertype: 'input', datafield: 'smtphost', width: 200 },
+                    { text: 'PortNo', filtertype: 'input', datafield: 'portno', width: 200 },
+                    { text: 'Email ID', filtertype: 'input', datafield: 'emailid', width: 200 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
@@ -119,7 +118,7 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("City", "City")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add City </a>
+                                    <a href="@Url.Action("EmailConfig", "EmailConfig")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Email Config </a>
                                     <br>
                                 </div>
 
