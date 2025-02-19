@@ -302,13 +302,21 @@ namespace RetailSales.Services.Purchase
                 }
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
-                {
+                { 
                     string SvSql1 = "Insert into GRN_BASIC (GRN_NO,GRN_DATE,SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,LR_DATE,PLACE_DIS,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF,POBASIC_ID,IS_ACTIVE) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "',SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,'" + cy.Amountinwords + "' ,'" + cy.Narration + "',TRANS_SPORTER,LR_NO,LR_DATE,PLACE_DIS,'" + cy.Gross + "','" + cy.Net + "','" + cy.Disc + "','" + cy.Frieghtcharge + "','" + cy.CGST + "','" + cy.SGST + "','" + cy.IGST + "','" + cy.Round + "','" + cy.ID + "','Y') RETURNING GRN_BASIC_ID INTO :GRNDEID";
                     SqlCommand objCmdsss = new SqlCommand(SvSql1, objConn);
                     objCmdsss.Parameters.Add(new SqlParameter("GRNDEID", SqlDbType.Int));
                     objCmdsss.Parameters["GRNDEID"].Direction = ParameterDirection.ReturnValue;
-                    objConn.Open();
-                    objCmdsss.ExecuteNonQuery();
+                    try
+                    {
+                        objConn.Open();
+                        objCmdsss.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        //System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
 
                     string stkid = objCmdsss.Parameters["GRNDEID"].Value.ToString();
                     if (cy.ID != null)
@@ -317,13 +325,14 @@ namespace RetailSales.Services.Purchase
                     }
                     foreach (PurchaseorderItem cp in cy.PurchaseorderLst)
                     {
-                        string SvSql2 = "Insert into GRN_DETAIL (GRN_BASIC_ID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + stkid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Hsn + "')";
+                        string SvSql2 = "Insert into GRN_DETAIL (GRN_BASIC_ID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RECIVED_QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + stkid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Recived + "','" + cp.Rate + "','" + cp.Amount + "')";
                         SqlCommand objCmddts = new SqlCommand(SvSql2, objConn);
                         objConn.Open();
                         objCmddts.ExecuteNonQuery();
+                        objConn.Close();
 
                     }
-                       
+
                     //svSQL = "Insert into GRN_BASIC (GRN_NO,GRN_DATE,SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,LR_DATE,PLACE_DIS,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF,POBASIC_ID,IS_ACTIVE) (Select '" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "',SUP_NAME,ADDRESS,COUNTRY,STATE,CITY,REF_NO,REF_DATE,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,LR_DATE,PLACE_DIS,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF,'" + cy.ID + "','Y' from POBASIC where POBASICID='" + cy.ID + "')";
                     //SqlCommand objCmd = new SqlCommand(svSQL, objConn);
                     //try

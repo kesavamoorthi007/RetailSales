@@ -5,6 +5,8 @@ using RetailSales.Interface.Accounts;
 using RetailSales.Interface.Master;
 using RetailSales.Models;
 using RetailSales.Models.Accounts;
+using RetailSales.Models.Inventory;
+using RetailSales.Services.Inventory;
 using System.Data;
 
 namespace RetailSales.Controllers.Accounts
@@ -24,6 +26,7 @@ namespace RetailSales.Controllers.Accounts
             List<DebitNoteItem> TData = new List<DebitNoteItem>();
 
             ic.ExcRate = "1";
+            ic.VocNo = "36";
             ic.RefDate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
             if (id == null)
@@ -45,6 +48,55 @@ namespace RetailSales.Controllers.Accounts
             ic.DebitNotelst = TData;
             return View(ic);
         }
+        [HttpPost]
+        public ActionResult DebitNote(DebitNote cy, string id)
+            {
+
+            try
+            {
+                cy.ID = id;
+                string Strout = DebitNoteService.DebitNoteCRUD(cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "DebitNote Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "DebitNote Updated Successfully...!";
+                    }
+                    return RedirectToAction("DebitNote");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit DebitNote";
+                    TempData["notice"] = Strout;                   
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(cy);
+        }
+
+        public JsonResult GetDebJSON()
+        {
+            DebitNoteItem model = new DebitNoteItem();
+            model.DBCRlst = BindDbCr();
+            return Json(BindDbCr());
+
+        }
+        public JsonResult GetAccJSON()
+        {
+            DebitNoteItem model = new DebitNoteItem();
+            return Json(BindAcc());
+
+        }
+
         public List<SelectListItem> BindDbCr()
         {
             try
@@ -78,17 +130,6 @@ namespace RetailSales.Controllers.Accounts
                 throw ex;
             }
         }
-        public JsonResult GetDebJSON()
-        {
-            DebitNoteItem model = new DebitNoteItem();
-            return Json(BindDbCr());
-
-        }
-        public JsonResult GetAccJSON()
-        {
-            DebitNoteItem model = new DebitNoteItem();
-            return Json(BindAcc());
-
-        }
+        
     }
 }
