@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Accounts.AccountGroup
 
 @{
-    ViewData["Title"] = "AccountsGroup";
+    ViewData["Title"] = "Account Group";
 }
 <style>
     .mandatory {
@@ -32,7 +32,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="widgets-container">
-                    @using (Html.BeginForm("AccountsGroup", "AccountsGroup", FormMethod.Post))
+                    @using (Html.BeginForm("AccountGroup", "AccountGroup", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <form>
@@ -44,8 +44,7 @@
                                         <label for="inputName3" class="col-sm-4 control-label">Account Class<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.AccountClass, Model.accclasslist, "---Plaese Select---", new { @id = "txtAccountClass", @class = "form-control _select", @TabIndex = 1 })<br />
-                                            @* @Html.TextBoxFor(C => C.AccountClass, new { @id = "txtAccountClass", @class = "form-control_select", @TabIndex = 1 })<br />
-                                               @Html.HiddenFor(C => C.ID) *@ 
+                                            @Html.HiddenFor(C => C.ID) 
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +56,7 @@
                                         <label for="inputName3" class="col-sm-4 control-label">Account Type<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.AccountType, Model.acctypelist, "---Plaese Select---", new { @id = "txtAccountType", @class = "form-control _select", @TabIndex = 1 })<br />
-                                            @* @Html.TextBoxFor(C => C.AccountType, new { @id = "txtAccountType", @class = "form-control", @TabIndex = 1 })<br /> *@
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -79,9 +78,6 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-9">
                                     <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
-                                  
-
-                                    <button type="reset" class="btn btn-warning" type="button" id="btnReset" onclick="location.href='@Url.Action("AccountGroup", "AccountGroup")'">Reset</button>
                                     <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListAccountGroup", "AccountGroup")'">Cancel</button>
                                 </div>
                             </div>
@@ -112,7 +108,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Account Class");
+                alert("Please Select Account Class");
                 return false;
             }
             else {
@@ -128,7 +124,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Account Type");
+                alert("Please Select Account Type");
                 return false;
             }
             else {

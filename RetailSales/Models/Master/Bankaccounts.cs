@@ -17,6 +17,7 @@ namespace RetailSales.Models
         public List<SelectListItem> Statelst;
         public List<SelectListItem> Citylst;
         public string Accountname { get; set; }
+        public string Accountnumber { get; set; }
         public string Bankname { get; set; }
         public string Accounttype { get; set; }
         public string Branchname { get; set; }
@@ -27,8 +28,23 @@ namespace RetailSales.Models
         public string Bsrcode { get; set; }
         public string Ifsccode { get; set; }
         public bool Isdefault { get; set; }
-        public string Openingbalance { get; set; }
-        
+        public string ID { get; internal set; }
+        //public string Openingbalance { get; set; }
+        public string ddlStatus { get; set; }
+
+
 
     }
+    public class Bankaccountsgrid
+    {
+        public string id { get; set; }
+        public string accname { get; set; }
+        public string accnum { get; set; }
+        public string bname { get; set; }
+        
+      
+        public string editrow { get; set; }
+        public string delrow { get; set; }
+    }
+       
 }

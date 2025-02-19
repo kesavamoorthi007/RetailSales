@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Interface.Master;
 using RetailSales.Models;
+using RetailSales.Services;
 using RetailSales.Services.Master;
 using System.Data;
 
@@ -30,11 +31,75 @@ namespace RetailSales.Controllers.Master
             }
             else
             {
+                DataTable dt = new DataTable();
+                dt = BankaccountsService.GetEditBankaccountsDetail(id);
+                if (dt.Rows.Count > 0)
+                {
+
+                    ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.Accounttype = dt.Rows[0]["ACC_TYPE"].ToString();
+                    ic.Accountname = dt.Rows[0]["ACC_NAME"].ToString();
+                    ic.Accountnumber = dt.Rows[0]["ACC_NO"].ToString();
+                    ic.Bankname = dt.Rows[0]["BANK_NAME"].ToString();
+                    ic.Branchname = dt.Rows[0]["BRANCH_NAME"].ToString();
+                    ic.Branchaddress = dt.Rows[0]["BRANCH_ADDR"].ToString();
+                    ic.Countrylst = BindCountry();
+                    ic.Country = dt.Rows[0]["BR_COUNTRY"].ToString();
+                    ic.Statelst = BindState();
+                    ic.State = dt.Rows[0]["BR_STATE"].ToString();
+                    ic.Citylst = BindCity();
+                    ic.City = dt.Rows[0]["BR_CITY"].ToString();
+                    ic.Bsrcode = dt.Rows[0]["BSR_CODE"].ToString();
+                    ic.Ifsccode = dt.Rows[0]["IFSC_CODE"].ToString();
+
+                }
 
 
             }
             return View(ic);
         }
+        [HttpPost]
+        public ActionResult Bankaccounts(Bankaccounts Ic, string id)
+        {
+
+            try
+            {
+                Ic.ID = id;
+                string Strout = BankaccountsService.BankaccountsCRUD(Ic);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (Ic.ID == null)
+                    {
+                        TempData["notice"] = "Bankaccounts Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "Bankaccounts Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListBankaccounts");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit Bankaccounts";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(Ic);
+        }
+        public IActionResult ListBankaccounts()
+        {
+            return View();
+        }
+
         public List<SelectListItem> BindAccounttype()
         {
             try
@@ -106,6 +171,79 @@ namespace RetailSales.Controllers.Master
                 throw ex;
             }
         }
+        public ActionResult MyListBankaccountsgrid(string strStatus)
+        {
+            List<Bankaccountsgrid> Reg = new List<Bankaccountsgrid>();
+            DataTable dtUsers = new DataTable();
+            strStatus = strStatus == "" ? "Y" : strStatus;
+            dtUsers = BankaccountsService.GetAllBankaccountsGRID(strStatus);
+            for (int i = 0; i < dtUsers.Rows.Count; i++)
+            {
+
+                string DeleteRow = string.Empty;
+                string EditRow = string.Empty;
+
+                if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
+                {
+                    EditRow = "<a href=Bankaccounts?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                }
+                else
+                {
+                    EditRow = "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                }
+                Reg.Add(new Bankaccountsgrid
+                {
+                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    
+                    accname = dtUsers.Rows[i]["ACC_NAME"].ToString(),
+                    bname = dtUsers.Rows[i]["BANK_NAME"].ToString(),
+                    accnum = dtUsers.Rows[i]["ACC_NO"].ToString(),
+                  
+                    editrow = EditRow,
+                    delrow = DeleteRow,
+
+                });
+            }
+
+            return Json(new
+            {
+                Reg
+            });
+
+        }
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = BankaccountsService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListBankaccounts");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListBankaccounts");
+            }
+        }
+        public ActionResult Remove(string tag, string id)
+        {
+
+            string flag = BankaccountsService.RemoveChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListBankaccounts");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListBankaccounts");
+            }
+        }
+
     }
 }
 

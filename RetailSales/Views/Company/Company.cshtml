@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
 
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
 
@@ -173,22 +173,6 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            //if (document.getElementById("txtCode").value == "") {
-            //    isValid = false;
-            //    $(txtCode).css({
-            //        "border": "1px solid red",
-            //        "background": "#FFCECE"
-            //    });
-
-            //    alert("Please Enter Company Code");
-            //    return false;
-            //}
-            //else {
-            //    $(txtCode).css({
-            //        "border": "",
-            //        "background": ""
-            //    });
-            //}
             if (document.getElementById("txtCompanyName").value == "") {
                 isValid = false;
                 $(txtCompanyName).css({
@@ -206,56 +190,22 @@
                 });
             }
 
-            if (document.getElementById("txtAddress").value == "") {
+            if (document.getElementById("txtMobile").value == "") {
                 isValid = false;
-                $(txtAddress).css({
+                $(txtMobile).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Address");
+                alert("Please Enter Mobile no");
                 return false;
             }
             else {
-                $(txtAddress).css({
+                $(txtMobile).css({
                     "border": "",
                     "background": ""
                 });
             }
-
-            if (document.getElementById("ddlMobile").value == "") {
-                isValid = false;
-                $(ddlMobile).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Mobile");
-                return false;
-            }
-            else {
-                $(ddlMobile).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("ddlCountry").value == "") {
-                isValid = false;
-                $(ddlCountry).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Country");
-                return false;
-            }
-            else {
-                $(ddlCountry).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-
             if (document.getElementById("ddlState").value == "") {
                 isValid = false;
                 $(ddlState).css({
@@ -272,10 +222,9 @@
                     "background": ""
                 });
             }
-
-            if (document.getElementById("txtCity").value == "") {
+            if (document.getElementById("ddlCity").value == "") {
                 isValid = false;
-                $(txtCity).css({
+                $(ddlCity).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
@@ -284,61 +233,12 @@
                 return false;
             }
             else {
-                $(txtCity).css({
+                $(ddlCity).css({
                     "border": "",
                     "background": ""
                 });
             }
-            if (document.getElementById("txtEmail").value == "") {
-                isValid = false;
-                $(txtEmail).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Email");
-                return false;
-            }
-            else {
-                $(txtEmail).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtLandline").value == "") {
-                isValid = false;
-                $(txtLandline).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Landline");
-                return false;
-            }
-            else {
-                $(txtLandline).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-
-            if (document.getElementById("txtWebsite").value == "") {
-                isValid = false;
-                $(txtGST).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Website");
-                return false;
-            }
-            else {
-                $(txtGST).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-
+            
             if (isValid == false)
                 e.preventDefault();
         });

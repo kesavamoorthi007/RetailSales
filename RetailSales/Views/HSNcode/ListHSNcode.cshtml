@@ -62,7 +62,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '65%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -83,8 +83,8 @@
 
                 columns: [
 
-                    { text: 'HSN Code', filtertype: 'checkedlist', datafield: 'hcode', width: 200 },
-                    { text: 'Description', filtertype: 'input', datafield: 'dec', width: 200 },
+                    { text: 'HSN Code', filtertype: 'checkedlist', datafield: 'hcode', width: 300 },
+                    { text: 'Description', filtertype: 'input', datafield: 'dec', width: 300 },
                     { text: 'Percentage', filtertype: 'input', datafield: 'per', width: 120 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                  //   { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },

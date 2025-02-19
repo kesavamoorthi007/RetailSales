@@ -4,7 +4,15 @@ namespace RetailSales.Models.Accounts
 {
     public class Ledgers
     {
+        public Ledgers()
+        {
+            this.AccountGroupList = new List<SelectListItem>();
+        }
+        public List<SelectListItem> AccountGroupList;
+
         public string? ID { get; set; }
+
+        public string? AccountGroup { get; set; }
 
         public string? LedgerName { get; set; }
 
@@ -12,17 +20,10 @@ namespace RetailSales.Models.Accounts
 
         public string? TotalOpeningBalance { get; set; }
 
-        public string? LedgerNotes { get; set; }
+        public string? LedgerNotes { get; set; }        
 
-        public string? AccountGroup { get; set; }
+        public string? ddlStatus { get; set; }
 
-        public string? ddlstatus { get; set; }
-
-        public Ledgers()
-        {
-            this.AccountGroupList = new List<SelectListItem>();
-        }
-        public List<SelectListItem> AccountGroupList;
     }
     public class ledgergrid
     {

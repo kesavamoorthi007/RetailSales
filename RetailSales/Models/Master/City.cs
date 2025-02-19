@@ -35,7 +35,7 @@ namespace RetailSales.Models
         public string? ciname { get; set; }
         public string? statid { get; set; }
         public string? counid { get; set; }
-        public string? edit { get; set; }
-        public string? delete { get; set; }
+        public string? editrow { get; set; }
+        public string? delrow { get; set; }
     }
 }

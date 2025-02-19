@@ -28,6 +28,7 @@ namespace RetailSales.Controllers.Master
             Employee ic = new Employee();
             ic.Gender = "Male";
             ic.Maritalstatus = "Married";
+            ic.Dbirth = DateTime.Now.ToString("dd-MMM-yyyy");
             //ic.Materialstatuslst = BindMaterialstatus();
             ic.Countrylst = BindCountry();
             ic.Statelst = BindState();
@@ -50,7 +51,7 @@ namespace RetailSales.Controllers.Master
                     ic.Cityid = dt.Rows[0]["CITY_ID"].ToString();
                     ic.Stateid = dt.Rows[0]["STATE_ID"].ToString();
                     ic.Countryid = dt.Rows[0]["COUNTRY_ID"].ToString();
-                    ic.mobile = dt.Rows[0]["MOBILE"].ToString();
+                    ic.Mobile = dt.Rows[0]["MOBILE"].ToString();
                     ic.Email = dt.Rows[0]["EMAIL"].ToString();
                     //ic.Remark = dt.Rows[0]["REMARKS"].ToString();
                     /*ic.Approved = dt.Rows[0]["APPROVED_BY"].ToString()*/
@@ -210,25 +211,10 @@ namespace RetailSales.Controllers.Master
                     empid = dtUsers.Rows[i]["EMPLOYEE_ID"].ToString(),
                     ename = dtUsers.Rows[i]["FNAME"].ToString(),
                     gender = dtUsers.Rows[i]["GENDER"].ToString(),
-                    //address = dtUsers.Rows[i]["ADDRESS"].ToString(),
-                    //cityid = dtUsers.Rows[i]["CITY_ID"].ToString(),
-                    //stateid = dtUsers.Rows[i]["STATE_ID"].ToString(),
-                    //countryid = dtUsers.Rows[i]["COUNTRY_ID"].ToString(),
+                    
                     mobile = dtUsers.Rows[i]["MOBILE"].ToString(),
                     email = dtUsers.Rows[i]["EMAIL"].ToString(),
-                    //remark = dtUsers.Rows[i]["REMARKS"].ToString(),
-                    //approved = dtUsers.Rows[i]["APPROVED_BY"].ToString(),
-                    //designation = dtUsers.Rows[i]["DESIGNATION"].ToString(),
-                    //branch = dtUsers.Rows[i]["BRANCH"].ToString(),
-                    //department = dtUsers.Rows[i]["DEPARTMENT"].ToString(),
-                    //maritalstatus = dtUsers.Rows[i]["MATERIALSTATUS"].ToString(),
-                    //emailpersonal = dtUsers.Rows[i]["EMAILPERSONAL"].ToString(),
-                    //djoining = dtUsers.Rows[i]["DATEOFJOINING"].ToString(),
-                    //dbirth = dtUsers.Rows[i]["DATEOFBIRTH"].ToString(),
-                    //dleaving = dtUsers.Rows[i]["DATEOFLEAVING"].ToString(),
-                    //degree = dtUsers.Rows[i]["DEGREE"].ToString(),
-                    //employeeStatus = dtUsers.Rows[i]["EMPLOYEE_STATUS"].ToString(),
-                    //report = dtUsers.Rows[i]["REPORT_TO"].ToString(),
+                   
 
                     editrow = EditRow,
                     delrow = DeleteRow,

@@ -22,10 +22,7 @@ namespace RetailSales.Controllers.Accounts
         {
 
             Ledgers ic = new Ledgers();
-
-            
             ic.AccountGroupList = BindAccountGroup();
-            
 
             if (id == null)
             {
@@ -47,17 +44,16 @@ namespace RetailSales.Controllers.Accounts
             }
             return View(ic);
         }
-
         [HttpPost]
-        public ActionResult Ledgers(Ledgers Ic, string id)
+        public ActionResult Ledgers(Ledgers cy, string id)
         {
             try
             {
-                Ic.ID = id;
-                string Strout = LedgersService.LedgersCRUD(Ic);
+                cy.ID = id;
+                string Strout = LedgersService.LedgersCRUD(cy);
                 if (string.IsNullOrEmpty(Strout))
                 {
-                    if (Ic.ID == null)
+                    if (cy.ID == null)
                     {
                         TempData["notice"] = "Ledgers Inserted Successfully...!";
                     }
@@ -81,7 +77,7 @@ namespace RetailSales.Controllers.Accounts
             {
                 throw ex;
             }
-            return View(Ic);
+            return View(cy);
         }
 
         public List<SelectListItem> BindAccountGroup()
@@ -121,7 +117,7 @@ namespace RetailSales.Controllers.Accounts
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    EditRow = "<a href=Product?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    EditRow = "<a href=Ledgers?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
                     DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
@@ -153,12 +149,12 @@ namespace RetailSales.Controllers.Accounts
             if (string.IsNullOrEmpty(flag))
             {
 
-                return RedirectToAction("ListProduct");
+                return RedirectToAction("ListLedgers");
             }
             else
             {
                 TempData["notice"] = flag;
-                return RedirectToAction("ListProduct");
+                return RedirectToAction("ListLedgers");
             }
         }
         public ActionResult Remove(string tag, string id)
@@ -168,12 +164,12 @@ namespace RetailSales.Controllers.Accounts
             if (string.IsNullOrEmpty(flag))
             {
 
-                return RedirectToAction("ListProduct");
+                return RedirectToAction("ListLedgers");
             }
             else
             {
                 TempData["notice"] = flag;
-                return RedirectToAction("ListProduct");
+                return RedirectToAction("ListLedgers");
             }
         }
     }

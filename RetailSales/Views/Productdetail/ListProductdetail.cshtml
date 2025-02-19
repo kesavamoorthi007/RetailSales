@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Productdetail
 
 @{
-    ViewData["Title"] = "Product Detail";
+    ViewData["Title"] = "Product";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Product Detail </strong> </li>
+            <li class="active"> <strong>Product</strong> </li>
         </ol>
     </div>
 </div>
@@ -42,9 +42,7 @@
             datafields: [
                 { name: 'product', type: 'string' },
                 { name: 'varint', type: 'string' },
-                { name: 'varintnic', type: 'string' },
                 { name: 'uom', type: 'string' },
-                { name: 'rate', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
@@ -62,7 +60,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '90%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -83,11 +81,11 @@
 
                 columns: [
 
-                    { text: 'Product Name', filtertype: 'checkedlist', datafield: 'product', width: 350 },
-                    { text: 'Variant', filtertype: 'input', datafield: 'varint', width: 200 },
-                    { text: 'Varint NickName', filtertype: 'input', datafield: 'varintnic', width: 200 },
-                    { text: 'UOM', filtertype: 'input', datafield: 'uom', width: 150 },
-                    { text: 'Rate', filtertype: 'input', datafield: 'rate', width: 150 },
+                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'product', width: 300 },
+                    { text: 'Variant', filtertype: 'input', datafield: 'varint', width: 220 },
+                    //{ text: 'Product NickName', filtertype: 'input', datafield: 'varintnic', width: 200 },
+                    { text: 'UOM', filtertype: 'input', datafield: 'uom', width: 80 },
+                    //{ text: 'Rate', filtertype: 'input', datafield: 'rate', width: 150 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
@@ -123,7 +121,7 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("Productdetail", "Productdetail")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Product Detail </a>
+                                    <a href="@Url.Action("Productdetail", "Productdetail")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Product</a>
                                     <br>
                                 </div>
 
@@ -132,7 +130,7 @@
                         <br />
                         <div class="row">
 
-                            <div class="col-md-12 ">
+                            <div class="col-md-8">
                                 <div id="grid">
                                 </div>
                             </div>

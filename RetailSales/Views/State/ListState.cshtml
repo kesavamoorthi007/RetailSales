@@ -59,7 +59,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '75%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -80,11 +80,12 @@
 
                 columns: [
 
-                    { text: 'Country Name', filtertype: 'checkedlist', datafield: 'conname', width: 200 },                    
-                    { text: 'State Name', filtertype: 'checkedlist', datafield: 'statname', width: 200 },
+                    { text: 'Country Name', filtertype: 'checkedlist', datafield: 'conname', width: 220 },                    
+                    { text: 'State Name', filtertype: 'checkedlist', datafield: 'statname', width: 250 },
                     { text: 'State Code', filtertype: 'checkedlist', datafield: 'statcode', width: 200 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 110 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 110},
+
                 ]
             });
         $("#ddlStatus").change(function () {

@@ -1,13 +1,12 @@
-﻿@model RetailSales.Models.Master.Rate
+﻿@model RetailSales.Models.Bankaccounts
 
 @{
-    ViewData["Title"] = "Rate";
+    ViewData["Title"] = "Bankaccounts ";
 
 }
 <partial name="JqxGridPartial" />
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
-
 
 <script type="text/javascript">
     @if (TempData["notice"] != null)
@@ -15,14 +14,15 @@
         @:alert('@TempData["notice"]');
     }
 </script>
-<div style="height:25px;"></div>
+
+
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Rate</strong> </li>
+            <li class="active"> <strong>Bankaccounts</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/Rate/MyListRategrid",
+            url: "/Bankaccounts/MyListBankaccountsgrid",
             data: {
                 strstatus: ""
             },
@@ -40,12 +40,17 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'docno', type: 'string' },
-                { name: 'docdate', type: 'string' },
-                { name: 'validfrom', type: 'string' },
-                { name: 'validto', type: 'string' },
+                { name: 'accname', type: 'string' },
+                { name: 'bname', type: 'string' },
+                { name: 'accnum', type: 'string' },
+
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
+               
+
+               
+               
+
             ],
             id: 'id',
         };
@@ -59,7 +64,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '80%',
+                width: '100%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -80,11 +85,10 @@
 
                 columns: [
 
-                    { text: 'Doc No', filtertype: 'checkedlist', datafield: 'docno', width: 150 },
-                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 120 },
-                    { text: 'Valid From', filtertype: 'input', datafield: 'validfrom', width: 200 },
-                    { text: 'Valid To', filtertype: 'input', datafield: 'validto', width: 200 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
+                    { text: ' Account Name', filtertype: 'checkedlist', datafield: 'accname', width: 250 },
+                    { text: 'Bank Name', filtertype: 'input', datafield: 'bname', width: 250 },
+                    { text: 'Account Number', filtertype: 'input', datafield: 'accnum', width: 250 },
+                    { text: 'EditRow', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
                 ]
             });
@@ -119,7 +123,7 @@
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("Rate", "Rate")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Rate</a>
+                                    <a href="@Url.Action("Bankaccounts", "Bankaccounts")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Bankaccounts </a>
                                     <br>
                                 </div>
 

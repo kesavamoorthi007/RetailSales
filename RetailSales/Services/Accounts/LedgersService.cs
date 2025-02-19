@@ -16,16 +16,16 @@ namespace RetailSales.Services.Accounts
             datatrans = new DataTransactions(_connectionString);
         }
 
-        public DataTable GetLedgers()
-        {
-            string SvSql = string.Empty;
-            SvSql = "select ACC_LEDGER.ID,ACC_LEDGER.ACC_GRP_CODE,ACC_LEDGER.LEDGER_NAME,ACC_LEDGER.ALLOW_ZERO_VAL,ACC_LEDGER.TOTAL_OPEN_BAL,ACC_LEDGER.LDGR_NOTES from ACC_LEDGER ";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
+        //public DataTable GetLedgers()
+        //{
+        //    string SvSql = string.Empty;
+        //    SvSql = "select ACC_LEDGER.ID,ACC_LEDGER.ACC_GRP_CODE,ACC_LEDGER.LEDGER_NAME,ACC_LEDGER.ALLOW_ZERO_VAL,ACC_LEDGER.TOTAL_OPEN_BAL,ACC_LEDGER.LDGR_NOTES from ACC_LEDGER ";
+        //    DataTable dtt = new DataTable();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        //    adapter.Fill(dtt);
+        //    return dtt;
+        //}
 
         public DataTable GetAccountName()
         {
@@ -49,26 +49,87 @@ namespace RetailSales.Services.Accounts
             return dtt;
         }
 
+
         public DataTable GetAllLedgersGRID(string strStatus)
         {
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "select L.ID,L.IS_ACTIVE,LEDGER_NAME,ACC_GRP_NAME,G.ACC_CLASS,T.ACC_TYPE_NAME from ACC_LEDGER L LEFT OUTER JOIN ACC_GROUP G ON G.ACC_GRP_CODE=L.ACC_GRP_CODE LEFT OUTER JOIN ACC_TYPE T on G.ACC_TYPE_CODE=T.ACC_TYPE_CODE WHERE L.IS_ACTIVE='Y' AND L.COMP_CODE='028' AND G.COMP_CODE='028' AND T.COMP_CODE='028' ORDER BY L.ID DESC";
+                SvSql = "SELECT ACC_LEDGER.ID, ACC_GROUP.ACC_GRP_NAME,ACC_LEDGER.LEDGER_NAME,ACC_LEDGER.IS_ACTIVE FROM ACC_LEDGER LEFT OUTER JOIN ACC_GROUP ON ACC_GROUP.ACC_GRP_CODE = ACC_LEDGER.ACC_GRP_CODE WHERE ACC_LEDGER.IS_ACTIVE = 'Y' ORDER BY ACC_LEDGER.ID DESC";
             }
             else
             {
-                SvSql = "select L.ID,L.IS_ACTIVE,LEDGER_NAME,ACC_GRP_NAME,G.ACC_CLASS,T.ACC_TYPE_NAME from ACC_LEDGER L LEFT OUTER JOIN ACC_GROUP G ON G.ACC_GRP_CODE=L.ACC_GRP_CODE LEFT OUTER JOIN ACC_TYPE T on G.ACC_TYPE_CODE=T.ACC_TYPE_CODE WHERE L.IS_ACTIVE='N' AND L.COMP_CODE='028' AND G.COMP_CODE='028' AND T.COMP_CODE='028' ORDER BY L.ID DESC";
-
+                SvSql = "SELECT ACC_LEDGER.ID, ACC_GROUP.ACC_GRP_NAME,ACC_LEDGER.LEDGER_NAME,ACC_LEDGER.IS_ACTIVE FROM ACC_LEDGER LEFT OUTER JOIN ACC_GROUP ON ACC_GROUP.ACC_GRP_CODE = ACC_LEDGER.ACC_GRP_CODE WHERE ACC_LEDGER.IS_ACTIVE = 'N' ORDER BY ACC_LEDGER.ID DESC";
             }
-
-           // SvSql = "SELECT ACC_LEDGER.ID,ACC_LEDGER.LEDGER_NAME,ACC_LEDGER.ALLOW_ZERO_VAL,ACC_LEDGER.TOTAL_OPEN_BAL,ACC_LEDGER.LDGR_NOTES,ACC_GROUP.ACC_GRP_NAME,ACC_LEDGER.IS_ACTIVE, FROM ACC_LEDGER LEFT OUTER JOIN ACC_GROUP ON ACC_GROUP.ID=ACC_LEDGER.ACC_GRP_CODE LEFT OUTER JOIN ACC_GROUP ON ACC_GROUP.ID=ACC_GROUP.ACC_GRP_NAME WHERE ACC_LEDGER.IS_ACTIVE = 'Y' ORDER BY ACC_LEDGER.ID DESC";
 
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
+        }
+
+        public string LedgersCRUD(Ledgers cy)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty;
+                string svSQL = "";
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    SqlCommand objCmd = new SqlCommand("LedgersProc", objConn);
+                    objCmd.CommandType = CommandType.StoredProcedure;
+                    if (cy.ID == null)
+                    {
+                        StatementType = "Insert";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        StatementType = "Update";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
+                    }
+
+
+                    objCmd.Parameters.Add("@accgroup", SqlDbType.NVarChar).Value = cy.AccountGroup;
+                    objCmd.Parameters.Add("@ledgername", SqlDbType.NVarChar).Value = cy.LedgerName;
+                    objCmd.Parameters.Add("@allowzerovalue", SqlDbType.NVarChar).Value = cy.AllowZeroValue;
+                    objCmd.Parameters.Add("@totopenbal", SqlDbType.NVarChar).Value = cy.TotalOpeningBalance;
+                    objCmd.Parameters.Add("@ledgernotes", SqlDbType.NVarChar).Value = cy.LedgerNotes;
+
+
+                    if (cy.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = "CreateBy";
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = "UpdateBy";
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
+                    try
+                    {
+                        objConn.Open();
+                        objCmd.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
         }
 
         public string StatusChange(string tag, string id)
@@ -78,7 +139,7 @@ namespace RetailSales.Services.Accounts
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE CITY SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE ACC_LEDGER SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -100,7 +161,7 @@ namespace RetailSales.Services.Accounts
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE CITY SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE ACC_LEDGER SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -114,69 +175,7 @@ namespace RetailSales.Services.Accounts
             }
             return "";
         }
-
-        public string LedgersCRUD(Ledgers ic)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public string LedgersCRUD(Ledgers ic)
-        //{
-        //    string msg = "";
-        //    try
-        //    {
-        //        string StatementType = string.Empty;
-        //        string svSQL = "";
-
-        //        if (ic.ID == null)
-        //        {
-
-        //            svSQL = "SELECT Count(CITY_NAME) as cnt FROM CITY WHERE CITY_NAME = LTRIM(RTRIM('" + ic.CityName + "')) and STATE_ID = LTRIM(RTRIM('" + ic.StateId + "')) and COUNTRY_ID = LTRIM(RTRIM('" + ic.CountryId + "'))";
-        //            if (datatrans.GetDataId(svSQL) > 0)
-        //            {
-        //                msg = "City Name Already Existed";
-        //                return msg;
-        //            }
-        //        }
-        //        using (SqlConnection objConn = new SqlConnection(_connectionString))
-        //        {
-        //            SqlCommand objCmd = new SqlCommand("CityProc", objConn);
-        //            objCmd.CommandType = CommandType.StoredProcedure;
-        //            if (ic.ID == null)
-        //            {
-        //                StatementType = "Insert";
-        //                objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
-        //            }
-        //            else
-        //            {
-        //                StatementType = "Update";
-        //                objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = ic.ID;
-        //            }
-        //            objCmd.Parameters.Add("@cityname", SqlDbType.NVarChar).Value = ic.CityName;
-        //            objCmd.Parameters.Add("@stateid", SqlDbType.NVarChar).Value = ic.StateId;
-        //            objCmd.Parameters.Add("@countryid", SqlDbType.NVarChar).Value = ic.CountryId;
-        //            objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
-        //            try
-        //            {
-        //                objConn.Open();
-        //                objCmd.ExecuteNonQuery();
-
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                System.Console.WriteLine("Exception: {0}", ex.ToString());
-        //            }
-        //            objConn.Close();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        msg = "Error Occurs, While inserting / updating Data";
-        //        throw ex;
-        //    }
-
-        //    return msg;
-        //}
+     
     }
 
    
