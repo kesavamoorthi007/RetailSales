@@ -62,7 +62,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '90%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -85,9 +85,9 @@
 
                     { text: 'Company Name', filtertype: 'checkedlist', datafield: 'coname', width: 200 },
                     { text: 'Address', filtertype: 'input', datafield: 'address', width: 200 },
-                    { text: 'City', filtertype: 'input', datafield: 'city', width: 200 },
-                    { text: 'State', filtertype: 'input', datafield: 'state', width: 200 },
                     { text: 'Country', filtertype: 'input', datafield: 'country', width: 200 },
+                    { text: 'State', filtertype: 'input', datafield: 'state', width: 200 },
+                    { text: 'City', filtertype: 'input', datafield: 'city', width: 200 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
