@@ -18,6 +18,7 @@ namespace RetailSales.Controllers
         public IActionResult Sequence(string id)
         {
             Sequence ic = new Sequence();
+            ic.Suffix = "24-25";
             if (id == null)
             {
 

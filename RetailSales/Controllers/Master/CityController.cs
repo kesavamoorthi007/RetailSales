@@ -142,18 +142,18 @@ namespace RetailSales.Controllers
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
 
-                string Delete = string.Empty;
-                string Edit = string.Empty;
+                string DeleteRow = string.Empty;
+                string EditRow = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    Edit = "<a href=City?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit-color.png' alt='Edit' width='28' /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/trash-bin.png' alt='Deactivate' width='28' /></a>";
+                    EditRow = "<a href=State?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
-                    Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    EditRow = "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
                 Reg.Add(new Citygrid
                 {
@@ -161,8 +161,8 @@ namespace RetailSales.Controllers
                     ciname = dtUsers.Rows[i]["CITY_NAME"].ToString(),
                     statid = dtUsers.Rows[i]["STATE_NAME"].ToString(),
                     counid = dtUsers.Rows[i]["COUNTRY_NAME"].ToString(),
-                    edit = Edit,
-                    delete = Delete,
+                    editrow = EditRow,
+                    delrow = DeleteRow,
 
                 });
             }
