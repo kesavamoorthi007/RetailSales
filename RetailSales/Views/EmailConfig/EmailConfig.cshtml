@@ -1,0 +1,218 @@
+﻿@model RetailSales.Models.Master.EmailConfig;
+@{
+    ViewData["Title"] = "EmailConfig";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>EmailConfig </strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("EmailConfig", "EmailConfig", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">SMTP HOST<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Smtphost, new { @id = "txtSmtphost", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">PortNo<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Portno, new { @id = "txtPortno", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Email ID<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Emailid, new { @id = "txtEmailid", @class = "form-control", @TabIndex = 1 })<br />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Password<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Password, new { @id = "txtPassword", @class = "form-control", @TabIndex = 1 })<br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">SSL<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            
+                                            <form asp-action="SomeAction" asp-controller="SomeController">
+                                                <label>
+                                                    <input type="radio" name="MyRadioField" value="Yes" checked /> Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="MyRadioField" value="No" /> No
+                                                </label>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Signature<label class="mandatory">*</label></label>
+                                        <div class="col-sm-12">
+                                            @Html.TextAreaFor(C => C.Signature, new { @id = "txtSignature", @class = "form-control", @TabIndex = 1 })<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <button type="submit" class="btn btn-success" id="btnSave">Save</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListEmailConfig", "EmailConfig")'">Cancel</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    // i/p validation purpose
+
+    $(function () {
+        $('._select').select2();
+    });
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+            if (document.getElementById("txtSmtphost").value == "") {
+                isValid = false;
+                $(txtSmtphost).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter SMTP HOST");
+                return false;
+            }
+            else {
+                $(txtSmtphost).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtPortno").value == "") {
+                isValid = false;
+                $(txtPortno).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter PortNo");
+                return false;
+            }
+            else {
+                $(txtPortno).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtEmailid").value == "") {
+                isValid = false;
+                $(txtEmailid).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Email ID");
+                return false;
+            }
+            else {
+                $(txtEmailid).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtPassword").value == "") {
+                isValid = false;
+                $(txtPassword).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Password");
+                return false;
+            }
+            else {
+                $(txtPassword).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtSignature").value == "") {
+                isValid = false;
+                $(txtSignature).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Signature");
+                return false;
+            }
+            else {
+                $(txtSignature).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>
