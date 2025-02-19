@@ -413,8 +413,8 @@ namespace RetailSales.Controllers.Purchase
                     if (dtUsers.Rows[i]["STATUS"].ToString() == "GRN Generated")
                     {
                         EditRow = "";
-                        GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='25' />";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+                        GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' />";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details'  /></a>";
 
 
 
@@ -422,7 +422,7 @@ namespace RetailSales.Controllers.Purchase
                     else
                     {
                         EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='25'  /></a>";
-                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='25' /></a>";
+                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details'/></a>";
                         View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
 
                     }
