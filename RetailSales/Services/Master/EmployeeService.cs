@@ -95,7 +95,7 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@cityname", SqlDbType.NVarChar).Value = cy.Cityid;
                      objCmd.Parameters.Add("@statename", SqlDbType.NVarChar).Value = cy.Stateid;
                     //objCmd.Parameters.Add("@Countryid", SqlDbType.NVarChar).Value = cy.Stateid;
-                     objCmd.Parameters.Add("@mobile", SqlDbType.NVarChar).Value = cy.mobile;
+                     objCmd.Parameters.Add("@mobile", SqlDbType.NVarChar).Value = cy.Mobile;
                      objCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = cy.Email;
                     //objCmd.Parameters.Add("@emailpersonal", SqlDbType.NVarChar).Value = cy.Emailpersonal;
                     objCmd.Parameters.Add("@Degree", SqlDbType.NVarChar).Value = cy.Degree;

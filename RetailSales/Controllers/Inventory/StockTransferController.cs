@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Services;
 using static RetailSales.Models.StockTransferItem;
 using RetailSales.Interface.Purchase;
+using RetailSales.Services.Purchase;
 
 namespace RetailSales.Controllers
 {
@@ -25,7 +26,10 @@ namespace RetailSales.Controllers
         {
             StockTransfer ic = new StockTransfer();
 
+            
+            ic.DocumentDate = DateTime.Now.ToString("dd-MMM-yyyy");
             DataTable dtv = datatrans.GetSequence("StockTransfor");
+
             if (dtv.Rows.Count > 0)
             {
                 ic.Documentid = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
@@ -49,41 +53,8 @@ namespace RetailSales.Controllers
                 }
             }
             else
-
             {
-                DataTable dt = new DataTable();
-                dt = StockTransferService.GetEditStockTransferDetail1(id);
-                if (dt.Rows.Count > 0)
-                {
-                    //ic.ID = dt.Rows[0]["ID"].ToString();
-                    ic.Documentid = dt.Rows[0]["STOCK_TRANSFER_ID"].ToString();
-                    ic.DocumentDate = dt.Rows[0]["STOCK_TRANSFER_DATE"].ToString();
-                    ic.Flocation = dt.Rows[0]["FROM_LOCATION"].ToString();
-                    ic.Tlocation = dt.Rows[0]["TO_LOCATION"].ToString();
-                    ic.FBin = dt.Rows[0]["FROM_BIN_ID"].ToString();
-                    ic.TBin = dt.Rows[0]["TO_BIN_ID"].ToString();
-                    ic.Order = dt.Rows[0]["BROWSE_ORDER"].ToString();
-                   
-
-
-                }
-                //DataTable dt1 = new DataTable();
-                //dt1 = StockTransferService.GetEditStockTransferDetail1(id);
-                //if (dt.Rows.Count > 0)
-                //{
-
-                //    //ic.ID = dt.Rows[0]["ID"].ToString();
-
-                //    tda.Item = dt.Rows[0]["ITEM"].ToString();
-                //    tda.Variant = dt.Rows[0]["VARIANT"].ToString();
-                //    tda.Unit = dt.Rows[0]["UNIT"].ToString();
-                //    tda.Stock = dt.Rows[0]["STOCK"].ToString();
-                //    tda.Qty = dt.Rows[0]["QUANTITY"].ToString();
-                //    tda.Rate = dt.Rows[0]["RATE"].ToString();
-                //    tda.Amount = dt.Rows[0]["AMOUNT"].ToString();
-
-
-                //}
+               
 
             }
             ic.StockTransferItemLst = TData;
@@ -321,12 +292,12 @@ namespace RetailSales.Controllers
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
                 }
                 else
                 {
-                    View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
                 Reg.Add(new StockTransfergrid
@@ -348,38 +319,88 @@ namespace RetailSales.Controllers
                 Reg
             });
         }
+        public IActionResult ViewStockTransfer(string id)
+        {
+            StockTransfer ic = new StockTransfer();
+
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = StockTransferService.GetStockTransfer(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.Documentid = dt.Rows[0]["STOCK_TRANSFER_ID"].ToString();
+                ic.DocumentDate = dt.Rows[0]["STOCK_TRANSFER_DATE"].ToString();
+                ic.Flocation = dt.Rows[0]["FROM_LOCATION"].ToString();
+                ic.Tlocation = dt.Rows[0]["TO_LOCATION"].ToString();
+                ic.FBin = dt.Rows[0]["FROM_BIN_ID"].ToString();
+                ic.TBin = dt.Rows[0]["TO_BIN_ID"].ToString();
+               
+
+            }
+
+            List<StockTransferItem> TData = new List<StockTransferItem>();
+            StockTransferItem tda = new StockTransferItem();
 
 
-        //public ActionResult DeleteMR(string tag, string id)
-        //{
 
-        //    string flag = StockTransferService.StatusChange(tag, id);
-        //    if (string.IsNullOrEmpty(flag))
-        //    {
 
-        //        return RedirectToAction("ListStockTransfer");
-        //    }
-        //    else
-        //    {
-        //        TempData["notice"] = flag;
-        //        return RedirectToAction("ListStockTransfer");
-        //    }
-        //}
-        //public ActionResult Remove(string tag, string id)
-        //{
+            dtt = StockTransferService.GetStockTransferItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
 
-        //    string flag = StockTransferService.RemoveChange(tag, id);
-        //    if (string.IsNullOrEmpty(flag))
-        //    {
+                    tda = new StockTransferItem();
+                    tda.Itemlst = BindItem();
+                    tda.Item = dtt.Rows[0]["PRODUCT_NAME"].ToString();
+                    tda.Varientlst = BindVarient(tda.Item);
+                    tda.Varient = dtt.Rows[0]["PRODUCT_VARIANT"].ToString();
+                    tda.Unit = dtt.Rows[0]["UNIT"].ToString();
+                    tda.Stock = dtt.Rows[0]["STOCK"].ToString();
+                    tda.Qty = dtt.Rows[0]["QUANTITY"].ToString();
+                    tda.Rate = dtt.Rows[0]["RATE"].ToString();
+                    tda.Amount = dtt.Rows[0]["AMOUNT"].ToString();
 
-        //        return RedirectToAction("ListStockTransfer");
-        //    }
-        //    else
-        //    {
-        //        TempData["notice"] = flag;
-        //        return RedirectToAction("ListStockTransfer");
-        //    }
-        //}
+                    tda.ID = id;
+                    TData.Add(tda);
+                }
+            }
+            ic.StockTransferLst = TData;
+            return View(ic);
+        }
+
+
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = StockTransferService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListStockTransfer");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListStockTransfer");
+            }
+        }
+        public ActionResult Remove(string tag, string id)
+        {
+
+            string flag = StockTransferService.RemoveChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListStockTransfer");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListStockTransfer");
+            }
+        }
 
     }
 

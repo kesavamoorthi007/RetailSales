@@ -59,7 +59,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '80%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -81,11 +81,11 @@
                 columns: [
 
                     { text: 'Doc No', filtertype: 'checkedlist', datafield: 'docno', width: 150 },
-                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 100 },
+                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 120 },
                     { text: 'Valid From', filtertype: 'input', datafield: 'validfrom', width: 200 },
                     { text: 'Valid To', filtertype: 'input', datafield: 'validto', width: 200 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
                 ]
             });
         $("#ddlStatus").change(function () {

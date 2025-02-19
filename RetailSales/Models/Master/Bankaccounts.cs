@@ -17,6 +17,7 @@ namespace RetailSales.Models
         public List<SelectListItem> Statelst;
         public List<SelectListItem> Citylst;
         public string Accountname { get; set; }
+        public string Accountnumber { get; set; }
         public string Bankname { get; set; }
         public string Accounttype { get; set; }
         public string Branchname { get; set; }
@@ -38,16 +39,10 @@ namespace RetailSales.Models
     {
         public string id { get; set; }
         public string accname { get; set; }
+        public string accnum { get; set; }
         public string bname { get; set; }
-        public string acctype { get; set; }
-        public string branch { get; set; }
-        public string badd { get; set; }
-        public string country { get; set; }
-        public string state { get; set; }
-        public string city { get; set; }
-        public string code { get; set; }
-        public string ifsc { get; set; }
-        public string isdefault { get; set; }
+        
+      
         public string editrow { get; set; }
         public string delrow { get; set; }
     }

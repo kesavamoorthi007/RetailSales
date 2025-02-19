@@ -68,7 +68,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '75%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -89,14 +89,9 @@
 
                 columns: [
 
-                    { text: 'Supplier Name', filtertype: 'input', datafield: 'supp', width: 200 },
-                    { text: 'Supplier Category', filtertype: 'input', datafield: 'category', width: 200 },
-                    { text: 'Credit Days', filtertype: 'input', datafield: 'days', width: 200 },
-                    // { text: 'Days', filtertype: 'input', datafield: 'days', width: 100 },
-                    // { text: 'City', filtertype: 'input', datafield: 'city', width: 100 },        
-                    // { text: 'Landline', filtertype: 'input', datafield: 'landline', width: 100 },
-                    // { text: 'Email', filtertype: 'input', datafield: 'email', width: 100 },
-                    // { text: 'Address', filtertype: 'input', datafield: 'address', width: 100 },
+                    { text: 'Supplier Name', filtertype: 'input', datafield: 'supp', width: 250 },
+                    { text: 'Supplier Category', filtertype: 'input', datafield: 'category', width: 250 },
+                    { text: 'Credit Days', filtertype: 'input', datafield: 'days', width: 250 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},
                 ]

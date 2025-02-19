@@ -414,25 +414,25 @@ namespace RetailSales.Controllers.Purchase
                     {
                         EditRow = "";
                         GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='25' />";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
 
 
                     }
                     else
                     {
-                        EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='25'  /></a>";
-                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='25' /></a>";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+                        EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
+                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
                     }
-                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='25' /></a>";
+                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
 
                 }
                 else
                 {
                    
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='25' /></a>";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
 
                 Reg.Add(new ListPurchaseordergrid
