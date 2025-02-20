@@ -67,15 +67,16 @@
                                         <div class="col-sm-8">
                                             <div class="input-group">
 
-                                                @Html.RadioButtonFor(C => C.Bin, "Yes", new { @TabIndex = 2 })
-                                                <label id="mt-radio">Yes</label>&emsp;
-                                                @Html.RadioButtonFor(C => C.Bin, "No", new { @TabIndex = 3 })
-                                                <label id="mt-radio">No</label>
+                                                @Html.RadioButtonFor(C => C.Bin, "YES", new { @TabIndex = 2 })
+                                                <label id="mt-radio">YES</label>&emsp;
+                                                @Html.RadioButtonFor(C => C.Bin, "NO", new { @TabIndex = 3 })
+                                                <label id="mt-radio">NO</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                             </div>
-                             </div>
+                            </div>
+                             
 
 
                             <div style="height:30px;"></div>
@@ -89,6 +90,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $(function () {
         $('._select').select2();
