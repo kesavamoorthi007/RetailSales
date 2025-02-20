@@ -59,7 +59,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '80%',
+                width: '75%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -80,9 +80,9 @@
 
                 columns: [
 
-                    { text: 'SMTP HOST', filtertype: 'input', datafield: 'smtphost', width: 200 },
-                    { text: 'PortNo', filtertype: 'input', datafield: 'portno', width: 200 },
-                    { text: 'Email ID', filtertype: 'input', datafield: 'emailid', width: 200 },
+                    { text: 'SMTP HOST', filtertype: 'input', datafield: 'smtphost', width: 150 },
+                    { text: 'PortNo', filtertype: 'input', datafield: 'portno', width: 150 },
+                    { text: 'Email ID', filtertype: 'input', datafield: 'emailid', width: 250 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
