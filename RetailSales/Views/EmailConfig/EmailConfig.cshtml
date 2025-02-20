@@ -85,16 +85,12 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">SSL<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            
-                                            <form asp-action="SomeAction" asp-controller="SomeController">
-                                                <label>
-                                                    <input type="radio" name="MyRadioField" value="Yes" checked /> Yes
-                                                </label>
-                                                <label>
-                                                    <input type="radio" name="MyRadioField" value="No" /> No
-                                                </label>
-                                            </form>
-
+                                            <div class="input-group">
+                                                @Html.RadioButtonFor(C => C.SSL, "YES", new { @TabIndex = 2 })
+                                                <label id="mt-radio">Yes</label>&emsp;
+                                                @Html.RadioButtonFor(C => C.SSL, "NO", new { @TabIndex = 3 })
+                                                <label id="mt-radio">No</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

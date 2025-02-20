@@ -35,6 +35,33 @@ namespace RetailSales.Services.Purchase
             adapter.Fill(dtt);
             return dtt;
         }
+        public IEnumerable<PurchaseorderItem> GetAllPurchaseOrderItem(string id)
+        {
+            List<PurchaseorderItem> cmpList = new List<PurchaseorderItem>();
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+
+                using (SqlCommand cmd = con.CreateCommand())
+                {
+                    con.Open();
+                    cmd.CommandText = "SELECT POBASICID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,PODETAIL.UOM,QTY  FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT where PODETAIL.POBASICID='" + id + "'";
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        PurchaseorderItem cmp = new PurchaseorderItem
+                        {
+                            ID = rdr["POBASICID"].ToString(),
+                            Item = rdr["PRODUCT_NAME"].ToString(),
+                            Varient = rdr["PRODUCT_VARIANT"].ToString(),
+                            UOM = rdr["UOM"].ToString(),
+                            Qty = rdr["QTY"].ToString()
+                        };
+                        cmpList.Add(cmp);
+                    }
+                }
+            }
+            return cmpList;
+        }
         public DataTable GetItem()
         {
             string SvSql = string.Empty;

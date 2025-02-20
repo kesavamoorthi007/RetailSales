@@ -34,6 +34,45 @@ namespace RetailSales.Models
             }
             return _Dt;
         }
+        public DataTable GetEmailConfig()
+        {
+            string SvSql = "Select ID,SMTP_HOST,PORT_NO,SIGNATURE,SSL,EMAIL_ID,PASSWORD from EMAIL_CONFIG where IS_ACTIVE='Y'";
+            DataTable dtCity = new DataTable();
+            dtCity = GetData(SvSql);
+            return dtCity;
+        }
+        public void sendemail(string Subject, string Message, string EmailID, string SenderID, string SenderPassword, string CompanySMTPPort, string SmtpEnableSsl, string sSmtpServer, string CompanyName)
+        {
+            string strerr = "";
+            if (EmailID != "" && EmailID != null)
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    System.Net.Mail.SmtpClient SmtpServer = new System.Net.Mail.SmtpClient(sSmtpServer);
+                    mail.From = new MailAddress(SenderID, CompanyName);
+                    mail.To.Add(EmailID);
+                    mail.Subject = Subject;
+                    StringBuilder sb3 = new StringBuilder();
+                    sb3.Append(Message);
+                    mail.Body = sb3.ToString();
+                    AlternateView avHtml = AlternateView.CreateAlternateViewFromString(sb3.ToString(), null, MediaTypeNames.Text.Html);
+                    mail.AlternateViews.Add(avHtml);
+                    mail.IsBodyHtml = true;
+
+                    SmtpServer.Port = Convert.ToInt32(CompanySMTPPort);
+                    SmtpServer.Credentials = new System.Net.NetworkCredential(SenderID, SenderPassword);
+                    SmtpServer.EnableSsl = Convert.ToBoolean(SmtpEnableSsl);
+                    //SmtpServer.Timeout = 10000;
+                    SmtpServer.Send(mail);
+                    mail.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    strerr = ex.Message;
+                }
+            }
+        }
         public bool UpdateStatus(string query)
         {
             bool Saved = true;
