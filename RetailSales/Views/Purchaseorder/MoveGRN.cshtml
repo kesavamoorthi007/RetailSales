@@ -123,9 +123,8 @@
                                                 <th> Recived Qty </th>
                                                 <th> Accepted Qty </th>
                                                 <th> Rejected  Qty </th>
+                                                <th>Rate </th>
                                                 <th>Amount </th>
-                                                <th> Frieght charges</th>
-                                                <th> Disc amount</th>
                                                 <th>Total Amount</th>
                                                 <th></th>
                                             </tr>
@@ -178,7 +177,7 @@
                                                             </td>
 
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 100px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 100px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                          <td>
                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].Accepted, new { @id = "txtAccepted" + i, @class = "form-control", style = "width: 100px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
@@ -191,23 +190,18 @@
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 100px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].FrigCharge, new { @id = "txtFrigCharge" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 100px;", @onkeyup = "changeQty(this," + i + ")" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 100px;", @onkeyup = "changeQty(this," + i + ")" })
-                                                        </td>
-                                                        <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].CGSTP, new { @id = "CGSTP" + i })
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].SGSTP, new { @id = "SGSTP" + i })
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP, new { @id = "IGSTP" + i })
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i })
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i })
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i })
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 100px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
+                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].Total, new { @id = "txtTotal" + i })
+                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 100px;", @readonly = "readonly" })
                                                         </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
+                                                            </td>
                                                             <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                                 <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="PurchaseorderLst.Index" type="hidden" value="@(i)" />
@@ -249,7 +243,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Fright</th>
+                                                    <th>FRIGHT</th>
                                                     <td>
 
                                                         @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
@@ -418,6 +412,7 @@
     $(function () {
         $('._select').select2();
     });
+
     function removeRow(i) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
@@ -445,6 +440,7 @@
             var sgsttotamt = 0;
             var igsttotamt = 0;
             var disttotamt = 0;
+            var rej = 0;
             var totdis = 0;
             var tpknc = 0;
             var tochr = 0;
@@ -461,6 +457,8 @@
             var SGST = document.getElementById("SGSTP" + i).value;
             var frieght = document.getElementById("txtFrigCharge" + i).value;
             var Disc = document.getElementById("txtDiscAmount" + i).value;
+
+            var Acc = document.getElementById("txtAccepted" + i).value;
 
             if (qty == "")
                 qty = 0;
@@ -486,10 +484,16 @@
             if (Disc == "")
                 Disc = 0;
 
+            if (Acc == "")
+                Acc = 0;
+
+            var rej = eval(qty) - eval(Acc);
+            document.getElementById("txtRejected" + i).value = rej.toFixed(2);
+
             var tot = eval(qty) * eval(up);
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
 
-            var dis = eval(tot) ;
+            var dis = eval(tot);
 
             var igstperc = (eval(dis) / 100) * eval(IGST);
             var cgstperc = (eval(dis) / 100) * eval(CGST);
@@ -608,6 +612,7 @@
             var sgsttotamt = 0;
             var igsttotamt = 0;
             var disttotamt = 0;
+            var rej = 0;
             var totdis = 0;
             var tpknc = 0;
             var tochr = 0;
@@ -624,6 +629,8 @@
             var SGST = document.getElementById("SGSTP" + i).value;
             var frieght = document.getElementById("txtFrigCharge" + i).value;
             var Disc = document.getElementById("txtDiscAmount" + i).value;
+
+            var Acc = document.getElementById("txtAccepted" + i).value;
 
             if (qty == "")
                 qty = 0;
@@ -648,6 +655,12 @@
 
             if (Disc == "")
                 Disc = 0;
+
+             if (Acc == "")
+                Acc = 0;
+
+                 var rej = eval(qty) - eval(Acc);
+            document.getElementById("txtRejected" + i).value = rej.toFixed(2);
 
             var tot = eval(qty) * eval(up);
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
@@ -740,6 +753,66 @@
             document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
             document.getElementById("txtDisc").value = disttotamt.toFixed(2);
 
+
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
+    }
+    function changeTot(_this) {
+        try {
+            var GTot = 0;
+            var j = 0;
+            var qty = 0;
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var rej = 0;
+            var totdis = 0;
+            var tpknc = 0;
+            var tochr = 0;
+            var tsdis = 0;
+            var totamt = 0;
+            var totamount = 0;
+            
+            var frieght = document.getElementById("txtFrieghtcharge").value;
+            var Disc = document.getElementById("txtDisc").value;
+
+            var tot = document.getElementById("txtNet").value;
+
+
+            if (frieght == "")
+                frieght = 0;
+
+            if (Disc == "")
+                Disc = 0;
+
+            if (tot == "")
+                tot = 0;
+
+           
+            var rej = eval(tot) - eval(Disc) + eval(frieght);
+            document.getElementById("txtNet").value = rej.toFixed(2);
+
+            
+            var roundamount = Math.round(rej);
+
+            var round = eval(roundamount) - eval(rej);
+
+            
+
+           
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = roundamount.toFixed(2);
+
+
+            document.getElementById("txtRound").value = round.toFixed(2);
 
             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
 

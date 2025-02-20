@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-6 control-label">Phone No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.PhoneNo, new { @id = "txtPhoneNo", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.PhoneNo, new { @id = "txtPhoneNo", @class = "form-control", @TabIndex = 1,type="number" })
 
                                         </div>
                                     </div>
@@ -162,6 +162,24 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
+            if (document.getElementById("ddlCustomergroup").value == "") {
+                isValid = false;
+                $(ddlCustomergroup).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Customer Category");
+                return false;
+            }
+            else {
+                $(ddlCustomergroup).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+           
             if (document.getElementById("txtCustomername").value == "") {
                 isValid = false;
                 $(txtCustomername).css({
@@ -194,38 +212,8 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("ddlCustomercategory").value == "") {
-                isValid = false;
-                $(ddlCustomercategory).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Customer Category");
-                return false;
-            }
-            else {
-                $(ddlCustomercategory).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtDescription").value == "") {
-                isValid = false;
-                $(txtDescription).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Description");
-                return false;
-            }
-            else {
-                $(txtDescription).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+           
+            
             if (document.getElementById("txtAddress").value == "") {
                 isValid = false;
                 $(txtAddress).css({
@@ -258,22 +246,8 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("ddlCountry").value == "") {
-                isValid = false;
-                $(ddlCountry).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Country");
-                return false;
-            }
-            else {
-                $(ddlCountry).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+           
+            
 
             if (document.getElementById("ddlState").value == "") {
                 isValid = false;

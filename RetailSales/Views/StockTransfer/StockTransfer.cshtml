@@ -50,8 +50,9 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-4 control-label">Doc Date<label class="mandatory">*</label></label>
+
                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
-                                            @Html.TextBoxFor(C => C.DocumentDate, new { @id = "DocumentDate", @class = "form-control", @TabIndex = 2, @size = "20", style = "width: 170px", @readonly = true })
+                                            @Html.TextBoxFor(C => C.DocumentDate, new { @id = "txtDocumentDate", @class = "form-control", @TabIndex = 2, @size = "20", style = "width: 170px", @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -185,33 +186,7 @@
                                 </div>
                             </div>
 
-                            @*<div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">Discount Amount<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.TotDis, new { @id = "txtTotDis", @class = "form-control", @style ="text-align:right" , @TabIndex = 1, @readonly = true })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Amount<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Total, new { @id = "txtTotal", @class = "form-control",@style ="text-align:right", @TabIndex = 1, @readonly = true })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Total Amount<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Tot, new { @id = "txtTot", @class = "form-control", @style ="text-align:right",@TabIndex = 1, @readonly = true })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>*@
+                           
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
@@ -275,24 +250,7 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-
-
-            if (document.getElementById("txtCustomer").value == "") {
-                isValid = false;
-                $(txtCustomer).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Customer Name");
-                return false;
-            }
-            else {
-                $(txtCustomer).css({
-                    "border": "",
-                    "background": ""
-                });
-            } var j = 0;
+            var j = 0;
             $('tr.chkitemlst').each(function () {
                 if ($(this).css('display') !== 'none') {
 
@@ -537,7 +495,8 @@
                 });
             }
 
-            if (document.getElementById("txtDocumentDate").value == "") {
+
+            if (document.getElementById("DocumentDate").value == "") {
                 isValid = false;
                 $(txtDocumentDate).css({
                     "border": "1px solid red",
@@ -570,7 +529,7 @@
                     "background": ""
                 });
             }
-
+           
             if (document.getElementById("txtVariant").value == "") {
                 isValid = false;
                 $(txtVariant).css({

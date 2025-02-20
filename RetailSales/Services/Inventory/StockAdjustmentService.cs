@@ -111,25 +111,6 @@ namespace RetailSales.Services.Inventory
                 string StatementType = string.Empty;
                 string svSQL = "";
 
-                //if (cy.ID == null)
-                //{
-                //    datatrans = new DataTransactions(_connectionString);
-
-
-                //    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'SI' AND IS_ACTIVE = 'Y'");
-                //    string po = string.Format("{0}{1}{2}", "SI/", "24-25/", (idc + 1).ToString());
-
-                //    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='SI' AND IS_ACTIVE ='Y'";
-                //    try
-                //    {
-                //        datatrans.UpdateStatus(updateCMd);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        throw ex;
-                //    }
-                //    cy.po = po;
-                //}
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("StkadjBasicProc", objConn);

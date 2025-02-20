@@ -71,7 +71,7 @@ namespace RetailSales.Models
         public string SGST { get; set; }
         public string IGST { get; set; }
         public string Total { get; set; }
-       
+
 
     }
     public class ListPurchaseordergrid
@@ -81,6 +81,8 @@ namespace RetailSales.Models
         public string podate { get; set; }
         public string sup { get; set; }
         public string refno { get; set; }
+        public string mailrow { get; set; }
+        public string pdf { get; set; }
         public string editrow { get; set; }
         public string move { get; set; }
         public string view { get; set; }

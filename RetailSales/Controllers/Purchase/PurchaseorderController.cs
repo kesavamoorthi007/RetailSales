@@ -30,8 +30,8 @@ namespace RetailSales.Controllers.Purchase
         {
             Purchaseorder ic = new Purchaseorder();
 
-            ic.Suplst= BindSupplier();
-            ic.Podate= DateTime.Now.ToString("dd-MMM-yyyy");
+            ic.Suplst = BindSupplier();
+            ic.Podate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.refdate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
             DataTable dtv = datatrans.GetSequence("PurchaseOrder");
@@ -240,7 +240,7 @@ namespace RetailSales.Controllers.Purchase
         {
             return View();
         }
-        public ActionResult GetVarientDetails(string ItemId,string cusid)
+        public ActionResult GetVarientDetails(string ItemId, string cusid)
         {
             try
             {
@@ -282,14 +282,14 @@ namespace RetailSales.Controllers.Purchase
                     }
                     DataTable trff = new DataTable();
                     trff = PurchaseorderService.GetgstDetails(hsnid);
-                    if (trff.Rows.Count >0)
+                    if (trff.Rows.Count > 0)
                     {
 
                         gst = trff.Rows[0]["TAX_NAME"].ToString();
                         DataTable percen = datatrans.GetData("Select PERCENTAGE from TAXMASTER where TAX_NAME='" + gst + "'  ");
                         per = percen.Rows[0]["PERCENTAGE"].ToString();
 
-                        string custstate=datatrans.GetDataString("SELECT STATE FROM SUPPLIER WHERE ID='" + cusid + "'");
+                        string custstate = datatrans.GetDataString("SELECT STATE FROM SUPPLIER WHERE ID='" + cusid + "'");
                         if (custstate == state)
                         {
                             cgst = Convert.ToDouble(per) / 2;
@@ -299,7 +299,7 @@ namespace RetailSales.Controllers.Purchase
                         }
                         else
                         {
-                            cgst =0;
+                            cgst = 0;
                             sgst = 0;
                             igst = Convert.ToDouble(per);
                         }
@@ -310,7 +310,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new { des = des, uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst= igst };
+                var result = new { des = des, uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
                 return Json(result);
             }
             catch (Exception ex)
@@ -330,7 +330,7 @@ namespace RetailSales.Controllers.Purchase
             model.Itemlst = BindItem();
             return Json(BindItem());
         }
-       
+
         public List<SelectListItem> BindItem()
         {
             try
@@ -365,6 +365,7 @@ namespace RetailSales.Controllers.Purchase
                 throw ex;
             }
         }
+
         public ActionResult GetSupplierDetails(string ItemId)
         {
             try
@@ -380,7 +381,7 @@ namespace RetailSales.Controllers.Purchase
                     add = dt.Rows[0]["ADDRESS"].ToString();
                     state = dt.Rows[0]["STATE"].ToString();
                     city = dt.Rows[0]["CITY"].ToString();
-                 
+
 
 
                 }
@@ -402,37 +403,47 @@ namespace RetailSales.Controllers.Purchase
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
 
-               
+                string MailRow = string.Empty;
+                string GeneratePDF = string.Empty;
                 string EditRow = string.Empty;
                 string GoToGRN = string.Empty;
                 string View = string.Empty;
                 string DeleteRow = string.Empty;
 
+
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
+                    MailRow = "<a href=SendMail?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/gmail.png' width='20' alt='Send Email' /></a>";
+
                     if (dtUsers.Rows[i]["STATUS"].ToString() == "GRN Generated")
                     {
+                        MailRow = "";
+                        GeneratePDF = "<a href=PurchaseOrderReprt?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                         EditRow = "";
-                        GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='25' />";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+                        GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='20' />";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
 
 
                     }
                     else
                     {
-                        EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='25'  /></a>";
-                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='25' /></a>";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='25' /></a>";
+                        MailRow = "<a href=SendMail?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/gmail.png' alt='Send Email' width='20' /></a>";
+                        GeneratePDF = "<a href=PurchaseOrderReprt?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                        EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
+                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
                     }
-                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='25' /></a>";
+                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
 
                 }
                 else
                 {
-                   
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='25' /></a>";
+
+                    MailRow = "";
+                    GeneratePDF = "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
 
                 Reg.Add(new ListPurchaseordergrid
@@ -442,6 +453,8 @@ namespace RetailSales.Controllers.Purchase
                     podate = dtUsers.Rows[i]["PODATE"].ToString(),
                     sup = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
                     refno = dtUsers.Rows[i]["REF_NO"].ToString(),
+                    mailrow = MailRow,
+                    pdf = GeneratePDF,
                     editrow = EditRow,
                     move = GoToGRN,
                     view = View,
