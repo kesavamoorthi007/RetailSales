@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Voucher No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 2})
+                                            @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 2,@readonly = "readonly"})
                                             @Html.HiddenFor(C => C.ID)
 
 
@@ -60,16 +60,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                @*<div class="col-md-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Exchange Rate<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.ExcRate, new { @id = "txtExcRate", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
-                            <div style="height:20px;"></div>
+                           @* <div style="height:20px;"></div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
 
                             <div style="height:20px;"></div>
                             <div class="row">
@@ -146,7 +146,7 @@
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.CreditNotelst[i].AccName, Model.CreditNotelst[i].AccNamelst, "---Please Select---", new { @class = "form-control _select newcss", @id = "txtAccName" + i, style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.CreditNotelst[i].AccName, Model.CreditNotelst[i].AccNamelst, "---Please Select---", new { @class = "form-control _select newcss", @id = "txtAccName" + i,@onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
 
                                                         </td>
                                                         <td>
@@ -158,7 +158,7 @@
 
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = "readonly" })
 
                                                         </td>
 
@@ -175,6 +175,7 @@
                                                 }
                                             }
 
+                                          
                                         </tbody>
 
 
@@ -249,6 +250,7 @@
 </div>
 
 <script>
+   
     $('.form_time').datetimepicker({
         weekStart: 1,
         todayBtn: 1,
@@ -493,7 +495,21 @@
 
     });
 
-    
+    function changeAcc_LedgerItem(ItemId, i) {
+        $.ajax({
+            url: 'GetLedgerDetails',
+            data: { "ItemId": ItemId },
+            type: "GET",
+            success: function (result) {              
+                document.getElementById("txtBalance" + i).value = result.balance;
+
+
+            },
+            error: function () {
+                alert("please Select Account Name");
+            }
+        });
+    }
 
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
@@ -548,39 +564,39 @@
                 });
             }
 
-            if (document.getElementById("txtVType").value == "") {
-                isValid = false;
-                $(txtVType).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
+            //if (document.getElementById("txtVType").value == "") {
+            //    isValid = false;
+            //    $(txtVType).css({
+            //        "border": "1px solid red",
+            //        "background": "#FFCECE"
+            //    });
 
-                alert("Please Select VType");
-                return false;
-            }
-            else {
-                $(txtVType).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            //    alert("Please Select VType");
+            //    return false;
+            //}
+            //else {
+            //    $(txtVType).css({
+            //        "border": "",
+            //        "background": ""
+            //    });
+            //}
 
-            if (document.getElementById("txtCur").value == "") {
-                isValid = false;
-                $(txtCur).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
+            //if (document.getElementById("txtCur").value == "") {
+            //    isValid = false;
+            //    $(txtCur).css({
+            //        "border": "1px solid red",
+            //        "background": "#FFCECE"
+            //    });
 
-                alert("Please Select Currency");
-                return false;
-            }
-            else {
-                $(txtCur).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            //    alert("Please Select Currency");
+            //    return false;
+            //}
+            //else {
+            //    $(txtCur).css({
+            //        "border": "",
+            //        "background": ""
+            //    });
+            //}
             if (document.getElementById("txtNarr").value == "" || document.getElementById("txtNarr").value == 0) {
                 isValid = false;
                 $(txtNarr).css({
@@ -749,10 +765,10 @@
         var index = $("#tbBooks").children("tr").length;
 
         var db = "<td><input id='txtDBCR" + index + "' name='CreditNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='CreditNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
-        var acnam = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='CreditNotelst[" + index + "].AccName'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
+        var acnam = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='CreditNotelst[" + index + "].AccName'onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
         var damo = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='CreditNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
         var camo = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='CreditNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
-        var bal = "<td><input class='form-control' id='txtBalance" + index + "' name='CreditNotelst[" + index + "].Balance'  style='width: 150px;' type='text' /></td>";
+        var bal = "<td><input class='form-control' id='txtBalance" + index + "' name='CreditNotelst[" + index + "].Balance'  style='width: 150px;' type='text' readonly='True' /></td>";
 
 
 
@@ -761,7 +777,7 @@
         var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + db + acnam + damo + camo + bal + removeCell + "</tr>";
         $("#tbBooks").append(newRow);
 
-        $(".chosen-select").chosen();
+       
         $(function () {
             $('._select').select2();
         });

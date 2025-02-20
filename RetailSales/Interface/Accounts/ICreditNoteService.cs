@@ -5,8 +5,16 @@ namespace RetailSales.Interface.Accounts
 {
     public interface ICreditNoteService
     {
-        DataTable GetAcc();
 
         string CreditNoteCRUD(CreditNote cy);
+
+        DataTable GetEditCreditNote(string id);
+
+        DataTable GetCreditNoteDetailes(string id);
+
+        DataTable GetAcc(string id);
+
+        DataTable GetLedgerDetails(string id);
+
     }
 }
