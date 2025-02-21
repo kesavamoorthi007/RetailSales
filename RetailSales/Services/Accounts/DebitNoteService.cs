@@ -47,6 +47,26 @@ namespace RetailSales.Services.Accounts
                 string StatementType = string.Empty;
                 string svSQL = "";
 
+                if (cy.ID == null)
+                {
+                    datatrans = new DataTransactions(_connectionString);
+
+
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'PO' AND IS_ACTIVE = 'Y'");
+                    string VocNo = string.Format("{0}{1}{2}", "PO/", "24-25/", (idc + 1).ToString());
+
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='PO' AND IS_ACTIVE ='Y'";
+                    try
+                    {
+                        datatrans.UpdateStatus(updateCMd);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    cy.VocNo = VocNo;
+                }
+
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("AccVoucherProc", objConn);
@@ -63,12 +83,12 @@ namespace RetailSales.Services.Accounts
                     }
                     objCmd.Parameters.Add("@vouchno", SqlDbType.NVarChar).Value = cy.VocNo;
                     objCmd.Parameters.AddWithValue("@vouchdate", cy.VocDate);
-                    objCmd.Parameters.Add("@excrate", SqlDbType.NVarChar).Value = cy.ExcRate;
-                    objCmd.Parameters.Add("@refno", SqlDbType.NVarChar).Value = cy.RefNo;
-                    objCmd.Parameters.AddWithValue("@refdate", cy.RefDate);
-                    objCmd.Parameters.Add("@currency", SqlDbType.NVarChar).Value = cy.Currency;
+                    //objCmd.Parameters.Add("@excrate", SqlDbType.NVarChar).Value = cy.ExcRate;
+                    //objCmd.Parameters.Add("@refno", SqlDbType.NVarChar).Value = cy.RefNo;
+                    //objCmd.Parameters.AddWithValue("@refdate", cy.RefDate);
+                    //objCmd.Parameters.Add("@currency", SqlDbType.NVarChar).Value = cy.Currency;
                     objCmd.Parameters.Add("@totdebamt", SqlDbType.NVarChar).Value = cy.Totdeb;
-                    objCmd.Parameters.Add("@totcreamt", SqlDbType.NVarChar).Value = cy.Totcri;
+                    //objCmd.Parameters.Add("@totcreamt", SqlDbType.NVarChar).Value = cy.Totcri;
                     objCmd.Parameters.Add("@amtinwords", SqlDbType.NVarChar).Value = cy.AmtWd;
                     objCmd.Parameters.Add("@narration", SqlDbType.NVarChar).Value = cy.Narr;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
@@ -91,7 +111,9 @@ namespace RetailSales.Services.Accounts
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "INSERT INTO ACC_VOUCHER_DETAIL (ID,TRANS_TYPE,ACCOUNT_NAME,DEBIT_AMT,CREDIT_AMT,BALANCE) VALUES ('" + Pid + "','" + cp.DBCR + "','" + cp.AccName + "','" + cp.DebitAmt + "','" + cp.CreditAmt + "','" + cp.Balance + "')";
+                                        svSQL = "Insert into ACC_VOUCHER_DETAIL (VOUCH_BASIC_ID,TRANS_TYPE,ACCOUNT_NAME,AMT,BALANCE) VALUES ('" + Pid + "','" + cp.DBCR + "','" + cp.AccName + "','" + cp.DebitAmt + "','" + cp.Balance + "')";
+
+                                        //svSQL = "INSERT INTO ACC_VOUCHER_DETAIL (ID,TRANS_TYPE,ACCOUNT_NAME,DEBIT_AMT,CREDIT_AMT,BALANCE) VALUES ('" + Pid + "','" + cp.DBCR + "','" + cp.AccName + "','" + cp.DebitAmt + "','" + cp.CreditAmt + "','" + cp.Balance + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -138,15 +160,28 @@ namespace RetailSales.Services.Accounts
             
         }
 
-        public DataTable GetAcc()
+        public DataTable GetAcc(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select LEDGER_NAME,ID FROM ACC_LEDGER  ";
+            SvSql = "Select LEDGER_NAME,ID FROM ACC_LEDGER WHERE ACC_GRP_CODE ='026' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetLedgerDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT CLOSE_BAL FROM ACC_LEDGER  WHERE ID='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+      
     }
 }

@@ -150,15 +150,15 @@
 
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
                                                         </td>
 
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
-
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
+                                                            
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = "readonly" })
 
                                                         </td>
 
@@ -228,7 +228,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-2 control-label">Narration<label class="mandatory">*</label></label>
+                                        <br /><label for="inputName3" class="col-sm-2 control-label">Narration</label>
                                         <div class="col-sm-10">
                                             @Html.TextAreaFor(C => C.Narr, new { @id = "txtNarr", @class = "form-control", @TabIndex = 2 })
                                             @Html.HiddenFor(C => C.ID)
@@ -455,45 +455,7 @@
 
     }
 
-    $('.form_time').datetimepicker({
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
-
-    $('.to_date').datetimepicker({
-        //   language:  'fr',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        endDate: new Date(),
-        forceParse: 0
-
-    });
-
-    $('.form_date').datetimepicker({
-        //   language:  'fr',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        endDate: new Date(),
-        forceParse: 0
-    }).on('changeDate', function (selected) {
-        var minDate = new Date(selected.date.valueOf());
-        $('.to_date').datetimepicker('setStartDate', minDate);
-
-    });
+   
 
     function changeAcc_LedgerItem(ItemId, i) {
         $.ajax({
@@ -654,27 +616,7 @@
     $(function () {
         $('._select').select2();
     });
-    function changeentry(typeid, i) {
-        if (typeid == "Dr") {
-            document.getElementById("txtCreditAmt" + i).readOnly = true;
-            document.getElementById("txtDebitAmt" + i).readOnly = false;
-        }
-
-        else {
-            document.getElementById("txtDebitAmt" + i).readOnly = true;
-            document.getElementById("txtCreditAmt" + i).readOnly = false;
-        }
-    }
-    $('.for_date').datetimepicker({
-        //   language:  'fr',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
+    
     function removeRow(id) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
@@ -730,10 +672,10 @@
             var j = 0;
             $('tr.chkitemlst').each(function () {
                 if ($(this).css('display') !== 'none') {
-                    var dr = $(this).find('#txtDebitAmt' + j.toString()).val();
+                    var dr = $(this).find('#totdeb' + j.toString()).val();
                     if (dr == "")
                         dr = 0;
-                    var cr = $(this).find('#txtCreditAmt' + j.toString()).val();
+                    var cr = $(this).find('#totcri' + j.toString()).val();
                     if (cr == "")
                         cr = 0;
 
@@ -766,9 +708,9 @@
 
         var db = "<td><input id='txtDBCR" + index + "' name='CreditNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='CreditNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
         var acnam = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='CreditNotelst[" + index + "].AccName'onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
-        var damo = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='CreditNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
-        var camo = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='CreditNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
-        var bal = "<td><input class='form-control' id='txtBalance" + index + "' name='CreditNotelst[" + index + "].Balance'  style='width: 150px;' type='text' readonly='True' /></td>";
+        var damo = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='CreditNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;text-align: right;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
+        var camo = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='CreditNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;text-align: right;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
+        var bal = "<td><input class='form-control' id='txtBalance" + index + "' name='CreditNotelst[" + index + "].Balance'  style='width: 150px;text-align: right;' type='text' readonly='True' /></td>";
 
 
 
@@ -876,89 +818,26 @@
         }
         return words_string;
     }
-    function totdeAmount(_this, i) {
-        try {
-
-            var tdr = 0;
-            var j = 0;
-            var tcr = 0;
-            var dqty = 0;
-            var cqty = 0;
-            var tot = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-                    var dr = $(this).find('#txtDebitAmt' + j.toString()).val();
-
-                    if (dr == "")
-                        dr = 0;
-
-
-                    tdr += eval(dr);
-
-
-
-
-                }
-                j += 1;
-            });
-            document.getElementById("totdeb").value = tdr.toFixed(2);
-
-            document.getElementById("txtAmtWd").value = withDecimal(tdr.toFixed(2));
-            // document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
-
-        }
-        catch (ex) {
-            alert(ex.message);
-        }
-
+  
+   
+    function changeAccName(id, i) {
+        $.ajax({
+            url: 'GetAccJSON',
+            type: "GET",
+            data: { 'id': id },
+            cache: false,
+            success: function (response) {
+                PopulateDropDown("#txtAccName" + i, response);
+            },
+            error: function () {
+                debugger;
+                alert("Please Select Account Name");
+            }
+        });
     }
-    function changeentry(typeid, i) {
-        if (typeid == "Dr") {
-            document.getElementById("txtCreditAmt" + i).readOnly = true;
-            document.getElementById("txtDebitAmt" + i).readOnly = false;
-        }
-
-        else {
-            document.getElementById("txtDebitAmt" + i).readOnly = true;
-            document.getElementById("txtCreditAmt" + i).readOnly = false;
-        }
-    }
-    function totcrAmount(_this, i) {
-        try {
-
-            var tdr = 0;
-            var j = 0;
-            var tcr = 0;
-            var dqty = 0;
-            var cqty = 0;
-            var tot = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-
-                    var cr = $(this).find('#txtCreditAmt' + j.toString()).val();
-
-                    if (cr == "")
-                        cr = 0;
 
 
-                    tcr += eval(cr);
-
-
-
-                }
-                j += 1;
-            });
-
-            document.getElementById("totcri").value = tcr.toFixed(2);
-            document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
-            // document.getElementById("txtAmtWd").value = withDecimal(tcr.toFixed(2));
-
-        }
-        catch (ex) {
-            alert(ex.message);
-        }
-
-    }
+   
 </script>
 
 
