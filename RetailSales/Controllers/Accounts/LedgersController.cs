@@ -22,6 +22,7 @@ namespace RetailSales.Controllers.Accounts
         {
 
             Ledgers ic = new Ledgers();
+            ic.AllowZeroValue = "YES" ;
             ic.AccountGroupList = BindAccountGroup();
 
             if (id == null)

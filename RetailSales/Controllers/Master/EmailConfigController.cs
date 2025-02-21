@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using RetailSales.Interface.Master;
+using RetailSales.Models;
 using RetailSales.Models.Master;
 using RetailSales.Services.Master;
 
@@ -10,11 +11,15 @@ namespace RetailSales.Controllers.Master
     {
 
         IEmailConfigService EmailConfigService;
-        public EmailConfigController(IEmailConfigService _EmailConfigService)
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
+        public EmailConfigController(IEmailConfigService _EmailConfigService, IConfiguration _configuratio)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             EmailConfigService = _EmailConfigService;
         }
-
         public IActionResult EmailConfig(string id)
         {
             EmailConfig ic = new EmailConfig();
@@ -38,7 +43,6 @@ namespace RetailSales.Controllers.Master
             }
             return View(ic);
         }
-
         [HttpPost]
         public ActionResult EmailConfig(EmailConfig cy, string id)
         {
