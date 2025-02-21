@@ -29,9 +29,7 @@ namespace RetailSales.Controllers.Accounts
        
         public IActionResult CreditNote(string id)
         {
-            CreditNote ic = new CreditNote();
-            ic.ExcRate = "1";
-            ic.RefDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            CreditNote ic = new CreditNote();                       
             ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
             DataTable dtv = datatrans.GetSequence("PurchaseOrder");
             if (dtv.Rows.Count > 0)
