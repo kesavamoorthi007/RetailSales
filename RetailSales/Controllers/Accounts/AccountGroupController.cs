@@ -177,11 +177,11 @@ namespace RetailSales.Controllers.Accounts
             return View();
         }
 
-        public ActionResult MyListDayBookgrid(string strfrom, string strTo)
+        public ActionResult MyListDayBookgrid(string strfrom, string strTo ,string strStatus)
         {
             List<ListDayItems> Reg = new List<ListDayItems>();
             DataTable dtUsers = new DataTable();
-            dtUsers = AccountGroupService.GetDaydet();
+            dtUsers = AccountGroupService.GetDaydet(strfrom, strTo, strStatus);
             DataTable dt = new DataTable();
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
