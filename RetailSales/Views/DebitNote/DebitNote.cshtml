@@ -59,48 +59,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Exchange Rate<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.ExcRate, new { @id = "txtExcRate", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
-                            <div style="height:20px;"></div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Reference No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.RefNo, new { @id = "txtRefNo", @class = "form-control", @TabIndex = 2 })
-                                            @Html.HiddenFor(C => C.ID)
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-5 control-label">Reference Date<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
-                                                @Html.TextBoxFor(C => C.RefDate, new { @id = "txtRefDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px", @readonly = "readonly" })
-                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                            </div>
-                                         
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                         <label for="inputName3" class="col-sm-4 control-label">Currency<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Currency, new { @id = "txtCurrency", @class = "form-control", @TabIndex = 2 })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                           
+                    
                             <div style="height:20px;"></div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -145,19 +107,19 @@
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.DebitNotelst[i].AccName, Model.DebitNotelst[i].AccNamelst, "Please Select", new { @class = "form-control _select newcss", @id = "txtAccName" + i, @onchange = "changeAccName(this.value," + i + ")", style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.DebitNotelst[i].AccName, Model.DebitNotelst[i].AccNamelst, "Please Select", new { @class = "form-control _select newcss", @id = "txtAccName" + i,@onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
+
+                                                        </td>               
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
 
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
-                                                        </td>
-
-                                                        <td>
-                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
-
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                            @Html.TextBoxFor(o => o.DebitNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)",@readonly = "readonly" })
 
                                                         </td>
 
@@ -226,7 +188,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-2 control-label">Narration<label class="mandatory">*</label></label>
+                                        <br /><label for="inputName3" class="col-sm-2 control-label">Narration</label>
                                         <div class="col-sm-10">
                                             @Html.TextAreaFor(C => C.Narr, new { @id = "txtNarr", @class = "form-control", @TabIndex = 2 })
                                             @Html.HiddenFor(C => C.ID)
@@ -428,6 +390,22 @@
         }
 
     }
+    function changeAcc_LedgerItem(ItemId, i) {
+        $.ajax({
+            url: 'GetLedgerDetails',
+            data: { "ItemId": ItemId },
+            type: "GET",
+            success: function (result) {
+                document.getElementById("txtBalance" + i).value = result.balance;
+
+
+            },
+            error: function () {
+                alert("please Select Account Name");
+            }
+        });
+    }
+
     function totcrAmount(_this, i) {
         try {
 
@@ -718,10 +696,10 @@
         var index = $("#tbBooks").children("tr").length;
 
         var DBCR = "<td><input id='txtDBCR" + index + "' name='DebitNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='DebitNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
-        var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='AccNamelst[" + index + "].AccName'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
-        var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='DebitNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
-        var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='DebitNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
-        var Balance = "<td><input class='form-control' id='txtBalance" + index + "' name='DebitNotelst[" + index + "].Balance'  style='width: 150px;' type='text' /></td>";
+        var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='AccNamelst[" + index + "].AccName' onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
+        var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='DebitNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;text-align: right;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
+        var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='DebitNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;text-align: right;' onkeyup = 'totcrAmount(this," + index + ")' type='text'  readonly='True' /></td>";
+        var Balance = "<td><input class='form-control' id='txtBalance" + index + "' name='DebitNotelst[" + index + "].Balance'  style='width: 150px;text-align: right;' type='text' /></td>";
 
 
 
