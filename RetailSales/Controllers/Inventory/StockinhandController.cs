@@ -69,13 +69,12 @@ namespace RetailSales.Controllers
                 }
                 Reg.Add(new Stockinhandgrid
                 {
-                    id = dtUsers.Rows[i]["ID"].ToString(),
-                    productname = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
-                    variant = dtUsers.Rows[i]["VARIANT"].ToString(),
-                    balancequantity = dtUsers.Rows[i]["BALANCE_QUANTITY"].ToString(),
+                    id = dtUsers.Rows[i]["INVENTORY_ITEM_ID"].ToString(),
+                    productname = dtUsers.Rows[i]["DOC_ID"].ToString(),
+                    variant = dtUsers.Rows[i]["ITEM_ID"].ToString(),
+                    balancequantity = dtUsers.Rows[i]["VARIANT"].ToString(),
                     uom = dtUsers.Rows[i]["UOM"].ToString(),
-                    unitcost = dtUsers.Rows[i]["UNIT_COST"].ToString(),
-                    totalvalue = dtUsers.Rows[i]["TOTAL_VALUE"].ToString(),
+                    unitcost = dtUsers.Rows[i]["BALANCE_QTY"].ToString(),
                     editrow = EditRow,
                     //move = GoToSales,
                     delrow = DeleteRow,

@@ -254,7 +254,7 @@ namespace RetailSales.Controllers.Purchase
                 DataTable dt1 = new DataTable();
                 DataTable dt2 = new DataTable();
 
-                string des = "";
+                //string des = "";
                 string uom = "";
                 string hsn = "";
                 string rate = "";
@@ -269,7 +269,7 @@ namespace RetailSales.Controllers.Purchase
 
                 if (dt.Rows.Count > 0)
                 {
-                    des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
+                    //des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
                     rate = dt.Rows[0]["RATE"].ToString();
@@ -316,7 +316,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new { des = des, uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
+                var result = new { uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
                 return Json(result);
             }
             catch (Exception ex)
@@ -380,6 +380,7 @@ namespace RetailSales.Controllers.Purchase
                 string add = "";
                 string state = "";
                 string city = "";
+                string gst = "";
                 dt = PurchaseorderService.GetSupplierDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
@@ -387,12 +388,13 @@ namespace RetailSales.Controllers.Purchase
                     add = dt.Rows[0]["ADDRESS"].ToString();
                     state = dt.Rows[0]["STATE"].ToString();
                     city = dt.Rows[0]["CITY"].ToString();
+                    gst = dt.Rows[0]["GST_NO"].ToString();
 
 
 
                 }
 
-                var result = new { add = add, state = state, city = city };
+                var result = new { add = add, state = state, city = city , gst  = gst };
                 return Json(result);
             }
             catch (Exception ex)
