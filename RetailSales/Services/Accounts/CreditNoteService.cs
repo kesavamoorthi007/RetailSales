@@ -109,7 +109,7 @@ namespace RetailSales.Services.Accounts
                     //objCmd.Parameters.AddWithValue("@refdate", cy.RefDate);
                     //objCmd.Parameters.Add("@currency", SqlDbType.NVarChar).Value = cy.Currency;
                     objCmd.Parameters.Add("@totdebamt", SqlDbType.NVarChar).Value = cy.totdeb;
-                    objCmd.Parameters.Add("@totcreamt", SqlDbType.NVarChar).Value = cy.totcri;
+                    //objCmd.Parameters.Add("@totcreamt", SqlDbType.NVarChar).Value = cy.totcri;
                     objCmd.Parameters.Add("@amtinwords", SqlDbType.NVarChar).Value = cy.AmtWd;
                     objCmd.Parameters.Add("@narration", SqlDbType.NVarChar).Value = cy.Narr;                    
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;

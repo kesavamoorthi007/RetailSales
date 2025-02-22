@@ -30,6 +30,7 @@ namespace RetailSales.Models
         public string ID { get; set; }
         public string Gross { get; set; }
         public string Disc { get; set; }
+        public string GST { get; set; }
         public string Frieghtcharge { get; set; }
         public string CGST { get; set; }
         public string SGST { get; set; }
@@ -55,6 +56,8 @@ namespace RetailSales.Models
         public string Recived { get; set; }
         public string Accepted { get; set; }
         public string Rejected { get; set; }
+        public string exqty { get; set; }
+        public string shortqty { get; set; }
         public string DiscAmount { get; set; }
         public string FrigCharge { get; set; }
         public string FrieghtAmt { get; set; }

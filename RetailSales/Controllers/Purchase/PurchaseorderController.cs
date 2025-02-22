@@ -8,8 +8,14 @@ using RetailSales.Models;
 using RetailSales.Services.Purchase;
 using RetailSales.Services.Sales;
 using System.Data;
+using System.Net.Mail;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.ConstrainedExecution;
+using RetailSales.Models.Master;
+using Nest;
+using System.Web;
+
 
 namespace RetailSales.Controllers.Purchase
 {
@@ -248,7 +254,7 @@ namespace RetailSales.Controllers.Purchase
                 DataTable dt1 = new DataTable();
                 DataTable dt2 = new DataTable();
 
-                string des = "";
+                //string des = "";
                 string uom = "";
                 string hsn = "";
                 string rate = "";
@@ -263,7 +269,7 @@ namespace RetailSales.Controllers.Purchase
 
                 if (dt.Rows.Count > 0)
                 {
-                    des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
+                    //des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
                     rate = dt.Rows[0]["RATE"].ToString();
@@ -310,7 +316,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new { des = des, uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
+                var result = new { uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
                 return Json(result);
             }
             catch (Exception ex)
@@ -374,6 +380,7 @@ namespace RetailSales.Controllers.Purchase
                 string add = "";
                 string state = "";
                 string city = "";
+                string gst = "";
                 dt = PurchaseorderService.GetSupplierDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
@@ -381,12 +388,13 @@ namespace RetailSales.Controllers.Purchase
                     add = dt.Rows[0]["ADDRESS"].ToString();
                     state = dt.Rows[0]["STATE"].ToString();
                     city = dt.Rows[0]["CITY"].ToString();
+                    gst = dt.Rows[0]["GST_NO"].ToString();
 
 
 
                 }
 
-                var result = new { add = add, state = state, city = city };
+                var result = new { add = add, state = state, city = city , gst  = gst };
                 return Json(result);
             }
             catch (Exception ex)
@@ -469,6 +477,150 @@ namespace RetailSales.Controllers.Purchase
             });
 
         }
+        public ActionResult SendMail(string id)
+        {
+            PromotionMail P = new PromotionMail();
+            P.To = "deepa@icand.in";
+            P.Sub = "Purchase Order";
+            IEnumerable<PurchaseorderItem> cmp = PurchaseorderService.GetAllPurchaseOrderItem(id);
+            string Content = @"<html> 
+                <head>
+    <style>
+                table, th, td {
+                border: 1px solid black;
+                    border - collapse: collapse;
+                }
+    </style>
+</head>
+<body>
+<p>Dear Sir,</p>
+</br>
+  <p> Kindly arrange to send your lowest price offer for the following items through our email immediately.</p>
+</br>";
+
+
+
+
+            foreach (PurchaseorderItem item in cmp)
+            {
+
+
+                Content += "<table><tr><td>" + item.Item + "-" + "</td>";
+                Content += "  <td>" + item.Varient + "-" + "</td>";
+                Content += "  <td>" + item.UOM + "</td>";
+                Content += "  <td>" + item.Qty + "</td></tr></table>";
+            }
+
+
+            Content += @" </br> 
+<p style='padding-left:30px;font-style:italic;'>With Regards,
+</br><img src='../Images/logo.png' alt='Logo' width='120'/>
+</br>N Balaji Purchase Manager
+</br>V.A.M RATHINAM & BROS.
+<br/102-A
+
+</br>
+</p> ";
+            Content += @"</body> 
+</html> ";
+            P.editors = Content;
+            return View(P);
+        }
+        [HttpPost]
+        public ActionResult SendMail(PromotionMail Cy, string id, IFormFile attachment)
+        {
+            datatrans = new DataTransactions(_connectionString);
+
+            if (!string.IsNullOrEmpty(Cy.To))
+            {
+                try
+                {
+                    EmailConfig ec = new EmailConfig();
+                    DataTable dtEmailConfig = datatrans.GetEmailConfig();
+
+                    string HostAdd = dtEmailConfig.Rows[0]["SMTP_HOST"].ToString();
+                    string FromEmailid = dtEmailConfig.Rows[0]["EMAIL_ID"].ToString();
+                    string password = dtEmailConfig.Rows[0]["PASSWORD"].ToString();
+                    int port = Convert.ToInt32(dtEmailConfig.Rows[0]["PORT_NO"].ToString());
+                    bool ssl = dtEmailConfig.Rows[0]["SSL"].ToString().ToUpper() == "YES";
+
+                    if (string.IsNullOrEmpty(HostAdd) || string.IsNullOrEmpty(FromEmailid) || string.IsNullOrEmpty(password))
+                    {
+                        throw new Exception("SMTP configuration is incomplete.");
+                    }
+
+                    MailMessage mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(FromEmailid),
+                        Subject = Cy.Sub,
+                        Body = Cy.editors,
+                        IsBodyHtml = true
+                    };
+
+                    // ✅ Add primary recipient (To)
+                    mailMessage.To.Add(Cy.To);
+
+                    // ✅ Add CC recipients (if provided)
+                    if (!string.IsNullOrEmpty(Cy.Cc))
+                    {
+                        string[] ccEmails = Cy.Cc.Split(',');
+                        foreach (var cc in ccEmails)
+                        {
+                            mailMessage.CC.Add(cc.Trim());  // Trim spaces before adding
+                        }
+                    }
+
+                    // ✅ Handle Attachments
+                    if (attachment != null && attachment.Length > 0)
+                    {
+                        try
+                        {
+                            string fileName = System.IO.Path.GetFileName(attachment.FileName);
+                            var stream = new MemoryStream();
+                            attachment.CopyTo(stream);
+                            stream.Position = 0;
+
+                            mailMessage.Attachments.Add(new System.Net.Mail.Attachment(stream, fileName));
+
+                            Console.WriteLine("✅ Attachment added successfully: " + fileName);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("❌ Error attaching file: " + ex.Message);
+                        }
+                    }
+
+                    SmtpClient smtp = new SmtpClient
+                    {
+                        Host = HostAdd,
+                        Port = port,
+                        EnableSsl = ssl,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(FromEmailid, password),
+                        DeliveryMethod = SmtpDeliveryMethod.Network
+                    };
+
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                    smtp.Send(mailMessage);
+                    ViewBag.Message = "✅ Email sent successfully!";
+                }
+                catch (SmtpException smtpEx)
+                {
+                    Console.WriteLine("SMTP Exception: " + smtpEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("General Exception: " + ex.Message);
+                }
+            }
+            //TempData["SuccessMessage"] = "✅ Email sent successfully!";
+            return RedirectToAction("ListPurchaseorder");
+        }
+
+
+
+
         public IActionResult MoveGRN(string id)
         {
             Purchaseorder ic = new Purchaseorder();
