@@ -34,7 +34,7 @@ namespace RetailSales.Services.Accounts
         public DataTable GetDaydet()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT VOUCH_NO,  FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME AS MID, DEBIT_AMT AS DBAMOUNT, CREDIT_AMT AS CRAMOUNT, CASE WHEN TRANS_TYPE = 'Credit' THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1 WHERE T1.TRANS_STATUS='OPEN'  ";
+            SvSql = "SELECT VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME AS MID, DEBIT_AMT AS DBAMOUNT, CREDIT_AMT AS CRAMOUNT, CASE WHEN TRANS_TYPE = 'Credit' THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1 WHERE T1.TRANS_STATUS='OPEN'  ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -194,6 +194,32 @@ namespace RetailSales.Services.Accounts
             }
             return "";
 
+        }
+
+        public DataTable GetDaydet(string strfrom, string strTo, string strStatus)
+        {
+            string SvSql = string.Empty;
+            //SvSql = "SELECT VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME , MID, DEBIT_AMT, CREDIT_AMT,TRANS_TYPE = 'Credit',THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1  ";
+            SvSql = "SELECT VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME AS MID, DEBIT_AMT AS DBAMOUNT, CREDIT_AMT AS CRAMOUNT, CASE WHEN TRANS_TYPE = 'Credit' THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1 WHERE ID BETWEEN  1 AND  (SELECT MAX(ID)  FROM ACC_VOUCHER)  ";
+            //WHERE T1.TRANS_STATUS='OPEN'
+            //SvSql = "select VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE,T1.ID,VOUCH_MEMO,TRANS_TYPE,VOUCH_NAME, MID,DEBIT_AMT,CREDIT_AMT from ACC_VOUCHER T1 ";
+            if (!string.IsNullOrEmpty(strfrom) && !string.IsNullOrEmpty(strTo))
+            {
+                if (strStatus == "Y" || strStatus == null)
+                {
+                    SvSql += "and T1.IS_ACTIVE ='Y' and T1.VOUCH_DATE BETWEEN '" + strfrom + "' and '" + strTo + "'";
+                }
+                else
+                {
+                    SvSql += "and T1.IS_ACTIVE ='N' and T1.VOUCH_DATE BETWEEN '" + strfrom + "' and '" + strTo + "'";
+                }
+            }
+            SvSql += " Order by T1.VOUCH_DATE ASC  ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
         }
 
     }

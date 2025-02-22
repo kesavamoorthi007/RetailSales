@@ -18,7 +18,7 @@ namespace RetailSales.Models.Accounts
         public string AccountType { get; set; }
         public string AccountGroupName { get; set; }
         public string ddlstatus { get; set; }
-        
+       
     }
 
     public class ListAccountGroupgrid
@@ -44,6 +44,8 @@ namespace RetailSales.Models.Accounts
         public string ledgercode { get; set; }
         public string debitamount { get; set; }
         public string creditamount { get; set; }
+
+        public string VocDate { get; set; }
 
     }
 }
