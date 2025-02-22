@@ -66,7 +66,7 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-4 control-label">Valid To<label class="mandatory">*</label></label>
 
-                                        <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
+                                        <div class="input-group date to_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
                                             @Html.TextBoxFor(C => C.ValidTo, new { @id = "ValidTo", @class = "form-control", @TabIndex = 2 })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
@@ -93,7 +93,7 @@
                                             <tr>
 
                                                 <th>Item</th>
-                                                <th>Varient</th>
+                                                <th>Variant</th>
                                                 <th>Unit</th>
                                                 <th>Rate </th>                                 
                                                 <th></th>
@@ -110,18 +110,18 @@
                                                         
                                                         
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.RateList[i].Item, Model.RateList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeVariantDetails(this.value," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.RateList[i].Item, new { @id = "txtItem" + i, @class = "form-control", style = "width: 220px;", @readonly = "readonly" })
                                                             @Html.HiddenFor(o => o.RateList[i].saveItemId)
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.RateList[i].Varient, Model.RateList[i].Variantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeItemDetails(this.value," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.RateList[i].Varient, new { @class = "form-control", @id = "Varient" + i, style = "width: 220px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.RateList[i].Unit, new { @id = "txtUnit" + i, @class = "form-control", style = "width: 200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.RateList[i].Rate1, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px;" })
+                                                            @Html.TextBoxFor(o => o.RateList[i].Rate1, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px;", type = "number" })
                                                         </td> 
                                                         <td>
                                                             @Html.HiddenFor(o => o.RateList[i].Isvalid, new { @id = "Isvalid" + i })
@@ -172,7 +172,7 @@
         todayHighlight: 1,
         startView: 2,
         minView: 2,
-        endDate: new Date(),
+        startDate: new Date(),
         forceParse: 0
 
     });
