@@ -146,13 +146,12 @@
 
                                                 <th>Item</th>
                                                 <th>Variant</th>
-                                                <th>HSN Code </th>
+                                                <th>HSN  </th>
                                                 <th>Tax</th>
                                                 <th>Unit </th>
                                                 <th>Qty </th>
                                                 <th>Rate </th>
                                                 <th>Amount </th>
-                                                <th>Frieght charges</th>
                                                 <th>Disc Amount</th>
                                                 <th>Total Amount</th>
                                                 <th></th>
@@ -194,9 +193,6 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].FrigCharge, new { @id = "txtFrigCharge" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
@@ -369,6 +365,28 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
+                                                                            <div class="col-sm-10">
+                                                                                @Html.TextBoxFor(C => C.Amountinwords, new { @id = "Amountinwords", @class = "form-control", @TabIndex = 2, onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = true })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label">Remarks<label class="Mandatory"></label></label>
+                                                                            <div class="col-sm-10">
+                                                                                @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 @*1st tab*@
                                                             </div>
                                                             @*1st tab*@
@@ -383,32 +401,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div style="height:10px;"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
-                                        <div class="col-sm-10">
-                                            @Html.TextBoxFor(C => C.Amountinwords, new { @id = "Amountinwords", @class = "form-control", @TabIndex = 2, onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = true })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Remarks<label class="Mandatory"></label></label>
-                                        <div class="col-sm-10">
-                                            @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                            
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
@@ -458,13 +450,12 @@
             var totamount = 0;
             var qty = document.getElementById("txtQty" + i).value;
             var up = document.getElementById("txtRate" + i).value;
-          
+
             var IGST = document.getElementById("IGSTP" + i).value;
 
             var CGST = document.getElementById("CGSTP" + i).value;
-           
+
             var SGST = document.getElementById("SGSTP" + i).value;
-            var frieght = document.getElementById("txtFrigCharge" + i).value;
             var Disc = document.getElementById("txtDiscAmount" + i).value;
 
             if (qty == "")
@@ -473,7 +464,7 @@
             if (up == "")
                 up = 0;
 
-            
+
 
             if (IGST == "")
                 IGST = 0;
@@ -485,8 +476,6 @@
             if (SGST == "")
                 SGST = 0;
 
-            if (frieght == "")
-                frieght = 0;
 
             if (Disc == "")
                 Disc = 0;
@@ -499,7 +488,7 @@
             var igstperc = (eval(dis) / 100) * eval(IGST);
             var cgstperc = (eval(dis) / 100) * eval(CGST);
             var sgstperc = (eval(dis) / 100) * eval(SGST);
-            
+
 
             document.getElementById("CGST" + i).value = cgstperc.toFixed(2);
             document.getElementById("SGST" + i).value = sgstperc.toFixed(2);
@@ -507,7 +496,7 @@
 
 
 
-            var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc) + eval(frieght);
+            var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc);
 
             var totdis = eval(tottax) - eval(Disc);
 
@@ -517,13 +506,13 @@
 
             $('tr.chkitemlst').each(function () {
                 if ($(this).css('display') !== 'none') {
-                    
+
                     var amt = $(this).find('#txtAmount' + j.toString()).val();
                     if (amt == "")
                         amt = 0;
 
                     totamt += eval(amt);
-                    
+
 
                     var tamt = $(this).find('#txtTotal' + j.toString()).val();
                     if (tamt == "")
@@ -548,6 +537,8 @@
                     if (igst == "")
                         igst = 0;
 
+                        igsttotamt += eval(igst);
+
                     var dist = $(this).find('#txtDiscAmount' + j.toString()).val();
                     if (dist == "")
                         dist = 0;
@@ -555,13 +546,8 @@
                     disttotamt += eval(dist);
 
 
-                    igsttotamt += eval(igst);
                     
-                    var frieght = $(this).find('#txtFrigCharge' + j.toString()).val();
-                    if (frieght == "")
-                        frieght = 0;
 
-                    totfrieght += eval(frieght);
 
                 }
                 j += 1;
@@ -570,21 +556,79 @@
 
             var round = eval(roundamount) - eval(totamount);
 
-            document.getElementById("txtFrieghtcharge").value = totfrieght.toFixed(2);
-            
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
             document.getElementById("hidnet").value = roundamount.toFixed(2);
 
-            
+
             document.getElementById("txtRound").value = round.toFixed(2);
-   
+
                 document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
             document.getElementById("txtSGST").value = sgsttotamt.toFixed(2);
             document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
             document.getElementById("txtDisc").value = disttotamt.toFixed(2);
 
-           
+
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
+    }
+     function changeTot(_this) {
+        try {
+            var GTot = 0;
+            var j = 0;
+            var qty = 0;
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var rej = 0;
+            var totdis = 0;
+            var tpknc = 0;
+            var tochr = 0;
+            var tsdis = 0;
+            var totamt = 0;
+            var totamount = 0;
+
+            var frieght = document.getElementById("txtFrieghtcharge").value;
+            var Disc = document.getElementById("txtDisc").value;
+
+            var tot = document.getElementById("txtNet").value;
+
+
+            if (frieght == "")
+                frieght = 0;
+
+            if (Disc == "")
+                Disc = 0;
+
+            if (tot == "")
+                tot = 0;
+
+
+            var rej = eval(tot) - eval(Disc) + eval(frieght);
+            document.getElementById("txtNet").value = rej.toFixed(2);
+
+
+            var roundamount = Math.round(rej);
+
+            var round = eval(roundamount) - eval(rej);
+
+
+
+
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = roundamount.toFixed(2);
+
+
+            document.getElementById("txtRound").value = round.toFixed(2);
+
             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
 
 
@@ -761,7 +805,7 @@
         else {
             alert("Cannot delete all the rows.")
         }
-        try {
+         try {
             var GTot = 0;
             var j = 0;
             var qty = 0;
@@ -785,7 +829,6 @@
             var CGST = document.getElementById("CGSTP" + i).value;
 
             var SGST = document.getElementById("SGSTP" + i).value;
-            var frieght = document.getElementById("txtFrigCharge" + i).value;
             var Disc = document.getElementById("txtDiscAmount" + i).value;
 
             if (qty == "")
@@ -806,13 +849,11 @@
             if (SGST == "")
                 SGST = 0;
 
-            if (frieght == "")
-                frieght = 0;
 
             if (Disc == "")
                 Disc = 0;
 
-            var tot = eval(qty) * eval(up);
+            var tot = eval(qty) * eval(up) ;
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
 
             var dis = eval(tot);
@@ -828,9 +869,10 @@
 
 
 
-            var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc) + eval(frieght);
+            var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc);
 
-             var totdis = eval(tottax) - eval(Disc);
+            var totdis = eval(tottax) - eval(Disc);
+
 
             document.getElementById("txtTotal" + i).value = totdis.toFixed(2);
 
@@ -877,11 +919,6 @@
 
                     igsttotamt += eval(igst);
 
-                    var frieght = $(this).find('#txtFrigCharge' + j.toString()).val();
-                    if (frieght == "")
-                        frieght = 0;
-
-                    totfrieght += eval(frieght);
 
                 }
                 j += 1;
@@ -890,8 +927,6 @@
 
             var round = eval(roundamount) - eval(totamount);
 
-            document.getElementById("txtFrieghtcharge").value = totfrieght.toFixed(2);
-
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
             document.getElementById("hidnet").value = roundamount.toFixed(2);
@@ -899,11 +934,69 @@
 
             document.getElementById("txtRound").value = round.toFixed(2);
 
-            document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
+                document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
             document.getElementById("txtSGST").value = sgsttotamt.toFixed(2);
             document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
             document.getElementById("txtDisc").value = disttotamt.toFixed(2);
 
+
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
+        try {
+            var GTot = 0;
+            var j = 0;
+            var qty = 0;
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var rej = 0;
+            var totdis = 0;
+            var tpknc = 0;
+            var tochr = 0;
+            var tsdis = 0;
+            var totamt = 0;
+            var totamount = 0;
+
+            var frieght = document.getElementById("txtFrieghtcharge").value;
+            var Disc = document.getElementById("txtDisc").value;
+
+            var tot = document.getElementById("txtNet").value;
+
+
+            if (frieght == "")
+                frieght = 0;
+
+            if (Disc == "")
+                Disc = 0;
+
+            if (tot == "")
+                tot = 0;
+
+
+            var rej = eval(tot) - eval(Disc) + eval(frieght);
+            document.getElementById("txtNet").value = rej.toFixed(2);
+
+
+            var roundamount = Math.round(rej);
+
+            var round = eval(roundamount) - eval(rej);
+
+
+
+
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = roundamount.toFixed(2);
+
+
+            document.getElementById("txtRound").value = round.toFixed(2);
 
             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
 
@@ -935,7 +1028,6 @@
 
         var Varient = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlVarient" + index + "' name='PurchaseorderLst[" + index + "].Varient' onchange = 'changeVarientItem(this.value," + index + ")'><option value=''>--Please select--</option></select></td>";
 
-        var Description = "<td><input class='form-control' id='txtDescription" + index + "' name='PurchaseorderLst[" + index + "].Description'  style='width: 200px;' type='text' readonly='True'  /></td>";
 
         var Hsn = "<td><input class='form-control' id='txtHsn" + index + "' name='PurchaseorderLst[" + index + "].Hsn'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text'  readonly='True' /></td>";
 
@@ -943,30 +1035,29 @@
 
         var UOM = "<td><input class='form-control' id='txtUOM" + index + "' name='PurchaseorderLst[" + index + "].UOM'  style='width: 120px;' type='text'  readonly='True' /></td>";
 
-        var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='PurchaseorderLst[" + index + "].Qty'  style='width: 120px;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
+        var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='PurchaseorderLst[" + index + "].Qty'  style='width: 120px; text-align: right;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
 
-        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='PurchaseorderLst[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px;' type='text' readonly='True' /></td>";
+        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='PurchaseorderLst[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' type='text' readonly='True' /></td>";
 
-        var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='PurchaseorderLst[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px;' type='text' readonly='True' /></td>";
+        var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='PurchaseorderLst[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' type='text' readonly='True' /></td>";
 
-        var FrigCharge = "<td><input class='form-control' id='txtFrigCharge" + index + "' name='PurchaseorderLst[" + index + "].FrigCharge'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")'  /></td>";
+        var DiscAmount = "<td><input class='form-control' id='txtDiscAmount" + index + "' name='PurchaseorderLst[" + index + "].DiscAmount'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")' /></td>";
 
-        var DiscAmount = "<td><input class='form-control' id='txtDiscAmount" + index + "' name='PurchaseorderLst[" + index + "].DiscAmount'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")' /></td>";
-
-
-        var CGST = "<td><input class='form-control' id='CGSTP" + index + "' name='PurchaseorderLst[" + index + "].CGSTP'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)'  readonly='True' type='hidden' onkeyup = 'changeQty(this.value," + index + ")' /><input class='form-control' id='CGST" + index + "' name='PurchaseorderLst[" + index + "].CGST'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text' value='0' readonly='True'   onkeyup = 'changeQty(this.value," + index + ")' /></td>";
-
-        var SGST = "<td><input class='form-control' id='SGSTP" + index + "' name='PurchaseorderLst[" + index + "].SGSTP'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)'  readonly='True' type='hidden' onkeyup = 'changeQty(this.value," + index + ")'  /><input class='form-control' id='SGST" + index + "' name='PurchaseorderLst[" + index + "].SGST'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text' value='0' readonly='True' onkeyup = 'changeQty(this.value," + index + ")'   /></td>";
-
-        var IGST = "<td><input class='form-control' id='IGSTP" + index + "' name='PurchaseorderLst[" + index + "].IGSTP'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)'  readonly='True' type='hidden' onkeyup = 'changeQty(this.value," + index + ")'   /><input class='form-control' id='IGST" + index + "' name='PurchaseorderLst[" + index + "].IGST'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text' value='0' readonly='True' onkeyup = 'changeQty(this.value," + index + ")'    /></td>";
-
-        var Total = "<td><input class='form-control' id='txtTotal" + index + "' name='PurchaseorderLst[" + index + "].Total'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text' value='0' readonly='True' onkeyup = 'changeQty(this.value," + index + ")'  /></td>";
-
+        var Total = "<td>" +
+        "<input type='hidden' id='IGSTP" + index + "' name='PurchaseorderLst[" + index + "].IGSTP' />" +
+        "<input type='hidden' id='IGST" + index + "' name='PurchaseorderLst[" + index + "].IGST' value='0' />" +
+        "<input type='hidden' id='SGSTP" + index + "' name='PurchaseorderLst[" + index + "].SGSTP' />" +
+        "<input type='hidden' id='SGST" + index + "' name='PurchaseorderLst[" + index + "].SGST' value='0' />" +
+        "<input type='hidden' id='CGSTP" + index + "' name='PurchaseorderLst[" + index + "].CGSTP' />" +
+        "<input type='hidden' id='CGST" + index + "' name='PurchaseorderLst[" + index + "].CGST' value='0' />" +
+        "<input class='form-control' id='txtTotal" + index + "' name='PurchaseorderLst[" + index + "].Total' " +
+        "style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' type='text' value='0' readonly />" +
+        "</td>";
 
         var removeCell = "<td><input id='Isvalid" + index + "' name='PurchaseorderLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='PurchaseorderLst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient + Description + Hsn + Tariff + UOM + Qty + Rate + Amount + FrigCharge + DiscAmount + CGST + SGST + IGST + Total + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient  + Hsn + Tariff + UOM + Qty + Rate + Amount + DiscAmount + Total + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
