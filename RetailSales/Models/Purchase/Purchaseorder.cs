@@ -30,6 +30,7 @@ namespace RetailSales.Models
         public string ID { get; set; }
         public string Gross { get; set; }
         public string Disc { get; set; }
+        public string GST { get; set; }
         public string Frieghtcharge { get; set; }
         public string CGST { get; set; }
         public string SGST { get; set; }

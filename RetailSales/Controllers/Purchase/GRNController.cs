@@ -64,7 +64,7 @@ namespace RetailSales.Controllers.Purchase
                     id = dtUsers.Rows[i]["GRN_BASIC_ID"].ToString(),
                     grn = dtUsers.Rows[i]["GRN_NO"].ToString(),
                     grndate = dtUsers.Rows[i]["GRN_DATE"].ToString(),
-                    sup = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
+                    sup = dtUsers.Rows[i]["SUP_NAME"].ToString(),
                     net = dtUsers.Rows[i]["NET"].ToString(),
                     //editrow = EditRow,
                     //view = View,
