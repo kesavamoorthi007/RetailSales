@@ -64,16 +64,21 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Allow Zero Value<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                           @* @Html.DropDownListFor(C => C.AllowZeroValue, Model.AllowZeroValueList, "---Plaese Select---", new { @id = "txtAllowZeroValue", @class = "form-control _select", @TabIndex = 1 })<br />*@
-                                            <form asp-action="SomeAction" asp-controller="SomeController">
+                                            @* <form asp-action="SomeAction" asp-controller="SomeController">
                                                 <label>
                                                     <input type="radio" name="MyRadioField" value="Yes" checked /> Yes
                                                 </label>
                                                 <label>
                                                     <input type="radio" name="MyRadioField" value="No" /> No
                                                 </label>
-                                            </form>
+                                            </form> *@
+                                            <div class="input-group">
 
+                                                @Html.RadioButtonFor(C => C.AllowZeroValue, "YES", new { @TabIndex = 2 })
+                                                <label id="mt-radio">YES</label>&emsp;
+                                                @Html.RadioButtonFor(C => C.AllowZeroValue, "NO", new { @TabIndex = 3 })
+                                                <label id="mt-radio">NO</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

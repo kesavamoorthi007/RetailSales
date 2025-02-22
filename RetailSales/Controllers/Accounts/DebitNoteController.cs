@@ -6,6 +6,7 @@ using RetailSales.Interface.Master;
 using RetailSales.Models;
 using RetailSales.Models.Accounts;
 using RetailSales.Models.Inventory;
+using RetailSales.Services.Accounts;
 using RetailSales.Services.Inventory;
 using System.Data;
 
@@ -13,31 +14,38 @@ namespace RetailSales.Controllers.Accounts
 {
     public class DebitNoteController : Controller
     {
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
         IDebitNoteService DebitNoteService;
-        public DebitNoteController(IDebitNoteService _DebitNoteService)
+        public DebitNoteController(IDebitNoteService _DebitNoteService, IConfiguration _configuratio)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             DebitNoteService = _DebitNoteService;
         }
+              
         public IActionResult DebitNote(string id)
         {
             DebitNote ic = new DebitNote();
 
             DebitNoteItem tda = new DebitNoteItem();
-            List<DebitNoteItem> TData = new List<DebitNoteItem>();
-
-            ic.ExcRate = "1";
-            ic.VocNo = "36";
-            ic.RefDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            List<DebitNoteItem> TData = new List<DebitNoteItem>();                                 
             ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.VocNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
             if (id == null)
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     tda = new DebitNoteItem();
                     tda.Isvalid = "Y";
                     tda.DBCRlst = BindDbCr();
-                    tda.AccNamelst = BindAcc();
-                    tda.DBCR = "Dr";
+                    tda.AccNamelst = BindAcc("");
+                    tda.DBCR = "Dr";                    
                     TData.Add(tda);
                 }
             }
@@ -82,6 +90,27 @@ namespace RetailSales.Controllers.Accounts
 
             return View(cy);
         }
+        public ActionResult GetLedgerDetails(string ItemId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                string balance = "";
+                dt = DebitNoteService.GetLedgerDetails(ItemId);
+
+                if (dt.Rows.Count > 0)
+                {
+                    balance = dt.Rows[0]["CLOSE_BAL"].ToString();
+                }
+
+                var result = new { balance = balance };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public JsonResult GetDebJSON()
         {
@@ -93,7 +122,7 @@ namespace RetailSales.Controllers.Accounts
         public JsonResult GetAccJSON()
         {
             DebitNoteItem model = new DebitNoteItem();
-            return Json(BindAcc());
+            return Json(BindAcc(""));
 
         }
 
@@ -111,11 +140,11 @@ namespace RetailSales.Controllers.Accounts
                 throw ex;
             }
         }
-        public List<SelectListItem> BindAcc()
+        public List<SelectListItem> BindAcc(string id)
         {
             try
             {
-                DataTable dtDesg = DebitNoteService.GetAcc();
+                DataTable dtDesg = DebitNoteService.GetAcc(id);
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -130,6 +159,29 @@ namespace RetailSales.Controllers.Accounts
                 throw ex;
             }
         }
-        
+
+        public ActionResult GetLedgerDetail(string ItemId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                string balance = "";
+                dt = DebitNoteService.GetLedgerDetails(ItemId);
+                
+                if (dt.Rows.Count > 0)
+                {
+                    balance = dt.Rows[0]["CLOSE_BAL"].ToString();
+                }
+
+                var result = new { balance = balance };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }
