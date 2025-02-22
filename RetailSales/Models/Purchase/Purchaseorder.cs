@@ -55,6 +55,8 @@ namespace RetailSales.Models
         public string Recived { get; set; }
         public string Accepted { get; set; }
         public string Rejected { get; set; }
+        public string exqty { get; set; }
+        public string shortqty { get; set; }
         public string DiscAmount { get; set; }
         public string FrigCharge { get; set; }
         public string FrieghtAmt { get; set; }
