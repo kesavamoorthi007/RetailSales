@@ -167,9 +167,9 @@ namespace RetailSales.Controllers.Master
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     coname = dtUsers.Rows[i]["COMPANY_NAME"].ToString(),
                     address = dtUsers.Rows[i]["ADDRESS"].ToString(),
-                    city = dtUsers.Rows[i]["CITY"].ToString(),
-                    state = dtUsers.Rows[i]["STATE"].ToString(),
-                    country = dtUsers.Rows[i]["COUNTRY"].ToString(),
+                    city = dtUsers.Rows[i]["CITY_NAME"].ToString(),
+                    state = dtUsers.Rows[i]["STATE_NAME"].ToString(),
+                    country = dtUsers.Rows[i]["COUNTRY_NAME"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
 
