@@ -21,11 +21,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT UOM.ID,UOM_CODE,UOM_DESCRIPTION,UOM.IS_ACTIVE FROM UOM WHERE UOM.IS_ACTIVE = 'Y' ORDER BY UOM.ID DESC";
+                SvSql = "SELECT UOM.ID,UOM_CODE,UOM_DESCRIPTION,CONVERSION_FACTOR,UOM.IS_ACTIVE FROM UOM WHERE UOM.IS_ACTIVE = 'Y' ORDER BY UOM.ID DESC";
             }
             else
             {
-                SvSql = "SELECT UOM.ID,UOM_CODE,UOM_DESCRIPTION,UOM.IS_ACTIVE FROM UOM WHERE UOM.IS_ACTIVE = 'N' ORDER BY UOM.ID DESC";
+                SvSql = "SELECT UOM.ID,UOM_CODE,UOM_DESCRIPTION,CONVERSION_FACTOR,UOM.IS_ACTIVE FROM UOM WHERE UOM.IS_ACTIVE = 'N' ORDER BY UOM.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -48,7 +48,7 @@ namespace RetailSales.Services.Master
                     objConn.Open();
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into UOM (UOM_CODE,UOM_DESCRIPTION,CREATED_BY,CREATED_ON) VALUES ('" + cy.UOMCODE + "',N'" + cy.Description + "',N'" + cy.Createdby + "','" + cy.Createdon + "')";
+                        svSQL = "Insert into UOM (UOM_CODE,UOM_DESCRIPTION,CONVERSION_FACTOR,CREATED_BY,CREATED_ON) VALUES ('" + cy.UOMCODE + "',N'" + cy.Description + "',N'" + cy.Factor + "','" + cy.Createdby + "','" + cy.Createdon + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
@@ -57,7 +57,7 @@ namespace RetailSales.Services.Master
                     }
                     else
                     {
-                        svSQL = "Update UOM set UOM_CODE = '" + cy.UOMCODE + "',UOM_DESCRIPTION = N'" + cy.Description + "',UPDATED_BY = '" + cy.Updatedby + "',UPDATED_ON = '" + cy.Updatedon + "' WHERE UOM.ID ='" + cy.ID + "'";
+                        svSQL = "Update UOM set UOM_CODE = '" + cy.UOMCODE + "',UOM_DESCRIPTION = N'" + cy.Description + "',CONVERSION_FACTOR = N'" + cy.Factor + "',UPDATED_BY = '" + cy.Updatedby + "',UPDATED_ON = '" + cy.Updatedon + "' WHERE UOM.ID ='" + cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
@@ -79,7 +79,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditUOM(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,UOM_CODE,UOM_DESCRIPTION FROM UOM WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,UOM_CODE,UOM_DESCRIPTION,CONVERSION_FACTOR FROM UOM WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

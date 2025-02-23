@@ -147,7 +147,7 @@ namespace RetailSales.Controllers
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    EditRow = "<a href=State?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    EditRow = "<a href=City?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
                     DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else

@@ -55,9 +55,9 @@ internal class Program
         builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
 
 
-		builder.Services.TryAddSingleton<ISalesInvoiceService, SalesInvoiceService>();
+		builder.Services.TryAddSingleton<ISalesInvoiceService, RetailSales.Services.Sales.SalesInvoiceService>();
 		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
-		builder.Services.TryAddSingleton<IStockTransferService, StockTransferService>();
+		builder.Services.TryAddSingleton<IStockTransferService, RetailSales.Services.SalesInvoiceService>();
 		builder.Services.TryAddSingleton<IBankaccountsService, BankaccountsService>();
 
         // adding Supplier interface and services containers

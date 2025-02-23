@@ -42,6 +42,7 @@
             datafields: [
                 { name: 'uomcode', type: 'string' },
                 { name: 'description', type: 'string' },
+                { name: 'factor', type: 'string' },
                 { name: 'edit', type: 'string' },
                 { name: 'delete', type: 'string' },
 
@@ -58,7 +59,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '60%',
+                width: '90%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -81,6 +82,7 @@
 
                     { text: 'UOM CODE', filtertype: 'input', datafield: 'uomcode', width: 250 },
                     { text: 'Description', filtertype: 'input', datafield: 'description', width: 250 },
+                    { text: 'Conversion Factor', filtertype: 'input', datafield: 'factor', width: 250 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},
                 ]
