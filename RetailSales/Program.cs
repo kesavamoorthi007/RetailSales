@@ -46,9 +46,10 @@ internal class Program
 		builder.Services.TryAddSingleton<ICGroupService, CGroupService>();
         builder.Services.TryAddSingleton<IProductService, ProductService>();
         builder.Services.TryAddSingleton<ICompanyService, CompanyService>();
+
 		builder.Services.TryAddSingleton<ISalesInvoiceService, SalesInvoiceService>();
 		builder.Services.TryAddSingleton<IStockinhandService, StockinhandService>();
-		builder.Services.TryAddSingleton<IStockTransferService, StockTransferService>();
+		builder.Services.TryAddSingleton<IStockTransferService, RetailSales.Services.SalesInvoiceService>();
 		builder.Services.TryAddSingleton<IBankaccountsService, BankaccountsService>();
 		builder.Services.TryAddSingleton<IProductService, ProductService>();
 		builder.Services.TryAddSingleton<IDebitNoteService, DebitNoteService>();

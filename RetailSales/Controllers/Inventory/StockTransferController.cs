@@ -26,7 +26,7 @@ namespace RetailSales.Controllers
         {
             StockTransfer ic = new StockTransfer();
 
-            
+         
             ic.DocumentDate = DateTime.Now.ToString("dd-MMM-yyyy");
             DataTable dtv = datatrans.GetSequence("StockTransfor");
 
@@ -184,6 +184,34 @@ namespace RetailSales.Controllers
                 throw ex;
             }
         }
+        //public ActionResult GetStockDetail(string ItemId)
+        //{
+        //    try
+        //    {
+        //        DataTable dt = new DataTable();
+
+        //        string stock = "";
+        //        string qty = "";
+        //        string rate = "";
+        //        dt = StockTransferService.GetVarientDetails(ItemId);
+
+        //        if (dt.Rows.Count > 0)
+        //        {
+
+        //            uom = dt.Rows[0]["UOM"].ToString();
+        //            qty = dt.Rows[0]["QTY"].ToString();
+        //            rate = dt.Rows[0]["RATE"].ToString();
+
+        //        }
+
+        //        var result = new { uom = uom, qty = qty, rate = rate };
+        //        return Json(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
         public JsonResult GetVarientJSON(string id)
         {
             //EnqItem model = new EnqItem();
