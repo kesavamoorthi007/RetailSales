@@ -200,5 +200,77 @@ namespace RetailSales.Controllers.Accounts
 
             return View(cy);
         }
+
+        public IActionResult SalesCreditNote(string id)
+        {
+            SalesCreditNote ic = new SalesCreditNote();
+            ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            ic.InvDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.VocNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+                ic.InvNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
+            SalesCreditNoteItem tda = new SalesCreditNoteItem();
+            List<SalesCreditNoteItem> TData = new List<SalesCreditNoteItem>();
+            if (id == null)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    tda = new SalesCreditNoteItem();
+                    tda.Isvalid = "Y";
+                    tda.DBCRlst = BindDbCr();
+                    tda.AccNamelst = BindAcc("");
+                    tda.DBCR = "Dr";
+                    TData.Add(tda);
+                }
+            }
+            else
+            {
+                
+            }
+            ic.SalesCreditNotelst = TData;
+            return View(ic);
+        }
+
+        [HttpPost]
+        public ActionResult SalesCreditNote(CreditNote cy, string id)
+        {
+
+            try
+            {
+                cy.ID = id;
+                string Strout = CreditNoteService.CreditNoteCRUD(cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "SalesCreditNote Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "SalesCreditNote Updated Successfully...!";
+                    }
+                    return RedirectToAction("SalesCreditNote");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit SalesCreditNote";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(cy);
+        }
+
     }
 }

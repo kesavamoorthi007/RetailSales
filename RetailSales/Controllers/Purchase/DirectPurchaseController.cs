@@ -370,7 +370,7 @@ namespace RetailSales.Controllers.Purchase
                 DataTable dt1 = new DataTable();
                 DataTable dt2 = new DataTable();
 
-                string des = "";
+                
                 string uom = "";
                 string hsn = "";
                 string rate = "";
@@ -385,7 +385,7 @@ namespace RetailSales.Controllers.Purchase
 
                 if (dt.Rows.Count > 0)
                 {
-                    des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
+                    
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
                     rate = dt.Rows[0]["RATE"].ToString();
@@ -432,7 +432,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new { des = des, uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
+                var result = new {  uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
                 return Json(result);
             }
             catch (Exception ex)

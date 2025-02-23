@@ -10,11 +10,11 @@ using System.Data.SqlClient;
 
 namespace RetailSales.Services
 {
-    public class StockTransferService : IStockTransferService
+    public class SalesInvoiceService : IStockTransferService
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public StockTransferService(IConfiguration _configuratio)
+        public SalesInvoiceService(IConfiguration _configuratio)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
@@ -24,7 +24,7 @@ namespace RetailSales.Services
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT STB.ST_BASIC_ID, STB.STOCK_TRANSFER_ID, STB.STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION, STB.IS_ACTIVE, FBM.BINID AS FBIN, TBM.BINID AS TOBIN FROM  dbo.STOCK_TRAN_BASICS AS STB LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STB.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STB.FROM_BIN_ID = FBM.ID ORDER BY ST_BASIC_ID DESC";
+                SvSql = "SELECT STB.ST_BASIC_ID, STB.STOCK_TRANSFER_ID,CONVERT(varchar,STB.STOCK_TRANSFER_DATE,106) AS STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION, STB.IS_ACTIVE, FBM.BINID AS FBIN, TBM.BINID AS TOBIN FROM  dbo.STOCK_TRAN_BASICS AS STB LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STB.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STB.FROM_BIN_ID = FBM.ID ORDER BY ST_BASIC_ID DESC";
 
             }
             else
@@ -61,6 +61,18 @@ namespace RetailSales.Services
             adapter.Fill(dtt);
             return dtt;
         }
+        //public DataTable GetStock()
+        //{
+
+        //    string SvSql = string.Empty;
+        //    SvSql = "SELECT ID,BALANCE_QTY FROM INVENTORY_ITEM";
+        //    DataTable dtt = new DataTable();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        //    adapter.Fill(dtt);
+        //    return dtt;
+
+        //}
         public DataTable GetVarientDetails(string ItemId)
         {
             string SvSql = string.Empty;
@@ -81,6 +93,16 @@ namespace RetailSales.Services
             adapter.Fill(dtt);
             return dtt;
         }
+        //public DataTable GetStockDetails(string ItemId)
+        //{
+        //    string SvSql = string.Empty;
+        //    SvSql = "SELECT ITEM.ID,VARIANT,BIN_NO,UOM,RATE FROM ITEM  Where ITEM.ID='" + ItemId + "'";
+        //    DataTable dtt = new DataTable();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        //    adapter.Fill(dtt);
+        //    return dtt;
+        //}
         public DataTable GetFBin()
         {
             string SvSql = string.Empty;

@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Doc ID<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Transfer No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Documentid, new { @id = "txtDocumentid", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
@@ -49,10 +49,9 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Doc Date<label class="mandatory">*</label></label>
-
+                                        <br><label for="inputName3" class="col-sm-4 control-label">Transfer Date<label class="mandatory">*</label></label>
                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
-                                            @Html.TextBoxFor(C => C.DocumentDate, new { @id = "txtDocumentDate", @class = "form-control", @TabIndex = 2, @size = "20", style = "width: 170px", @readonly = true })
+                                            @Html.TextBoxFor(C => C.DocumentDate, new { @id = "txtDocumentDate", @class = "form-control", @TabIndex = 2})
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -173,6 +172,10 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.StockTransferItemLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly"})
+                                                        </td>
+                                                        <td>
+                                                            @Html.HiddenFor(o => o.StockTransferItemLst[i].Isvalid, new { @id = "Isvalid" + i })
+                                                            <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="SalesInvoiceLst.Index" type="hidden" value="@(i)" />
                                                         </td>
                                                     </tr>
                                                     i = i + 1;
@@ -445,6 +448,24 @@
         }
         $(dropDownId).trigger("liszt:updated");
     }
+    @*function removeRow(id) {
+        var table = document.getElementById("dataTable");
+        var rowCount = table.rows.length;
+        var row = document.getElementById('trBook' + id);
+        var j = 0;
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+                j += 1;
+            }
+        });
+        if (j > 1) {
+            row.style.display = "none";
+            document.getElementById('Isvalid' + id).value = "N";
+        }
+        else {
+            alert("Cannot delete all the rows.")
+        }
+    }*@
 
     function AppendRow(opt) {
         var index = $("#tbBooks").children("tr").length;
@@ -485,7 +506,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Document Id");
+                alert("Please Enter Transfer Id");
                 return false;
             }
             else {
@@ -503,7 +524,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Document Date");
+                alert("Please Enter Transfer Date");
                 return false;
             }
             else {
