@@ -21,10 +21,12 @@ namespace RetailSales.Models
     }
     public class CreditNoteItem
     {
+        public string ID { get;set; }
         public string Isvalid { get; set; }
         public List<SelectListItem> DBCRlst { get; set; }
         public string DBCR { get; set; }
         public List<SelectListItem> AccNamelst { get; set; }
+        public List<SelectListItem> AccLedgerBalance { get; set; }
         public string AccName { get; set; }
         public double DebitAmt { get; set; }
         public double CreditAmt { get; set; }

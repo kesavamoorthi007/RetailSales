@@ -247,28 +247,27 @@ namespace RetailSales.Controllers.Sales
         }
         public async Task<IActionResult> Invoice(string id)
         {
+
             string mimtype = "";
             int extension = 1;
 
             System.Data.DataSet ds = new System.Data.DataSet();
             var path = $"{this._WebHostEnvironment.WebRootPath}\\Reports\\SalesInv.rdlc";
             Dictionary<string, string> Parameters = new Dictionary<string, string>();
-            //  Parameters.Add("rp1", " Hi Everyone");
+            //  Parameters.Add("rp1", " Hi Everyone");
             var basic = await SalesInvoiceService.GetBasicItem(id);
-           // var Detail = await SalesInvoiceService.GetExinvItemDetail(id);
+            // var Detail = await SalesInvoiceService.GetExinvItemDetail(id);
             //var terms = await ProFormaInvoiceService.GetPinvtermsDetail(id);
+            LocalReport localReport = new LocalReport(path);
 
-          
-
-
-             LocalReport localReport = new  LocalReport(path);
             localReport.AddDataSource("salesinv", basic);
+
             //localReport.AddDataSource("InvDet", Detail);
-           
-
-
             var result = localReport.Execute(RenderType.Pdf, extension, Parameters, mimtype);
+
             return File(result.MainStream, "application/Pdf");
+
         }
+       
     }
 }

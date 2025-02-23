@@ -20,6 +20,7 @@ namespace RetailSales.Controllers.Master
         public IActionResult Location(string id)
         {
             Location ic = new Location();
+            ic.Bin = "YES";
             if (id == null)
             {
 

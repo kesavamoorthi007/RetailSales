@@ -40,11 +40,12 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'docno', type: 'string' },
+                //{ name: 'docno', type: 'string' },
                 { name: 'docdate', type: 'string' },
                 { name: 'validfrom', type: 'string' },
                 { name: 'validto', type: 'string' },
                 { name: 'editrow', type: 'string' },
+                { name: 'revision', type: 'string' },
                 { name: 'delrow', type: 'string' },
             ],
             id: 'id',
@@ -59,7 +60,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '80%',
+                width: '75%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -80,12 +81,13 @@
 
                 columns: [
 
-                    { text: 'Doc No', filtertype: 'checkedlist', datafield: 'docno', width: 150 },
-                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 120 },
-                    { text: 'Valid From', filtertype: 'input', datafield: 'validfrom', width: 200 },
-                    { text: 'Valid To', filtertype: 'input', datafield: 'validto', width: 200 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 90 },
+                    //{ text: 'Doc No', filtertype: 'checkedlist', datafield: 'docno', width: 120 },
+                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 150 },
+                    { text: 'Valid From', filtertype: 'input', datafield: 'validfrom', width: 150 },
+                    { text: 'Valid To', filtertype: 'input', datafield: 'validto', width: 150 },
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Revision', datafield: 'revision', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });
         $("#ddlStatus").change(function () {

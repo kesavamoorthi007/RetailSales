@@ -12,7 +12,8 @@ namespace RetailSales.Interface.Accounts
         string RemoveChange(string tag, string id);
         DataTable GetAccountClass();
         DataTable GetAccountType();
-        DataTable GetDaydet();
-        
+        DataTable GetDaydet(string strfrom, string strTo, string strStatus);
+
+
     }
 }

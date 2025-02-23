@@ -16,26 +16,26 @@ namespace RetailSales.Services.Master
             datatrans = new DataTransactions(_connectionString);
         }
        
-        public DataTable GetItemDetails(string ItemId)
-        {
-            string SvSql = string.Empty;
-            SvSql = "SELECT ITEM.ID,VARIANT,UOM,RATE FROM ITEM  Where ITEM.ID='" + ItemId + "'";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
+        //public DataTable GetItemDetails(string ItemId)
+        //{
+        //    string SvSql = string.Empty;
+        //    SvSql = "SELECT ITEM.ID,VARIANT,UOM,RATE FROM ITEM  Where ITEM.ID='" + ItemId + "'";
+        //    DataTable dtt = new DataTable();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        //    adapter.Fill(dtt);
+        //    return dtt;
+        //}
         public DataTable GetAllRate(string strStatus)
         {
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT RATE_BASIC.ID,RATE_BASIC.DOC_NO,FORMAT(RATE_BASIC.DOC_DATE, 'dd-MM-yyyy') AS DOC_DATE,FORMAT(RATE_BASIC.VALID_FROM, 'dd-MM-yyyy') AS VALID_FROM,FORMAT(RATE_BASIC.VALID_TO, 'dd-MM-yyyy') AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.ID DESC";
+                SvSql = "SELECT RATE_BASIC.ID,FORMAT(RATE_BASIC.DOC_DATE, 'dd-MM-yyyy') AS DOC_DATE,FORMAT(RATE_BASIC.VALID_FROM, 'dd-MM-yyyy') AS VALID_FROM,FORMAT(RATE_BASIC.VALID_TO, 'dd-MM-yyyy') AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.ID DESC";
             }
             else
             {
-                SvSql = "SELECT RATE_BASIC.ID,RATE_BASIC.DOC_NO,FORMAT(RATE_BASIC.DOC_DATE, 'dd-MM-yyyy') AS DOC_DATE,FORMAT(RATE_BASIC.VALID_FROM, 'dd-MM-yyyy') AS VALID_FROM,FORMAT(RATE_BASIC.VALID_TO, 'dd-MM-yyyy') AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'N' ORDER BY RATE_BASIC.ID DESC";
+                SvSql = "SELECT RATE_BASIC.ID,FORMAT(RATE_BASIC.DOC_DATE, 'dd-MM-yyyy') AS DOC_DATE,FORMAT(RATE_BASIC.VALID_FROM, 'dd-MM-yyyy') AS VALID_FROM,FORMAT(RATE_BASIC.VALID_TO, 'dd-MM-yyyy') AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'N' ORDER BY RATE_BASIC.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -45,34 +45,10 @@ namespace RetailSales.Services.Master
             return dtt;
         }
 
-        //another
         public DataTable GetEditRate(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,DOC_NO,DOC_DATE,VALID_FROM,VALID_TO FROM RATE_BASIC WHERE ID = '" + id + "' ";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-
-        public DataTable GetItem()
-        {
-            string SvSql = string.Empty;
-            SvSql = "SELECT ID,PRODUCT_NAME FROM ITEM";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-
-        public DataTable GetVariant(string id)
-        {
-            string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
-           // SvSql = "SELECT ITEM.ID,VARIANT FROM ITEM WHERE ITEM.PRODUCT_DETAIL='" + id + "'";
+            SvSql = "SELECT ID,DOC_DATE,VALID_FROM,VALID_TO FROM RATE_BASIC WHERE RATE_BASIC.ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -83,7 +59,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditRateDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,ITEM_NAME,VARIANT,UNIT,RATE FROM RATE_DETAIL WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,RATEDETAIL_ID,ITEM_NAME,VARIANT,UNIT,RATE FROM RATE_DETAIL WHERE RATE_DETAIL.ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -91,6 +67,38 @@ namespace RetailSales.Services.Master
             return dtt;
         }
 
+        //public DataTable GetItem()
+        //{
+        //    string SvSql = string.Empty;
+        //    SvSql = "SELECT ID,PRODUCT_NAME FROM ITEM";
+        //    DataTable dtt = new DataTable();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        //    adapter.Fill(dtt);
+        //    return dtt;
+        //}
+
+        //public DataTable GetVariant(string id)
+        //{
+        //    string SvSql = string.Empty;
+        //    SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
+        //    DataTable dtt = new DataTable();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        //    adapter.Fill(dtt);
+        //    return dtt;
+        //}
+
+        public DataTable GetproductDetail(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,PRO_DETAIL.UOM, PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY WHERE PRO_DETAIL.IS_ACTIVE = 'Y' ORDER BY PRO_DETAIL.ID DESC";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
 
         public string RateCRUD(Rate cy)
         {
@@ -114,7 +122,7 @@ namespace RetailSales.Services.Master
                         StatementType = "Update";
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
-                    objCmd.Parameters.Add("@docno", SqlDbType.NVarChar).Value = cy.DocNo;
+                    //objCmd.Parameters.Add("@docno", SqlDbType.NVarChar).Value = cy.DocNo;
                     objCmd.Parameters.AddWithValue("@docdate", cy.DocDate);
                     objCmd.Parameters.AddWithValue("@validfrom", cy.ValidFrom);
                     objCmd.Parameters.AddWithValue("@validto", cy.ValidTo);
@@ -138,7 +146,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into RATE_DETAIL (RATEBASIC_ID,ITEM_NAME,VARIANT,UNIT,RATE) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate1 + "')";
+                                        svSQL = "Insert into RATE_DETAIL (ID,ITEM_NAME,VARIANT,UNIT,RATE) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate1 + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -146,7 +154,7 @@ namespace RetailSales.Services.Master
                             }
                             else
                             {
-                                svSQL = "Delete RATE_DETAIL WHERE RATEBASIC_ID='" + cy.ID + "'";
+                                svSQL = "Delete RATE_DETAIL WHERE ID='" + cy.ID + "'";
                                 SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
                                 objCmdd.ExecuteNonQuery();
                                 foreach (RateList cp in cy.RateList)
@@ -154,7 +162,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into RATE_DETAIL (RATEBASIC_ID,ITEM_NAME,VARIANT,UNIT,RATE) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate1 + "')";
+                                        svSQL = "Insert into RATE_DETAIL (ID,ITEM_NAME,VARIANT,UNIT,RATE) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate1 + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -183,8 +191,6 @@ namespace RetailSales.Services.Master
 
             return msg;
         }
-
-       
 
         public string StatusChange(string tag, string id)
         {
@@ -230,5 +236,6 @@ namespace RetailSales.Services.Master
             return "";
         }
 
+        
     }
 }

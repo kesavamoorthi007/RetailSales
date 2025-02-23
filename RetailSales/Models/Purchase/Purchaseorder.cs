@@ -30,6 +30,7 @@ namespace RetailSales.Models
         public string ID { get; set; }
         public string Gross { get; set; }
         public string Disc { get; set; }
+        public string GST { get; set; }
         public string Frieghtcharge { get; set; }
         public string CGST { get; set; }
         public string SGST { get; set; }
@@ -55,6 +56,8 @@ namespace RetailSales.Models
         public string Recived { get; set; }
         public string Accepted { get; set; }
         public string Rejected { get; set; }
+        public string exqty { get; set; }
+        public string shortqty { get; set; }
         public string DiscAmount { get; set; }
         public string FrigCharge { get; set; }
         public string FrieghtAmt { get; set; }
@@ -71,7 +74,7 @@ namespace RetailSales.Models
         public string SGST { get; set; }
         public string IGST { get; set; }
         public string Total { get; set; }
-       
+
 
     }
     public class ListPurchaseordergrid
@@ -81,6 +84,8 @@ namespace RetailSales.Models
         public string podate { get; set; }
         public string sup { get; set; }
         public string refno { get; set; }
+        public string mailrow { get; set; }
+        public string pdf { get; set; }
         public string editrow { get; set; }
         public string move { get; set; }
         public string view { get; set; }
