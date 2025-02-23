@@ -33,15 +33,15 @@ namespace RetailSales.Controllers.Master
 
                 if (dtt.Rows.Count > 0)
                 {
-                     for (int i = 0; i < dtt.Rows.Count; i++)
-                     {
+                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    {
                         tda = new RateList();
                         tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                         tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-                        tda.Unit = dtt.Rows[i]["UOM"].ToString();
+                        tda.Unit = dtt.Rows[i]["UOM"].ToString();                        
                         tda.Isvalid = "Y";
                         TData.Add(tda);
-                     }
+                    }
 
                 }  
             }
@@ -52,7 +52,7 @@ namespace RetailSales.Controllers.Master
                 if (dt.Rows.Count > 0)
                 {
                     //ic.DocNo = dt.Rows[0]["DOC_NO"].ToString();
-                    ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString();
+                    ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString(); 
                     ic.ValidFrom = dt.Rows[0]["VALID_FROM"].ToString();
                     ic.ValidTo = dt.Rows[0]["VALID_TO"].ToString();
                     ic.ID = id;
@@ -63,7 +63,7 @@ namespace RetailSales.Controllers.Master
                 {
                     tda = new RateList();
 
-                    tda.Item = dtt.Rows[0]["ITEM_NAME"].ToString();
+                    tda.Item = dtt.Rows[0]["ITEM_NAME"].ToString(); 
                     tda.Varient = dtt.Rows[0]["VARIANT"].ToString();
                     tda.Unit = dtt.Rows[0]["UNIT"].ToString();
                     tda.Rate1 = dtt.Rows[0]["RATE"].ToString();
@@ -72,7 +72,7 @@ namespace RetailSales.Controllers.Master
                     TData.Add(tda);
                 }
             }
-            ic.RateList = TData;
+            ic.RateListIdem = TData;
             return View(ic);
         }
 
@@ -132,6 +132,7 @@ namespace RetailSales.Controllers.Master
         {
             return View();
         }
+        
 
 //        public List<SelectListItem> BindItem()
 //        {
@@ -209,30 +210,32 @@ namespace RetailSales.Controllers.Master
 
                 string Delete = string.Empty;
                 string Edit = string.Empty;
-                string GoToSales = string.Empty;
+                //string GoToSales = string.Empty;
+                string Revision = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-
-                    Edit = "<a href=Rate?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    Revision = "<a href=RateView?id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    Edit = "<a href=Rate?id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
 
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
 
                 Reg.Add(new RateGrid
                 {
-                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    id = dtUsers.Rows[i]["RATE_BASIC_ID"].ToString(),
                     //docno = dtUsers.Rows[i]["DOC_NO"].ToString(),
                     docdate = dtUsers.Rows[i]["DOC_DATE"].ToString(),
                     validfrom = dtUsers.Rows[i]["VALID_FROM"].ToString(),
                     validto = dtUsers.Rows[i]["VALID_TO"].ToString(),
                     editrow = Edit,                    
                     delrow = Delete,
+                    revision = Revision,
 
                 });
             }
@@ -242,6 +245,46 @@ namespace RetailSales.Controllers.Master
                 Reg
             });
 
+        }
+        public IActionResult RateView(string id)
+        {
+            Rate ic = new Rate();
+
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = RateService.GetEditRate(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString();
+                ic.ValidFrom = dt.Rows[0]["VALID_FROM"].ToString();
+                ic.ValidTo = dt.Rows[0]["VALID_TO"].ToString();                                                  
+                ic.ID = id;
+
+            }
+                 
+            List<RateList> TData = new List<RateList>();
+            RateList tda = new RateList();
+
+
+
+
+            dtt = RateService.GetEditRateDetail(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new RateList();
+                    tda.Item = dtt.Rows[i]["ITEM_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
+                    tda.Unit = dtt.Rows[i]["UNIT"].ToString();
+                    tda.Rate1 = dtt.Rows[i]["RATE"].ToString();                  
+                    tda.ID = id;
+                    TData.Add(tda);
+                }
+            }
+            ic.RateListIdem = TData;
+            return View(ic);
         }
 
         public ActionResult DeleteMR(string tag, string id)
