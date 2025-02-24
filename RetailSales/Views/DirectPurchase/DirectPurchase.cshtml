@@ -415,6 +415,44 @@
         }
         $(dropDownId).trigger("liszt:updated");
     }
+     function changeVarientItem(ItemId, i) {
+        var cusid = document.getElementById("ddlSupplier").value;
+        $.ajax({
+            url: 'GetVarientDetails',
+            data: { "ItemId": ItemId, "cusid": cusid },
+            type: "GET",
+            success: function (result) {
+                document.getElementById("txtUOM" + i).value = result.uom;
+                document.getElementById("txtHsn" + i).value = result.hsn;
+                document.getElementById("txtRate" + i).value = result.rate;
+                document.getElementById("txtTariff" + i).value = result.gst;
+                document.getElementById("CGSTP" + i).value = result.cgst;
+                document.getElementById("SGSTP" + i).value = result.sgst;
+                document.getElementById("IGSTP" + i).value = result.igst;
+
+            },
+            error: function () {
+                alert("Data Not Found");
+            }
+        });
+    }
+    function changesupplier(ItemId) {
+        $.ajax({
+            url: 'GetSupplierDetails',
+            data: { "ItemId": ItemId },
+            type: "GET",
+            success: function (result) {
+
+                document.getElementById("txtSupplieraddress").value = result.add;
+                document.getElementById("txtState").value = result.state;
+                document.getElementById("txtCity").value = result.city;
+
+            },
+            error: function () {
+                alert("Data Not Found");
+            }
+        });
+    }
      function changeQty(_this, i) {
         try {
             var GTot = 0;
@@ -717,44 +755,7 @@
             return whole;
         }
     }
-    function changeVarientItem(ItemId, i) {
-        var cusid = document.getElementById("ddlSupplier").value;
-        $.ajax({
-            url: 'GetVarientDetails',
-            data: { "ItemId": ItemId, "cusid": cusid },
-            type: "GET",
-            success: function (result) {
-                document.getElementById("txtUOM" + i).value = result.uom;
-                document.getElementById("txtHsn" + i).value = result.hsn;
-                document.getElementById("txtRate" + i).value = result.rate;
-                document.getElementById("txtTariff" + i).value = result.gst;
-                document.getElementById("CGSTP" + i).value = result.cgst;
-                document.getElementById("SGSTP" + i).value = result.sgst;
-                document.getElementById("IGSTP" + i).value = result.igst;
-
-            },
-            error: function () {
-                alert("Data Not Found");
-            }
-        });
-    }
-    function changesupplier(ItemId) {
-        $.ajax({
-            url: 'GetSupplierDetails',
-            data: { "ItemId": ItemId },
-            type: "GET",
-            success: function (result) {
-
-                document.getElementById("txtSupplieraddress").value = result.add;
-                document.getElementById("txtState").value = result.state;
-                document.getElementById("txtCity").value = result.city;
-
-            },
-            error: function () {
-                alert("Data Not Found");
-            }
-        });
-    }
+   
     function changeVarientDetails(id, i) {
         $.ajax({
             url: 'GetVarientJSON',
