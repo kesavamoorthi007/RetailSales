@@ -56,6 +56,7 @@ namespace RetailSales.Controllers.Purchase
                     tda = new PurchaseorderItem();
                     tda.Itemlst = BindItem();
                     tda.Varientlst = BindVarient("");
+                   
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -336,7 +337,23 @@ namespace RetailSales.Controllers.Purchase
             model.Itemlst = BindItem();
             return Json(BindItem());
         }
-
+        public List<SelectListItem> BindUOM()
+        {
+            try
+            {
+                DataTable dtDesg = PurchaseorderService.GetUOM();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<SelectListItem> BindItem()
         {
             try
@@ -395,6 +412,33 @@ namespace RetailSales.Controllers.Purchase
                 }
 
                 var result = new { add = add, state = state, city = city, gst = gst };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult GetUOMDetail(string ItemId, string uom)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                //string des = "";
+                string cf = "";
+
+
+
+                dt = datatrans.GetData("SELECT CONVRT_FACTOR FROM UOM_CONVERT WHERE SRC_UOM = '" + uom + "' AND DEST_UOM ='" + ItemId + "'");
+
+                if (dt.Rows.Count > 0)
+                {
+                    cf = dt.Rows[0]["CONVRT_FACTOR"].ToString();
+
+                }
+
+                var result = new { cf = cf };
                 return Json(result);
             }
             catch (Exception ex)
@@ -669,6 +713,7 @@ namespace RetailSales.Controllers.Purchase
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new PurchaseorderItem();
+                    tda.UOMlst = BindUOM();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();

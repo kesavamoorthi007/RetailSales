@@ -127,8 +127,11 @@
                                                     <th>Variant</th>
                                                     <th> HSN  </th>
                                                     <th>Tax</th>
-                                                    <th> Unit </th>
+                                                    <th> UOM </th>
                                                     <th> Ord Qty </th>
+                                                    <th> Dest UOM </th>
+                                                    <th> CF </th>
+                                                    <th> CF Qty</th>
                                                     <th> Rec Qty </th>
                                                     <th> Acc Qty </th>
                                                     <th> Rej Qty </th>
@@ -189,8 +192,8 @@
                                                             </td>
                                                             <td>
                                                                 <span style="width: 50px; display: inline-block;">
-                                                                    @Html.DisplayFor(o => o.PurchaseorderLst[i].UOM)
-                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].UOM)
+                                                                    @Html.DisplayFor(o => o.PurchaseorderLst[i].UOM, new { @id = "txtUOM" + i })
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].UOM, new { @id = "txtUOM" + i })
                                                                 </span>
                                                             </td>
                                                             <td>
@@ -199,7 +202,16 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Qty, new { @id = "ordqty" + i })
                                                                 </span>
                                                             </td>
+                                                            <td>
+                                                                @Html.DropDownListFor(o => o.PurchaseorderLst[i].DestUOM, Model.PurchaseorderLst[i].UOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 120px;", onchange = "changeUOM(this.value," + i + ")" })
+                                                            </td>
+                                                            <td>
 
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;", @onkeyup = "changeCF(this.value," + i + ")" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 80px; text-align: right;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                            </td>
                                                             <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Recived)
                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
@@ -311,14 +323,14 @@
                                                     <th>DISCOUNT</th>
                                                     <td>
                                                         @Html.HiddenFor(C => C.Disc)
-                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeDisTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>FRIGHT</th>
                                                     <td>
                                                         @Html.HiddenFor(C => C.Frieghtcharge)
-                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -495,7 +507,46 @@
     $(function () {
         $('._select').select2();
     });
+      function changeUOM(ItemId, i) {
+         var uom =document.getElementById("txtUOM" + i).value;
+         var qty =document.getElementById("ordqty" + i).value;
 
+         if (qty == "")
+                qty = 0;
+
+          $.ajax({
+              url: 'GetUOMDetail',
+              data: { "ItemId": ItemId, "uom": uom },
+             type: "GET",
+             success: function (result) {
+
+                 document.getElementById("txtCF" + i).value = result.cf;
+                 var cfqty = result.cf;
+                 var cqty = eval(cfqty) * eval(qty);
+                   document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
+
+             },
+              error: function () {
+                  debugger;
+                  alert("Please Select Varient");
+              }
+          });
+    }
+     function changeCF(_this, i) {
+         var qty =document.getElementById("ordqty" + i).value;
+         var cf =document.getElementById("txtCF" + i).value;
+
+
+         if (qty == "")
+                qty = 0;
+
+            if (cf == "")
+                cf = 0;
+
+                 var cqty = eval(cf) * eval(qty);
+                   document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
+
+     }
     function removeRow(i) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
@@ -775,6 +826,8 @@
 
                  //var rej = eval(qty) - eval(Acc);
             //document.getElementById("txtRejected" + i).value = rej.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = qty;
+
             if (eval(qty) > eval(ordqty)) {
                 var eqty = eval(qty) - eval(ordqty);
                 document.getElementById("exqty" + i).innerHTML = eqty;
@@ -884,7 +937,7 @@
 
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = totamount.toFixed(2);
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
@@ -903,66 +956,118 @@
             alert(ex.message);
         }
     }
-    function changeTot(_this) {
-        try {
-            var GTot = 0;
-            var j = 0;
-            var qty = 0;
-            var tot = 0;
-            var totfrieght = 0;
-            var cgsttotamt = 0;
-            var sgsttotamt = 0;
-            var igsttotamt = 0;
-            var disttotamt = 0;
-            var rej = 0;
-            var totdis = 0;
-            var tpknc = 0;
-            var tochr = 0;
-            var tsdis = 0;
-            var totamt = 0;
-            var totamount = 0;
+    function changeDisTot(_this) {
+         try {
+             var GTot = 0;
+             var j = 0;
+             var qty = 0;
+             var tot = 0;
+             var totfrieght = 0;
+             var cgsttotamt = 0;
+             var sgsttotamt = 0;
+             var igsttotamt = 0;
+             var disttotamt = 0;
+             var rej = 0;
+             var totdis = 0;
+             var tpknc = 0;
+             var tochr = 0;
+             var tsdis = 0;
+             var totamt = 0;
+             var totamount = 0;
 
-            var frieght = document.getElementById("txtFrieghtcharge").value;
-            var Disc = document.getElementById("txtDisc").value;
+             var Disc = document.getElementById("txtDisc").value;
 
-            var tot = document.getElementById("txtNet").value;
-
-
-            if (frieght == "")
-                frieght = 0;
-
-            if (Disc == "")
-                Disc = 0;
-
-            if (tot == "")
-                tot = 0;
+             var tot = document.getElementById("hidnet").value;
 
 
-            var rej = eval(tot) - eval(Disc) + eval(frieght);
-            document.getElementById("txtNet").value = rej.toFixed(2);
+             if (Disc == "")
+                 Disc = 0;
+
+             if (tot == "")
+                 tot = 0;
 
 
-            var roundamount = Math.round(rej);
+             var rej = eval(tot) - eval(Disc) ;
+             document.getElementById("txtNet").value = rej.toFixed(2);
 
-            var round = eval(roundamount) - eval(rej);
+
+             var roundamount = Math.round(rej);
+
+             var round = eval(roundamount) - eval(rej);
 
 
 
 
-            document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = roundamount.toFixed(2);
+             document.getElementById("txtNet").value = roundamount.toFixed(2);
+             document.getElementById("hidnet").value = rej.toFixed(2);
 
 
-            document.getElementById("txtRound").value = round.toFixed(2);
+             document.getElementById("txtRound").value = round.toFixed(2);
 
-            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
 
 
-        }
-        catch (ex) {
-            alert(ex.message);
-        }
-    }
+         }
+         catch (ex) {
+             alert(ex.message);
+         }
+     }
+      function changeFrightTot(_this) {
+         try {
+             var GTot = 0;
+             var j = 0;
+             var qty = 0;
+             var tot = 0;
+             var totfrieght = 0;
+             var cgsttotamt = 0;
+             var sgsttotamt = 0;
+             var igsttotamt = 0;
+             var disttotamt = 0;
+             var rej = 0;
+             var totdis = 0;
+             var tpknc = 0;
+             var tochr = 0;
+             var tsdis = 0;
+             var totamt = 0;
+             var totamount = 0;
+
+             var Fri = document.getElementById("txtFrieghtcharge").value;
+
+             var tot = document.getElementById("hidnet").value;
+
+
+             if (Fri == "")
+                 Fri = 0;
+
+             if (tot == "")
+                 tot = 0;
+
+
+             var rej = eval(tot) + eval(Fri) ;
+             document.getElementById("txtNet").value = rej.toFixed(2);
+
+
+             var roundamount = Math.round(rej);
+
+             var round = eval(roundamount) - eval(rej);
+
+
+
+
+             document.getElementById("txtNet").value = roundamount.toFixed(2);
+             document.getElementById("hidnet").value = rej.toFixed(2);
+
+
+             document.getElementById("txtRound").value = round.toFixed(2);
+
+             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+         }
+         catch (ex) {
+             alert(ex.message);
+         }
+     }
     function roundtorupee(amt) {
         if (amt - round_decimals(amt, 0) > 0.5)
             return pad_with_zeros(round_decimals(amt + 1, 0));

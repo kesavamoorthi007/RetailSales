@@ -17,6 +17,16 @@ namespace RetailSales.Services.Purchase
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+        public DataTable GetUOM()
+        {
+            string SvSql = string.Empty;
+            SvSql = "  SELECT UOM_CODE,ID FROM UOM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetAllListPurchaseorder(string strStatus)
         {
             string SvSql = string.Empty;

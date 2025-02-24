@@ -230,14 +230,14 @@
                                                 <tr>
                                                     <th>DISCOUNT</th>
                                                     <td>
-                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeDisTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Fright</th>
                                                     <td>
 
-                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -327,10 +327,10 @@
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
 
-                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">Transporter<label class="Mandatory"></label></label>
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">Transporter Name<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-8">
 
-                                                                                @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @class = "form-control", @TabIndex = 1, onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                                                @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @class = "form-control", @TabIndex = 1 })
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -580,7 +580,7 @@
 
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = totamount.toFixed(2);
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
@@ -599,7 +599,7 @@
             alert(ex.message);
         }
     }
-     function changeTot(_this) {
+     function changeDisTot(_this) {
         try {
             var GTot = 0;
             var j = 0;
@@ -618,14 +618,10 @@
             var totamt = 0;
             var totamount = 0;
 
-            var frieght = document.getElementById("txtFrieghtcharge").value;
             var Disc = document.getElementById("txtDisc").value;
 
-            var tot = document.getElementById("txtNet").value;
+            var tot = document.getElementById("hidnet").value;
 
-
-            if (frieght == "")
-                frieght = 0;
 
             if (Disc == "")
                 Disc = 0;
@@ -634,7 +630,7 @@
                 tot = 0;
 
 
-            var rej = eval(tot) - eval(Disc) + eval(frieght);
+            var rej = eval(tot) - eval(Disc) ;
             document.getElementById("txtNet").value = rej.toFixed(2);
 
 
@@ -646,7 +642,63 @@
 
 
             document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = rej.toFixed(2);
+
+
+            document.getElementById("txtRound").value = round.toFixed(2);
+
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
+    }
+     function changeFrightTot(_this) {
+        try {
+            var GTot = 0;
+            var j = 0;
+            var qty = 0;
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var rej = 0;
+            var totdis = 0;
+            var tpknc = 0;
+            var tochr = 0;
+            var tsdis = 0;
+            var totamt = 0;
+            var totamount = 0;
+
+            var Fri = document.getElementById("txtFrieghtcharge").value;
+
+            var tot = document.getElementById("hidnet").value;
+
+
+            if (Fri == "")
+                Fri = 0;
+
+            if (tot == "")
+                tot = 0;
+
+
+            var rej = eval(tot) + eval(Fri) ;
+            document.getElementById("txtNet").value = rej.toFixed(2);
+
+
+            var roundamount = Math.round(rej);
+
+            var round = eval(roundamount) - eval(rej);
+
+
+
+
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = rej.toFixed(2);
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
