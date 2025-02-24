@@ -37,6 +37,7 @@ namespace RetailSales.Services.Sales
             adapter.Fill(dtt);
             return dtt;
         }
+
         public DataTable GetVarientDetails(string ItemId)
         {
             string SvSql = string.Empty;
@@ -47,7 +48,36 @@ namespace RetailSales.Services.Sales
             adapter.Fill(dtt);
             return dtt;
         }
-
+        public DataTable GetState()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select STATE_NAME,ID from STATE";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCity(string cityid)
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,ID from CITY WHERE STATE_ID = '" + cityid + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetUOM()
+        {
+            string SvSql = string.Empty;
+            SvSql = "  SELECT UOM_CODE,ID FROM UOM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetAllSalesInvoice(string strStatus)
         {
             string SvSql = string.Empty;

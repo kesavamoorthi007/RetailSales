@@ -5,6 +5,7 @@ using RetailSales.Models;
 using System.Data;
 using AspNetCore.Reporting;
 using RetailSales.Services.Purchase;
+using RetailSales.Services.Master;
 
 namespace RetailSales.Controllers.Sales
 {
@@ -26,6 +27,8 @@ namespace RetailSales.Controllers.Sales
         public IActionResult SalesInvoice(string id)
         {
             SalesInvoice ic = new SalesInvoice();
+            ic.Statelst = BindState();
+            ic.Citylst = BindCity("");
 
             ic.InvoiceNo = "RETAIL/INV-1 /24-25";
             ic.InvoiceDate = DateTime.Now.ToString("dd-MMM-yyyy");
@@ -45,6 +48,7 @@ namespace RetailSales.Controllers.Sales
                     tda = new SalesInvoiceItem();
                     tda.Itemlst = BindItem();
                     tda.Varientlst = BindVarient("");
+                    tda.UOMlst = BindUOM();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -124,9 +128,42 @@ namespace RetailSales.Controllers.Sales
                 throw ex;
             }
         }
+        public ActionResult GetUOMDetail(string ItemId,string uom)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                //string des = "";
+                string cf = "";
+
+
+
+                dt = datatrans.GetData("SELECT CONVRT_FACTOR FROM UOM_CONVERT WHERE SRC_UOM = '" + uom  + "' AND DEST_UOM ='" + ItemId + "'");
+
+                if (dt.Rows.Count > 0)
+                {
+                    cf = dt.Rows[0]["CONVRT_FACTOR"].ToString();
+
+                }
+
+                var result = new { cf = cf };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public IActionResult ListSalesInvoice()
         {
             return View();
+        }
+        public JsonResult GetCityJSON(string cityid)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindCity(cityid));
         }
         public JsonResult GetVarientJSON(string id)
         {
@@ -140,7 +177,57 @@ namespace RetailSales.Controllers.Sales
             model.Itemlst = BindItem();
             return Json(BindItem());
         }
-
+        public List<SelectListItem> BindUOM()
+        {
+            try
+            {
+                DataTable dtDesg = SalesInvoiceService.GetUOM();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindState()
+        {
+            try
+            {
+                DataTable dtDesg = SalesInvoiceService.GetState();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["STATE_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCity(string cityid)
+        {
+            try
+            {
+                DataTable dtDesg = SalesInvoiceService.GetCity(cityid);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CITY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<SelectListItem> BindItem()
         {
             try

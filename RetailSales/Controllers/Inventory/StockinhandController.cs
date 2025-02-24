@@ -70,11 +70,11 @@ namespace RetailSales.Controllers
                 Reg.Add(new Stockinhandgrid
                 {
                     id = dtUsers.Rows[i]["INVENTORY_ITEM_ID"].ToString(),
-                    productname = dtUsers.Rows[i]["DOC_ID"].ToString(),
-                    variant = dtUsers.Rows[i]["ITEM_ID"].ToString(),
-                    balancequantity = dtUsers.Rows[i]["VARIANT"].ToString(),
+                    doc = dtUsers.Rows[i]["DOC_ID"].ToString(),
+                    item = dtUsers.Rows[i]["ITEM_ID"].ToString(),
+                    variant = dtUsers.Rows[i]["VARIANT"].ToString(),
                     uom = dtUsers.Rows[i]["UOM"].ToString(),
-                    unitcost = dtUsers.Rows[i]["BALANCE_QTY"].ToString(),
+                    qty = dtUsers.Rows[i]["BALANCE_QTY"].ToString(),
                     editrow = EditRow,
                     //move = GoToSales,
                     delrow = DeleteRow,

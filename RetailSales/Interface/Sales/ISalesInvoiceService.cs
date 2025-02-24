@@ -14,6 +14,9 @@ namespace RetailSales.Interface.Sales
         DataTable GetSalesInvoiceItem(string id);
         Task<IEnumerable<ExinvBasicItem>> GetBasicItem(string id);
         Task<IEnumerable<ExinvDetailitem>> GetExinvItemDetail(string id);
+        DataTable GetState();
+        DataTable GetCity(string cityid);
+        DataTable GetUOM();
         //string SalesInvoiceCRUD(Purchaseorder cy);
     }
 }

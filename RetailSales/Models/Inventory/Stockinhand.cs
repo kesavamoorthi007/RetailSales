@@ -16,12 +16,11 @@
     public class Stockinhandgrid
     {
         public string id { get; set; }
-        public string productname { get; set; }
+        public string doc { get; set; }
+        public string item { get; set; }
+        public string qty { get; set; }
         public string variant { get; set; }
-        public string balancequantity { get; set; }
         public string uom { get; set; }
-        public string unitcost { get; set; }
-        public string totalvalue { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
 

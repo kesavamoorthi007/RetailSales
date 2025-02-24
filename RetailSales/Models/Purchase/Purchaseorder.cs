@@ -49,6 +49,11 @@ namespace RetailSales.Models
         public string Item { get; set; }
         public List<SelectListItem> Varientlst { get; set; }
         public string Varient { get; set; }
+
+        public List<SelectListItem> UOMlst { get; set; }
+        public string DestUOM { get; set; }
+        public string CF { get; set; }
+        public string CfQty { get; set; }
         public string Isvalid { get; set; }
         public string Description { get; set; }
         public string UOM { get; set; }

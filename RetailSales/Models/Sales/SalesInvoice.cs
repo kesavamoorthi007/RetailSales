@@ -4,6 +4,15 @@ namespace RetailSales.Models
 {
     public class SalesInvoice
     {
+        public SalesInvoice()
+        {
+            
+            this.Statelst = new List<SelectListItem>();
+            this.Citylst = new List<SelectListItem>();
+
+        }
+        public List<SelectListItem> Statelst;
+        public List<SelectListItem> Citylst;
         public string ID { get; set; }
         public string InvoiceNo { get; set; }
         public string InvoiceDate { get; set; }
@@ -37,6 +46,11 @@ namespace RetailSales.Models
         public string Item { get; set; }
         public List<SelectListItem> Varientlst { get; set; }
         public string Varient { get; set; }
+
+        public List<SelectListItem> UOMlst { get; set; }
+        public string DestUOM { get; set; }
+        public string CF { get; set; }
+        public string CfQty { get; set; }
         public string Isvalid { get; set; }
         public string Description { get; set; }
         public string UOM { get; set; }
