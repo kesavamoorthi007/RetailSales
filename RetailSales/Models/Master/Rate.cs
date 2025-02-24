@@ -10,7 +10,7 @@ namespace RetailSales.Models.Master
         public string DocDate { get; set; }
         public string ValidFrom { get; set; }
         public string ValidTo { get; set; }
-        public List<RateList> RateList { get; set; }
+        public List<RateList> RateListIdem { get; set; }
         public string ddlStatus { get; set; }
     }
 

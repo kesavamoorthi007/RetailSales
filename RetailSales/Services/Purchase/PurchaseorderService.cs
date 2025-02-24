@@ -337,12 +337,27 @@ namespace RetailSales.Services.Purchase
                     
                     foreach (PurchaseorderItem cp in cy.PurchaseorderLst)
                     {
+
+
                         string SvSql2 = "Insert into GRN_DETAIL (GRN_BASIC_ID,ITEM,VARIANT,HSN,TARIFF,UOM,QTY,RECIVED_QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Recived + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "')";
                         SqlCommand objCmddts = new SqlCommand(SvSql2, objConn);
                         objConn.Open();
                         objCmddts.ExecuteNonQuery();
                         objConn.Close();
 
+
+                        //string SvSql3 = "INSERT INTO INVENTORY_ITEM(ITEM_ID,TSOURCEID,VARIANT,TSOURCEBASICID,DOC_ID,DOC_DATE,REC_GOOD_QTY,BALANCE_QTY,CREATED_BY,CREATED_ON,LOCATION_ID,LOCID,RATE,AMOUNT) VALUES ('" + stkid + "','" + cp.Item + "','" + cp.Varient + "','" + docno + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + cp.Qty + "','" + cp.Recived + "','" + cp.Rate + "','" + cp.Amount + "')";
+                        //SqlCommand objCmddtSs = new SqlCommand(SvSql2, objConn);
+                        //objConn.Open();
+                        //objCmddts.ExecuteNonQuery();
+                        //objConn.Close();
+
+                    }
+
+
+                }
+
+               
                         string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Item + "','" + cp.Varient + "',5,'" + cp.UOM + "','" + cp.Qty + "','N','2024-2025','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
                         SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
                         objConn.Open();
@@ -360,6 +375,7 @@ namespace RetailSales.Services.Purchase
 
 
                 }
+
                 using (SqlConnection objConnE = new SqlConnection(_connectionString))
                 {
                     string Sql = "UPDATE POBASIC SET STATUS='GRN Generated' where POBASICID='" + cy.ID + "'";

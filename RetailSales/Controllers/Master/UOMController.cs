@@ -35,7 +35,8 @@ namespace RetailSales.Controllers.Master
                 {
                     ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.UOMCODE = dt.Rows[0]["UOM_CODE"].ToString();
-                    ic.Description = dt.Rows[0]["UOM_DESCRIPTION"].ToString();              
+                    ic.Description = dt.Rows[0]["UOM_DESCRIPTION"].ToString();
+                    ic.Factor = dt.Rows[0]["CONVERSION_FACTOR"].ToString();
                 }
             }
             return View(ic);
@@ -111,7 +112,8 @@ namespace RetailSales.Controllers.Master
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     uomcode = dtUsers.Rows[i]["UOM_CODE"].ToString(),
-                    description = dtUsers.Rows[i]["UOM_DESCRIPTION"].ToString(),                   
+                    description = dtUsers.Rows[i]["UOM_DESCRIPTION"].ToString(),
+                    factor = dtUsers.Rows[i]["CONVERSION_FACTOR"].ToString(),
                     edit = Edit,
                     delete = Delete,
 
