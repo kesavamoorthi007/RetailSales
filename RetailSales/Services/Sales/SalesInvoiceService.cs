@@ -20,23 +20,34 @@ namespace RetailSales.Services.Sales
         public DataTable GetItem()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,PRODUCT_NAME FROM ITEM";
+            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME FROM PRODUCT";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetItemDetails(string ItemId)
+        public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ITEM.ID,VARIANT,BIN_NO,UOM,RATE FROM ITEM  Where ITEM.ID='" + ItemId + "'";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
+        public DataTable GetVarientDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT UOM.UOM_CODE,HSNMAST.HSCODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.ID='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetAllSalesInvoice(string strStatus)
         {
             string SvSql = string.Empty;
@@ -118,7 +129,7 @@ namespace RetailSales.Services.Sales
 
             return msg;
         }
-
+       
         public async Task<IEnumerable<ExinvBasicItem>> GetBasicItem(string id)
         {
             using (SqlConnection db = new SqlConnection(_connectionString))

@@ -4,6 +4,7 @@ using RetailSales.Interface.Sales;
 using RetailSales.Models;
 using System.Data;
 using AspNetCore.Reporting;
+using RetailSales.Services.Purchase;
 
 namespace RetailSales.Controllers.Sales
 {
@@ -12,8 +13,12 @@ namespace RetailSales.Controllers.Sales
         ISalesInvoiceService SalesInvoiceService;
         private readonly IWebHostEnvironment _WebHostEnvironment;
         IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
         public SalesInvoiceController(ISalesInvoiceService _SalesInvoiceService, IConfiguration _configuratio, IWebHostEnvironment WebHostEnvironment)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             SalesInvoiceService = _SalesInvoiceService;
             this._WebHostEnvironment = WebHostEnvironment;
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -24,6 +29,12 @@ namespace RetailSales.Controllers.Sales
 
             ic.InvoiceNo = "RETAIL/INV-1 /24-25";
             ic.InvoiceDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.InvoiceNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
+
 
             List<SalesInvoiceItem> TData = new List<SalesInvoiceItem>();
             SalesInvoiceItem tda = new SalesInvoiceItem();
@@ -33,6 +44,7 @@ namespace RetailSales.Controllers.Sales
                 {
                     tda = new SalesInvoiceItem();
                     tda.Itemlst = BindItem();
+                    tda.Varientlst = BindVarient("");
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -45,10 +57,82 @@ namespace RetailSales.Controllers.Sales
             ic.SalesInvoiceLst = TData;
             return View(ic);
         }
+        //public ActionResult Purchaseorder(Purchaseorder cy, string id)
+        //{
 
+        //    try
+        //    {
+        //        cy.ID = id;
+        //        string Strout = SalesInvoiceService.SalesInvoiceCRUD(cy);
+        //        if (string.IsNullOrEmpty(Strout))
+        //        {
+        //            if (cy.ID == null)
+        //            {
+        //                TempData["notice"] = "PurchaseOrder Inserted Successfully...!";
+        //            }
+        //            else
+        //            {
+        //                TempData["notice"] = "PurchaseOrder Updated Successfully...!";
+        //            }
+        //            return RedirectToAction("ListPurchaseorder");
+        //        }
+
+        //        else
+        //        {
+        //            ViewBag.PageTitle = "Edit Purchaseorder";
+        //            TempData["notice"] = Strout;
+        //            //return View();
+        //        }
+
+        //        // }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+
+        //    return View(cy);
+        //}
+         
+        public ActionResult GetVarientDetail(string ItemId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                //string des = "";
+                string uom = "";
+                string hsn = "";
+                string rate = "";
+               
+                dt = SalesInvoiceService.GetVarientDetails(ItemId);
+
+                if (dt.Rows.Count > 0)
+                {
+                    //des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
+                    uom = dt.Rows[0]["UOM_CODE"].ToString();
+                    hsn = dt.Rows[0]["HSCODE"].ToString();
+                    rate = dt.Rows[0]["RATE"].ToString();
+                    
+                }
+
+                var result = new { uom = uom, hsn = hsn, rate = rate };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public IActionResult ListSalesInvoice()
         {
             return View();
+        }
+        public JsonResult GetVarientJSON(string id)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindVarient(id));
         }
         public JsonResult GetItemGrpJSON()
         {
@@ -56,6 +140,7 @@ namespace RetailSales.Controllers.Sales
             model.Itemlst = BindItem();
             return Json(BindItem());
         }
+
         public List<SelectListItem> BindItem()
         {
             try
@@ -73,35 +158,24 @@ namespace RetailSales.Controllers.Sales
                 throw ex;
             }
         }
-        public ActionResult GetItemDetails(string ItemId)
+        public List<SelectListItem> BindVarient(string id)
         {
             try
             {
-                DataTable dt = new DataTable();
-                string var = "";
-                string uom = "";
-                string bin = "";
-                string rate = "";
-                dt = SalesInvoiceService.GetItemDetails(ItemId);
-
-                if (dt.Rows.Count > 0)
+                DataTable dtDesg = SalesInvoiceService.GetVariant(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    var = dt.Rows[0]["VARIANT"].ToString();
-                    uom = dt.Rows[0]["UOM"].ToString();
-                    bin = dt.Rows[0]["BIN_NO"].ToString();
-                    rate = dt.Rows[0]["RATE"].ToString();
-
-
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
-
-                var result = new { var = var, uom = uom, bin = bin,  rate = rate };
-                return Json(result);
+                return lstdesg;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+       
         public ActionResult MyListSalesInvoicegrid(string strStatus)
         {
             List<SalesInvoicegrid> Reg = new List<SalesInvoicegrid>();
