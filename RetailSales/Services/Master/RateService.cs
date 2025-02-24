@@ -31,11 +31,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT RATE_BASIC.RATE_BASIC_ID,FORMAT(RATE_BASIC.DOC_DATE, 'dd-MM-yyyy') AS DOC_DATE,FORMAT(RATE_BASIC.VALID_FROM, 'dd-MM-yyyy') AS VALID_FROM,FORMAT(RATE_BASIC.VALID_TO, 'dd-MM-yyyy') AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.RATE_BASIC_ID DESC";
+                SvSql = "SELECT RATE_BASIC.RATE_BASIC_ID,CONVERT(varchar, RATE_BASIC.DOC_DATE, 106) AS DOC_DATE,CONVERT(varchar, RATE_BASIC.VALID_FROM, 106) AS VALID_FROM,CONVERT(varchar, RATE_BASIC.VALID_TO, 106) AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.RATE_BASIC_ID DESC";
             }
             else
             {
-                SvSql = "SELECT RATE_BASIC.RATE_BASIC_ID,FORMAT(RATE_BASIC.DOC_DATE, 'dd-MM-yyyy') AS DOC_DATE,FORMAT(RATE_BASIC.VALID_FROM, 'dd-MM-yyyy') AS VALID_FROM,FORMAT(RATE_BASIC.VALID_TO, 'dd-MM-yyyy') AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'N' ORDER BY RATE_BASIC.RATE_BASIC_ID DESC";
+                SvSql = "SELECT RATE_BASIC.RATE_BASIC_ID,CONVERT(varchar, RATE_BASIC.DOC_DATE, 106) AS DOC_DATE,CONVERT(varchar, RATE_BASIC.VALID_FROM, 106) AS VALID_FROM,CONVERT(varchar, RATE_BASIC.VALID_TO, 106) AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.RATE_BASIC_ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -48,7 +48,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditRate(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT RATE_BASIC_ID,DOC_DATE,VALID_FROM,VALID_TO FROM RATE_BASIC WHERE RATE_BASIC.RATE_BASIC_ID = '" + id + "' ";
+            SvSql = "SELECT RATE_BASIC_ID,CONVERT(varchar, RATE_BASIC.DOC_DATE, 106) AS DOC_DATE,CONVERT(varchar, RATE_BASIC.VALID_FROM, 106) AS VALID_FROM,CONVERT(varchar, RATE_BASIC.VALID_TO, 106) AS VALID_TO FROM RATE_BASIC WHERE RATE_BASIC.RATE_BASIC_ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -59,7 +59,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditRateDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,RATE_BASIC_ID,ITEM_NAME,VARIANT,UNIT,RATE FROM RATE_DETAIL WHERE RATE_DETAIL.ID = '" + id + "' ";
+            SvSql = "SELECT ID,RATE_BASIC_ID,ITEM_NAME,VARIANT,UNIT,RATE FROM RATE_DETAIL WHERE RATE_DETAIL.RATE_BASIC_ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -159,7 +159,7 @@ namespace RetailSales.Services.Master
                                 }
                             }
                             else
-                            {
+                            {  
                                 svSQL = "Delete RATE_DETAIL WHERE RATE_BASIC_ID='" + cy.ID + "'";
                                 SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
                                 objCmdd.ExecuteNonQuery();

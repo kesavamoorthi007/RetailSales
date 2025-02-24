@@ -61,15 +61,17 @@ namespace RetailSales.Controllers.Master
                 dtt = RateService.GetEditRateDetail(id);
                 if (dtt.Rows.Count > 0)
                 {
-                    tda = new RateList();
-
-                    tda.Item = dtt.Rows[0]["ITEM_NAME"].ToString(); 
-                    tda.Varient = dtt.Rows[0]["VARIANT"].ToString();
-                    tda.Unit = dtt.Rows[0]["UNIT"].ToString();
-                    tda.Rate1 = dtt.Rows[0]["RATE"].ToString();
-                    tda.ID = id;
-                    tda.Isvalid = "Y";
-                    TData.Add(tda);
+                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    {
+                        tda = new RateList();
+                        tda.Item = dtt.Rows[i]["ITEM_NAME"].ToString();
+                        tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
+                        tda.Unit = dtt.Rows[i]["UNIT"].ToString();
+                        tda.Rate1 = dtt.Rows[i]["RATE"].ToString();
+                        tda.ID = id;
+                        tda.Isvalid = "Y";
+                        TData.Add(tda);
+                    }                      
                 }
             }
             ic.RateListIdem = TData;
