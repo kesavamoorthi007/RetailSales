@@ -394,7 +394,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new { add = add, state = state, city = city , gst  = gst };
+                var result = new { add = add, state = state, city = city, gst = gst };
                 return Json(result);
             }
             catch (Exception ex)

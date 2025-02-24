@@ -10,11 +10,11 @@ using System.Data.SqlClient;
 
 namespace RetailSales.Services
 {
-    public class SalesInvoiceService : IStockTransferService
+    public class StockTransferService : IStockTransferService
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public SalesInvoiceService(IConfiguration _configuratio)
+        public StockTransferService(IConfiguration _configuratio)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
