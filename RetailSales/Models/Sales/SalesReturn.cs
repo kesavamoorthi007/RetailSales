@@ -15,6 +15,8 @@ namespace RetailSales.Models
         public string invno { get; set; }
         public string invdate { get; set; }
         public string customer { get; set; }
+        public string type { get; set; }
+        public string go { get; set; }
         public string edit { get; set; }
         public string delete { get; set; }
         
