@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.SalesCreditNote
 
 @{
-    ViewData["Title"] = "Sales Credit Note";
+    ViewData["Title"] = "Credit Note";
 }
 <style>
     .mandatory {
@@ -224,7 +224,7 @@
                             </div>
                             <div style="height:30px;"></div>
                             <button type="submit" class="btn btn-primary" id="btnSave">Submit</button>
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("DebitNote", "DebitNote")'">Cancel</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListSalesReturn", "SalesReturn")'">Cancel</button>
                         </form>
                     }
                 </div>
@@ -440,7 +440,17 @@
 
     }
 
+     function changeentry(typeid, i) {
+        if (typeid == "Dr") {
+            document.getElementById("txtCreditAmt" + i).readOnly = true;
+            document.getElementById("txtDebitAmt" + i).readOnly = false;
+        }
 
+        else {
+            document.getElementById("txtDebitAmt" + i).readOnly = true;
+            document.getElementById("txtCreditAmt" + i).readOnly = false;
+        }
+    }
 
     function changeAcc_LedgerItem(ItemId, i) {
         $.ajax({

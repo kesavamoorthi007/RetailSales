@@ -28,26 +28,32 @@ namespace RetailSales.Controllers.Sales
 
                 string Delete = string.Empty;
                 string Edit = string.Empty;
+                string GoTo = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     Edit = "<a><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                    GoTo = "<a href=/CreditNote/SalesCreditNote?id=" + dtUsers.Rows[i]["RETURN_TYPE"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='Deactivate' width='20' /></a>";
                     Delete = "<a><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                    
                 }
                 else
                 {
                     Edit = "";
+                    GoTo = "";
                     Delete = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
                 Reg.Add(new SalesReturngrid
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
-                    doc = dtUsers.Rows[i]["DOC_NO"].ToString(),
-                    date = dtUsers.Rows[i]["DOC_DATE"].ToString(),
                     invno = dtUsers.Rows[i]["INVOICE_NO"].ToString(),
                     invdate = dtUsers.Rows[i]["INV_DATE"].ToString(),
                     customer = dtUsers.Rows[i]["CUSTOMER"].ToString(),
+                    doc = dtUsers.Rows[i]["DOC_NO"].ToString(),
+                    date = dtUsers.Rows[i]["DOC_DATE"].ToString(),
+                    type = dtUsers.Rows[i]["RETURN_TYPE"].ToString(),
                     edit = Edit,
+                    go = GoTo,
                     delete = Delete,
 
                 });

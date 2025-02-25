@@ -456,7 +456,17 @@
     }
 
    
+     function changeentry(typeid, i) {
+        if (typeid == "Dr") {
+            document.getElementById("txtCreditAmt" + i).readOnly = true;
+            document.getElementById("txtDebitAmt" + i).readOnly = false;
+        }
 
+        else {
+            document.getElementById("txtDebitAmt" + i).readOnly = true;
+            document.getElementById("txtCreditAmt" + i).readOnly = false;
+        }
+    }
     function changeAcc_LedgerItem(ItemId, i) {
         $.ajax({
             url: 'GetLedgerDetails',
