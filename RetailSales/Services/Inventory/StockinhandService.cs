@@ -16,18 +16,10 @@ namespace RetailSales.Services
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
-        public DataTable GetAllListStockinhand(string strStatus)
+        public DataTable GetAllListStockinhand()
         {
             string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
-            {
-                SvSql = "SELECT INVENTORY_ITEM_ID,DOC_ID,ITEM_ID,VARIANT,UOM,BALANCE_QTY,IS_ACTIVE FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.IS_ACTIVE = 'Y' ORDER BY INVENTORY_ITEM.INVENTORY_ITEM_ID DESC";
-            }
-            else
-            {
-                SvSql = "SELECT INVENTORY_ITEM_ID,DOC_ID,ITEM_ID,VARIANT,UOM,BALANCE_QTY,IS_ACTIVE FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.IS_ACTIVE = 'N' ORDER BY INVENTORY_ITEM.INVENTORY_ITEM_ID DESC";
-
-            }
+            SvSql = "SELECT   ITEM_ID,VARIANT,UOM,SUM(BALANCE_QTY) AS BALANCE_QTY FROM INVENTORY_ITEM  GROUP BY ITEM_ID,VARIANT,UOM";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

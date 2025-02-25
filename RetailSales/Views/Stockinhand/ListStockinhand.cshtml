@@ -30,7 +30,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "/Stockinhand/MyListStockinhandgrid",
+            url: "MyListStockinhandgrid",
             data: {
                 strstatus: ""
             },
@@ -39,7 +39,7 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'doc', type: 'string' },
+                
                 { name: 'item', type: 'string' },
                 { name: 'variant', type: 'string' },
                 { name: 'uom', type: 'string' },
@@ -57,7 +57,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '100%',
+                width: '75%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -78,7 +78,7 @@
 
                 columns: [
 
-                    { text: 'Doc No', filtertype: 'checkedlist', datafield: 'doc', width: 300 },
+                    //{ text: 'Doc No', filtertype: 'checkedlist', datafield: 'doc', width: 300 },
                     { text: 'Product Name', filtertype: 'checkedlist', datafield: 'item', width: 300 },
                     { text: 'Variant', filtertype: 'checkedlist', datafield: 'variant', width: 250 },
                     { text: 'Unit', filtertype: 'checkedlist', datafield: 'uom', width: 100 },
