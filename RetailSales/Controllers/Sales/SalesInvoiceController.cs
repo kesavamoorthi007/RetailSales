@@ -284,14 +284,14 @@ namespace RetailSales.Controllers.Sales
                     {
                         GoToSales = "<img src='../Images/tick.png' alt='Moved to Quote' width='20' />";
                         EditRow = "";
-                        report = "<a href=Invoice?id=" + dtUsers.Rows[i]["ID"].ToString() + " target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                        report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
 
                     }
                     else
                     {
                         GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["ID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/back.png' alt='View Details' width='20' /></a>";
                         EditRow = "<a><img src='../Images/edit.png' alt='Edit' /></a>";
-                        report = "<a href=Invoice?id=" + dtUsers.Rows[i]["ID"].ToString() + " target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                        report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
 
 
                     }

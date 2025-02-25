@@ -41,43 +41,21 @@ namespace RetailSales.Controllers
         {
             return View();
         }
-        public ActionResult MyListStockinhandgrid(string strStatus)
+        public ActionResult MyListStockinhandgrid()
         {
             List<Stockinhandgrid> Reg = new List<Stockinhandgrid>();
             DataTable dtUsers = new DataTable();
-            strStatus = strStatus == "" ? "Y" : strStatus;
-            dtUsers = Stockinhands.GetAllListStockinhand(strStatus);
+            dtUsers = Stockinhands.GetAllListStockinhand();
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
 
-                string DeleteRow = string.Empty;
-                string EditRow = string.Empty;
-                string GoToSales = string.Empty;
-
-                if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
-                {
-
-                        EditRow = "<a><img src='../Images/edit.png' alt='Edit' /></a>";
-
-                    DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
-
-                }
-                else
-                {
-                    DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
-                    EditRow = "";
-                }
                 Reg.Add(new Stockinhandgrid
                 {
-                    id = dtUsers.Rows[i]["INVENTORY_ITEM_ID"].ToString(),
-                    doc = dtUsers.Rows[i]["DOC_ID"].ToString(),
+                    
                     item = dtUsers.Rows[i]["ITEM_ID"].ToString(),
                     variant = dtUsers.Rows[i]["VARIANT"].ToString(),
                     uom = dtUsers.Rows[i]["UOM"].ToString(),
                     qty = dtUsers.Rows[i]["BALANCE_QTY"].ToString(),
-                    editrow = EditRow,
-                    //move = GoToSales,
-                    delrow = DeleteRow,
 
                 });
             }
