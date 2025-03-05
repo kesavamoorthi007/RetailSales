@@ -1,5 +1,6 @@
 ﻿using RetailSales.Interface.Master;
 using RetailSales.Models;
+using RetailSales.Models.Inventory;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -14,6 +15,7 @@ namespace RetailSales.Services.Master
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+
         public DataTable GetAllProductDeatilsGRID(string strStatus)
         {
             string SvSql = string.Empty;
@@ -32,16 +34,29 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
+
         public DataTable GetEditProductdetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,PRODUCT_DESCRIPTION,UOM,HSN_CODE,RATE FROM PRO_DETAIL WHERE ID = '" + id + "' ";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,PRODUCT_DESCRIPTION,UOM,HSN_CODE,RATE,MIN_QTY FROM PRO_DETAIL WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetEditProductdetailTable(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CONVRT_FACTOR FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public string ProductdetailCRUD(Productdetail cy)
         {
             string msg = "";
@@ -71,6 +86,7 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@hsncode ", SqlDbType.NVarChar).Value = cy.Hsncode;
                     objCmd.Parameters.Add("@uom", SqlDbType.NVarChar).Value = cy.Uom;
                     objCmd.Parameters.Add("@rate ", SqlDbType.NVarChar).Value = cy.Rate;
+                    objCmd.Parameters.Add("@minqty ", SqlDbType.NVarChar).Value = cy.Minqty;
                    
                     //if (cy.ID == null)
                     //{
@@ -104,6 +120,76 @@ namespace RetailSales.Services.Master
 
             return msg;
         }
+
+        public string CFCRUD(Productdetail cy, string proid)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty;
+                string svSQL = "";
+
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    
+                    try
+                    {
+
+                        objConn.Open();
+                        proid = cy.ID;
+                        if (cy.ProductDetailTablelst != null)
+                        {
+                            if(cy.ID == null)
+                            {
+                                foreach (ProductDetailTable cp in cy.ProductDetailTablelst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CONVRT_FACTOR) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
+                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                objCmdd.ExecuteNonQuery();
+                                foreach (ProductDetailTable cp in cy.ProductDetailTablelst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CONVRT_FACTOR) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
+        }
+
+
         public DataTable GetCategory()
         {
             string SvSql = string.Empty;
@@ -114,6 +200,7 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
+
         public DataTable GetUom()
         {
             string SvSql = string.Empty;
@@ -124,6 +211,7 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
+
         public DataTable GetHsn()
         {
             string SvSql = string.Empty;
@@ -134,16 +222,51 @@ namespace RetailSales.Services.Master
             adapter.Fill(dtt);
             return dtt;
         }
-        //public DataTable GetAllProductDeatilsGRID()
-        //{
-        //    string SvSql = string.Empty;
-        //    SvSql = "SELECT ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM,RATE FROM PRO_DETAIL ORDER BY PRO_DETAIL.ID DESC";
-        //    DataTable dtt = new DataTable();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-        //    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        //    adapter.Fill(dtt);
-        //    return dtt;
-        //}
+
+        public DataTable GetProductdetail(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY WHERE PRO_DETAIL.ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetProductdetailTable(string id)
+        {
+            string SvSql = string.Empty;
+            //SvSql = " SELECT UOM_CONVERT.ID,PRO_ID,UOM.UOM_CODE,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM WHERE UOM_CONVERT.ID='" + id + "'";
+            SvSql = " SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetSUOM()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetDUOM()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
 
         public string StatusChange(string tag, string id)
         {
@@ -168,6 +291,7 @@ namespace RetailSales.Services.Master
             return "";
 
         }
+
         public string RemoveChange(string tag, string id)
         {
 
@@ -194,6 +318,6 @@ namespace RetailSales.Services.Master
 
         }
 
-       
+        
     }
 }
