@@ -42,12 +42,13 @@
                                         <br> <label for="inputName3" class="col-sm-5 control-label">Product Category<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.Product, Model.Categorylst, "---Please Select---", new { @id = "ddlProduct", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.HiddenFor(C => C.ID)
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">Product Varint<label class="mandatory">*</label></label>
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Product Variant<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Varint, new { @id = "txtVarint", @class = "form-control", @TabIndex = 1 })
                                         </div>
@@ -74,9 +75,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                     <br> <label for="inputName3" class="col-sm-5 control-label">HSN Code<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-@*                                            @Html.TextBoxFor(C => C.Hsncode, new { @id = "txtHsncode", @class = "form-control", @TabIndex = 1 ,onkeydown = "return isNumeric2(event.keyCode,this.value)"})<br />
-*@
+                                        <div class="col-sm-8">                                         
                                             @Html.DropDownListFor(C => C.Hsncode, Model.Hsnlst, "---Please Select---", new { @id = "ddlHsn", @Class = "form-control _select", @TabIndex = 1 })
                                        </div>
                                     </div>
@@ -85,29 +84,29 @@
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-5 control-label">Minimum Qty<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.minqty, new { @id = "txtminqty", @class = "form-control", @TabIndex = 1 ,onkeydown = "return isNumeric2(event.keyCode,this.value)"})<br />
+                                            @Html.TextBoxFor(C => C.Minqty, new { @id = "txtMinqty", @class = "form-control", @TabIndex = 1 })<br />
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <br> <label for="inputName3" class="col-sm-5 control-label">Rate<label class="mandatory"></label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Rate, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
-                                     </div>
-                                   </div>
-                                </div>
-                               <div class="col-lg-4">
-                                <div class="form-group">
-                                    <br><label for="inputName3" class="col-sm-5 control-label">Product Description<label class="mandatory"></label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextAreaFor(C => C.Productdescription, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">Rate<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Rate, new { @id = "txtRate", @class = "form-control", @TabIndex = 1 })<br />
+                                        </div>
                                     </div>
                                 </div>
-                              </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Product Description<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Productdescription, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
@@ -139,7 +138,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Product Category");
+                alert("Please Select Product Category");
                 return false;
             }
             else {
@@ -156,7 +155,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Product Varint");
+                alert("Please Enter Variant");
                 return false;
             }
             else {
@@ -172,43 +171,11 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Product Varint Nicname");
+                alert("Please Enter product NickName");
                 return false;
             }
             else {
                 $(txtVarintnicname).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtProductdescription").value == "") {
-                isValid = false;
-                $(txtProductdescription).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Product Productdescription");
-                return false;
-            }
-            else {
-                $(txtVarint).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("ddlHsncode").value == "") {
-                isValid = false;
-                $(ddlHsncode).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter HSN Code");
-                return false;
-            }
-            else {
-                $(ddlHsncode).css({
                     "border": "",
                     "background": ""
                 });
@@ -220,7 +187,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Uom");
+                alert("Please Select UOM");
                 return false;
             }
             else {
@@ -229,18 +196,18 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtRate").value == "") {
+            if (document.getElementById("txtminqty").value == "") {
                 isValid = false;
-                $(txtRate).css({
+                $(txtminqty).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Product Rate");
+                alert("Please Enter Minimum Qty");
                 return false;
             }
             else {
-                $(txtRate).css({
+                $(txtminqty).css({
                     "border": "",
                     "background": ""
                 });

@@ -45,6 +45,7 @@
                 { name: 'uom', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
+                { name: 'cf', type: 'string' },
 
 
             ],
@@ -82,12 +83,11 @@
                 columns: [
 
                     { text: 'Product Category', filtertype: 'checkedlist', datafield: 'product', width: 300 },
-                    { text: 'Variant', filtertype: 'input', datafield: 'varint', width: 220 },
-                    //{ text: 'Product NickName', filtertype: 'input', datafield: 'varintnic', width: 200 },
+                    { text: 'Variant', filtertype: 'checkedlist', datafield: 'varint', width: 220 },
                     { text: 'UOM', filtertype: 'input', datafield: 'uom', width: 80 },
-                    //{ text: 'Rate', filtertype: 'input', datafield: 'rate', width: 150 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'CF', datafield: 'cf', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });
         $("#ddlStatus").change(function () {
