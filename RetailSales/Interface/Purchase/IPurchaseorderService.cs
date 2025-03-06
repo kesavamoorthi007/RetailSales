@@ -9,6 +9,7 @@ namespace RetailSales.Interface.Purchase
         DataTable GetSupplierDetails(string id);
         DataTable GetItem();
         DataTable GetVariant(string id);
+        DataTable GetDUOM();
         DataTable GetVarientDetails(string id);
         string PurchaseorderCRUD(Purchaseorder cy);
         string StatusChange(string tag, string id);

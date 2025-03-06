@@ -149,7 +149,10 @@
                                                 <th>HSN  </th>
                                                 <th>Tax</th>
                                                 <th>Unit </th>
+                                                <th>Dest UOM</th>
+                                                <th>CF</th>                                              
                                                 <th>Qty </th>
+                                                <th>CF Qty</th>
                                                 <th>Rate </th>
                                                 <th>Amount </th>
                                                 <th>Disc Amount</th>
@@ -185,11 +188,20 @@
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].UOM, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
+                                                            @Html.DropDownListFor(o => o.PurchaseorderLst[i].DestUOM, Model.PurchaseorderLst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 220px;", onchange = "changeUOM(this.value," + i + ")" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 70px;", @readonly = "readonly", @onkeyup = "changeCF(this.value," + i + ")" })
+                                                        </td>
+                                                        <td>
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 120px; text-align: right;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
+                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 120px; text-align: right;", type = "number", @readonly = "readonly", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                        </td>
+                                                        <td>
                                                             @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" })
@@ -457,13 +469,16 @@
 
             var SGST = document.getElementById("SGSTP" + i).value;
             var Disc = document.getElementById("txtDiscAmount" + i).value;
+            var CF = document.getElementById("txtCF" + i).value;
 
             if (qty == "")
                 qty = 0;
 
             if (up == "")
                 up = 0;
-
+                
+             if (CF == "")
+                CF = 0;
 
 
             if (IGST == "")
@@ -481,7 +496,9 @@
                 Disc = 0;
 
             var tot = eval(qty) * eval(up) ;
+            var cfqty = eval(qty) * eval(CF) ;
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = cfqty.toFixed(2);
 
             var dis = eval(tot);
 
@@ -839,6 +856,47 @@
             }
         });
     }
+    function changeUOM(ItemId, i) {
+         var uom =document.getElementById("txtUOM" + i).value;
+         var qty =document.getElementById("txtQty" + i).value;
+
+         if (qty == "")
+                qty = 0;
+
+
+          $.ajax({
+              url: 'GetUOMDetail',
+              data: { "ItemId": ItemId, "uom": uom },
+             type: "GET",
+             success: function (result) {
+
+                 document.getElementById("txtCF" + i).value = result.cf;
+                 var cfqty = result.cf;
+                 var cqty = eval(cfqty) * eval(qty);
+                   document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
+
+             },
+              error: function () {
+                  debugger;
+                  alert("Please Select Varient");
+              }
+          });
+    }
+    function changeCF(_this, i) {
+         var qty =document.getElementById("txtQty" + i).value;
+         var cf =document.getElementById("txtCF" + i).value;
+
+
+         if (qty == "")
+                qty = 0;
+
+            if (cf == "")
+                cf = 0;
+
+                 var cqty = eval(cf) * eval(qty);
+                   document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
+
+     }
 
     function removeRow(i) {
         var table = document.getElementById("dataTable");
@@ -1060,6 +1118,7 @@
     }
     function AddRow() {
         var opt = "";
+        var rem= "";
         $.ajax({
             type: "POST",
             url: 'GetItemGrpJSON',
@@ -1068,12 +1127,21 @@
                 $.each(data, function () {
                     opt += "<option value=" + this.value + ">" + this.text + "</option>";
                 });
-                AppendRow(opt);
+                $.ajax({
+                     type: "POST",
+            url: 'GetUOMGrpJSON',
+            success: function (data) {
+
+                $.each(data, function () {
+                    rem += "<option value=" + this.value + ">" + this.text + "</option>";
+                });
+                AppendRow(opt,rem);
             }
         })
+        }
+        })
     }
-
-    function AppendRow(opt) {
+    function AppendRow(opt,rem) {
         var index = $("#tbBooks").children("tr").length;
 
         var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='PurchaseorderLst[" + index + "].Item' onchange = 'changeVarientDetails(this.value," + index + ")'><option value=''>--Please select--</option>" + opt + "</select></td>";
@@ -1087,7 +1155,13 @@
 
         var UOM = "<td><input class='form-control' id='txtUOM" + index + "' name='PurchaseorderLst[" + index + "].UOM'  style='width: 120px;' type='text'  readonly='True' /></td>";
 
+        var DestUOM = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlDestUOM" + index + "' name='PurchaseorderLst[" + index + "].DestUOM' onchange = 'changeUOM(this.value," + index + ")'><option value=''>--Please select--</option>" + rem + "</select></td>";
+
+        var CF = "<td><input class='form-control' id='txtCF" + index + "' name='PurchaseorderLst[" + index + "].CF'  style='width: 70px;' readonly='True' onkeyup = 'changeCF(this.value," + index + ")' /></td>";
+
         var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='PurchaseorderLst[" + index + "].Qty'  style='width: 120px; text-align: right;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
+
+        var CfQty = "<td><input class='form-control' id='txtCfQty" + index + "' name='PurchaseorderLst[" + index + "].CfQty' readonly='True' style='width: 120px; text-align: right;' min='0'' max='99' /></td>";
 
         var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='PurchaseorderLst[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' type='text' readonly='True' /></td>";
 
@@ -1109,7 +1183,7 @@
         var removeCell = "<td><input id='Isvalid" + index + "' name='PurchaseorderLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='PurchaseorderLst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient  + Hsn + Tariff + UOM + Qty + Rate + Amount + DiscAmount + Total + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient  + Hsn + Tariff + UOM + DestUOM + CF + Qty + CfQty + Rate + Amount + DiscAmount + Total + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
@@ -1166,6 +1240,44 @@
                             });
                         }
                     }
+                    if ($(this).find('#ddlVarient' + j.toString()).val() != "" || $(this).find('#ddlVarient' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlVarient' + j.toString()).val() == "" || $(this).find('#ddlVarient' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlVarient' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Variant");
+                            $(this).find('#ddlVarient' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlVarient' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#ddlDestUOM' + j.toString()).val() != "" || $(this).find('#ddlDestUOM' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlDestUOM' + j.toString()).val() == "" || $(this).find('#ddlDestUOM' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlDestUOM' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select DestUOM");
+                            $(this).find('#ddlDestUOM' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlDestUOM' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
                     if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
                         isValid = false;
                         $(this).find('#txtQty' + j.toString()).css({
@@ -1180,6 +1292,24 @@
                     }
                     else {
                         $(this).find('#txtQty' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#txtCfQty' + j.toString()).val() == "" || $(this).find('#txtCfQty' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtCfQty' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter CfQty");
+                        $(this).find('#txtCfQty' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtCfQty' + j.toString()).css({
                             "border": "",
                             "background": ""
                         });

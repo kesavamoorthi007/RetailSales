@@ -21,7 +21,7 @@ namespace RetailSales.Models
         public string Supplieraddress { get; set; }
 
         public string ddlStatus { get; set; }
-        public List<PurchaseorderItem> PurchaseorderLst { get; set; }
+        
         public string Narration { get; set; }
         public string Amountinwords { get; set; }
         public string TotDis { get; set; }
@@ -41,6 +41,7 @@ namespace RetailSales.Models
         public string LRno { get; set; }
         public string dispatchname { get; set; }
         public string LRdate { get; set; }
+        public List<PurchaseorderItem> PurchaseorderLst { get; set; }
     }
     public class PurchaseorderItem
     {
@@ -51,12 +52,13 @@ namespace RetailSales.Models
         public string Varient { get; set; }
 
         public List<SelectListItem> UOMlst { get; set; }
+        public string UOM { get; set; }
+        public List<SelectListItem> DUOMlst { get; set; }
         public string DestUOM { get; set; }
         public string CF { get; set; }
         public string CfQty { get; set; }
         public string Isvalid { get; set; }
         public string Description { get; set; }
-        public string UOM { get; set; }
         public string Qty { get; set; }
         public string Recived { get; set; }
         public string Accepted { get; set; }

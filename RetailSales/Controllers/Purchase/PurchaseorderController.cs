@@ -15,6 +15,7 @@ using System.Runtime.ConstrainedExecution;
 using RetailSales.Models.Master;
 using Nest;
 using System.Web;
+using RetailSales.Services.Master;
 
 
 namespace RetailSales.Controllers.Purchase
@@ -56,6 +57,7 @@ namespace RetailSales.Controllers.Purchase
                     tda = new PurchaseorderItem();
                     tda.Itemlst = BindItem();
                     tda.Varientlst = BindVarient("");
+                    tda.DUOMlst = BindDUOM();
                    
                     tda.Isvalid = "Y";
                     TData.Add(tda);
@@ -110,7 +112,11 @@ namespace RetailSales.Controllers.Purchase
                         tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                         tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                         tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                        tda.DUOMlst = BindDUOM();
+                        tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
+                        tda.CF = dtt.Rows[i]["CONVT_FACTOR"].ToString();
                         tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                        tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                         tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
@@ -222,7 +228,10 @@ namespace RetailSales.Controllers.Purchase
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[i]["CONVT_FACTOR"].ToString();
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                     tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
@@ -337,6 +346,14 @@ namespace RetailSales.Controllers.Purchase
             model.Itemlst = BindItem();
             return Json(BindItem());
         }
+
+        public JsonResult GetUOMGrpJSON()
+        {
+            PurchaseorderItem model = new PurchaseorderItem();
+            model.DUOMlst = BindDUOM();
+            return Json(BindDUOM());
+        }
+
         public List<SelectListItem> BindUOM()
         {
             try
@@ -380,6 +397,24 @@ namespace RetailSales.Controllers.Purchase
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
                     lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<SelectListItem> BindDUOM()
+        {
+            try
+            {
+                DataTable dtDesg = PurchaseorderService.GetDUOM();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
                 }
                 return lstdesg;
             }
@@ -436,6 +471,10 @@ namespace RetailSales.Controllers.Purchase
                 {
                     cf = dt.Rows[0]["CONVRT_FACTOR"].ToString();
 
+                }
+                else
+                {
+                    cf = "1";
                 }
 
                 var result = new { cf = cf };
