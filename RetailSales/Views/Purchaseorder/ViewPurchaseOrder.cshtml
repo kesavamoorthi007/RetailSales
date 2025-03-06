@@ -119,7 +119,10 @@
                                                 <th> HSN Code </th>
                                                 <th>Tariff Id</th>
                                                 <th> Unit </th>
+                                                <th> Dest UOM</th>
+                                                <th>CF</th>
                                                 <th> Qty </th>
+                                                <th>CF Qty</th>
                                                 <th>Rate </th>
                                                 <th>Amount </th>
                                                 <th> Frieght charges</th>
@@ -144,7 +147,10 @@
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Hsn)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Tariff)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].UOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].DestUOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].CF)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Qty)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].CfQty)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Rate)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Amount)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].FrigCharge)</td>
