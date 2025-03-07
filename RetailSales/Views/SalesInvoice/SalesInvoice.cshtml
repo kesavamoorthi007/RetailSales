@@ -166,20 +166,20 @@
                                                         </td>
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;", @onkeyup = "changeCF(this.value," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 70px;", @readonly = "readonly", @onkeyup = "changeCF(this.value," + i + ")" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 80px; text-align: right;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 70px; text-align: right;", @readonly = "readonly", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.SalesInvoiceLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Discount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px; text-align: right;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
@@ -296,7 +296,7 @@
 
                                                                             <br /> <label for="inputName3" class="col-sm-2 control-label">Remarks<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
-                                                                                @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
+                                                                                @Html.TextAreaFor(C => C.Remarks, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -496,6 +496,7 @@
 
            
             var Disc = document.getElementById("txtDiscAmount" + i).value;
+            var CF = document.getElementById("txtCF" + i).value;
 
             if (qty == "")
                 qty = 0;
@@ -503,11 +504,15 @@
             if (up == "")
                 up = 0;
 
+                if (CF == "")
+                CF = 0;
+
 
             if (Disc == "")
                 Disc = 0;
 
             var tot = eval(qty) * eval(up) ;
+            var cfqty = eval(qty) * eval(CF) ;
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
             document.getElementById("txtCfQty" + i).value = qty;
 
@@ -947,8 +952,10 @@
             alert(ex.message);
         }
     }
+    
     function AddRow() {
         var opt = "";
+        var rem = "";
         $.ajax({
             type: "POST",
             url: 'GetItemGrpJSON',
@@ -957,13 +964,23 @@
                 $.each(data, function () {
                     opt += "<option value=" + this.value + ">" + this.text + "</option>";
                 });
-                AppendRow(opt);
+                $.ajax({
+                     type: "POST",
+            url: 'GetUOMGrpJSON',
+            success: function (data) {
+
+                $.each(data, function () {
+                    rem += "<option value=" + this.value + ">" + this.text + "</option>";
+                });
+                AppendRow(opt,rem);
             }
+        })
+        }
         })
     }
    
 
-     function AppendRow(opt) {
+     function AppendRow(opt,rem) {
         var index = $("#tbBooks").children("tr").length;
 
         var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='SalesInvoiceLst[" + index + "].Item' onchange = 'changeVarientDetails(this.value," + index + ")'><option value=''>--Please select--</option>" + opt + "</select></td>";
@@ -976,21 +993,27 @@
 
         var UOM = "<td><input class='form-control' id='txtUOM" + index + "' name='SalesInvoiceLst[" + index + "].UOM'  style='width: 120px;' type='text'  readonly='True' /></td>";
 
-        var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='SalesInvoiceLst[" + index + "].Qty'  style='width: 120px; text-align: right;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
+        var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='SalesInvoiceLst[" + index + "].Qty'  style='width: 80px; text-align: right;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
+
+        var DestUOM = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlDestUOM" + index + "' name='SalesInvoiceLst[" + index + "].DestUOM' onchange = 'changeUOM(this.value," + index + ")'><option value=''>--Please select--</option>" + rem + "</select></td>";
+
+        var CF = "<td><input class='form-control' id='txtCF" + index + "' name='SalesInvoiceLst[" + index + "].CF'  style='width: 70px;' readonly='True' onkeyup = 'changeCF(this.value," + index + ")' /></td>";
+
+        var CfQty = "<td><input class='form-control' id='txtCfQty" + index + "' name='SalesInvoiceLst[" + index + "].CfQty' readonly='True' style='width: 70px; text-align: right;' min='0'' max='99' /></td>";
 
         var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='SalesInvoiceLst[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' type='text' readonly='True' /></td>";
 
         var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='SalesInvoiceLst[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' type='text' readonly='True' /></td>";
 
-        var DiscAmount = "<td><input class='form-control' id='txtDiscAmount" + index + "' name='SalesInvoiceLst[" + index + "].DiscAmount'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")' /></td>";
+        var Discount = "<td><input class='form-control' id='txtDiscAmount" + index + "' name='SalesInvoiceLst[" + index + "].Discount'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")' /></td>";
 
-       var Total = "<td><input class='form-control' id='txtTotal" + index + "' name='SalesInvoiceLst[" + index + "].Total'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")' readonly='True' /></td>";
-
-
-        var removeCell = "<td><input id='Isvalid" + index + "' name='PurchaseorderLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='PurchaseorderLst.Index' type='hidden' value='" + index + "'  /></td>";
+        var Total = "<td><input class='form-control' id='txtTotal" + index + "' name='SalesInvoiceLst[" + index + "].Total'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' type='text'  onkeyup = 'changeQty(this.value," + index + ")' readonly='True' /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient  + Hsn  + UOM + Qty + Rate + Amount + DiscAmount + Total + removeCell + "</tr>";
+        var removeCell = "<td><input id='Isvalid" + index + "' name='SalesInvoiceLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='SalesInvoiceLst.Index' type='hidden' value='" + index + "'  /></td>";
+
+
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient  + Hsn  + UOM + Qty + DestUOM + CF + CfQty + Rate + Amount + Discount + Total + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
@@ -1046,6 +1069,25 @@
                             });
                         }
                     }
+                    if ($(this).find('#ddlVarient' + j.toString()).val() != "" || $(this).find('#ddlVarient' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlVarient' + j.toString()).val() == "" || $(this).find('#ddlVarient' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlVarient' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Variant");
+                            $(this).find('#ddlVarient' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlVarient' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
                     if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
                         isValid = false;
                         $(this).find('#txtQty' + j.toString()).css({
@@ -1063,6 +1105,25 @@
                             "border": "",
                             "background": ""
                         });
+                    }
+                    if ($(this).find('#ddlDestUOM' + j.toString()).val() != "" || $(this).find('#ddlDestUOM' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlDestUOM' + j.toString()).val() == "" || $(this).find('#ddlDestUOM' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlDestUOM' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Dest UOM");
+                            $(this).find('#ddlDestUOM' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlDestUOM' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
                     }
 
                 }

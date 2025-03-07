@@ -17,6 +17,11 @@ namespace RetailSales.Interface.Sales
         DataTable GetState();
         DataTable GetCity(string cityid);
         DataTable GetUOM();
+        string StatusChange(string tag, string id);
+        string RemoveChange(string tag, string id);
+        DataTable GetEditSalesInvoice(string id);
+        DataTable GetEditSalesInvoiceItem(string id);
+        string SalesInvoiceCRUD(SalesInvoice cy);
         //string SalesInvoiceCRUD(Purchaseorder cy);
     }
 }
