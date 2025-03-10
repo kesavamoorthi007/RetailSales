@@ -47,7 +47,7 @@
                 { name: 'net', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'view', type: 'string' },
-                { name: 'delrow', type: 'string' },
+                //{ name: 'delrow', type: 'string' },
 
 
             ],
@@ -84,14 +84,14 @@
 
                 columns: [
 
-                    { text: 'Inv No', filtertype: 'checkedlist', datafield: 'doc', width: 160 },
-                    { text: 'Inv Date', filtertype: 'input', datafield: 'docdate', width: 160 },
+                    { text: 'Invoice No', filtertype: 'checkedlist', datafield: 'doc', width: 160 },
+                    { text: 'Invoice Date', filtertype: 'input', datafield: 'docdate', width: 160 },
                     { text: 'Supplier Name', filtertype: 'input', datafield: 'sup', width: 160 },
                     { text: 'Ref No', filtertype: 'input', datafield: 'refno', width: 120 },
                     { text: 'Total Amount', filtertype: 'input', datafield: 'net', width: 120 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'Cancel', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                     { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    // { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -150,6 +150,33 @@
     function ConfirmDelete() {
         return confirm("Are you sure you want to delete?");
     }
+</script>
+<a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a>
+<a class="fancyboxe1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a>
+<link rel="stylesheet" href="@Url.Content("~/css/jquery.fancybox.css?v=2.1.5")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/css/jquery.fancybox.pack.js?v=2.1.5")"></script>
+<script type="text/javascript">
+    var fancybox123;
+    jQuery(document).ready(function ($) {
+        $(".fancybox").fancybox({
+            width: '80%',
+            height: '10%',
+            arrows: false,
+
+        });
+        fancybox123 = $.fancybox;
+    });
+
+    function close_popup() {
+        fancybox123.close();
+        $(".fancybox1").fancybox({
+            width: '100%',
+            height: '100%',
+            arrows: false,
+        });
+        $(".fancybox1").eq(0).trigger('click');
+    }
+
 </script>
 
 

@@ -1,6 +1,7 @@
 ﻿@model RetailSales.Models.PromotionMail
 
 @{
+    Layout = "_PopupLayout";
     ViewData["Title"] = "Promotion Mail";
 }
 <style>
@@ -66,7 +67,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">CC<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">CC<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
 
                                             @Html.TextBoxFor(C => C.Cc, new { @id = "txtCc", @class = "form-control", @TabIndex = 2 })<br>
@@ -89,7 +90,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Subject<label class="mandatory"></label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Subject<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Sub, new { @id = "txtSub ", @class = "form-control", @TabIndex = 2 })
                                         </div>
@@ -101,7 +102,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <br />  <label for="inputName3" class="col-sm-4 control-label">Content<label class="mandatory">*</label></label>
+                                        <br />  <label for="inputName3" class="col-sm-4 control-label">Content<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
 
                                             @Html.TextAreaFor(C => C.editors, new { @class = "form-control", @id = "editor", TabIndex = 6 })
@@ -125,12 +126,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @* <a href="@Url.Action("ViewPurchaseOrder", "Purchaseorder")" class="btn  btn-round btn-primary" style="float: right; color:white;">Click here to View PurchaseOrder </a> *@
+                                </div>
+                            </div>
 
                             <div style="height:30px;"></div>
                             <div class="row">
-                                <div class="col-md-9"></div>
-                                <div class="col-md-3">
-                                    <button type="submit" name="submit" class="btn aqua m-t-xs bottom15-xs" id="btnSave" value="Save" tabindex="18">Send</button>
+                                <div class="col-md-6"></div>
+                                <div class="col-md-9">
+                                    <button type="submit" name="submit" class="btn btn-success" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'" id="btnSave" value="Save" tabindex="18">Send & Close</button>
+                                    <button type="button" class="btn btn-warning marginright" id="" value="Draft" tabindex="18">Draft</button>
                                     <button type="button" class="btn btn-danger marginright" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'" value="Cancel" causesvalidation="false" tabindex="9">Cancel</button>
                                 </div>
                             </div>

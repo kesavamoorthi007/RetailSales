@@ -758,6 +758,9 @@ namespace RetailSales.Controllers.Purchase
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[i]["CONVT_FACTOR"].ToString();
+                    tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
