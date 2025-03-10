@@ -77,9 +77,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                       <label for="inputName3" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
+                                        <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Gst, new { @id = "txtGst", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Gst, new { @id = "gstNumber", @class = "form-control", @TabIndex = 2, onchange = "validateGSTNumber()" })
 
                                         </div>
                                     </div>
@@ -154,6 +154,20 @@
     </div>
 </div>
 <script>
+        function validateGSTNumber() {
+        var gstNumber = document.getElementById('gstNumber').value;
+        var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[0-9]{1}$/;
+        
+        if (gstPattern.test(gstNumber)) {
+            // If the GST number is valid, hide the error message
+            //document.getElementById('gstError').style.display = 'none';
+        } else {
+            // If the GST number is invalid, show the error message
+            alert("Invalid GST No");
+           // document.getElementById('gstError').style.display = 'inline';
+        }
+    }
+
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
         $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
@@ -188,6 +202,23 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
+            if (document.getElementById("ddlCategory").value == "") {
+                isValid = false;
+                $(ddlCategory).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Supplier Category");
+                return false;
+            }
+            else {
+                $(ddlCategory).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
             if (document.getElementById("txtSupp").value == "") {
                 isValid = false;
                 $(txtSupp).css({
@@ -204,22 +235,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("ddlCategory").value == "") {
-                isValid = false;
-                $(ddlCategory).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Supplier Category");
-                return false;
-            }
-            else {
-                $(ddlCategory).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            
 
             if (document.getElementById("txtDays").value == "") {
                 isValid = false;
@@ -238,9 +254,9 @@
                 });
             }
 
-            if (document.getElementById("txtGst").value == "") {
+            if (document.getElementById("gstNumber").value == "") {
                 isValid = false;
-                $(txtGst).css({
+                $(gstNumber).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
@@ -249,7 +265,36 @@
                 return false;
             }
             else {
-                $(txtGst).css({
+                $(gstNumber).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            var gstNumber = document.getElementById('gstNumber').value;
+        var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[0-9]{1}$/;
+        
+        if (gstPattern.test(gstNumber)) {
+            // If the GST number is valid, hide the error message
+            //document.getElementById('gstError').style.display = 'none';
+        } else {
+            
+            // If the GST number is invalid, show the error message
+            alert("Invalid GST No");
+            return false;
+           // document.getElementById('gstError').style.display = 'inline';
+        }
+            if (document.getElementById("txtMobile").value == "") {
+                isValid = false;
+                $(txtMobile).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Mobile No");
+                return false;
+            }
+            else {
+                $(txtMobile).css({
                     "border": "",
                     "background": ""
                 });

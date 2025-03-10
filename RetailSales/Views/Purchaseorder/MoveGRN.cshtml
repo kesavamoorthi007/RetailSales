@@ -128,16 +128,16 @@
                                                     <th> HSN  </th>
                                                     <th>Tax</th>
                                                     <th> UOM </th>
-                                                    <th> Ord Qty </th>
+                                                    <th> Ordered </th>
+                                                    
+                                                    <th> Received </th>
+                                                    <th> Accepted </th>
+                                                    <th> Rejected </th>
+                                                    <th> Exceed Qty </th>
+                                                    <th> Shortage Qty </th>
                                                     <th> Dest UOM </th>
                                                     <th> CF </th>
                                                     <th> CF Qty</th>
-                                                    <th> Rec Qty </th>
-                                                    <th> Acc Qty </th>
-                                                    <th> Rej Qty </th>
-                                                    <th> Exceed Qty </th>
-                                                    <th> Shortage Qty </th>
-
                                                     <th>Rate </th>
                                                     <th>Amount </th>
                                                     @if (Model.State == "Tamil Nadu")
@@ -202,6 +202,24 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Qty, new { @id = "ordqty" + i })
                                                                 </span>
                                                             </td>
+                                                            
+                                                            <td>
+                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            </td>
+                                                            <td>
+                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].Accepted, new { @id = "txtAccepted" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            </td>
+                                                            <td>
+                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rejected, new { @id = "txtRejected" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            </td>
+                                                            <td>
+                                                                 <label id="exqty@(i)"></label>
+                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].exqty, new { @id = "exqty" + i })
+                                                            </td>
+                                                            <td>
+                                                                 <label id="shortqty@(i)"></label>
+                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].shortqty, new { @id = "shortqty" + i })
+                                                            </td>
                                                             <td>
                                                                 @Html.DropDownListFor(o => o.PurchaseorderLst[i].DestUOM, Model.PurchaseorderLst[i].UOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 120px;", onchange = "changeUOM(this.value," + i + ")" })
                                                             </td>
@@ -210,40 +228,18 @@
                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;", @onkeyup = "changeCF(this.value," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 80px; text-align: right;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].Recived)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].Accepted)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Accepted, new { @id = "txtAccepted" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].Rejected)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rejected, new { @id = "txtRejected" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].exqty)
-                                                                <label id="exqty@(i)"></label>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].exqty, new { @id = "exqty" + i })
-                                                            </td>
-                                                            <td>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].shortqty)
-                                                                <label id="shortqty@(i)"></label>
-                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].shortqty, new { @id = "shortqty" + i })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 80px; text-align: right;", type = "number", @readonly = "readonly", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                             </td>
                                                             <td>
 
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Rate)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                             </td>
                                                             <td>
 
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Amount)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 100px;", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 100px;text-align:right", @readonly = "readonly" })
                                                             </td>
                                                             @if (Model.State == "Tamil Nadu")
                                                             {
@@ -251,13 +247,13 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].CGSTP, new { @id = "CGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].SGSTP, new { @id = "SGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP, new { @id = "IGSTP" + i })
-                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
-                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
 
-                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                 </td>
 
                                                             }
@@ -267,22 +263,22 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].CGSTP, new { @id = "CGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].SGSTP, new { @id = "SGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP, new { @id = "IGSTP" + i })
-                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
-                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
 
-                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
 
                                                                 </td>
                                                             }
 
                                                             <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].DiscAmount)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", style = "width: 100px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", style = "width: 100px;text-align:right", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                             </td>
 
                                                             <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Total)
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px;text-align:right", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
                                                             </td>
                                                             <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
@@ -333,27 +329,33 @@
                                                         @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th>CGST</th>
-                                                    <td>
-                                                        @Html.HiddenFor(C => C.CGST)
-                                                        @Html.TextBoxFor(o => o.CGST, new { @id = "txtCGST", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @readonly = "readonly" })
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>SGST</th>
-                                                    <td>
-                                                        @Html.HiddenFor(C => C.SGST)
-                                                        @Html.TextBoxFor(o => o.SGST, new { @id = "txtSGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>IGST</th>
-                                                    <td>
-                                                        @Html.HiddenFor(C => C.IGST)
-                                                        @Html.TextBoxFor(o => o.IGST, new { @id = "txtIGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
-                                                    </td>
-                                                </tr>
+                                                if (Model.State == "Tamil Nadu"){
+                                                    <tr>
+                                                        <th>CGST</th>
+                                                        <td>
+                                                            @Html.HiddenFor(C => C.CGST)
+                                                            @Html.TextBoxFor(o => o.CGST, new { @id = "txtCGST", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>SGST</th>
+                                                        <td>
+                                                            @Html.HiddenFor(C => C.SGST)
+                                                            @Html.TextBoxFor(o => o.SGST, new { @id = "txtSGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else{
+                                                    <tr>
+                                                        <th>IGST</th>
+                                                        <td>
+                                                            @Html.HiddenFor(C => C.IGST)
+                                                            @Html.TextBoxFor(o => o.IGST, new { @id = "txtIGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                
+                                                
 
                                                 <tr>
                                                     <th> ROUND OFF</th>
@@ -452,7 +454,7 @@
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
 
-                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label">Remarks<label class="Mandatory"></label></label>
+                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label">Narration<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
                                                                                 @Html.HiddenFor(C => C.Narration)
                                                                                 @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
@@ -467,7 +469,7 @@
 
                                                                             <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
-                                                                                @Html.HiddenFor(C => C.Amountinwords)
+                                                                               @*  @Html.HiddenFor(C => C.Amountinwords) *@
                                                                                 @Html.TextBoxFor(C => C.Amountinwords, new { @id = "Amountinwords", @class = "form-control", @TabIndex = 2, onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = true })
                                                                             </div>
                                                                         </div>
@@ -492,7 +494,7 @@
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
-                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Move To GRN</button>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
                             <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'">Cancel</button>
 
 
@@ -583,6 +585,7 @@
             var totamount = 0;
             var state = document.getElementById("state").value;
             var qty = document.getElementById("txtRecived" + i).value;
+            var rej = document.getElementById("txtRejected" + i).value;
             var ordqty = document.getElementById("ordqty" + i).value;
             var up = document.getElementById("txtRate" + i).value;
 
@@ -615,7 +618,8 @@
             if (SGST == "")
                 SGST = 0;
 
-
+                 if (rej == "")
+                rej = 0;
 
             if (Disc == "")
                 Disc = 0;
@@ -625,6 +629,8 @@
 
                  //var rej = eval(qty) - eval(Acc);
             //document.getElementById("txtRejected" + i).value = rej.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = qty;
+
             if (eval(qty) > eval(ordqty)) {
                 var eqty = eval(qty) - eval(ordqty);
                 document.getElementById("exqty" + i).innerHTML = eqty;
@@ -641,9 +647,26 @@
                 document.getElementById("shortqty" + i).innerHTML = "0";
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
+             document.getElementById("txtAccepted" + i).value = qty;
+             if (eval(rej) > 0)
+             {
+                 var rejqty = eval(qty)-eval(rej);
+
+                document.getElementById("txtAccepted" + i).value = rejqty;
+
+             }
+
+
+             if(eval(qty) < eval(rej))
+             {
+                 alert("Rejected is more than Received");
+                 document.getElementById("txtRejected" + i).value = "0";
+                 document.getElementById("txtAccepted" + i).value = Acc;
+             }
+
             var tot = eval(qty) * eval(up);
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
-            document.getElementById("txtAccepted" + i).value = qty;
+
             var dis = eval(tot);
 
             var igstperc = (eval(dis) / 100) * eval(IGST);
@@ -734,7 +757,7 @@
 
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = totamount.toFixed(2);
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
@@ -784,6 +807,7 @@
             var totamount = 0;
             var state = document.getElementById("state").value;
             var qty = document.getElementById("txtRecived" + i).value;
+            var rej = document.getElementById("txtRejected" + i).value;
             var ordqty = document.getElementById("ordqty" + i).value;
             var up = document.getElementById("txtRate" + i).value;
 
@@ -816,7 +840,8 @@
             if (SGST == "")
                 SGST = 0;
 
-
+                 if (rej == "")
+                rej = 0;
 
             if (Disc == "")
                 Disc = 0;
@@ -831,12 +856,13 @@
             if (eval(qty) > eval(ordqty)) {
                 var eqty = eval(qty) - eval(ordqty);
                 document.getElementById("exqty" + i).innerHTML = eqty;
+                document.getElementById("exqty" + i).value = eqty;
                 document.getElementById("shortqty" + i).innerHTML = "0";
 
             }
             if (eval(qty) < eval(ordqty)) {
                 var sqty = eval(ordqty) - eval(qty);
-                document.getElementById("shortqty" + i).innerHTML = sqty;
+                document.getElementById("shortqty" + i).value = sqty;
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
             if (eval(qty) == eval(ordqty)) {
@@ -844,9 +870,26 @@
                 document.getElementById("shortqty" + i).innerHTML = "0";
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
+             document.getElementById("txtAccepted" + i).value = qty;
+             if (eval(rej) > 0)
+             {
+                 var rejqty = eval(qty)-eval(rej);
+                 
+                document.getElementById("txtAccepted" + i).value = rejqty;
+             
+             }
+
+
+             if(eval(qty) < eval(rej))
+             {
+                 alert("Rejected is more than Received");
+                 document.getElementById("txtRejected" + i).value = "0";
+                 document.getElementById("txtAccepted" + i).value = Acc;
+             }
+
             var tot = eval(qty) * eval(up);
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
-            document.getElementById("txtAccepted" + i).value = qty;
+           
             var dis = eval(tot);
 
             var igstperc = (eval(dis) / 100) * eval(IGST);
@@ -865,13 +908,28 @@
                 document.getElementById("SGST" + i).value = "0";
             }
 
+             var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc);
+             //alert(totdis);
+             //alert(tot);
+             //alert(Disc);
+            var totdis =tottax;
+            if(eval(tot) < eval(Disc))
+            {
+                 alert("Discount is higher than Actual Amount");
+                 document.getElementById("txtDiscAmount" + i).value = "0";
+
+            document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            }
+            else{
+                 totdis = eval(tottax) - eval(Disc);
+            }
+            document.getElementById("txtTotal" + i).value = totdis.toFixed(2);
 
 
+            //var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc) - eval(Disc);
 
-            var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc) - eval(Disc);
 
-
-            document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
+            //document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
 
 
             $('tr.chkitemlst').each(function () {
@@ -929,8 +987,9 @@
                 }
                 j += 1;
             });
+            //alert(totamount);
             var roundamount = Math.round(totamount);
-
+             //alert(roundamount);
             var round = eval(roundamount) - eval(totamount);
 
          //   document.getElementById("txtFrieghtcharge").value = totfrieght.toFixed(2);
@@ -1155,15 +1214,32 @@
         return words_string;
     }
     function withDecimal(n) {
-        var nums = n.toString().split('.')
-        var whole = convertNumberToWords(nums[0])
-        if (nums.length == 2) {
-            var fraction = convertNumberToWords(nums[1])
-            return whole + ' ' + fraction;
-        } else {
-            return whole;
-        }
+          var nums = n.toString().split('.')
+          var whole = convertNumberToWords(nums[0])
+          if (nums.length == 2) {
+              var fraction = convertNumberToWords(nums[1])
+              if(nums[1]=="00")
+              {
+                  return whole + ' ' + fraction + 'Rupees Only ';
+              }
+            else{
+                return whole + ' ' + fraction + 'Paise Only ';
+            }
+          } else {
+            return whole + 'Rupees Only ';
+          }
     }
+    // function withDecimal(n) {
+        
+    //     var nums = n.toString().split('.')
+    //     var whole = convertNumberToWords(nums[0])
+    //     if (nums.length == 2) {
+    //         var fraction = convertNumberToWords(nums[1])
+    //         return whole + ' ' + fraction;
+    //     } else {
+    //         return whole;
+    //     }
+    // }
 </script>
 
 

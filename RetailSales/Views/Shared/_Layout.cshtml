@@ -380,18 +380,7 @@
 
         </script>
         <script type="text/javascript">
-            jQuery.browser = {};
-            (function () {
-                jQuery.browser.msie = false;
-                jQuery.browser.version = 0;
-                if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
-                    jQuery.browser.msie = true;
-                    jQuery.browser.version = RegExp.$1;
-                }
-            })();
-
-
-            $(".chosen-select").chosen();
+         
             function isNumeric(keyCode) {
                 return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || (keyCode >= 96 && keyCode <= 105));
             }

@@ -131,11 +131,11 @@ namespace RetailSales.Controllers.Purchase
                 {
                     if (cy.ID == null)
                     {
-                        TempData["notice"] = "DirectPurchase Inserted Successfully...!";
+                        TempData["notice"] = "Purchase Registered...!";
                     }
                     else
                     {
-                        TempData["notice"] = "DirectPurchase Updated Successfully...!";
+                        TempData["notice"] = "Purchase Updated...!";
                     }
                     return RedirectToAction("ListDirectPurchase");
                 }

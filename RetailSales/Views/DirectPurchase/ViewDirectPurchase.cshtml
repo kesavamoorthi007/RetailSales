@@ -1,11 +1,17 @@
 ﻿@model RetailSales.Models.DirectPurchase
 @{
+    Layout = "_PopupLayout";
     ViewData["Title"] = "Direct Purchase";
 }
 <style>
     .newwidth {
         width: 120px;
     }
+
+    .text-right {
+        text-align: right;
+    }
+
 </style>
 <div style="height:25px;"></div>
 <div class="row wrapper border-bottom page-heading">
@@ -145,19 +151,20 @@
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Tariff)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].UOM)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Qty)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Rate)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Amount)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].FrigCharge)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].DiscAmount)</td>
-                                                        <td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].Rate)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].Amount)</td>
+
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].FrigCharge)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].DiscAmount)</td>
+                                                        <td style="text-align: right;">
                                                             @Html.HiddenFor(o => o.DirectPurchaseLst[i].CGSTP)
                                                             @Html.HiddenFor(o => o.DirectPurchaseLst[i].SGSTP)
                                                             @Html.HiddenFor(o => o.DirectPurchaseLst[i].IGSTP)
                                                             @Html.DisplayFor(o => o.DirectPurchaseLst[i].CGST)
                                                         </td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].SGST)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].IGST)</td>
-                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Total)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].SGST)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].IGST)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].Total)</td>
 
                                                     </tr>
                                                     //i = i + 1;
@@ -184,50 +191,50 @@
                                                 <tr>
 
                                                     <th>GROSS</th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.Gross)
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>DISCOUNT</th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.Disc)
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Fright</th>
-                                                    <td>
+                                                    <th>FRIGHT</th>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.Frieghtcharge)
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>CGST</th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.CGST)
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>SGST</th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.SGST)
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>IGST</th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.IGST)
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <th> ROUND OFF</th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.Round)
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th> TOTAL </th>
-                                                    <td>
+                                                    <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.Net)
                                                         <input type="hidden" id="hidnet" />
                                                     </td>
