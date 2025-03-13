@@ -46,11 +46,12 @@ namespace RetailSales.Controllers.Purchase
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    
+
                     //EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
                     //View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
-
+                    //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    //DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "";
                 }
                 else
                 {
@@ -78,6 +79,22 @@ namespace RetailSales.Controllers.Purchase
                 Reg
             });
 
+        }
+
+        public ActionResult DeleteMR(string tag, string id)
+        {
+
+            string flag = GRNService.StatusChange(tag, id);
+            if (string.IsNullOrEmpty(flag))
+            {
+
+                return RedirectToAction("ListGRN");
+            }
+            else
+            {
+                TempData["notice"] = flag;
+                return RedirectToAction("ListGRN");
+            }
         }
     }
 }

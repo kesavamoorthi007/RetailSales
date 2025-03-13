@@ -1,5 +1,6 @@
 ﻿using RetailSales.Interface.Purchase;
 using RetailSales.Models;
+using RetailSales.Models.Master;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -45,7 +46,9 @@ namespace RetailSales.Services.Purchase
         public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
+            //SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
+            SvSql = "SELECT ID,CONCAT(PRODUCT_VARIANT, ' - ', HSCODE) AS Variant_HSN FROM PRO_DETAIL JOIN HSNMAST ON HSN_CODE = HSNMASTID WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
+            //SvSql = "SELECT CONCAT(PRODUCT_VARIANT, ' - ', HSCODE) AS Variant_HSN FROM PRO_DETAIL JOIN HSNMAST ON HSN_CODE = HSNMASTID;";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -276,6 +279,43 @@ namespace RetailSales.Services.Purchase
 
             return msg;
         }
+
+        public string SupplierCRUD(string SupplierName, string SupplierAdd, string State, String City)
+        {
+            string id = "";
+            try
+            {
+                string StatementType = string.Empty; string svSQL = "";
+
+                //svSQL = " SELECT Count(CITY_NAME) as cnt FROM M_CITY WHERE CITY_NAME =LTRIM(RTRIM('" + category + "')) ";
+                //if (datatrans.GetDataId(svSQL) > 0)
+                //{
+                //    msg = "SUB CITY Already Existed";
+                //    return msg;
+                //}
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    svSQL = "Insert into SUPPLIER (SUPPLIER_NAME,ADDRESS,STATE,CITY) VALUES ('" + SupplierName + "','" + SupplierAdd + "','" + State + "','" + City + "') SELECT SCOPE_IDENTITY()";
+
+                    SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                    objConn.Open();
+                    Object Cid = objCmds.ExecuteScalar();
+                    objConn.Close();
+                    id = Cid.ToString();
+                }
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return id;
+        }
         public string StatusChange(string tag, string id)
         {
 
@@ -323,6 +363,7 @@ namespace RetailSales.Services.Purchase
 
         }
 
+        
     }
 
 }

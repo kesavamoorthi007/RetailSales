@@ -396,7 +396,7 @@ namespace RetailSales.Controllers.Purchase
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["Variant_HSN"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
@@ -526,7 +526,7 @@ namespace RetailSales.Controllers.Purchase
                         View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
                     }
-                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
 
                 }
                 else
@@ -534,7 +534,8 @@ namespace RetailSales.Controllers.Purchase
 
                     MailRow = "";
                     GeneratePDF = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    DeleteRow = "Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
                 }
 
                 Reg.Add(new ListPurchaseordergrid
@@ -564,7 +565,9 @@ namespace RetailSales.Controllers.Purchase
         {
             PromotionMail P = new PromotionMail();
             P.To = "deepa@icand.in";
-            P.Sub = "Purchase Order";
+            string pono = datatrans.GetDataString("SELECT PONO FROM POBASIC WHERE POBASICID='" + id + "'");
+            P.Sub = pono;
+            P.ID = id;
             IEnumerable<PurchaseorderItem> cmp = PurchaseorderService.GetAllPurchaseOrderItem(id);
             string Content = @"<html> 
                 <head>

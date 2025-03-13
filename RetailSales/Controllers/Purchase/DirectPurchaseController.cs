@@ -281,6 +281,21 @@ namespace RetailSales.Controllers.Purchase
             ic.DirectPurchaseLst = TData;
             return View(ic);
         }
+
+        public IActionResult AddSupplier()
+        {
+            DirectPurchase ic = new DirectPurchase();
+
+            return View(ic);
+        }
+
+        public JsonResult SaveSupplier(string SupplierName, string SupplierAdd, string State, String City)
+        {
+            string id = DirectPurchaseService.SupplierCRUD(SupplierName,SupplierAdd,State,City);
+            var result = new { id = id };
+            return Json(result);
+        }
+
         public ActionResult DeleteMR(string tag, string id)
         {
 
@@ -336,7 +351,7 @@ namespace RetailSales.Controllers.Purchase
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["Variant_HSN"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }

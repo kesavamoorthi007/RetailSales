@@ -1,0 +1,187 @@
+﻿@model RetailSales.Models.DirectPurchase
+
+@{
+    Layout = "_PopupLayout";
+    ViewData["Title"] = "DirectPurchase";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    <h5 style="font-size:14px">Supplier @Html.DisplayFor(C => C.Suppid)</h5>
+                    <hr>
+
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="inputName3" class="col-sm-4 control-label">Supplier Name<label class="mandatory">*</label></label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(C => C.Suppid, new { @id = "txtSuppid", @class = "form-control", @TabIndex = 2 })
+                                        @* @Html.HiddenFor(C => C.State, new { @id = "State", @class = "form-control", @TabIndex = 2 }) *@
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="inputName3" class="col-sm-4 control-label">Supplier Address<label class="mandatory">*</label></label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(C => C.Supplieraddress, new { @id = "txtSuppadd", @class = "form-control", @TabIndex = 2 })
+                                        @* @Html.HiddenFor(C => C.State, new { @id = "State", @class = "form-control", @TabIndex = 2 }) *@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(C => C.State, new { @id = "txtState", @class = "form-control", @TabIndex = 2 })
+                                        @* @Html.HiddenFor(C => C.State, new { @id = "State", @class = "form-control", @TabIndex = 2 }) *@
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory">*</label></label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(C => C.City, new { @id = "txtCity", @class = "form-control", @TabIndex = 2 })
+                                        @* @Html.HiddenFor(C => C.State, new { @id = "State", @class = "form-control", @TabIndex = 2 }) *@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="height:30px;"></div>
+                        <input type="submit" class="btn btn-success" value="Save" id="btnSave" />
+                        <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+                        
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+            if (document.getElementById("txtSuppid").value == "" || document.getElementById("txtSuppid").value == 0) {
+                isValid = false;
+                $(txtSuppid).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Supplier Name");
+                return false;
+            }
+            else {
+                $(txtSuppid).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtSuppadd").value == "" || document.getElementById("txtSuppadd").value == 0) {
+                isValid = false;
+                $(txtSuppadd).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Supplier Address");
+                return false;
+            }
+            else {
+                $(txtSuppadd).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtState").value == "" || document.getElementById("txtState").value == 0) {
+                isValid = false;
+                $(txtState).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter State");
+                return false;
+            }
+            else {
+                $(txtState).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtCity").value == "" || document.getElementById("txtCity").value == 0) {
+                isValid = false;
+                $(txtCity).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter City");
+                return false;
+            }
+            else {
+                $(txtCity).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+
+             if (isValid == false){
+                  e.preventDefault();
+             }
+             else{
+                 var SupplierName = document.getElementById("txtSuppid").value;
+                 var SupplierAdd = document.getElementById("txtSuppadd").value;
+                 var State = document.getElementById("txtState").value;
+                 var City = document.getElementById("txtCity").value;
+                 
+
+                $.ajax({
+                    type: "POST",
+                    url: "SaveSupplier",
+                    data: { "SupplierName": SupplierName,"SupplierAdd": SupplierAdd,"State": State,"City": City, },
+                    success: function (r) {
+                        //alert(r.id)
+                            window.parent.AddSupplier(r.id,SupplierAdd,State,City);
+                       window.parent.jQuery.fancybox.close();
+                    }
+                });
+
+             }
+
+
+        });
+
+
+
+    });
+</script>
+
