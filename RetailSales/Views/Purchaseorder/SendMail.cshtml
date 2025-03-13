@@ -128,7 +128,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    @* <a href="@Url.Action("ViewPurchaseOrder", "Purchaseorder")" class="btn  btn-round btn-primary" style="float: right; color:white;">Click here to View PurchaseOrder </a> *@
+                                    @* <a href="@Url.Action("ViewPurchaseOrder", "Purchaseorder")" class="text-left" style="float: right; color:black;">Click here to View PurchaseOrder </a> *@
+                                    <a href="@Url.Action("ViewPurchaseOrder", new { id = Model.ID })" class="text-left" style="text-align: left; color:black;">
+                                        Click here to View Purchase Order
+                                    </a>
+
                                 </div>
                             </div>
 

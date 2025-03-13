@@ -146,7 +146,7 @@
 
                                                 <th>Item</th>
                                                 <th>Variant</th>
-                                                <th>HSN  </th>
+                                                
                                                 <th>Tax</th>
                                                 <th>Unit </th>
                                                 <th>Dest UOM</th>
@@ -176,12 +176,9 @@
                                                         <td>
                                                             @Html.DropDownListFor(o => o.PurchaseorderLst[i].Varient, Model.PurchaseorderLst[i].Varientlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVarientItem(this.value," + i + ")" })
                                                         </td>
+                                                        
                                                         <td>
-
-                                                            @Html.TextBoxFor(o => o.PurchaseorderLst[i].Hsn, new { @id = "txtHsn" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-
+                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].Hsn, new { @id = "txtHsn" + i })
                                                             @Html.TextBoxFor(o => o.PurchaseorderLst[i].Tariff, new { @id = "txtTariff" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
@@ -870,6 +867,24 @@
             },
             error: function () {
                 alert("Data Not Found");
+            }
+        });
+        var j = 0;
+        var itemSelected = ItemId;  // Current item ID selected
+
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+                // Skip the row that is currently being processed
+                if (j !== i) {
+                    var item = document.getElementById("ddlVarient" + j).value;
+                    //alert(item);
+                    if (item == itemSelected) {
+                        alert("The Variant already Exist");
+                        $('#ddlVarient'+i).select2("val", "");
+                        return false; // Exit loop as soon as we find a duplicate
+                    }
+                }
+                j += 1;
             }
         });
     }
