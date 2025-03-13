@@ -32,5 +32,29 @@ namespace RetailSales.Services.Purchase
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public string StatusChange(string tag, string id)
+        {
+
+            try
+            {
+                string svSQL = string.Empty;
+                using (SqlConnection objConnT = new SqlConnection(_connectionString))
+                {
+                    svSQL = "UPDATE GRN_BASIC SET IS_ACTIVE ='N' WHERE GRN_BASIC_ID='" + id + "'";
+                    SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
+                    objConnT.Open();
+                    objCmds.ExecuteNonQuery();
+                    objConnT.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return "";
+
+        }
     }
 }

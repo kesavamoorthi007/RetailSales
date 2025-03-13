@@ -3,14 +3,32 @@
 @{
     ViewData["Title"] = "DirectPurchase";
 }
+<head>
+    <link rel="stylesheet" href="~/css/bootstrap-toggle.min.css">
+</head>
+
 <style>
+    
     .mandatory {
         color: red;
         position: relative;
         top: 2px;
         left: 5px;
     }
+
+    .toggle {
+        min-width: 15px !important; /* Adjust the width */
+        
+    }
+
+    .toggle-on, .toggle-off {
+        padding: 2px 6px !important; /* Adjust padding */
+        font-size: 25px !important; /* Adjust font size */
+        background-color: white;       
+    }
 </style>
+
+
 <script type="text/javascript">
     @if (TempData["notice"] != null)
     {
@@ -63,7 +81,7 @@
                                             @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ",new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
                                             
                                         </div>
-                                        <div class="col-sm-1"><a href="@Url.Action("Supplier", "DirectPurchase")" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></div>
+                                        <div class="col-sm-1"><a href="@Url.Action("AddSupplier", "DirectPurchase")" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +156,7 @@
 
                                                 <th>Item</th>
                                                 <th>Variant</th>
-                                                <th> HSN  </th>
+                                              
                                                 <th>Tax</th>
                                                 <th> Unit </th>
                                                 <th> Qty </th>
@@ -164,12 +182,9 @@
                                                         <td>
                                                             @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Varient, Model.DirectPurchaseLst[i].Varientlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVarientItem(this.value," + i + ")" })
                                                         </td>
+                                                       
                                                         <td>
-
-                                                            @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Hsn, new { @id = "txtHsn" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-
+                                                            @Html.HiddenFor(o => o.DirectPurchaseLst[i].Hsn, new { @id = "txtHsn" + i })
                                                             @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Tariff, new { @id = "txtTariff" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
@@ -242,7 +257,7 @@
                                                         @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
                                                     </td>
                                                 </tr>                                             
-                                                <tr>
+                                                <tr id="cg2">
                                                     <th> <div id="cg">CGST </div></th>
                                                     <td>
                                                         <div id="cg1">
@@ -251,15 +266,15 @@
                                                     </td>
                                     
                                                 </tr>                                                        
-                                                <tr>
+                                                <tr id="sg2">
                                                     <th> <div id="sg">SGST</div></th>
                                                     <td>
                                                         <div id="sg1">
                                                                 @Html.TextBoxFor(o => o.SGST, new { @id = "txtSGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
                                                         </div>
                                                     </td>
-                                                </tr>                                               
-                                                <tr>
+                                                </tr>
+                                                <tr id="ig2">
                                                     <th> <div id="ig">IGST</div></th>
                                                     <td>
                                                         <div id="ig1">
@@ -270,8 +285,15 @@
                                                 <tr>
                                                     <th> ROUND OFF</th>
                                                     <td>
-                                                        @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        <div style="display: flex; align-items: center; gap: 10px;">
+
+                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary">
+
+                                                            
+                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        </div>
                                                     </td>
+                                                    
                                                 </tr>
                                                 <tr>
                                                     <th> TOTAL </th>
@@ -407,10 +429,12 @@
         </div>
     </div>
 </div>
+
 <script>
     $(function () {
         $('._select').select2();
     });
+    
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
         $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
@@ -459,6 +483,24 @@
                 alert("Data Not Found");
             }
         });
+        var j = 0;
+        var itemSelected = ItemId;  // Current item ID selected
+
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+                // Skip the row that is currently being processed
+                if (j !== i) {
+                    var item = document.getElementById("ddlVarient" + j).value;
+                    //alert(item);
+                    if (item == itemSelected) {
+                        alert("The Variant already Exist");
+                        $('#ddlVarient'+i).select2("val", "");
+                        return false; // Exit loop as soon as we find a duplicate
+                    }
+                }
+                j += 1;
+            }
+        });
     }
     function changesupplier(ItemId) {
         $.ajax({
@@ -473,19 +515,25 @@
 
 
                 if(result.state == "Tamil Nadu"){
-                    
+                      
+                      //document.getElementById("cg2").style.display = "block";
                       document.getElementById("cg").style.display = "block";
                       document.getElementById("cg1").style.display = "block";
+                      //document.getElementById("sg2").style.display = "block";
                       document.getElementById("sg").style.display = "block";
                       document.getElementById("sg1").style.display = "block";
+                      //document.getElementById("ig2").style.display = "none";
                       document.getElementById("ig").style.display = "none";
                       document.getElementById("ig1").style.display = "none";
                 }
                 else{
+                    //document.getElementById("cg2").style.display = "none";
                     document.getElementById("cg").style.display = "none";
                     document.getElementById("cg1").style.display = "none";
+                    //document.getElementById("sg2").style.display = "none";
                     document.getElementById("sg").style.display = "none";
                     document.getElementById("sg1").style.display = "none";
+                    //document.getElementById("ig2").style.display = "block";
                     document.getElementById("ig").style.display = "block";
                     document.getElementById("ig1").style.display = "block";
                 }
@@ -1254,5 +1302,11 @@
         minView: 2,
         endDate: new Date(),
         forceParse: 0
+    });
+</script>
+<script src="~/js/bootstrap-toggle.min.js"></script>
+<script>
+    (function () {
+        $('#toggle-two').bootstrapToggle();
     });
 </script>
