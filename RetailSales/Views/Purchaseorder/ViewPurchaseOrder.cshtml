@@ -132,9 +132,16 @@
                                                 <th>Amount </th>
                                                 <th> Frieght charges</th>
                                                 <th> Disc amount</th>
-                                                <th>CGST</th>
-                                                <th>SGST</th>
-                                                <th>IGST</th>
+                                                @if (Model.State == "Tamil Nadu")
+                                                {
+                                                    <th>CGST</th>
+                                                    <th>SGST</th>
+                                                }
+                                                else
+                                                {
+                                                    <th>IGST</th>
+                                                }
+                                                
                                                 <th>Total Amount</th>
                                             </tr>
                                         </thead>
@@ -160,14 +167,17 @@
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].Amount)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].FrigCharge)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].DiscAmount)</td>
-                                                        <td style="text-align: right;">
-                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].CGSTP)
-                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].SGSTP)
-                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP)
-                                                            @Html.DisplayFor(o => o.PurchaseorderLst[i].CGST)
-                                                        </td>
-                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].SGST)</td>
-                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].IGST)</td>
+                                                      
+                                                        @if (Model.State == "Tamil Nadu")
+                                                        {
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].CGST)</td>
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].SGST)</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].IGST)</td>
+                                                        }
+                                                        
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].Total)</td>
 
                                                     </tr>
@@ -211,24 +221,31 @@
                                                         @Html.DisplayFor(C => C.Frieghtcharge)
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th>CGST</th>
-                                                    <td style="text-align: right;">
-                                                        @Html.DisplayFor(C => C.CGST)
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>SGST</th>
-                                                    <td style="text-align: right;">
-                                                        @Html.DisplayFor(C => C.SGST)
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>IGST</th>
-                                                    <td style="text-align: right;">
-                                                        @Html.DisplayFor(C => C.IGST)
-                                                    </td>
-                                                </tr>
+                                                if (Model.State == "Tamil Nadu")
+                                                {
+                                                    <tr>
+                                                        <th>CGST</th>
+                                                        <td style="text-align: right;">
+                                                            @Html.DisplayFor(C => C.CGST)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>SGST</th>
+                                                        <td style="text-align: right;">
+                                                            @Html.DisplayFor(C => C.SGST)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <th>IGST</th>
+                                                        <td style="text-align: right;">
+                                                            @Html.DisplayFor(C => C.IGST)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                
 
                                                 <tr>
                                                     <th> ROUND OFF</th>
