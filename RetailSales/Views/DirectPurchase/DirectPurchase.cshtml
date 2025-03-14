@@ -287,8 +287,8 @@
                                                     <td>
                                                         <div style="display: flex; align-items: center; gap: 10px;">
 
-                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary">
-
+                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
+                                                           
                                                             
                                                             @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
                                                         </div>
@@ -703,6 +703,34 @@
             alert(ex.message);
         }
     }
+    function changeTot(element) {
+        var isChecked = $(element).prop('checked');
+        var symbol = isChecked ? '-' : '+';
+        var round = document.getElementById("txtRound").value;
+        round = round.startsWith('-') ? round.substring(1) : round;
+        var net = document.getElementById("txtNet").value;
+       
+        var total=0;
+     if(symbol=="+")
+     {
+            total = eval(net) + eval(round);
+          
+     }
+        if (symbol == "-") {
+            total = eval(net) - eval(round);
+           
+        }
+        document.getElementById("txtNet").value = total.toFixed(2);
+
+        //$('#toggle-state').text(symbol);
+    }
+
+    $(document).ready(function () {
+        $('#toggle-two').change(function () {
+            changeTot(this);
+        });
+    });
+    
      function changeDisTot(_this) {
         try {
             var GTot = 0;
