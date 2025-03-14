@@ -117,13 +117,13 @@
                     <form>
                         <br />
                         <div class="row">
-                            <div class="col-md-2 ">
+                            @* <div class="col-md-2 ">
                                 @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
                                          { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
                                          new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
-                            </div>
-                            <div class="col-md-9 ">
+                            </div> *@
+                            <div class="col-md-11 ">
                                 <div class=" textalignright">
                                     <a href="@Url.Action("DirectPurchase", "DirectPurchase")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Direct Purchase </a>
                                     <br>

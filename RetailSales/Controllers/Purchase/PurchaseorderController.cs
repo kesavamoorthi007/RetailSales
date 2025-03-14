@@ -41,7 +41,7 @@ namespace RetailSales.Controllers.Purchase
             ic.Podate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.refdate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            DataTable dtv = datatrans.GetSequence("Purchase Order");
             if (dtv.Rows.Count > 0)
             {
                 ic.po = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
