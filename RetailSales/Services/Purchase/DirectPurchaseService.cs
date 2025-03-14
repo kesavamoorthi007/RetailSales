@@ -58,7 +58,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetSupplierDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE,CITY,SUPPLIER.ID from SUPPLIER  WHERE SUPPLIER.ID='" + ItemId + "'";
+            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE.STATE_NAME,CITY,SUPPLIER.ID from SUPPLIER LEFT OUTER JOIN STATE ON STATE.ID=SUPPLIER.STATE WHERE SUPPLIER.ID='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -280,7 +280,38 @@ namespace RetailSales.Services.Purchase
             return msg;
         }
 
-        public string SupplierCRUD(string SupplierName, string SupplierAdd, string State, String City)
+        public DataTable GetState()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select STATE_NAME,ID from STATE";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCity(string cityid)
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,ID from CITY WHERE STATE_ID = '" + cityid + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCategory()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CATGRY_NAME,ID from SUPPL_CATGRY";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public string SupplierCRUD(string Category, string SupplierName, string SupplierAdd, string Days, string GST, string State, String City, string Mobile, string Landline, string Email)
         {
             string id = "";
             try
@@ -295,7 +326,7 @@ namespace RetailSales.Services.Purchase
                 //}
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    svSQL = "Insert into SUPPLIER (SUPPLIER_NAME,ADDRESS,STATE,CITY) VALUES ('" + SupplierName + "','" + SupplierAdd + "','" + State + "','" + City + "') SELECT SCOPE_IDENTITY()";
+                    svSQL = "Insert into SUPPLIER (SUPP_CAT,SUPPLIER_NAME,ADDRESS,CR_DAYS,GST_NO,STATE,CITY,MOBILE_NO,LANDLINE_NO,EMAIL_ID) VALUES ('" + Category + "','" + SupplierName + "','" + SupplierAdd + "','" + Days + "','" + GST + "','" + State + "','" + City + "','" + Mobile + "','" + Landline + "','" + Email + "') SELECT SCOPE_IDENTITY()";
 
                     SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                     objConn.Open();

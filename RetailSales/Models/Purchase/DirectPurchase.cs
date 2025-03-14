@@ -7,6 +7,9 @@ namespace RetailSales.Models
         public DirectPurchase()
         {
             this.Suplst = new List<SelectListItem>();
+            this.Catlst = new List<SelectListItem>();
+            this.Statelst = new List<SelectListItem>();
+            this.Citylst = new List<SelectListItem>();
         }
         public string Suppid { get; set; }
         public List<SelectListItem> Suplst { get; set; }
@@ -15,7 +18,9 @@ namespace RetailSales.Models
         public string doc { get; set; }
         public string Country { get; set; }
         public string State { get; set; }
+        public List<SelectListItem> Statelst { get; set; }
         public string City { get; set; }
+        public List<SelectListItem> Citylst { get; set; }
         public string refdate { get; set; }
         public string Supplieraddress { get; set; }
 
@@ -38,6 +43,13 @@ namespace RetailSales.Models
         public string LRno { get; set; }
         public string dispatchname { get; set; }
         public string LRdate { get; set; }
+        public string  Category { get; set; }
+        public List<SelectListItem> Catlst { get; set; }
+        public string Days { get; set; }
+        public string GST { get; set; }
+        public string  Mobile { get; set; }
+        public string Landline { get; set; }
+        public string Email { get; set; }
         public List<DirectPurchaseItem> DirectPurchaseLst { get; set; }
     }
     public class DirectPurchaseItem
