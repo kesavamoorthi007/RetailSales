@@ -108,7 +108,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetSupplierDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE,CITY,GST_NO,SUPPLIER.ID from SUPPLIER  WHERE SUPPLIER.ID='" + ItemId + "'";
+            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE.STATE_NAME,CITY,GST_NO,SUPPLIER.ID from SUPPLIER LEFT OUTER JOIN STATE ON STATE.ID=SUPPLIER.STATE WHERE SUPPLIER.ID='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
