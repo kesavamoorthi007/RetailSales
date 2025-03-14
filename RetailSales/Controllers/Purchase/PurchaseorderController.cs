@@ -41,7 +41,7 @@ namespace RetailSales.Controllers.Purchase
             ic.Podate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.refdate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            DataTable dtv = datatrans.GetSequence("Purchase Order");
             if (dtv.Rows.Count > 0)
             {
                 ic.po = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
@@ -438,7 +438,7 @@ namespace RetailSales.Controllers.Purchase
                 if (dt.Rows.Count > 0)
                 {
                     add = dt.Rows[0]["ADDRESS"].ToString();
-                    state = dt.Rows[0]["STATE"].ToString();
+                    state = dt.Rows[0]["STATE_NAME"].ToString();
                     city = dt.Rows[0]["CITY"].ToString();
                     gst = dt.Rows[0]["GST_NO"].ToString();
 

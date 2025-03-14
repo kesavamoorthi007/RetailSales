@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Interface.Purchase;
 using RetailSales.Models;
+using RetailSales.Services.Master;
 using RetailSales.Services.Purchase;
 using System.Data;
 
@@ -28,7 +29,7 @@ namespace RetailSales.Controllers.Purchase
             ic.refdate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.LRdate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("DirectPurchase");
+            DataTable dtv = datatrans.GetSequence("Direct Purchase");
             if (dtv.Rows.Count > 0)
             {
                 ic.doc = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
@@ -285,13 +286,75 @@ namespace RetailSales.Controllers.Purchase
         public IActionResult AddSupplier()
         {
             DirectPurchase ic = new DirectPurchase();
-
+            ic.Statelst = BindState();
+            ic.Citylst = BindCity("");
+            ic.Catlst = BindCategory();
             return View(ic);
         }
 
-        public JsonResult SaveSupplier(string SupplierName, string SupplierAdd, string State, String City)
+        public List<SelectListItem> BindState()
         {
-            string id = DirectPurchaseService.SupplierCRUD(SupplierName,SupplierAdd,State,City);
+            try
+            {
+                DataTable dtDesg = DirectPurchaseService.GetState();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["STATE_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCity(string cityid)
+        {
+            try
+            {
+                DataTable dtDesg = DirectPurchaseService.GetCity(cityid);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CITY_NAME"].ToString(), Value = dtDesg.Rows[i]["CITY_NAME"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindCategory()
+        {
+            try
+            {
+                DataTable dtDesg = DirectPurchaseService.GetCategory();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["CATGRY_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public JsonResult GetCityJSON(string cityid)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindCity(cityid));
+        }
+
+        public JsonResult SaveSupplier(string Category, string SupplierName, string SupplierAdd, string Days,string GST, string State, String City, string Mobile, string Landline, string Email)
+        {
+            
+            string id = DirectPurchaseService.SupplierCRUD(Category,SupplierName, SupplierAdd,Days,GST,State,City,Mobile,Landline,Email);
             var result = new { id = id };
             return Json(result);
         }
@@ -468,7 +531,7 @@ namespace RetailSales.Controllers.Purchase
                 if (dt.Rows.Count > 0)
                 {
                     add = dt.Rows[0]["ADDRESS"].ToString();
-                    state = dt.Rows[0]["STATE"].ToString();
+                    state = dt.Rows[0]["STATE_NAME"].ToString();
                     city = dt.Rows[0]["CITY"].ToString();
 
 

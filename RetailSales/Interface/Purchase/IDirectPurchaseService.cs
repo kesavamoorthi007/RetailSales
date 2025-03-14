@@ -21,6 +21,9 @@ namespace RetailSales.Interface.Purchase
         DataTable GetEditDirectPurchaseItem(string id);
         DataTable GetDirectPurchase(string id);
         DataTable GetDirectPurchaseItem(string id);
-        string SupplierCRUD(string SupplierName, string SupplierAdd, string State, String City);
+        string SupplierCRUD(string Category, string SupplierName, string SupplierAdd, string Days, string GST, string State, String City, string Mobile, string Landline, string Email);
+        DataTable GetCategory();
+        DataTable GetState();
+        DataTable GetCity(string cityid);
     }
 }
