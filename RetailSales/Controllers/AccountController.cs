@@ -50,7 +50,7 @@ namespace RetailSales.Controllers
                 if (_dtUser.Rows.Count > 0)
                 {
                     CookieOptions option = new CookieOptions();
-                    //HttpCookie Cookie = Request.Cookies["Arasan"];
+                    //HttpCookie Cookie = Request.Cookies["RetailSales"];
                     //if (expireTime.HasValue)
                     //    option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
                     //else

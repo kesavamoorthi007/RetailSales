@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "PurchasOrder";
 }
+<head>
+    <link rel="stylesheet" href="~/css/bootstrap-toggle.min.css">
+</head>
 <style>
     .newwidth {
         width: 120px;
@@ -357,8 +360,11 @@
                                                 <tr>
                                                     <th> ROUND OFF</th>
                                                     <td>
-                                                        @Html.HiddenFor(C => C.Round)
-                                                        @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        <div style="display: flex; align-items: center; gap: 10px;">
+
+                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
+
+                                                         @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -531,7 +537,34 @@
               }
           });
     }
-     function changeCF(_this, i) {
+    function changeTot(element) {
+        var isChecked = $(element).prop('checked');
+        var symbol = isChecked ? '-' : '+';
+        var round = document.getElementById("txtRound").value;
+        round = round.startsWith('-') ? round.substring(1) : round;
+        var net = document.getElementById("txtNet").value;
+
+        var total = 0;
+        if (symbol == "+") {
+            total = eval(net) + eval(round);
+
+        }
+        if (symbol == "-") {
+            total = eval(net) - eval(round);
+
+        }
+        document.getElementById("txtNet").value = total.toFixed(2);
+
+        //$('#toggle-state').text(symbol);
+    }
+
+    $(document).ready(function () {
+        $('#toggle-two').change(function () {
+            changeTot(this);
+        });
+    });
+
+    function changeCF(_this, i) {
          var qty =document.getElementById("ordqty" + i).value;
          var cf =document.getElementById("txtCF" + i).value;
 
@@ -825,11 +858,14 @@
             var totamount = 0;
             var state = document.getElementById("state").value;
             var qty = document.getElementById("txtRecived" + i).value;
+            
             var rej = document.getElementById("txtRejected" + i).value;
+
             var ordqty = document.getElementById("ordqty" + i).value;
             var up = document.getElementById("txtRate" + i).value;
 
             var IGST = document.getElementById("IGSTP" + i).value;
+          
 
             var CGST = document.getElementById("CGSTP" + i).value;
 
@@ -867,13 +903,13 @@
              if (Acc == "")
                 Acc = 0;
 
-                 //var rej = eval(qty) - eval(Acc);
-            //document.getElementById("txtRejected" + i).value = rej.toFixed(2);
-            document.getElementById("txtCfQty" + i).value = qty;
+                
+             document.getElementById("txtCfQty" + i).value = qty;
 
             if (eval(qty) > eval(ordqty)) {
                 var eqty = eval(qty) - eval(ordqty);
                 document.getElementById("exqty" + i).innerHTML = eqty;
+
                 document.getElementById("exqty" + i).value = eqty;
                 document.getElementById("shortqty" + i).innerHTML = "0";
 
@@ -881,7 +917,10 @@
             if (eval(qty) < eval(ordqty)) {
                 var sqty = eval(ordqty) - eval(qty);
                 document.getElementById("shortqty" + i).innerHTML = sqty;
+
                 document.getElementById("shortqty" + i).value = sqty;
+
+
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
             if (eval(qty) == eval(ordqty)) {
@@ -890,6 +929,7 @@
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
              document.getElementById("txtAccepted" + i).value = qty;
+            alert("dhzu");
              if (eval(rej) > 0)
              {
                  var rejqty = eval(qty)-eval(rej);
@@ -1259,6 +1299,14 @@
     //         return whole;
     //     }
     // }
+
+
+</script>
+<script src="~/js/bootstrap-toggle.min.js"></script>
+<script>
+    (function () {
+        $('#toggle-two').bootstrapToggle();
+    });
 </script>
 
 
