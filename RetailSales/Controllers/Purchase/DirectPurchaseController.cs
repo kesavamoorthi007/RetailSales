@@ -490,7 +490,7 @@ namespace RetailSales.Controllers.Purchase
                         per = percen.Rows[0]["PERCENTAGE"].ToString();
 
                         string custstate = datatrans.GetDataString("SELECT STATE FROM SUPPLIER WHERE ID='" + cusid + "'");
-                        if (custstate == state)
+                        if (custstate == "1047")
                         {
                             cgst = Convert.ToDouble(per) / 2;
                             sgst = Convert.ToDouble(per) / 2;
