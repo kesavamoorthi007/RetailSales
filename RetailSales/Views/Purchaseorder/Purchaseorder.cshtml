@@ -434,6 +434,33 @@
     $(function () {
         $('._select').select2();
     });
+    $(document).ready(function () {
+
+        var state=document.getElementById("txtState").value;
+        if(state == "Tamil Nadu"){
+
+                      //document.getElementById("cg2").style.display = "block";
+                      document.getElementById("cg").style.display = "block";
+                      document.getElementById("cg1").style.display = "block";
+                      //document.getElementById("sg2").style.display = "block";
+                      document.getElementById("sg").style.display = "block";
+                      document.getElementById("sg1").style.display = "block";
+                      //document.getElementById("ig2").style.display = "none";
+                      document.getElementById("ig").style.display = "none";
+                      document.getElementById("ig1").style.display = "none";
+                }
+                else{
+                    //document.getElementById("cg2").style.display = "none";
+                    document.getElementById("cg").style.display = "none";
+                    document.getElementById("cg1").style.display = "none";
+                    //document.getElementById("sg2").style.display = "none";
+                    document.getElementById("sg").style.display = "none";
+                    document.getElementById("sg1").style.display = "none";
+                    //document.getElementById("ig2").style.display = "block";
+                    document.getElementById("ig").style.display = "block";
+                    document.getElementById("ig1").style.display = "block";
+                }
+    });
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
         $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
