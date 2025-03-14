@@ -204,7 +204,7 @@
                                                             </td>
                                                             
                                                             <td>
-                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Recived, new { @id = "txtRecived" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                             </td>
                                                             <td>
                                                                  @Html.TextBoxFor(o => o.PurchaseorderLst[i].Accepted, new { @id = "txtAccepted" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
@@ -249,13 +249,11 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP, new { @id = "IGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
-
                                                                     @Html.TextBoxFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
                                                                     @Html.TextBoxFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                 </td>
-
                                                             }
                                                             else
                                                             {
@@ -265,7 +263,6 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP, new { @id = "IGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
-
                                                                     @Html.TextBoxFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
 
                                                                 </td>
@@ -588,6 +585,7 @@
             var rej = document.getElementById("txtRejected" + i).value;
             var ordqty = document.getElementById("ordqty" + i).value;
             var up = document.getElementById("txtRate" + i).value;
+            var amt = document.getElementById("Amountinwords" + i).value;
 
             var IGST = document.getElementById("IGSTP" + i).value;
 
@@ -634,12 +632,14 @@
             if (eval(qty) > eval(ordqty)) {
                 var eqty = eval(qty) - eval(ordqty);
                 document.getElementById("exqty" + i).innerHTML = eqty;
+                document.getElementById("exqty" + i).value = eqty;
                 document.getElementById("shortqty" + i).innerHTML = "0";
 
             }
             if (eval(qty) < eval(ordqty)) {
                 var sqty = eval(ordqty) - eval(qty);
                 document.getElementById("shortqty" + i).innerHTML = sqty;
+                document.getElementById("shortqty" + i).value = sqty;
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
             if (eval(qty) == eval(ordqty)) {
@@ -685,13 +685,30 @@
                 document.getElementById("SGST" + i).value = "0";
             }
 
+             var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc);
+             //alert(totdis);
+             //alert(tot);
+             //alert(Disc);
+            var totdis =tottax;
+            if(eval(tot) < eval(Disc))
+            {
+                 alert("Discount is higher than Actual Amount");
+                 document.getElementById("txtDiscAmount" + i).value = "0";
+
+            document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            document.getElementById("Amountinwords" + i).value = tot.toFixed(2);
+            
+            }
+            else{
+                 totdis = eval(tottax) - eval(Disc);
+            }
+            document.getElementById("txtTotal" + i).value = totdis.toFixed(2);
+            
+
+            //var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc) - eval(Disc);
 
 
-
-            var tottax = eval(dis) + eval(igstperc) + eval(cgstperc) + eval(sgstperc) - eval(Disc);
-
-
-            document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
+            //document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
 
 
             $('tr.chkitemlst').each(function () {
@@ -749,8 +766,9 @@
                 }
                 j += 1;
             });
+            //alert(totamount);
             var roundamount = Math.round(totamount);
-
+             //alert(roundamount);
             var round = eval(roundamount) - eval(totamount);
 
          //   document.getElementById("txtFrieghtcharge").value = totfrieght.toFixed(2);
@@ -862,6 +880,7 @@
             }
             if (eval(qty) < eval(ordqty)) {
                 var sqty = eval(ordqty) - eval(qty);
+                document.getElementById("shortqty" + i).innerHTML = sqty;
                 document.getElementById("shortqty" + i).value = sqty;
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
