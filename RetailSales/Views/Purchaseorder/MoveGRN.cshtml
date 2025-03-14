@@ -808,14 +808,19 @@
 
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = totamount.toFixed(2);
+            //document.getElementById("hidnet").value = totamount.toFixed(2);
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
-
-            document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
+            if(state=="Tamil Nadu")
+            {
+                document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
             document.getElementById("txtSGST").value = sgsttotamt.toFixed(2);
-            document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
+            }
+            else{
+                 document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
+            }
+           
             document.getElementById("txtDisc").value = disttotamt.toFixed(2);
 
 
@@ -929,7 +934,7 @@
                 document.getElementById("exqty" + i).innerHTML = "0";
             }
              document.getElementById("txtAccepted" + i).value = qty;
-            alert("dhzu");
+           
              if (eval(rej) > 0)
              {
                  var rejqty = eval(qty)-eval(rej);
