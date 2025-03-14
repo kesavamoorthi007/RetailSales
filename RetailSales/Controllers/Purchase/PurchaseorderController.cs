@@ -438,7 +438,7 @@ namespace RetailSales.Controllers.Purchase
                 if (dt.Rows.Count > 0)
                 {
                     add = dt.Rows[0]["ADDRESS"].ToString();
-                    state = dt.Rows[0]["STATE"].ToString();
+                    state = dt.Rows[0]["STATE_NAME"].ToString();
                     city = dt.Rows[0]["CITY"].ToString();
                     gst = dt.Rows[0]["GST_NO"].ToString();
 
