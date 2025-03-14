@@ -45,7 +45,7 @@ namespace RetailSales.Services
             //    using (OracleCommand cmd = con.CreateCommand())
             //    {
             //        con.Open();
-            //        cmd.CommandText = "Select Username,password,eactive,empdept from empmast where  eactive='Yes' and  username='balaji' and password   ='Arasan'";
+            //        cmd.CommandText = "Select Username,password,eactive,empdept from empmast where  eactive='Yes' and  username='balaji' and password   ='RetailSales'";
             //        OracleDataReader rdr = cmd.ExecuteReader();
 
             //    }

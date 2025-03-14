@@ -79,9 +79,9 @@ internal class Program
         builder.Services.TryAddSingleton<IRateService, RateService>();
         builder.Services.TryAddSingleton<IGRNService, GRNService>();
 
+		builder.Services.TryAddSingleton<IAccConfig, AccConfigService>();
 
-
-        builder.Services.AddSession();
+		builder.Services.AddSession();
 
 
         builder.Services.AddControllers();

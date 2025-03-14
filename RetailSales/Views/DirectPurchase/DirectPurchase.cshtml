@@ -195,7 +195,7 @@
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.DirectPurchaseLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                            @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px;text-align:right" })
+                                                            @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px;text-align:right", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px;text-align:right", @readonly = "readonly" })
