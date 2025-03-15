@@ -943,7 +943,6 @@
              
              }
 
-
              if(eval(qty) < eval(rej))
              {
                  alert("Rejected is more than Received");
@@ -1064,10 +1063,13 @@
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
-
-            document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
+            if (eval(cgsttotamt) > 0){
+                document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
             document.getElementById("txtSGST").value = sgsttotamt.toFixed(2);
-            document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
+            }
+            if (eval(igsttotamt) > 0){
+                document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
+            }
             document.getElementById("txtDisc").value = disttotamt.toFixed(2);
 
 

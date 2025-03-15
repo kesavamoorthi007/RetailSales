@@ -41,6 +41,16 @@ namespace RetailSales.Models
             dtCity = GetData(SvSql);
             return dtCity;
         }
+        public DataTable GetGRNconfig()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select D.ADTYPE,D.ADNAME,D.ADACCOUNT,H.ADCOMPHID from ADCOMPH H ,ADCOMPD D where H.ADCOMPHID=D.ADCOMPHID AND H.ADSCHEME='GRN-IMPORT' AND H.IS_ACTIVE='Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public void sendemail(string Subject, string Message, string EmailID, string SenderID, string SenderPassword, string CompanySMTPPort, string SmtpEnableSsl, string sSmtpServer, string CompanyName)
         {
             string strerr = "";
