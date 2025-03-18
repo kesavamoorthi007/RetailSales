@@ -52,7 +52,7 @@ namespace RetailSales.Controllers.Purchase
 
             if (id == null)
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     tda = new PurchaseorderItem();
                     tda.Itemlst = BindItem();
@@ -224,8 +224,8 @@ namespace RetailSales.Controllers.Purchase
                 {
                     tda = new PurchaseorderItem();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
+                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
@@ -757,8 +757,8 @@ namespace RetailSales.Controllers.Purchase
                     tda = new PurchaseorderItem();
                     tda.UOMlst = BindUOM();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
+                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();

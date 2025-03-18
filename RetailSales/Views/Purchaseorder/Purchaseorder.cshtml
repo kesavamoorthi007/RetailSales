@@ -3,12 +3,25 @@
 @{
     ViewData["Title"] = "Purchase Order";
 }
+<head>
+    <link rel="stylesheet" href="~/css/bootstrap-toggle.min.css">
+</head>
 <style>
     .mandatory {
         color: red;
         position: relative;
         top: 2px;
         left: 5px;
+    }
+
+    .toggle {
+        min-width: 15px !important; /* Adjust the width */
+    }
+
+    .toggle-on, .toggle-off {
+        padding: 2px 6px !important; /* Adjust padding */
+        font-size: 25px !important; /* Adjust font size */
+        background-color: white;
     }
 </style>
 
@@ -109,7 +122,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Ref No<label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">Supplier Ref No<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.refno, new { @id = "txtrefno", @class = "form-control", @TabIndex = 1 })<br />
 
@@ -145,7 +158,7 @@
                                             <tr>
 
                                                 <th>Item</th>
-                                                <th>Variant</th>
+                                                <th>Variant - HSN</th>
                                                 
                                                 <th>Tax</th>
                                                 <th>Unit </th>
@@ -153,10 +166,10 @@
                                                 <th>CF</th>                                              
                                                 <th>Qty </th>
                                                 <th>CF Qty</th>
-                                                <th>Rate </th>
-                                                <th>Amount </th>
-                                                <th>Disc Amount</th>
-                                                <th>Total Amount</th>
+                                                <th>Rate (₹) </th>
+                                                <th>Amount (₹) </th>
+                                                <th>Disc Amount (₹)</th>
+                                                <th>Total Amount (₹)</th>
                                                 <th></th>
                                         </thead>
                                         <tbody id="tbBooks">
@@ -242,19 +255,19 @@
                                             @{
                                                 <tr>
 
-                                                    <th>GROSS</th>
+                                                    <th>GROSS (₹)</th>
                                                     <td>
                                                         @Html.TextBoxFor(o => o.Gross, new { @id = "txtGross", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>DISCOUNT</th>
+                                                    <th>DISCOUNT (₹)</th>
                                                     <td>
                                                         @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeDisTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>FRIGHT</th>
+                                                    <th>FRIGHT (₹)</th>
                                                     <td>
 
                                                         @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
@@ -288,11 +301,18 @@
                                                 <tr>
                                                     <th> ROUND OFF</th>
                                                     <td>
-                                                        @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        <div style="display: flex; align-items: center; gap: 10px;">
+
+                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
+
+
+                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                        </div>
                                                     </td>
+                                                    
                                                 </tr>
                                                 <tr>
-                                                    <th> TOTAL </th>
+                                                    <th> TOTAL (₹) </th>
                                                     <td>
                                                         <input type="hidden" id="hidnet" />
                                                         @Html.TextBoxFor(o => o.Net, new { @id = "txtNet", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @readonly = "readonly" })
@@ -360,22 +380,23 @@
 
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label">Transporter Name<label class="Mandatory"></label></label>
+                                                                            <div class="col-sm-8">
+
+                                                                                @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @class = "form-control", @TabIndex = 1, onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
                                                                             <br />  <label for="inputName3" class="col-sm-4 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
 
                                                                             <div class="col-sm-8">
                                                                                 @Html.TextBoxFor(C => C.dispatchname, new { @id = "txtdispatchname", @class = "form-control", @TabIndex = 1 })
                                                                             </div>
 
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-
-                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">Transporter Name<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-
-                                                                                @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @class = "form-control", @TabIndex = 1, onkeydown = "return isNumeric2(event.keyCode,this.value)" })
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -439,27 +460,27 @@
         var state=document.getElementById("txtState").value;
         if(state == "Tamil Nadu"){
 
-                      //document.getElementById("cg2").style.display = "block";
-                      document.getElementById("cg").style.display = "block";
-                      document.getElementById("cg1").style.display = "block";
-                      //document.getElementById("sg2").style.display = "block";
-                      document.getElementById("sg").style.display = "block";
-                      document.getElementById("sg1").style.display = "block";
-                      //document.getElementById("ig2").style.display = "none";
-                      document.getElementById("ig").style.display = "none";
-                      document.getElementById("ig1").style.display = "none";
-                }
-                else{
-                    //document.getElementById("cg2").style.display = "none";
-                    document.getElementById("cg").style.display = "none";
-                    document.getElementById("cg1").style.display = "none";
-                    //document.getElementById("sg2").style.display = "none";
-                    document.getElementById("sg").style.display = "none";
-                    document.getElementById("sg1").style.display = "none";
-                    //document.getElementById("ig2").style.display = "block";
-                    document.getElementById("ig").style.display = "block";
-                    document.getElementById("ig1").style.display = "block";
-                }
+            //document.getElementById("cg2").style.display = "block";
+            document.getElementById("cg").style.display = "block";
+            document.getElementById("cg1").style.display = "block";
+            //document.getElementById("sg2").style.display = "block";
+            document.getElementById("sg").style.display = "block";
+            document.getElementById("sg1").style.display = "block";
+            //document.getElementById("ig2").style.display = "none";
+            document.getElementById("ig").style.display = "none";
+            document.getElementById("ig1").style.display = "none";
+        }
+        else{
+            //document.getElementById("cg2").style.display = "none";
+            document.getElementById("cg").style.display = "none";
+            document.getElementById("cg1").style.display = "none";
+            //document.getElementById("sg2").style.display = "none";
+            document.getElementById("sg").style.display = "none";
+            document.getElementById("sg1").style.display = "none";
+            //document.getElementById("ig2").style.display = "block";
+            document.getElementById("ig").style.display = "block";
+            document.getElementById("ig1").style.display = "block";
+        }
     });
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
@@ -622,9 +643,12 @@
 
             document.getElementById("txtRound").value = round.toFixed(2);
 
-                document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
+            document.getElementById("txtCGST").value = cgsttotamt.toFixed(2);
+            //alert(cgsttotamt);
             document.getElementById("txtSGST").value = sgsttotamt.toFixed(2);
+            //alert(sgsttotamt);
             document.getElementById("txtIGST").value = igsttotamt.toFixed(2);
+            //alert(igsttotamt);
             document.getElementById("txtDisc").value = disttotamt.toFixed(2);
 
 
@@ -636,6 +660,33 @@
             alert(ex.message);
         }
     }
+    function changeTot(element) {
+        var isChecked = $(element).prop('checked');
+        var symbol = isChecked ? '-' : '+';
+        var round = document.getElementById("txtRound").value;
+        round = round.startsWith('-') ? round.substring(1) : round;
+        var net = document.getElementById("txtNet").value;
+
+        var total=0;
+     if(symbol=="+")
+     {
+            total = eval(net) + eval(round);
+
+     }
+        if (symbol == "-") {
+            total = eval(net) - eval(round);
+
+        }
+        document.getElementById("txtNet").value = total.toFixed(2);
+
+        //$('#toggle-state').text(symbol);
+    }
+
+    $(document).ready(function () {
+        $('#toggle-two').change(function () {
+            changeTot(this);
+        });
+    });
      function changeDisTot(_this) {
         try {
             var GTot = 0;
@@ -713,8 +764,11 @@
 
             var Fri = document.getElementById("txtFrieghtcharge").value;
 
-            var tot = document.getElementById("hidnet").value;
-
+            var tot = document.getElementById("txtGross").value;
+            var Disc = document.getElementById("txtDisc").value;
+            var IGST = document.getElementById("txtIGST").value;
+            var CGST = document.getElementById("txtCGST").value;
+            var SGST = document.getElementById("txtSGST").value;
 
             if (Fri == "")
                 Fri = 0;
@@ -722,9 +776,20 @@
             if (tot == "")
                 tot = 0;
 
+            if (Disc == "")
+                Disc = 0;
 
-            var rej = eval(tot) + eval(Fri) ;
-            document.getElementById("txtNet").value = rej.toFixed(2);
+            if (IGST == "")
+                IGST = 0;
+
+            if (CGST == "")
+                CGST = 0;
+
+            if (SGST == "")
+                SGST = 0;
+
+            var rej = eval(tot) + eval(Fri) - eval(Disc) + eval(CGST) + eval(SGST) + eval(IGST);
+            //document.getElementById("txtNet").value = rej.toFixed(2);
 
 
             var roundamount = Math.round(rej);
@@ -1451,5 +1516,11 @@
         minView: 2,
         endDate: new Date(),
         forceParse: 0
+    });
+</script>
+<script src="~/js/bootstrap-toggle.min.js"></script>
+<script>
+    (function () {
+        $('#toggle-two').bootstrapToggle();
     });
 </script>

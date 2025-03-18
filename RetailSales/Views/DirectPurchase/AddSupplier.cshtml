@@ -18,13 +18,13 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="widgets-container">
-                    <h5 style="font-size:14px">Supplier @Html.DisplayFor(C => C.Suppid)</h5>
+                    <h5 style="font-size:14px">Add Supplier @Html.DisplayFor(C => C.Suppid)</h5>
                     <hr>
 
                     <form>
                         <br />
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputName3" class="col-sm-5 control-label">Supplier Category<label class="mandatory">*</label></label>
                                     <div class="col-sm-8">
@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
                                     <div class="col-sm-8">
@@ -42,7 +42,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputName3" class="col-sm-5 control-label">Supplier Address</label>
                                     <div class="col-sm-8">
@@ -51,10 +55,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputname3" class="col-sm-4 control-label">Credit Days<label class="mandatory">*</label></label>
                                     <div class="col-sm-8">
@@ -63,7 +64,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
                                     <div class="col-sm-8">
@@ -72,28 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">State</label>
-                                    <div class="col-sm-8">
-                                        @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1, onchange = "changecity(this.value)" })
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">City</label>
-                                    <div class="col-sm-8">
-                                        @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="mandatory">*</label></label>
                                     <div class="col-sm-8">
@@ -102,7 +85,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputName3" class="col-sm-4 control-label">State</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1, onchange = "changecity(this.value)" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputName3" class="col-sm-4 control-label">City</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputName3" class="col-sm-4 control-label">Landline No</label>
                                     <div class="col-sm-8">
@@ -111,10 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="inputName3" class="col-sm-4 control-label">Email ID</label>
                                     <div class="col-sm-8">

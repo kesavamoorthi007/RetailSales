@@ -68,7 +68,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetVarientDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "    SELECT UOM.UOM_CODE,HSNMAST.HSCODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE\r\n WHERE PRO_DETAIL.ID='" + ItemId + "'";
+            SvSql = "    SELECT UOM.UOM_CODE,HSNMAST.HSCODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.ID='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -139,7 +139,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetDirectPurchaseItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT DPBASICID,DPDETAILID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,HSN,DPDETAIL.TARIFF,DPDETAIL.UOM,QTY,DPDETAIL.RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM DPDETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=DPDETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=DPDETAIL.VARIANT  WHERE DPDETAIL.DPBASICID='" + id + "'";
+            SvSql = "SELECT DPBASICID, DPDETAILID, PRODUCT.PRODUCT_NAME, CONCAT(PRO_DETAIL.PRODUCT_VARIANT, ' - ', HSN) AS VARIANT_HSN, DPDETAIL.TARIFF, DPDETAIL.UOM, QTY, DPDETAIL.RATE, AMOUNT, FRIGHT, DIS_AMOUNT, CGSTP, SGSTP, IGSTP, CGST, SGST, IGST, TOTAL_AMOUNT FROM DPDETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID = DPDETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID = DPDETAIL.VARIANT WHERE DPDETAIL.DPBASICID = '" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
