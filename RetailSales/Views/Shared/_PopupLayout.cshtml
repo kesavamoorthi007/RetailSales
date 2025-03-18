@@ -68,6 +68,7 @@
     <!-- tap on tap ends-->
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
+
         <!-- Page Header Start-->
         @* <div class="page-header">
             <div class="header-wrapper row m-0">
@@ -119,6 +120,9 @@
 
             </div>
         </div> *@
+
+    
+
         <!-- Page Header Ends-->
         <!-- Page Body Start-->
         
@@ -181,18 +185,7 @@
 
         </script>
         <script type="text/javascript">
-            jQuery.browser = {};
-            (function () {
-                jQuery.browser.msie = false;
-                jQuery.browser.version = 0;
-                if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
-                    jQuery.browser.msie = true;
-                    jQuery.browser.version = RegExp.$1;
-                }
-            })();
-
-
-            $(".chosen-select").chosen();
+           
             function isNumeric(keyCode) {
                 return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || (keyCode >= 96 && keyCode <= 105));
             }
@@ -212,13 +205,14 @@
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
 
-            <div class="page-body">
+         
                 <div class="container">
                     <main role="main" class="pb-3">
                         @await RenderSectionAsync("Scripts", required: false)
                         @RenderBody()
                     </main>
                 </div>
+
             </div>
 
             <!-- footer start-->
@@ -231,6 +225,11 @@
                     </div>
                 </div>
             </footer> *@
+
+           
+
+         
+
         </div>
     </div>
 

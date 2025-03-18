@@ -6,6 +6,10 @@ using Org.BouncyCastle.Asn1;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
+using RetailSales.Services.Purchase;
+
 namespace RetailSales.Services 
 {
     public class AccConfigService : IAccConfig
@@ -77,35 +81,34 @@ namespace RetailSales.Services
                     if (cy.ID == null)
                     {
                         StatementType = "Insert";
-                        objCmd.Parameters.Add("ID", SqlDbType.NVarChar).Value = DBNull.Value;
+                        objCmd.Parameters.Add("@ID", SqlDbType.NVarChar).Value = DBNull.Value;
                     }
                     else
                     {
                         StatementType = "Update";
-                        objCmd.Parameters.Add("ID", SqlDbType.NVarChar).Value = cy.ID;
+                        objCmd.Parameters.Add("@ID", SqlDbType.NVarChar).Value = cy.ID;
 
                     }
                     
-                    objCmd.Parameters.Add("ADTRANSDESC", SqlDbType.NVarChar).Value = cy.TransactionName;
-                    objCmd.Parameters.Add("ADTRANSID", SqlDbType.NVarChar).Value = cy.TransactionID;
+                    objCmd.Parameters.Add("@TName", SqlDbType.NVarChar).Value = cy.TransactionName;
+                    objCmd.Parameters.Add("@Tid", SqlDbType.NVarChar).Value = cy.TransactionID;
                     
-                    objCmd.Parameters.Add("ADSCHEME", SqlDbType.NVarChar).Value = cy.Scheme;
-                    objCmd.Parameters.Add("ADSCHEMEDESC", SqlDbType.NVarChar).Value = cy.SchemeDes;
+                    objCmd.Parameters.Add("@Scheme", SqlDbType.NVarChar).Value = cy.Scheme;
+                    objCmd.Parameters.Add("@Descrip", SqlDbType.NVarChar).Value = cy.SchemeDes;
 
-                    objCmd.Parameters.Add("BRANCHID", SqlDbType.NVarChar).Value = cy.Branch;
-                    objCmd.Parameters.Add("CREATED_BY", SqlDbType.NVarChar).Value = cy.CreatBy;
-                    objCmd.Parameters.Add("CREATED_ON", SqlDbType.Date).Value = DateTime.Now;
-                    objCmd.Parameters.Add("CURRENT_DATE", SqlDbType.Date).Value = DateTime.Now;
+                    objCmd.Parameters.Add("@Bid", SqlDbType.Int).Value = "0";
+                    objCmd.Parameters.Add("@Crby", SqlDbType.NVarChar).Value = cy.CreatBy;
+                    objCmd.Parameters.Add("@Cron", SqlDbType.Date).Value = DateTime.Now;
+                    objCmd.Parameters.Add("@Cudate", SqlDbType.Date).Value = DateTime.Now;
 
-                    objCmd.Parameters.Add("StatementType", SqlDbType.NVarChar).Value = StatementType;
-                    objCmd.Parameters.Add("OUTID", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
+                    //objCmd.Parameters.Add("@OUTID", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                     try
                     {
 
                         objConn.Open();
-                        objCmd.ExecuteNonQuery();
-                        Object Pid = objCmd.Parameters["OUTID"].Value;
+                        Object Pid = objCmd.ExecuteScalar();
                         if (cy.ID != null)
                         {
                             Pid = cy.ID;
@@ -123,16 +126,16 @@ namespace RetailSales.Services
                                     SqlCommand objCmds = new SqlCommand("ADCOMPD_PROC", objConns);
                                    
                                         StatementType = "Insert";
-                                        objCmds.Parameters.Add("ID", SqlDbType.NVarChar).Value = DBNull.Value;
+                                        objCmds.Parameters.Add("@ID", SqlDbType.NVarChar).Value = DBNull.Value;
                                    
                                     objCmds.CommandType = CommandType.StoredProcedure;
-                                    objCmds.Parameters.Add("ADCOMPHID", SqlDbType.NVarChar).Value = Pid;
-                                    objCmds.Parameters.Add("ADTYPE", SqlDbType.NVarChar).Value = cp.Type;
-                                    objCmds.Parameters.Add("ADNAME", SqlDbType.NVarChar).Value = cp.Tname;
-                                    objCmds.Parameters.Add("ADSCHEMENAME", SqlDbType.NVarChar).Value = cp.Schname;
-                                    objCmds.Parameters.Add("ADACCOUNT", SqlDbType.NVarChar).Value = cp.ledger;
+                                    objCmds.Parameters.Add("@Pid", SqlDbType.NVarChar).Value = Pid;
+                                    objCmds.Parameters.Add("@Ttype", SqlDbType.NVarChar).Value = cp.Type;
+                                    objCmds.Parameters.Add("@Tname", SqlDbType.NVarChar).Value = cp.Tname;
+                                    objCmds.Parameters.Add("@Scheme", SqlDbType.NVarChar).Value = cp.Schname;
+                                    objCmds.Parameters.Add("@Acco", SqlDbType.NVarChar).Value = cp.ledger;
 
-                                    objCmds.Parameters.Add("StatementType", SqlDbType.NVarChar).Value = StatementType;
+                                    objCmds.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                                     objConns.Open();
                                     objCmds.ExecuteNonQuery();
                                     objConns.Close();
@@ -158,8 +161,8 @@ namespace RetailSales.Services
 
             return msg;
         }
-
        
+
         public DataTable GetAccConfig(string id)
         {
             string SvSql = string.Empty;
@@ -256,7 +259,7 @@ namespace RetailSales.Services
         public DataTable GetConfigItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select ADTYPE,ADNAME,ADSCHEMENAME,M.MNAME LEDNAME from ADCOMPD A LEFT OUTER JOIN MASTER M ON M.MASTERID = A.ADACCOUNT where A.ADCOMPHID= '" + id + "' ";
+            SvSql = "Select ADTYPE,ADNAME,ADSCHEMENAME,M.LEDGER_NAME LEDNAME from ADCOMPD A LEFT OUTER JOIN ACC_LEDGER M ON M.ID = A.ADACCOUNT where A.ADCOMPHID= '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
