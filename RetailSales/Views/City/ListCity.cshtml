@@ -23,7 +23,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>ListCity </strong> </li>
+            <li class="active"> <strong>List City </strong> </li>
         </ol>
     </div>
 </div>
@@ -44,8 +44,8 @@
                 { name: 'ciname', type: 'string' },
                 { name: 'statid', type: 'string' },
                 { name: 'counid', type: 'string' },
-                { name: 'edit', type: 'string' },
-                { name: 'delete', type: 'string' },
+                { name: 'editrow', type: 'string' },
+                { name: 'delrow', type: 'string' },
 
             ],
             id: 'id',
@@ -85,8 +85,8 @@
                     { text: 'Country Name', filtertype: 'input', datafield: 'counid', width: 200 },
                     { text: 'State name', filtertype: 'input', datafield: 'statid', width: 200 },
                     { text: 'City Name', filtertype: 'checkedlist', datafield: 'ciname', width: 200 },
-                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
+                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
             });
         $("#ddlStatus").change(function () {

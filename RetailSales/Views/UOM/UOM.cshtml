@@ -38,7 +38,7 @@
                         <form>
                             <br />
                             <div class="row">
-                                <!--<div class="col-lg-3"></div>-->
+                                <div class="col-lg-3"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">UOM Code<label class="mandatory">*</label></label>
@@ -48,10 +48,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Description</label>
+                                        <br/><label for="inputName3" class="col-sm-4 control-label">Description</label>
                                         <div class="col-sm-8">
                                             @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
@@ -59,15 +61,16 @@
                                 </div>
                             </div>
                             <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">Conversion Factor<label class="mandatory">*</label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Factor, new { @id = "txtFactor", @class = "form-control", @TabIndex = 1 })<br />
-                                        @Html.HiddenFor(C => C.ID)
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Conversion Factor<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Factor, new { @id = "txtFactor", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
                                     </div>
                                 </div>
-                              </div>
                             </div>
                             
 
@@ -75,7 +78,7 @@
                             <div class="row">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-9">
-                                    <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
+                                    <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
                                     <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListUOM", "UOM")'">Cancel</button>
                                 </div>                               
                             </div>
@@ -111,38 +114,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtDescription").value == "" ) {
-                isValid = false;
-                $(txtDescription).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-               
-                alert("Please Enter Description");
-                return false;
-            }
-            else {
-                $(txtDescription).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtFactor").value == "") {
-                isValid = false;
-                $(txtFactor).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Factor");
-                return false;
-            }
-            else {
-                $(txtFactor).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            
             if (isValid == false)
                 e.preventDefault();
         });

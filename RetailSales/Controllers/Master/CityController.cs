@@ -29,7 +29,7 @@ namespace RetailSales.Controllers
             // country binding
             ic.colist = BindCountry();
             // state binding
-            ic.stlist = BindState();
+            ic.stlist = BindState("");
 
             if (id == null)
             {
@@ -107,11 +107,11 @@ namespace RetailSales.Controllers
         }
 
         // Binding State
-        public List<SelectListItem> BindState()
+        public List<SelectListItem> BindState(string stateid)
         {
             try
             {
-                DataTable dtDesg1 = CityServices.GetState();
+                DataTable dtDesg1 = CityServices.GetState(stateid);
                 List<SelectListItem> lstdesg1 = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg1.Rows.Count; i++)
                 {
@@ -125,13 +125,18 @@ namespace RetailSales.Controllers
             }
         }
 
+        public JsonResult GetstateJSON(string stateid)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindState(stateid));
+        }
+
         // retrieves to listcity view page
         public IActionResult ListCity() 
         {
             return View();
         }
-
-
 
         public ActionResult MyListCitygrid(string strStatus)
         {
