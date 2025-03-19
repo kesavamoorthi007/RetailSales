@@ -42,8 +42,10 @@ namespace RetailSales.Controllers.Master
                     ic.Category = dt.Rows[0]["SUPP_CAT"].ToString();
                     //ic.Delivery = dt.Rows[0]["DEL_LEAD_TIME"].ToString();
                     ic.Days = dt.Rows[0]["CR_DAYS"].ToString();
-                    ic.City = dt.Rows[0]["CITY"].ToString();
+                 
                     ic.State = dt.Rows[0]["STATE"].ToString();
+                    ic.Citylst = BindCity(ic.State);
+                    ic.City = dt.Rows[0]["CITY"].ToString();
                     //ic.Country = dt.Rows[0]["COUNTRY"].ToString();
                     ic.Gst = dt.Rows[0]["GST_NO"].ToString();
                     ic.Mobile = dt.Rows[0]["MOBILE_NO"].ToString();

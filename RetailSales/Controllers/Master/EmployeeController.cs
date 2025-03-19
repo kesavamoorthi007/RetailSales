@@ -69,6 +69,8 @@ namespace RetailSales.Controllers.Master
                     ic.Bank = dt.Rows[0]["BANK"].ToString();
                     ic.AccNumber = dt.Rows[0]["ACCNUMBER"].ToString();
                     ic.AadharNumber = dt.Rows[0]["AANUMBER"].ToString();
+                    ic.Uname = dt.Rows[0]["USER_NAME"].ToString();
+                    ic.Pass = dt.Rows[0]["PASSWORD"].ToString();
 
                 }
 

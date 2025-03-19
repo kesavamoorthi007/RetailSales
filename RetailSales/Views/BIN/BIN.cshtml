@@ -56,7 +56,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Location<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.Location, Model.locationlist, "---Plaese Select---", new { @id = "txtlocation", @class = "form-control _select", @TabIndex = 1 })<br />
+                                            @Html.DropDownListFor(C => C.Location, Model.locationlist, "---Please Select---", new { @id = "txtlocation", @class = "form-control _select", @TabIndex = 1 })<br />
                                             @* @Html.TextBoxFor(C => C.Location, new { @id = "txtlocation", @class = "form-control", @TabIndex = 1 })<br /> *@
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-9">
-                                    <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
+                                    <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
                                     <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListBIN", "BIN")'">Cancel</button>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter BIN ID");
+                alert("Please Enter BIN No");
                 return false;
             }
             else {
