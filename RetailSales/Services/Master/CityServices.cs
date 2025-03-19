@@ -30,28 +30,16 @@ namespace RetailSales.Services
 
         // used for state binding and retrieving from database
 
-        public DataTable GetState()
+        public DataTable GetState(string stateid)
         {
             string SvSql = string.Empty;
-            SvSql = "select STATE.ID,STATE.STATE_NAME,STATE.STATE_CODE,STATE.IS_ACTIVE,STATE.COUNTRY_ID,STATE.CREATED_BY,STATE.CREATED_ON,STATE.UPDATED_BY,STATE.UPDATED_ON from STATE  WHERE STATE.IS_ACTIVE='Y' ";
+            SvSql = "select STATE.ID,STATE.STATE_NAME,STATE.IS_ACTIVE from STATE  WHERE COUNTRY_ID = '" + stateid + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
-
-        public DataTable GetCity()
-        {
-            string SvSql = string.Empty;
-            SvSql = "select CITY.ID,CITY.CITY_NAME,CITY.COUNTRY_ID,CITY.STATE_ID,CITY.CREATED_BY,CITY.CREATED_ON,CITY.UPDATED_BY,CITY.UPDATED_ON,CITY.IS_ACTIVE from CITY  WHERE CITY.IS_ACTIVE='Y' ";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-
 
         // retrieving from database
 

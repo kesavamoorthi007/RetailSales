@@ -26,9 +26,7 @@ namespace RetailSales.Interface
         DataTable GetCountry();
 
         // used for state binding and retrieving from database
-        DataTable GetState();
+        DataTable GetState(string stateid);
 
-        // used for City binding and retrieving from database
-        DataTable GetCity();
     }
 }

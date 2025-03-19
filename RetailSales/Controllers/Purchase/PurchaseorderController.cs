@@ -52,7 +52,7 @@ namespace RetailSales.Controllers.Purchase
 
             if (id == null)
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     tda = new PurchaseorderItem();
                     tda.Itemlst = BindItem();
@@ -224,8 +224,8 @@ namespace RetailSales.Controllers.Purchase
                 {
                     tda = new PurchaseorderItem();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
+                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
@@ -275,13 +275,15 @@ namespace RetailSales.Controllers.Purchase
                 double igst = 0;
                 string per = "";
                 string state = "Tamil Nadu";
+                string uomid = "";
                 dt = PurchaseorderService.GetVarientDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
                 {
                     //des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
-                    hsn = dt.Rows[0]["HSCODE"].ToString();
+					uomid= dt.Rows[0]["UOM_ID"].ToString();
+					hsn = dt.Rows[0]["HSCODE"].ToString();
                     rate = dt.Rows[0]["RATE"].ToString();
                     dt1 = PurchaseorderService.GetHsn(ItemId);
                     if (dt1.Rows.Count > 0)
@@ -326,7 +328,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new { uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
+                var result = new { uomid= uomid,uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
                 return Json(result);
             }
             catch (Exception ex)
@@ -757,8 +759,8 @@ namespace RetailSales.Controllers.Purchase
                     tda = new PurchaseorderItem();
                     tda.UOMlst = BindUOM();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
+                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();

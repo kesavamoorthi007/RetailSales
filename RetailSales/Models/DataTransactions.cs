@@ -182,7 +182,7 @@ namespace RetailSales.Models
             }
             return str;
         }
-      
 
+        
     }
 }

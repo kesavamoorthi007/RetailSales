@@ -106,6 +106,8 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@aadharnumber", SqlDbType.NVarChar).Value = cy.AadharNumber;
                     objCmd.Parameters.Add("@bank", SqlDbType.NVarChar).Value = cy.Bank;
                     objCmd.Parameters.Add("@accnumber", SqlDbType.NVarChar).Value = cy.AccNumber;
+                    objCmd.Parameters.Add("@username", SqlDbType.NVarChar).Value = cy.Uname;
+                    objCmd.Parameters.Add("@password", SqlDbType.NVarChar).Value = cy.Pass;
 
                     //objCmd.Parameters.Add("@ReportTo", SqlDbType.NVarChar).Value = cy.Report;
 
@@ -136,7 +138,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditEmployeeDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,EMPLOYEE_ID,FNAME,GENDER,ADDRESS,CITY_ID,STATE_ID,COUNTRY_ID,MOBILE,EMAIL,REMARKS,APPROVED_BY,BRANCH,DEPARTMENT,MARITALSTATUS,EMAILPERSONAL,DATEOFJOINING,DATEOFBIRTH,DATEOFLEAVING,DEGREE,EMPLOYEE_STATUS,REPORT_TO,AANUMBER,ACCNUMBER,BANK FROM USER_REGIST WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,EMPLOYEE_ID,FNAME,GENDER,ADDRESS,CITY_ID,STATE_ID,COUNTRY_ID,MOBILE,EMAIL,REMARKS,APPROVED_BY,BRANCH,DEPARTMENT,MARITALSTATUS,EMAILPERSONAL,CONVERT(varchar, USER_REGIST.DATEOFJOINING, 106) AS DATEOFJOINING,CONVERT(varchar, USER_REGIST.DATEOFBIRTH, 106) AS DATEOFBIRTH,CONVERT(varchar, USER_REGIST.DATEOFLEAVING, 106) AS DATEOFLEAVING,DEGREE,EMPLOYEE_STATUS,REPORT_TO,AANUMBER,ACCNUMBER,BANK,USER_NAME,PASSWORD FROM USER_REGIST WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

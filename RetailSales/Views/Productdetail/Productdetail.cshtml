@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">Product Nickname<label class="mandatory">*</label></label>
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Product Nickname<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Varintnic, new { @id = "txtVarintnic", @class = "form-control", @TabIndex = 1 })
                                         </div>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                    <br> <label for="inputName3" class="col-sm-5 control-label">HSN Code<label class="mandatory"></label></label>
+                                    <br> <label for="inputName3" class="col-sm-5 control-label">HSN Code<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">                                         
                                             @Html.DropDownListFor(C => C.Hsncode, Model.Hsnlst, "---Please Select---", new { @id = "ddlHsn", @Class = "form-control _select", @TabIndex = 1 })
                                        </div>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-5 control-label">Minimum Qty<label class="mandatory">*</label></label>
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">Minimum Qty<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Minqty, new { @id = "txtMinqty", @class = "form-control", @TabIndex = 1 })<br />
 
@@ -93,7 +93,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br> <label for="inputName3" class="col-sm-5 control-label">Rate<label class="mandatory"></label></label>
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">Rate<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Rate, new { @id = "txtRate", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
@@ -164,22 +164,6 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtVarintnicname").value == "") {
-                isValid = false;
-                $(txtVarintnicname).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter product NickName");
-                return false;
-            }
-            else {
-                $(txtVarintnicname).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
             if (document.getElementById("ddlUom").value == "") {
                 isValid = false;
                 $(ddlUom).css({
@@ -196,6 +180,39 @@
                     "background": ""
                 });
             }
+            if (document.getElementById("ddlHsn").value == "") {
+                isValid = false;
+                $(ddlHsn).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select HSN Code");
+                return false;
+            }
+            else {
+                $(ddlHsn).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtRate").value == "") {
+                isValid = false;
+                $(txtRate).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Rate");
+                return false;
+            }
+            else {
+                $(txtRate).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            
             if (document.getElementById("txtminqty").value == "") {
                 isValid = false;
                 $(txtminqty).css({

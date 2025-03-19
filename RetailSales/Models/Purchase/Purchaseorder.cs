@@ -17,6 +17,7 @@ namespace RetailSales.Models
         public string State { get; set; }
         public string City { get; set; }
         public string refdate { get; set; }
+        public string Noofrows { get; set; }
         public string Podate { get; set; }
         public string Supplieraddress { get; set; }
 
@@ -66,6 +67,7 @@ namespace RetailSales.Models
         public string exqty { get; set; }
         public string shortqty { get; set; }
         public string DiscAmount { get; set; }
+        public string DiscPer { get; set; }
         public string FrigCharge { get; set; }
         public string FrieghtAmt { get; set; }
         public string Rate { get; set; }
