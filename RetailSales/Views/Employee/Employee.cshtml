@@ -246,7 +246,7 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Username<label class="mandatory">*</label></label>
+                                                <br /> <label for="inputName3" class="col-sm-4 control-label">User Name<label class="mandatory">*</label></label>
                                                 <div class="col-sm-8">
                                                 @Html.TextBoxFor(C => C.Uname, new { @id = "txtUname", @class = "form-control", @TabIndex = 1 })
                                                 </div>
@@ -339,25 +339,56 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtAccNumber").value == "") {
+            if (document.getElementById("txtAccount").value == "") {
                 isValid = false;
-                $(txtAccNumber).css({
+                $(txtAccount).css({
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Acc Number");
+                alert("Please Enter Account Number");
                 return false;
             }
             else {
-                $(txtAccNumber).css({
+                $(txtAccount).css({
                     "border": "",
                     "background": ""
                 });
             }
       
                          
-       
+            if (document.getElementById("txtUname").value == "") {
+                isValid = false;
+                $(txtUname).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter User Name");
+                return false;
+            }
+            else {
+                $(txtUname).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("txtPass").value == "") {
+                isValid = false;
+                $(txtPass).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Password");
+                return false;
+            }
+            else {
+                $(txtPass).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
        
             if (isValid == false)
                 e.preventDefault();

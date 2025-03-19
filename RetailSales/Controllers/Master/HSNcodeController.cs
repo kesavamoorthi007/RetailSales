@@ -245,13 +245,15 @@ namespace RetailSales.Controllers
                 {
 
                     EditRow = "<a href=HSNcode?id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "><img src='../Images/edit.png' alt='Edit' /></a>";
-                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
+                    //DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
+                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
 
                     EditRow = "";
-                    DeleteRow = "Remove?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
+                    //DeleteRow = "Remove?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
 
                
