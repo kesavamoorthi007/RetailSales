@@ -23,6 +23,7 @@ namespace RetailSales.Controllers.Master
         public IActionResult EmailConfig(string id)
         {
             EmailConfig ic = new EmailConfig();
+            ic.SSL = "Yes";
             
             if (id == null)
             {
@@ -39,6 +40,9 @@ namespace RetailSales.Controllers.Master
                     ic.Smtphost = dt.Rows[0]["SMTP_HOST"].ToString();
                     ic.Portno = dt.Rows[0]["PORT_NO"].ToString();
                     ic.Emailid = dt.Rows[0]["EMAIL_ID"].ToString();
+                    ic.Password = dt.Rows[0]["PASSWORD"].ToString();
+                    ic.SSL = dt.Rows[0]["SSL"].ToString();
+                    ic.Signature = dt.Rows[0]["SIGNATURE"].ToString();
                 }
             }
             return View(ic);
