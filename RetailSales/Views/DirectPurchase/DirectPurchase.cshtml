@@ -1003,11 +1003,27 @@
             return whole;
         }
     } *@
-     
-   
-    
 
-    function removeRow(i) {
+
+        function removeRow(id) {
+            var row = document.getElementById('trBook' + id);
+            var rowCount = $("#tbBooks tr.chkitemlst").length; // Count visible rows
+
+            if (rowCount > 1) {
+                row.remove(); // Completely remove the row from the DOM
+
+                // Recalculate Serial Numbers
+                $("#tbBooks tr.chkitemlst").each(function (index) {
+                    $(this).find("td:first").text(index + 1); // Update displayed Serial No.
+                    $(this).find("input[id^='sno']").val(index + 1); // Update hidden field
+                });
+
+            } else {
+                alert("Cannot delete all the rows.");
+            }
+        }
+
+   @* function removeRow(i) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
         var row = document.getElementById('trBook' + i);
@@ -1023,7 +1039,7 @@
         }
         else {
             alert("Cannot delete all the rows.")
-        }
+        }*@
          try {
             var GTot = 0;
             var j = 0;

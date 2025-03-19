@@ -274,7 +274,7 @@ namespace RetailSales.Controllers.Purchase
                 double sgst = 0;
                 double igst = 0;
                 string per = "";
-                string state = "Tamil Nadu";
+                string state = "1047";
                 string uomid = "";
                 dt = PurchaseorderService.GetVarientDetails(ItemId);
 

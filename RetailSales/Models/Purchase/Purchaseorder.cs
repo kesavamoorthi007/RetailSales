@@ -83,7 +83,7 @@ namespace RetailSales.Models
         public string SGST { get; set; }
         public string IGST { get; set; }
         public string Total { get; set; }
-
+        public string sno { get; set; }
 
     }
     public class ListPurchaseordergrid
