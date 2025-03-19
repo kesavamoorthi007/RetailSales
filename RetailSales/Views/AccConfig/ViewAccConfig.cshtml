@@ -15,22 +15,22 @@
         left: 5px;
     }
 </style>
-<div class="row wrapper border-bottom page-heading">
+@* <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
-        <ol class="breadcrumb">
-            <li> <a href="#">Home</a> </li>
+         <ol class="breadcrumb">
+             <li> <a href="#">Home</a> </li>
             <li> <a>Sales</a> </li>
-            <li class="active"> <strong>AccConfig</strong> </li>
-        </ol>
+            <li class="active"> <strong>AccConfig</strong> </li> 
+        </ol> 
     </div>
-</div>
+</div> *@
 <div class="wrapper-content ">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="widgets-container">
-                    <h5 style="font-size:14px">AccConfig</h5>
+                    <h5 style="font-size:14px"><strong>Account Config</strong></h5>
                     <hr>
                     @*  @using (Html.BeginForm("ApproveProEntry", "DepotInvoice", FormMethod.Post))
                     {
@@ -138,11 +138,8 @@
                    
                 </div>
                 <div style="height:30px;"></div>
-
-
-                @*                <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListQCTesting", "QCTesting")'">Cancel</button>
-                *@
-                <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+                <div class="col-lg-10"></div>
+                <a button class="btn btn-danger" type="button" href="@Url.Action("ListAccConfig", "AccConfig")">Cancel</a>
 
             </div>
         </div>

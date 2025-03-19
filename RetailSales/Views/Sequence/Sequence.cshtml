@@ -109,6 +109,7 @@
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
+            
             if (document.getElementById("txtTransectiontype").value == "") {
                 isValid = false;
                 $(txtTransectiontype).css({
@@ -116,17 +117,7 @@
                     "background": "#FFCECE"
                 });
 
-
-                alert("Please Enter Transection Type");
-
-            if (document.getElementById("txtTransectiontype").value == "") {
-                isValid = false;
-                $(txtTransectiontype).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Transaction type");
+                alert("Please Enter Transaction Type");
                 return false;
             }
             else {
@@ -158,7 +149,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Lastnumber");
+                alert("Please Enter Last Number");
                 return false;
             }
             else {
