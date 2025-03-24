@@ -134,18 +134,20 @@ namespace RetailSales.Controllers.Inventory
             {
 
 
-                string Edit = string.Empty;
-                string Delete = string.Empty;
+                //string Edit = string.Empty;
+                //string Delete = string.Empty;
+                string View = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
-                {                    
-                    Edit = "<a href=StockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                {
+                    View = "<a href=ViewStockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    //Edit = "<a href=StockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    //Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
-                    Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    //Edit = "";
+                    //Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
 
                 Reg.Add(new ListStockAdjustmentgrid
@@ -155,8 +157,9 @@ namespace RetailSales.Controllers.Inventory
                     type = dtUsers.Rows[i]["TYPE"].ToString(),
                     docid = dtUsers.Rows[i]["DOCID"].ToString(),
                     docdate = dtUsers.Rows[i]["DOCDATE"].ToString(),
-                    edit = Edit,
-                    delete = Delete,
+                    view = View,
+                    //edit = Edit,
+                    //delete = Delete,
 
                 });
             }
@@ -166,6 +169,49 @@ namespace RetailSales.Controllers.Inventory
                 Reg
             });
 
+        }
+
+        public IActionResult ViewStockAdjustment(string id)
+        {
+            StockAdjustment ic = new StockAdjustment();
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = StockAdjustmentService.GetStockAdjustment(id);
+            if(dt.Rows.Count > 0)
+            {
+                ic.Location = dt.Rows[0]["LOCATION_NAME"].ToString();
+                ic.Type = dt.Rows[0]["TYPE"].ToString();
+                ic.DocId = dt.Rows[0]["DOCID"].ToString();
+                ic.DocDate = dt.Rows[0]["DOCDATE"].ToString();
+                ic.Reason = dt.Rows[0]["REASON"].ToString();
+            }
+
+            List<StockAdjustmentItem> TData = new List<StockAdjustmentItem>();
+            StockAdjustmentItem tda = new StockAdjustmentItem();
+
+            dtt = StockAdjustmentService.GetStockAdjustmentItem(id);
+            if(dtt.Rows.Count > 0)
+            {
+                for(int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new StockAdjustmentItem();
+                    tda.Itemlst = BindItem();
+                    tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Variantlst = BindVariant(tda.Item);
+                    tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Unit = dtt.Rows[i]["UOM"].ToString();
+                    tda.StockQty = dtt.Rows[i]["STOCKQTY"].ToString();
+                    tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+
+                    tda.ID = id;
+                    TData.Add(tda);
+                }
+            }
+            ic.StockAdjustmentList = TData;
+            return View(ic);
         }
 
         private List<SelectListItem> BindLocation()

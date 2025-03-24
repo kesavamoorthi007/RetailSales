@@ -79,6 +79,7 @@ namespace RetailSales.Controllers.Purchase
                     ic.Country = dt.Rows[0]["COUNTRY"].ToString();
                     ic.State = dt.Rows[0]["STATE"].ToString();
                     ic.City = dt.Rows[0]["CITY"].ToString();
+                    ic.GST = dt.Rows[0]["GST_NO"].ToString();
                     ic.refno = dt.Rows[0]["REF_NO"].ToString();
                     ic.refdate = dt.Rows[0]["REF_DATE"].ToString();
                     ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
@@ -120,6 +121,7 @@ namespace RetailSales.Controllers.Purchase
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                         tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
+                        tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
                         tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                         tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                         tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
@@ -193,6 +195,7 @@ namespace RetailSales.Controllers.Purchase
                 ic.City = dt.Rows[0]["CITY"].ToString();
                 ic.refno = dt.Rows[0]["REF_NO"].ToString();
                 ic.refdate = dt.Rows[0]["REF_DATE"].ToString();
+                ic.GST = dt.Rows[0]["GST_NO"].ToString();
                 ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
                 ic.Narration = dt.Rows[0]["NARRATION"].ToString();
                 ic.drivername = dt.Rows[0]["TRANS_SPORTER"].ToString();
@@ -236,6 +239,7 @@ namespace RetailSales.Controllers.Purchase
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                     tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
                     tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
+                    tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
                     tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                     tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
                     tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
@@ -725,6 +729,7 @@ namespace RetailSales.Controllers.Purchase
                 ic.Country = dt.Rows[0]["COUNTRY"].ToString();
                 ic.State = dt.Rows[0]["STATE"].ToString();
                 ic.City = dt.Rows[0]["CITY"].ToString();
+                ic.GST = dt.Rows[0]["GST_NO"].ToString();
                 ic.refno = dt.Rows[0]["REF_NO"].ToString();
                 ic.refdate = dt.Rows[0]["REF_DATE"].ToString();
                 ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();

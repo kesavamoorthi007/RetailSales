@@ -25,7 +25,7 @@ namespace RetailSales.Models
 
         public List<StockTransferItem> StockTransferItemLst { get; set; }
         public string ID { get; internal set; }
-        public List<StockTransferItem> StockTransferLst { get; internal set; }
+        
     }
     public class StockTransferItem
     {

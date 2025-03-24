@@ -50,8 +50,9 @@ namespace RetailSales.Models.Inventory
         public string type { get; set; }
         public string docid { get; set; }
         public string docdate { get; set; }
-        public string edit { get; set; }
-        public string delete { get; set; }
+        public string view { get; set; }
+        //public string edit { get; set; }
+        //public string delete { get; set; }
     }
 
 }

@@ -41,6 +41,28 @@ namespace RetailSales.Controllers.Accounts
             ca.Contralst = TData;
             return View(ca);
         }
+
+        public ActionResult GetLedgerDetails(string ItemId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                string balance = "";
+                dt = ContraVoucherService.GetLedgerDetails(ItemId);
+
+                if (dt.Rows.Count > 0)
+                {
+                    balance = dt.Rows[0]["CLOSE_BAL"].ToString();
+                }
+
+                var result = new { balance = balance };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<SelectListItem> BindDbCr()
         {
             try

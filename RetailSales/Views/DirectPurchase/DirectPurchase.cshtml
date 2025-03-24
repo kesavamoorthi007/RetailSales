@@ -11,8 +11,8 @@
     
     .mandatory {
         color: red;
-        position: relative;F
-        top: 2pxF
+        position: relative;
+        top: 2px;
         left: 5px;
     }
 
@@ -77,7 +77,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-6 control-label">Supplier Name<label class="mandatory">*</label></label>
-                                        <div class="input-group">
+                                        <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ",new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
                                             
                                         </div>
@@ -538,6 +538,7 @@
                 document.getElementById("txtSupplieraddress").value = result.add;
                 document.getElementById("txtState").value = result.state;
                 document.getElementById("txtCity").value = result.city;
+
 
 
                 if(result.state == "Tamil Nadu"){
@@ -1040,7 +1041,7 @@
         else {
             alert("Cannot delete all the rows.")
         }*@
-         try {
+        try {
             var GTot = 0;
             var j = 0;
             var qty = 0;
@@ -1254,7 +1255,7 @@
         catch (ex) {
             alert(ex.message);
         }
-    }
+    
     function AddRow() {
         var opt = "";
         $.ajax({

@@ -52,10 +52,10 @@ namespace RetailSales.Services.Accounts
                     datatrans = new DataTransactions(_connectionString);
 
 
-                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'PO' AND IS_ACTIVE = 'Y'");
-                    string VocNo = string.Format("{0}{1}{2}", "PO/", "24-25/", (idc + 1).ToString());
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'DN' AND IS_ACTIVE = 'Y'");
+                    string VocNo = string.Format("{0}{1}{2}", "DN/", "24-25/", (idc + 1).ToString());
 
-                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='PO' AND IS_ACTIVE ='Y'";
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='DN' AND IS_ACTIVE ='Y'";
                     try
                     {
                         datatrans.UpdateStatus(updateCMd);

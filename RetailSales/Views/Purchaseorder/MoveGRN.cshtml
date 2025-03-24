@@ -103,6 +103,16 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">GST No<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DisplayFor(C => C.GST)
+                                            @Html.HiddenFor(C => C.GST)
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Supplier Ref No<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.DisplayFor(C => C.refno)
@@ -323,7 +333,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>FRIGHT (₹)</th>
+                                                    <th>FREIGHT (₹)</th>
                                                     <td>
                                                         @Html.HiddenFor(C => C.Frieghtcharge)
                                                         @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })

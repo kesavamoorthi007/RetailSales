@@ -15,5 +15,7 @@ namespace RetailSales.Interface.Inventory
         string StockAdjustmentCRUD(StockAdjustment cy);
         string StatusChange(string tag, string id);
         string RemoveChange(string tag, string id);
+        DataTable GetStockAdjustment(string id);
+        DataTable GetStockAdjustmentItem(string id);
     }
 }

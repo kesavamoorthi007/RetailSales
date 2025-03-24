@@ -25,5 +25,16 @@ namespace RetailSales.Services.Accounts
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetLedgerDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT CLOSE_BAL FROM ACC_LEDGER  WHERE ID='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
     }
 }

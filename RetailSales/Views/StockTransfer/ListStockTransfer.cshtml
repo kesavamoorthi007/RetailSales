@@ -49,7 +49,7 @@
                 { name: 'tBin', type: 'string' },
                
                 { name: 'view', type: 'string' },
-                { name: 'delrow', type: 'string' },
+                // { name: 'delrow', type: 'string' },
 
             ],
             id: 'id',
@@ -95,7 +95,7 @@
                  
 
                     { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    //{ text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -124,7 +124,7 @@
                             <div class="col-md-2 ">
                                 @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
                                 { new SelectListItem() {Text = "Enabled", Value="Y"},
-                                new SelectListItem() {Text = "Disabled", Value="N"}},
+                                new SelectListItem() {Text = "Disabled", Value="Y"}},
                                 new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">

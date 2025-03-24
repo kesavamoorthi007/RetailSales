@@ -31,7 +31,7 @@ namespace RetailSales.Controllers.Accounts
         {
             CreditNote ic = new CreditNote();                       
             ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            DataTable dtv = datatrans.GetSequence("Credit Note");
             if (dtv.Rows.Count > 0)
             {
                 ic.VocNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
@@ -206,7 +206,7 @@ namespace RetailSales.Controllers.Accounts
             SalesCreditNote ic = new SalesCreditNote();
             ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.InvDate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            DataTable dtv = datatrans.GetSequence("Credit Note");
             if (dtv.Rows.Count > 0)
             {
                 ic.VocNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
