@@ -115,8 +115,6 @@ namespace RetailSales.Services
 
         }
 
-
-
         public DataTable GetTBin()
         {
             string SvSql = string.Empty;
@@ -127,20 +125,24 @@ namespace RetailSales.Services
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetStockTransferItem(string id)
+
+        public DataTable GetStockTransfer(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ST_BASIC_ID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,UNIT,STOCK,QUANTITY,AMOUNT,STOCK_TRAN_DETAIL.RATE FROM STOCK_TRAN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STOCK_TRAN_DETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STOCK_TRAN_DETAIL.VARIANT   WHERE STOCK_TRAN_DETAIL.ST_BASIC_ID='" + id + "'";
+            SvSql = " SELECT STB.STOCK_TRANSFER_ID, STB.STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION, FBM.BINID AS FBIN, TBM.BINID AS TOBIN FROM  dbo.STOCK_TRAN_BASICS AS STB LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STB.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STB.FROM_BIN_ID = FBM.ID WHERE STB.ST_BASIC_ID='" + id + "'";
+
+            //SvSql = " SELECT STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID FROM STOCK_TRAN_BASICS WHERE STOCK_TRAN_BASICS.ST_BASIC_ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetStockTransfer(string id)
+
+        public DataTable GetStockTransferItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = " SELECT STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID FROM STOCK_TRAN_BASICS WHERE STOCK_TRAN_BASICS.ST_BASIC_ID='" + id + "'";
+            SvSql = "SELECT ST_BASIC_ID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,UNIT,STOCK,QUANTITY,AMOUNT,STOCK_TRAN_DETAIL.RATE FROM STOCK_TRAN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STOCK_TRAN_DETAIL.ITEM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STOCK_TRAN_DETAIL.VARIANT   WHERE STOCK_TRAN_DETAIL.ST_BASIC_ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

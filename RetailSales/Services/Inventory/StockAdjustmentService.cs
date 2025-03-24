@@ -103,6 +103,28 @@ namespace RetailSales.Services.Inventory
             return dtt;
         }
 
+        public DataTable GetStockAdjustment(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT LOCATION.LOCATION_NAME, TYPE, DOCID, CONVERT(varchar, STKADJBASIC.DOCDATE,106) AS DOCDATE, REASON FROM STKADJBASIC LEFT OUTER JOIN LOCATION ON LOCATION.ID=STKADJBASIC.LOCATION WHERE STKADJBASIC.STKADJBASICID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetStockAdjustmentItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT STKADJBASICID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,STKADJDETAIL.UOM,STOCKQTY,QTY,AMOUNT,STKADJDETAIL.RATE FROM STKADJDETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STKADJDETAIL.PRODUCT_NAME LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STKADJDETAIL.VARIANT WHERE STKADJDETAIL.STKADJBASICID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public string StockAdjustmentCRUD(StockAdjustment cy)
         {
             string msg = "";
@@ -239,5 +261,7 @@ namespace RetailSales.Services.Inventory
             }
             return "";
         }
+
+        
     }
 }

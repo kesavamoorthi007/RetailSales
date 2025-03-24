@@ -103,7 +103,7 @@ namespace RetailSales.Services.Master
                     }
                     else
                     {
-                        svSQL = "Update COMP_BANK_ACC set ACC_NAME = '" + Cy.Accountname + "',ACC_NO = '" + Cy.Accountnumber + "',BANK_NAME = '" + Cy.Bankname + "',ACC_TYPE = '" + Cy.Accounttype + "',BRANCH_NAME = '" + Cy.Branchname + "',BRANCH_ADDR = '" + Cy.Branchaddress + "',BR_COUNTRY = '" + Cy.Country + "',BR_STATE = '" + Cy.State + "',BR_CITY = '" + Cy.City + "',BSR_CODE = '" + Cy.Bsrcode + "',IFSC_CODE = '" + Cy.Ifsccode + "' WHERE COMP_BANK_ACC.A_Id ='" + Cy.ID + "'";
+                        svSQL = "Update COMP_BANK_ACC set ACC_NAME = '" + Cy.Accountname + "',ACC_NO = '" + Cy.Accountnumber + "',BANK_NAME = '" + Cy.Bankname + "',ACC_TYPE = '" + Cy.Accounttype + "',BRANCH_NAME = '" + Cy.Branchname + "',BRANCH_ADDR = '" + Cy.Branchaddress + "',BR_COUNTRY = '" + Cy.Country + "',BR_STATE = '" + Cy.State + "',BR_CITY = '" + Cy.City + "',BSR_CODE = '" + Cy.Bsrcode + "',IFSC_CODE = '" + Cy.Ifsccode + "' WHERE COMP_BANK_ACC.ID ='" + Cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
                     }

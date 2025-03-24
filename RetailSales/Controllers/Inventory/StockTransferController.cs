@@ -28,7 +28,7 @@ namespace RetailSales.Controllers
 
          
             ic.DocumentDate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("StockTransfor");
+            DataTable dtv = datatrans.GetSequence("Stock Transfer");
 
             if (dtv.Rows.Count > 0)
             {
@@ -321,12 +321,12 @@ namespace RetailSales.Controllers
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                    //DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
                 }
                 else
                 {
-                    View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    //View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
                 Reg.Add(new StockTransfergrid
                 {
@@ -361,8 +361,8 @@ namespace RetailSales.Controllers
                 ic.DocumentDate = dt.Rows[0]["STOCK_TRANSFER_DATE"].ToString();
                 ic.Flocation = dt.Rows[0]["FROM_LOCATION"].ToString();
                 ic.Tlocation = dt.Rows[0]["TO_LOCATION"].ToString();
-                ic.FBin = dt.Rows[0]["FROM_BIN_ID"].ToString();
-                ic.TBin = dt.Rows[0]["TO_BIN_ID"].ToString();
+                ic.FBin = dt.Rows[0]["FBIN"].ToString();
+                ic.TBin = dt.Rows[0]["TOBIN"].ToString();
                
 
             }
@@ -381,20 +381,20 @@ namespace RetailSales.Controllers
 
                     tda = new StockTransferItem();
                     tda.Itemlst = BindItem();
-                    tda.Item = dtt.Rows[0]["PRODUCT_NAME"].ToString();
+                    tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Varientlst = BindVarient(tda.Item);
-                    tda.Varient = dtt.Rows[0]["PRODUCT_VARIANT"].ToString();
-                    tda.Unit = dtt.Rows[0]["UNIT"].ToString();
-                    tda.Stock = dtt.Rows[0]["STOCK"].ToString();
-                    tda.Qty = dtt.Rows[0]["QUANTITY"].ToString();
-                    tda.Rate = dtt.Rows[0]["RATE"].ToString();
-                    tda.Amount = dtt.Rows[0]["AMOUNT"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Unit = dtt.Rows[i]["UNIT"].ToString();
+                    tda.Stock = dtt.Rows[i]["STOCK"].ToString();
+                    tda.Qty = dtt.Rows[i]["QUANTITY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
 
                     tda.ID = id;
                     TData.Add(tda);
                 }
             }
-            ic.StockTransferLst = TData;
+            ic.StockTransferItemLst = TData;
             return View(ic);
         }
 

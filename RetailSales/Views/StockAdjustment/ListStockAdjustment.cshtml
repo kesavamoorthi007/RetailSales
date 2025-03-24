@@ -44,8 +44,9 @@
                 { name: 'type', type: 'string' },
                 { name: 'docid', type: 'string' },
                 { name: 'docdate', type: 'string' },
-                { name: 'edit', type: 'string' },
-                { name: 'delete', type: 'string' },
+                { name: 'view', type: 'string' },
+                //{ name: 'edit', type: 'string' },
+                //{ name: 'delete', type: 'string' },
 
 
             ],
@@ -87,8 +88,9 @@
                     { text: 'Date', filtertype: 'input', datafield: 'docdate', width: 200 },                   
                     { text: 'Type', filtertype: 'input', datafield: 'type', width: 200 },
                     { text: 'Location', filtertype: 'checkedlist', datafield: 'location', width: 200 },
-                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    //{ text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    //{ text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -117,7 +119,7 @@
                             <div class="col-md-2 ">
                                 @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
                                          { new SelectListItem() {Text = "Enabled", Value="Y"},
-                                new SelectListItem() {Text = "Disabled", Value="N"}},
+                                new SelectListItem() {Text = "Disabled", Value="Y"}},
                                          new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">

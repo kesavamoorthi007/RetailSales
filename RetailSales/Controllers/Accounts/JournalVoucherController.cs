@@ -45,6 +45,28 @@ namespace RetailSales.Controllers.Accounts
             ic.JournalVoucherlst = TData;
             return View(ic);
         }
+
+        public ActionResult GetLedgerDetails(string ItemId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                string balance = "";
+                dt = JournalVoucherService.GetLedgerDetails(ItemId);
+
+                if (dt.Rows.Count > 0)
+                {
+                    balance = dt.Rows[0]["CLOSE_BAL"].ToString();
+                }
+
+                var result = new { balance = balance };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<SelectListItem> BindSection()
         {
             try

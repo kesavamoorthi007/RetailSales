@@ -32,7 +32,7 @@ namespace RetailSales.Controllers.Accounts
             DebitNoteItem tda = new DebitNoteItem();
             List<DebitNoteItem> TData = new List<DebitNoteItem>();                                 
             ic.VocDate = DateTime.Now.ToString("dd-MMM-yyyy");
-            DataTable dtv = datatrans.GetSequence("PurchaseOrder");
+            DataTable dtv = datatrans.GetSequence("Debit Note");
             if (dtv.Rows.Count > 0)
             {
                 ic.VocNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();

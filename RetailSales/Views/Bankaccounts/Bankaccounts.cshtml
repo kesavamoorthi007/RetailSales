@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Account Name<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-6 control-label">Account Holder's Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Accountname, new { @id = "txtAccountname", @class = "form-control", @TabIndex = 1 })
                                         </div>
@@ -52,9 +52,9 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Account Number<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Account Number<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Accountnumber, new { @id = "txtAccountnumber", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.Accountnumber, new { @id = "txtAccountnumber", @class = "form-control",type="number", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Bankname, new { @id = "txtBankname", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">Branch Name<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Branch Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Branchname, new { @id = "txtBranchname", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Branch Address<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Branch Address<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextAreaFor(C => C.Branchaddress, new { @id = "txtBranchaddress", @class = "form-control", @TabIndex = 1 })
                                         </div>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
@@ -114,15 +114,15 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Bsrcode, new { @id = "txtBsrcode", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.Bsrcode, new { @id = "txtBsrcode", @class = "form-control",type="number", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Ifsccode, new { @id = "txtIfsccode", @class = "form-control", @TabIndex = 1 })
                                             @Html.HiddenFor(C => C.ID)
@@ -181,7 +181,7 @@
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
-                alert("Please Enter Account Type");
+                alert("Please Select Account Type");
                 return false;
             }
             else {
@@ -196,7 +196,7 @@
                     "border": "1px solid red",
                     "background": "#FFCECE"
                 });
-                alert("Please Enter Account Name");
+                alert("Please Enter Account Holder's Name");
                 return false;
             }
             else {
@@ -250,81 +250,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtBranchaddress").value == "") {
-                isValid = false;
-                $(txtBranchaddress).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter Branch Address");
-                return false;
-            }
-            else {
-                $(txtBranchaddress).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("ddlCountry").value == "") {
-                isValid = false;
-                $(ddlCountry).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter Country");
-                return false;
-            }
-            else {
-                $(ddlCountry).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("ddlState").value == "") {
-                isValid = false;
-                $(ddlState).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter State");
-                return false;
-            }
-            else {
-                $(ddlState).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("ddlCity").value == "") {
-                isValid = false;
-                $(ddlCity).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter City");
-                return false;
-            }
-            else {
-                $(ddlCity).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtBsrcode").value == "") {
-                isValid = false;
-                $(txtBsrcode).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-                alert("Please Enter BSR Code");
-                return false;
-            }
-            else {
-                $(txtBsrcode).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            
             if (document.getElementById("txtIfsccode").value == "") {
                 isValid = false;
                 $(txtIfsccode).css({

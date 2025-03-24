@@ -73,7 +73,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12" style="overflow-x:scroll; min-width:300px; min-height:300px;">
+                                <div class="col-md-12" style="overflow-x:scroll; min-width:300px; min-height:200px;">
 
 
                                     <table class="table table-striped table-hover" id="dataTable">
@@ -107,7 +107,7 @@
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.DebitNotelst[i].AccName, Model.DebitNotelst[i].AccNamelst, "Please Select", new { @class = "form-control _select newcss", @id = "txtAccName" + i,@onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.DebitNotelst[i].AccName, Model.DebitNotelst[i].AccNamelst, "--- Please Select ---", new { @class = "form-control _select newcss", @id = "txtAccName" + i,@onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
 
                                                         </td>               
                                                         <td>
@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div style="height:30px;"></div>
-                            <button type="submit" class="btn btn-primary" id="btnSave">Submit</button>
+                            <button type="submit" class="btn btn-success" id="btnSave">Submit</button>
                             <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("DebitNote", "DebitNote")'">Cancel</button>
                         </form>
                     }
@@ -210,18 +210,6 @@
 </div>
 
 <script>
-
-    
-    $('.form_time').datetimepicker({
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
 
 
     $('.to_date').datetimepicker({
@@ -252,16 +240,6 @@
         $('.to_date').datetimepicker('setStartDate', minDate);
 
     });
-    function withDecimal(n) {
-        var nums = n.toString().split('.')
-        var whole = convertNumberToWords(nums[0])
-        if (nums.length == 2) {
-            var fraction = convertNumberToWords(nums[1])
-            return whole + ' ' + fraction;
-        } else {
-            return whole;
-        }
-    }
 
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
@@ -348,12 +326,28 @@
                 if (i == 6 && value != 0 && (n_array[i + 1] != 0 && n_array[i + 2] != 0)) {
                     words_string += "Hundred and ";
                 } else if (i == 6 && value != 0) {
-                    words_string += "Hundred Only";
+                    words_string += "Hundred";
                 }
             }
             words_string = words_string.split("  ").join(" ");
         }
         return words_string;
+    }
+    function withDecimal(n) {
+          var nums = n.toString().split('.')
+          var whole = convertNumberToWords(nums[0])
+          if (nums.length == 2) {
+              var fraction = convertNumberToWords(nums[1])
+              if(nums[1]=="00")
+              {
+                  return whole + ' ' + fraction + 'Rupees Only ';
+              }
+            else{
+                return whole + ' ' + fraction + 'Paise Only ';
+            }
+          } else {
+            return whole + 'Rupees Only ';
+          }
     }
     function totdeAmount(_this, i) {
         try {
@@ -390,22 +384,6 @@
         }
 
     }
-    function changeAcc_LedgerItem(ItemId, i) {
-        $.ajax({
-            url: 'GetLedgerDetails',
-            data: { "ItemId": ItemId },
-            type: "GET",
-            success: function (result) {
-                document.getElementById("txtBalance" + i).value = result.balance;
-
-
-            },
-            error: function () {
-                alert("please Select Account Name");
-            }
-        });
-    }
-
     function totcrAmount(_this, i) {
         try {
 
@@ -441,6 +419,23 @@
         }
 
     }
+    function changeAcc_LedgerItem(ItemId, i) {
+        $.ajax({
+            url: 'GetLedgerDetails',
+            data: { "ItemId": ItemId },
+            type: "GET",
+            success: function (result) {
+                document.getElementById("txtBalance" + i).value = result.balance;
+
+
+            },
+            error: function () {
+                alert("please Select Account Name");
+            }
+        });
+    }
+
+    
     
 </script>
 
@@ -485,72 +480,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtRefDate").value == "") {
-                isValid = false;
-                $(txtRefDate).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Reference Date");
-                return false;
-            }
-            else {
-                $(txtRefDate).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-
-             if (document.getElementById("txtNarr").value == "") {
-                isValid = false;
-                $(txtNarr).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Narration");
-                return false;
-            }
-            else {
-                $(txtNarr).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-
-
-            //Grid validation
-            var i = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-
-                    // if ($(this).find('#txtAccName' + i.toString()).val() == "" || $(this).find('#txtAccName' + i.toString()).val() == "0") {
-                    //     isValid = false;
-                    //     $(this).find('#txtAccName' + i.toString()).css({
-                    //         "border": "1px solid red",
-                    //         "background": "#FFCECE"
-                    //     });
-
-                    //     alert("Please Select AccName");
-                    //     $(this).find('#txtAccName' + i.toString()).focus();
-                    //     return false;
-
-                    // }
-                    // else {
-                    //     $(this).find('#txtAccName' + i.toString()).css({
-                    //         "border": "",
-                    //         "background": ""
-                    //     });
-                    // }
-
-                    
-                }
-                i += 1;
-            });
-
-           
-
+            
             if (isValid == false)
                 e.preventDefault();
         });
@@ -580,36 +510,7 @@
         }
     }
 
-    function changeAccName(id, i) {
-        $.ajax({
-            url: 'GetAccJSON',
-            type: "GET",
-            data: { 'id': id },
-            cache: false,
-            success: function (response) {
-                PopulateDropDown("#txtAccName" + i, response);
-            },
-            error: function () {
-                debugger;
-                alert("Please Select Account Name");
-            }
-        });
-    }
-
-    $('.for_date').datetimepicker({
-        //   language:  'fr',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-
-
-
-    function removeRow(id) {
+   function removeRow(id) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
         var row = document.getElementById('trBook' + id);
@@ -697,9 +598,9 @@
 
         var DBCR = "<td><input id='txtDBCR" + index + "' name='DebitNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='DebitNotelst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
         var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='AccNamelst[" + index + "].AccName' onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
-        var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='DebitNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;text-align: right;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
-        var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='DebitNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;text-align: right;' onkeyup = 'totcrAmount(this," + index + ")' type='text'  readonly='True' /></td>";
-        var Balance = "<td><input class='form-control' id='txtBalance" + index + "' name='DebitNotelst[" + index + "].Balance'  style='width: 150px;text-align: right;' type='text' /></td>";
+        var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='DebitNotelst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;text-align: right;' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
+        var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='DebitNotelst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;text-align: right;' onkeyup = 'totcrAmount(this," + index + ")' readonly='True' /></td>";
+         var Balance = "<td><input class='form-control' id='txtBalance" + index + "' name='DebitNotelst[" + index + "].Balance'  style='width: 150px;text-align: right;' readonly='True' /></td>";
 
 
 

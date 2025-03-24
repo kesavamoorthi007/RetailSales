@@ -36,7 +36,7 @@ namespace RetailSales.Controllers.Master
                 if (dt.Rows.Count > 0)
                 {
 
-                    ic.ID = dt.Rows[0]["ID"].ToString();
+                    //ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.Accounttype = dt.Rows[0]["ACC_TYPE"].ToString();
                     ic.Accountname = dt.Rows[0]["ACC_NAME"].ToString();
                     ic.Accountnumber = dt.Rows[0]["ACC_NO"].ToString();
