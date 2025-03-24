@@ -77,7 +77,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-6 control-label">Supplier Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ",new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
                                             
                                         </div>
@@ -1022,7 +1022,7 @@
             } else {
                 alert("Cannot delete all the rows.");
             }
-        }
+        
 
    @* function removeRow(i) {
         var table = document.getElementById("dataTable");
@@ -1197,64 +1197,7 @@
         catch (ex) {
             alert(ex.message);
         }
-        try {
-            var GTot = 0;
-            var j = 0;
-            var qty = 0;
-            var tot = 0;
-            var totfrieght = 0;
-            var cgsttotamt = 0;
-            var sgsttotamt = 0;
-            var igsttotamt = 0;
-            var disttotamt = 0;
-            var rej = 0;
-            var totdis = 0;
-            var tpknc = 0;
-            var tochr = 0;
-            var tsdis = 0;
-            var totamt = 0;
-            var totamount = 0;
-
-            var frieght = document.getElementById("txtFrieghtcharge").value;
-            var Disc = document.getElementById("txtDisc").value;
-
-            var tot = document.getElementById("txtNet").value;
-
-
-            if (frieght == "")
-                frieght = 0;
-
-            if (Disc == "")
-                Disc = 0;
-
-            if (tot == "")
-                tot = 0;
-
-
-            var rej = eval(tot) - eval(Disc) + eval(frieght);
-            document.getElementById("txtNet").value = rej.toFixed(2);
-
-
-            var roundamount = Math.round(rej);
-
-            var round = eval(roundamount) - eval(rej);
-
-
-
-
-            document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = roundamount.toFixed(2);
-
-
-            document.getElementById("txtRound").value = round.toFixed(2);
-
-            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
-
-
-        }
-        catch (ex) {
-            alert(ex.message);
-        }
+       }
     
     function AddRow() {
         var opt = "";
