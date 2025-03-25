@@ -36,98 +36,99 @@
                         <form>
                             <br />
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-5 control-label">PO No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>PO No :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.HiddenFor(C => C.ID)
                                             @Html.DisplayFor(C => C.po)
                                             @Html.HiddenFor(C => C.po)
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">PO Date<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>PO Date :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.Podate)
                                             @Html.HiddenFor(C => C.Podate)
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Name :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.Suppid)
                                             @Html.HiddenFor(C => C.Suppid)
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                            </div>
-                            <div style="height:20px;"></div>
-                            <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-
-                                        <label for="inputName3" class="col-sm-4 control-label">Supplier Address<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Supplier Address :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.Supplieraddress)
                                             @Html.HiddenFor(C => C.Supplieraddress)
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-
-                                        <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.State)
-
-                                            @Html.HiddenFor(C => C.State, new { @id = "state" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-
-                                        <label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.City)
-                                            @Html.HiddenFor(C => C.City)
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div style="height:20px;"></div>
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">GST No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.GST)
-                                            @Html.HiddenFor(C => C.GST)
-
-                                        </div>
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>State :</strong><label class="mandatory"></label></label>
+                                        
+                                            @Html.DisplayFor(C => C.State)
+                                            @Html.HiddenFor(C => C.State, new { @id = "state" })
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Supplier Ref No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>City :</strong><label class="mandatory"></label></label>
+                                        
+                                            @Html.DisplayFor(C => C.City)
+                                            @Html.HiddenFor(C => C.City)
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Ref No :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.refno)
                                             @Html.HiddenFor(C => C.refno)
-
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Ref Date<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Ref Date :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.refdate)
                                             @Html.HiddenFor(C => C.refdate)
-                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>GST No :</strong><label class="mandatory"></label></label>
+                                        
+                                            @Html.DisplayFor(C => C.GST)
+                                            @Html.HiddenFor(C => C.GST)
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +168,7 @@
                                                     {
                                                         <th> IGST </th>
                                                     }
-
+                                                    <th> Discount (%) </th>
                                                     <th> Discount (₹) </th>
 
                                                     <th>Total Amount (₹)</th>
@@ -185,7 +186,7 @@
 
                                                         <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
                                                             <td>
-                                                                <span style="width: 220px; display: inline-block;">
+                                                                <span style="width: 200px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].Item)
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Item)
                                                                 </span>
@@ -204,7 +205,7 @@
                                                                 </span>
                                                             </td>
                                                             <td>
-                                                                <span style="width: 50px; display: inline-block;">
+                                                                <span style="width: 60px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].UOM, new { @id = "txtUOM" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].UOM, new { @id = "txtUOM" + i })
                                                                 </span>
@@ -280,6 +281,11 @@
 
                                                                 </td>
                                                             }
+
+                                                            <td>
+                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].DiscPer)
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", style = "width: 100px;text-align:right", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeDisc(this," + i + ")" })
+                                                            </td>
 
                                                             <td>
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].DiscAmount)
@@ -375,6 +381,7 @@
                                                             <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
 
                                                          @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -416,60 +423,43 @@
                                                         <div class="form-group">
                                                             <div class="tab-pane active" id="tab-1">
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
-                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">LR.No<label class="Mandatory"></label></label>
-
-                                                                            <div class="col-sm-8">
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label"><strong>LR.No :</strong><label class="Mandatory"></label></label>                                                        
                                                                                 @Html.DisplayFor(C => C.LRno)
-                                                                                @Html.HiddenFor(C => C.LRno)
-                                                                            </div>
-
+                                                                                @Html.HiddenFor(C => C.LRno)                                                                          
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-8">
                                                                         <div class="form-group">
-
-                                                                            <br /><label for="inputName3" class="col-sm-4 control-label">LR.Date<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.LRdate)
-                                                                                @Html.HiddenFor(C => C.LRdate)
-                                                                            </div>
+                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label"><strong>Transporter Name :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.drivername)
+                                                                            @Html.HiddenFor(C => C.drivername)
                                                                         </div>
                                                                     </div>
-                                                                    
-                                                                    
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
-
-                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label">Transporter Name<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.drivername)
-                                                                                @Html.HiddenFor(C => C.drivername)
-                                                                            </div>
+                                                                            <br /><label for="inputName3" class="col-sm-4 control-label"><strong>LR.Date :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.LRdate)
+                                                                            @Html.HiddenFor(C => C.LRdate)
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
+                                                                    </div>                                                                   
+                                                                    <div class="col-md-8">
                                                                         <div class="form-group">
-                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
-
-                                                                            <div class="col-sm-8">
+                                                                            <br />  <label for="inputName3" class="col-sm-6 control-label"><strong>Place Of Dispatch :</strong><label class="Mandatory"></label></label>                                                                          
                                                                                 @Html.DisplayFor(C => C.dispatchname)
-                                                                                @Html.HiddenFor(C => C.dispatchname)
-                                                                            </div>
-
+                                                                                @Html.HiddenFor(C => C.dispatchname)                                                                           
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
                                                                 <div style="height:10px;"></div>
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
 
-                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Amount In Words :</strong><label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
                                                                                 @*  @Html.HiddenFor(C => C.Amountinwords) *@
                                                                                 @Html.TextBoxFor(C => C.Amountinwords, new { @id = "Amountinwords", @class = "form-control", @TabIndex = 2, onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = true })
@@ -483,7 +473,7 @@
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
 
-                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label">Narration<label class="Mandatory"></label></label>
+                                                                            <br /> <label for="inputName3" class="col-sm-2 control-label"><strong>Narration :</strong><label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
                                                                                 @Html.HiddenFor(C => C.Narration)
                                                                                 @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
@@ -1094,6 +1084,120 @@
             alert(ex.message);
         }
     }
+    
+    // function changeDisc(_this, i) {
+    //     try {
+    //         var tot = 0;
+    //         var totfrieght = 0;
+    //         var cgsttotamt = 0;
+    //         var sgsttotamt = 0;
+    //         var igsttotamt = 0;
+    //         var disttotamt = 0;
+    //         var totamt = 0;
+    //         var qty = parseFloat(document.getElementById("txtRecived" + i).value) || 0;
+    //         var discper = parseFloat(document.getElementById("txtDiscPer" + i).value) || 0;
+    //         var up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
+    //         var IGST = parseFloat(document.getElementById("IGSTP" + i).value) || 0;
+    //         var CGST = parseFloat(document.getElementById("CGSTP" + i).value) || 0;
+    //         var SGST = parseFloat(document.getElementById("SGSTP" + i).value) || 0;
+    //         var Disc = parseFloat(document.getElementById("txtDiscAmount" + i).value) || 0;
+    //         var CF = parseFloat(document.getElementById("txtCF" + i).value) || 0;
+
+    //         // Calculate total amount based on quantity and rate
+    //         tot = qty * up;
+
+    //         // If discount percentage is greater than 0, apply the discount
+
+
+    //         var cfqty = qty * CF;
+
+    //         // Update the fields for Amount and CFQty
+    //         document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+    //         document.getElementById("txtCfQty" + i).value = cfqty.toFixed(2);
+
+    //         var tottax=tot;
+
+    //         if (discper > 0) {
+    //             Disc = (discper / 100) * tot;
+    //             document.getElementById("txtDiscAmount" + i).value = Disc;
+    //             tottax = tottax - Disc;
+    //         }
+
+    //         // Calculate tax percentages
+    //         var igstperc = (tottax / 100) * IGST;
+    //         var cgstperc = (tottax / 100) * CGST;
+    //         var sgstperc = (tottax / 100) * SGST;
+
+    //         // Update hidden fields with calculated values
+    //         document.getElementById("CGST" + i).value = cgstperc.toFixed(2);
+    //         document.getElementById("SGST" + i).value = sgstperc.toFixed(2);
+    //         document.getElementById("IGST" + i).value = igstperc.toFixed(2);
+
+    //         // Calculate total tax and discounted amount
+    //          tottax += igstperc + cgstperc + sgstperc;
+
+    //         // Ensure that Discount doesn't exceed Total Amount
+
+
+
+
+    //         // Update the total amount field
+    //         document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
+
+    //         // Calculate totals for all rows
+    //         var totalAmount = 0;
+    //         var totalCGST = 0;
+    //         var netamt = 0;
+    //         var totalSGST = 0;
+    //         var totalIGST = 0;
+    //         var totalDisc = 0;
+    //         var j = 0;
+
+    //         $('tr.chkitemlst').each(function () {
+    //             if ($(this).css('display') !== 'none') {
+    //                 var amt = parseFloat($(this).find('#txtAmount' + j).val()) || 0;
+    //                 totalAmount += amt;
+
+    //                 var tamt = parseFloat($(this).find('#txtTotal' + j).val()) || 0;
+    //                     netamt += tamt;
+
+    //                 var cgst = parseFloat($(this).find('#CGST' + j).val()) || 0;
+    //                 totalCGST += cgst;
+
+    //                 var sgst = parseFloat($(this).find('#SGST' + j).val()) || 0;
+    //                 totalSGST += sgst;
+
+    //                 var igst = parseFloat($(this).find('#IGST' + j).val()) || 0;
+    //                 totalIGST += igst;
+
+    //                 var dist = parseFloat($(this).find('#txtDiscAmount' + j).val()) || 0;
+    //                 totalDisc += dist;
+    //             }
+    //             j += 1;
+
+    //         });
+
+    //         // Calculate rounded amount and update fields
+    //         var roundedAmount = Math.round(netamt.toFixed(2));
+    //         var roundDiff = roundedAmount - netamt;
+
+    //         document.getElementById("txtGross").value = totalAmount.toFixed(2);
+    //         document.getElementById("txtNet").value = roundedAmount.toFixed(2);
+    //         document.getElementById("hidnet").value = netamt.toFixed(2);
+
+    //         document.getElementById("txtRound").value = roundDiff.toFixed(2);
+    //         document.getElementById("txtCGST").value = totalCGST.toFixed(2);
+    //         document.getElementById("txtSGST").value = totalSGST.toFixed(2);
+    //         document.getElementById("txtIGST").value = totalIGST.toFixed(2);
+    //         document.getElementById("txtDisc").value = totalDisc.toFixed(2);
+
+    //         // Convert total amount to words and display
+    //         document.getElementById("Amountinwords").value = withDecimal(roundedAmount.toFixed(2));
+
+    //     } catch (ex) {
+    //         alert("Error: " + ex.message);
+    //     }
+    // }
     function changeDisTot(_this) {
          try {
              var GTot = 0;

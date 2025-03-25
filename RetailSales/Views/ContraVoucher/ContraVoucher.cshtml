@@ -146,7 +146,7 @@
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.Contralst[i].AccName, Model.Contralst[i].AccNamelst, "Please Select", new { @class = "form-control _select newcss", @id = "txtAccName" + i, @onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.Contralst[i].AccName, Model.Contralst[i].AccNamelst, "-- Please Select --", new { @class = "form-control _select newcss", @id = "txtAccName" + i, @onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
 
                                                         </td>
                                                         <td>
@@ -184,6 +184,31 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Total Debit Amount<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.totdeb, new { @id = "totdeb", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
+
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Total Credit Amount<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.totcri, new { @id = "totcri", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Cheque No.<label class="mandatory"></label></label>
@@ -200,7 +225,7 @@
                                         <div class="col-sm-8">
                                             <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
                                                 @Html.TextBoxFor(C => C.Chedate, new { @id = "txtChedate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px", @readonly = "readonly" })
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span> 
                                             </div>
                                             <br />
                                         </div>
@@ -220,8 +245,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Amount In Words<label class="mandatory"></label></label>
+                                        <div class="col-sm-12">
+                                            @Html.TextBoxFor(C => C.AmtWd, new { @id = "txtAmtWd", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Narration<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextAreaFor(C => C.Narr, new { @id = "txtNarr", @class = "form-control", @TabIndex = 2 })
                                             @Html.HiddenFor(C => C.ID)
                                             <br />
@@ -465,6 +501,39 @@
 
     }
 
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+
+            var tdr = 0;
+            var tcr = 0;
+            var isValid = true;
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    var dr = $(this).find('#txtDebitAmt' + j.toString()).val();
+                    if (dr == "")
+                        dr = 0;
+                    var cr = $(this).find('#txtCreditAmt' + j.toString()).val();
+                    if (cr == "")
+                        cr = 0;
+
+                    tdr += eval(dr);
+                    tcr += eval(cr);
+
+
+
+                }
+                j += 1;
+            });
+            if (eval(tdr) != eval(tcr)) {
+                alert("Debit Amount and Credit Amount is not Equal");
+                return false;
+            }
+
+        });
+
+    });
+
 </script>
 
 
@@ -667,47 +736,16 @@
             }
         })
     }
-    $(document).ready(function () {
-        $('#btnSave').click(function (e) {
-
-            var tdr = 0;
-            var tcr = 0;
-            var isValid = true;
-            var j = 0;
-            $('tr.chkitemlst').each(function () {
-                if ($(this).css('display') !== 'none') {
-                    var dr = $(this).find('#txtDebitAmt' + j.toString()).val();
-                    if (dr == "")
-                        dr = 0;
-                    var cr = $(this).find('#txtCreditAmt' + j.toString()).val();
-                    if (cr == "")
-                        cr = 0;
-
-                    tdr += eval(dr);
-                    tcr += eval(cr);
-
-
-
-                }
-                j += 1;
-            });
-            if (eval(tdr) != eval(tcr)) {
-                alert("Debit Amount and Credit Amount is not Eqval");
-                return false;
-            }
-
-        });
-
-    });
+    
     
    
     function AppendRow(opt, remopt) {
         var index = $("#tbBooks").children("tr").length;
 
         var DBCR = "<td><input id='txtDBCR" + index + "' name='Contralst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='Contralst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
-        var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='AccNamelst[" + index + "].AccName' onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
-        var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='Contralst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
-        var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='Contralst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
+        var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='Contralst[" + index + "].AccName' onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
+        var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='Contralst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
+        var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='Contralst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' /></td>";
         var Balance = "<td><input class='form-control' id='txtBalance" + index + "' name='Contralst[" + index + "].Balance'  style='width: 150px;' readonly='True' /></td>";
 
 

@@ -775,6 +775,7 @@ namespace RetailSales.Controllers.Purchase
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                     tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
+                    tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
                     tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                     tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                     tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
