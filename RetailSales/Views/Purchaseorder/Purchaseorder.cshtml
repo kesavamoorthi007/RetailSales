@@ -703,6 +703,112 @@
             // Calculate total amount based on quantity and rate
             tot = qty * up;
 
+            // Calculate CF quantity
+            var cfqty = qty * CF;
+
+            // Update the fields for Amount and CFQty
+            document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = cfqty.toFixed(2);
+
+            var tottax = tot;
+
+            // Ensure txtDiscAmount is updated correctly if nothing is entered
+            if (isNaN(discper) || discper === 0) {  // **Added validation to reset discount when blank**
+                document.getElementById("txtDiscAmount" + i).value = "0.00";
+            } else {
+                Disc = (discper / 100) * tot;
+                document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);  // **Fixed formatting issue**
+                tottax -= Disc;
+            }
+
+            // Calculate tax percentages
+            var igstperc = (tottax / 100) * IGST;
+            var cgstperc = (tottax / 100) * CGST;
+            var sgstperc = (tottax / 100) * SGST;
+
+            // Update hidden fields with calculated values
+            document.getElementById("CGST" + i).value = cgstperc.toFixed(2);
+            document.getElementById("SGST" + i).value = sgstperc.toFixed(2);
+            document.getElementById("IGST" + i).value = igstperc.toFixed(2);
+
+            // Calculate total tax and update total amount
+            tottax += igstperc + cgstperc + sgstperc;
+            document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
+
+            // Calculate totals for all rows
+            var totalAmount = 0;
+            var totalCGST = 0;
+            var netamt = 0;
+            var totalSGST = 0;
+            var totalIGST = 0;
+            var totalDisc = 0;
+            var j = 0;
+
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    var amt = parseFloat($(this).find('#txtAmount' + j).val()) || 0;
+                    totalAmount += amt;
+
+                    var tamt = parseFloat($(this).find('#txtTotal' + j).val()) || 0;
+                    netamt += tamt;
+
+                    var cgst = parseFloat($(this).find('#CGST' + j).val()) || 0;
+                    totalCGST += cgst;
+
+                    var sgst = parseFloat($(this).find('#SGST' + j).val()) || 0;
+                    totalSGST += sgst;
+
+                    var igst = parseFloat($(this).find('#IGST' + j).val()) || 0;
+                    totalIGST += igst;
+
+                    var dist = parseFloat($(this).find('#txtDiscAmount' + j).val()) || 0;
+                    totalDisc += dist;
+                }
+                j += 1;
+            });
+
+            // Calculate rounded amount and update fields
+            var roundedAmount = Math.round(netamt.toFixed(2));
+            var roundDiff = roundedAmount - netamt;
+
+            document.getElementById("txtGross").value = totalAmount.toFixed(2);
+            document.getElementById("txtNet").value = roundedAmount.toFixed(2);
+            document.getElementById("hidnet").value = netamt.toFixed(2);
+            document.getElementById("txtRound").value = roundDiff.toFixed(2);
+            document.getElementById("txtCGST").value = totalCGST.toFixed(2);
+            document.getElementById("txtSGST").value = totalSGST.toFixed(2);
+            document.getElementById("txtIGST").value = totalIGST.toFixed(2);
+            document.getElementById("txtDisc").value = totalDisc.toFixed(2);
+
+            // Convert total amount to words and display
+            document.getElementById("Amountinwords").value = withDecimal(roundedAmount.toFixed(2));
+
+        } catch (ex) {
+            alert("Error: " + ex.message);
+        }
+    }
+
+    @* function changeDisc(_this, i) {
+        try {
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var totamt = 0;
+            var qty = parseFloat(document.getElementById("txtQty" + i).value) || 0;
+            var discper = parseFloat(document.getElementById("txtDiscPer" + i).value) || 0;
+            var up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
+            var IGST = parseFloat(document.getElementById("IGSTP" + i).value) || 0;
+            var CGST = parseFloat(document.getElementById("CGSTP" + i).value) || 0;
+            var SGST = parseFloat(document.getElementById("SGSTP" + i).value) || 0;
+            var Disc = parseFloat(document.getElementById("txtDiscAmount" + i).value) || 0;
+            var CF = parseFloat(document.getElementById("txtCF" + i).value) || 0;
+
+            // Calculate total amount based on quantity and rate
+            tot = qty * up;
+
             // If discount percentage is greater than 0, apply the discount
 
 
@@ -794,7 +900,7 @@
         } catch (ex) {
             alert("Error: " + ex.message);
         }
-    }
+    } *@
 
     function changeTot(element) {
         var isChecked = $(element).prop('checked');
