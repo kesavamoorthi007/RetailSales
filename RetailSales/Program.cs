@@ -59,6 +59,8 @@ internal class Program
         builder.Services.TryAddSingleton<ILedgersServices, LedgersService>();
         builder.Services.TryAddSingleton<IHSNcodeService, HSNcodeService>();
 
+        // adding ProductName interface and services containers
+        builder.Services.TryAddSingleton<IProductNameService, ProductNameService>();
         // adding City interface and services containers
         builder.Services.TryAddSingleton<ICityService, CityServices>();
         // adding Supplier interface and services containers

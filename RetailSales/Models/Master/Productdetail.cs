@@ -7,16 +7,18 @@ namespace RetailSales.Models
         public Productdetail()
         {
             this.Categorylst = new List<SelectListItem>();
+            this.Productlst = new List<SelectListItem>();
             this.Uomlst = new List<SelectListItem>();
             this.Hsnlst = new List<SelectListItem>();
         }
         public List<SelectListItem> Categorylst;
+        public List<SelectListItem> Productlst;
         public List<SelectListItem> Uomlst;
         public List<SelectListItem> Hsnlst;
         public string ID { get; set; }
         public string Product { get; set; }
         public string Varint { get; set; }
-        public string Varintnic { get; set; }
+        public string ProName { get; set; }
         public string Uom { get; set; }
         public string Hsncode { get; set; }
         public string Minqty { get; set; }
@@ -44,7 +46,7 @@ namespace RetailSales.Models
         public string id { get; set; }
         public string product { get; set; }
         public string varint { get; set; }      
-        public string uom { get; set; }
+        public string proname { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
         public string cf { get; set; }

@@ -44,7 +44,9 @@ namespace RetailSales.Controllers.Purchase
                 {
                     tda = new DirectPurchaseItem();
                     tda.Itemlst = BindItem();
+                    tda.Productlst = BindProduct("");
                     tda.Varientlst = BindVarient("");
+                    tda.DUOMlst = BindDUOM();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -93,15 +95,22 @@ namespace RetailSales.Controllers.Purchase
                         tda = new DirectPurchaseItem();
                         tda.Itemlst = BindItem();
                         tda.Item = dtt.Rows[i]["ITEM"].ToString();
-                        tda.Varientlst = BindVarient(tda.Item);
+                        tda.Productlst = BindProduct(tda.Item);
+                        tda.Product = dtt.Rows[i]["PRODUCT"].ToString();
+                        tda.Varientlst = BindVarient(tda.Product);
                         tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
                         tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                         tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                         tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                        tda.DUOMlst = BindDUOM();
+                        tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
+                        tda.CF = dtt.Rows[i]["CONVT_FACTOR"].ToString();
                         tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                        tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                         tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
+                        tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
                         tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
                         tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                         tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
@@ -259,15 +268,20 @@ namespace RetailSales.Controllers.Purchase
                 {
                     tda = new DirectPurchaseItem();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
-                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[i]["CONVT_FACTOR"].ToString();
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                     tda.FrigCharge = dtt.Rows[i]["FRIGHT"].ToString();
                     tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
+                    tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
                     tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                     tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
                     tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
@@ -276,6 +290,7 @@ namespace RetailSales.Controllers.Purchase
                     tda.IGST = dtt.Rows[i]["IGST"].ToString();
                     tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
                     tda.ID = id;
+                    tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
             }
@@ -406,6 +421,23 @@ namespace RetailSales.Controllers.Purchase
                 throw ex;
             }
         }
+        public List<SelectListItem> BindProduct(string id)
+        {
+            try
+            {
+                DataTable dtDesg = DirectPurchaseService.GetProduct(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PROD_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<SelectListItem> BindVarient(string id)
         {
             try
@@ -414,7 +446,24 @@ namespace RetailSales.Controllers.Purchase
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["Variant_HSN"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SelectListItem> BindDUOM()
+        {
+            try
+            {
+                DataTable dtDesg = DirectPurchaseService.GetDUOM();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
                 }
                 return lstdesg;
             }
@@ -448,7 +497,7 @@ namespace RetailSales.Controllers.Purchase
                 DataTable dt1 = new DataTable();
                 DataTable dt2 = new DataTable();
 
-                
+                //string des = "";
                 string uom = "";
                 string hsn = "";
                 string rate = "";
@@ -458,13 +507,15 @@ namespace RetailSales.Controllers.Purchase
                 double sgst = 0;
                 double igst = 0;
                 string per = "";
-                string state = "Tamil Nadu";
+                string state = "1047";
+                string uomid = "";
                 dt = DirectPurchaseService.GetVarientDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
                 {
-                    
+                    //des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
+                    uomid = dt.Rows[0]["UOM_ID"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
                     rate = dt.Rows[0]["RATE"].ToString();
                     dt1 = DirectPurchaseService.GetHsn(ItemId);
@@ -490,7 +541,7 @@ namespace RetailSales.Controllers.Purchase
                         per = percen.Rows[0]["PERCENTAGE"].ToString();
 
                         string custstate = datatrans.GetDataString("SELECT STATE FROM SUPPLIER WHERE ID='" + cusid + "'");
-                        if (custstate == "1047")
+                        if (custstate == state)
                         {
                             cgst = Convert.ToDouble(per) / 2;
                             sgst = Convert.ToDouble(per) / 2;
@@ -510,7 +561,7 @@ namespace RetailSales.Controllers.Purchase
 
                 }
 
-                var result = new {  uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
+                var result = new { uomid = uomid, uom = uom, hsn = hsn, rate = rate, gst = gst, cgst = cgst, sgst = sgst, igst = igst };
                 return Json(result);
             }
             catch (Exception ex)
@@ -546,17 +597,58 @@ namespace RetailSales.Controllers.Purchase
                 throw ex;
             }
         }
+        public ActionResult GetUOMDetail(string ItemId, string uom)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                //string des = "";
+                string cf = "";
+
+
+
+                dt = datatrans.GetData("SELECT CONVRT_FACTOR FROM UOM_CONVERT WHERE SRC_UOM = '" + uom + "' AND DEST_UOM ='" + ItemId + "'");
+
+                if (dt.Rows.Count > 0)
+                {
+                    cf = dt.Rows[0]["CONVRT_FACTOR"].ToString();
+
+                }
+                else
+                {
+                    cf = "1";
+                }
+
+                var result = new { cf = cf };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public JsonResult GetVarientJSON(string id)
         {
             //EnqItem model = new EnqItem();
             //  model.ItemGrouplst = BindItemGrplst(value);
             return Json(BindVarient(id));
         }
+        public JsonResult GetProductJSON(string ItemId)
+        {
+            return Json(BindProduct(ItemId));
+        }
         public JsonResult GetItemGrpJSON()
         {
             DirectPurchaseItem model = new DirectPurchaseItem();
             model.Itemlst = BindItem();
             return Json(BindItem());
+        }
+        public JsonResult GetUOMGrpJSON()
+        {
+            PurchaseorderItem model = new PurchaseorderItem();
+            model.DUOMlst = BindDUOM();
+            return Json(BindDUOM());
         }
     }
 }

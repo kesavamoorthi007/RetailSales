@@ -39,20 +39,28 @@
                         <form>
                             <br />
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group d-flex align-items-center">
-                                        <label for="inputName3" class="col-sm-5 control-label">Product Category<label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Product Category :</strong><label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.HiddenFor(C => C.ID)
-                                            <strong class="ml-2">@Html.DisplayFor(C => C.Product)</strong>
+                                            <div class="ml-2">@Html.DisplayFor(C => C.Product)</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group d-flex align-items-center">
-                                        <label for="inputName3" class="col-sm-4 control-label">Variant<label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Product Name :</strong><label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            <strong class="ml-2">@Html.DisplayFor(C => C.Varint)</strong>
+                                            <div class="ml-2">@Html.DisplayFor(C => C.ProName)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group d-flex align-items-center">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Variant :</strong><label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            <div class="ml-2">@Html.DisplayFor(C => C.Varint)</div>
                                         </div>
                                     </div>
                                 </div>

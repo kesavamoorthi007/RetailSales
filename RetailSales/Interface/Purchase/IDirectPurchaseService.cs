@@ -25,5 +25,7 @@ namespace RetailSales.Interface.Purchase
         DataTable GetCategory();
         DataTable GetState();
         DataTable GetCity(string cityid);
+        DataTable GetDUOM();
+        DataTable GetProduct(string id);
     }
 }

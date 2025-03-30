@@ -24,5 +24,6 @@ namespace RetailSales.Interface.Purchase
         string OrderToGRN(Purchaseorder cy);
         DataTable GetUOM();
         IEnumerable<PurchaseorderItem> GetAllPurchaseOrderItem(string id);
+        DataTable GetProduct(string productid);
     }
 }
