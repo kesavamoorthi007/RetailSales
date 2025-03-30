@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Irony.Parsing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Interface.Master;
@@ -27,6 +28,7 @@ namespace RetailSales.Controllers.Master
             Productdetail ic = new Productdetail();
 
             ic.Categorylst = BindCategory();
+            ic.Productlst = BindProduct("");
             ic.Uomlst = BindUOM();
             ic.Hsnlst = BindHsn();
 
@@ -42,8 +44,9 @@ namespace RetailSales.Controllers.Master
                 {
                     ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.Product = dt.Rows[0]["PRODUCT_CATEGORY"].ToString();
+                    ic.Productlst = BindProduct(ic.Product);
                     ic.Varint = dt.Rows[0]["PRODUCT_VARIANT"].ToString();
-                    ic.Varintnic = dt.Rows[0]["VARIANT_NICKNAME"].ToString();
+                    ic.ProName = dt.Rows[0]["PRODUCTS_NAME"].ToString();
                     ic.Uom = dt.Rows[0]["UOM"].ToString();
                     ic.Hsncode = dt.Rows[0]["HSN_CODE"].ToString();
                     ic.Minqty = dt.Rows[0]["MIN_QTY"].ToString();
@@ -107,6 +110,7 @@ namespace RetailSales.Controllers.Master
             if (dt.Rows.Count > 0)
             {
                 ic.Product = dt.Rows[0]["PRODUCT_NAME"].ToString();
+                ic.ProName = dt.Rows[0]["PROD_NAME"].ToString();
                 ic.Varint = dt.Rows[0]["PRODUCT_VARIANT"].ToString();
 
             }
@@ -223,8 +227,8 @@ namespace RetailSales.Controllers.Master
                 {
                     id = dtUsers.Rows[i]["ID"].ToString(),
                     product = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
+                    proname = dtUsers.Rows[i]["PROD_NAME"].ToString(),
                     varint = dtUsers.Rows[i]["PRODUCT_VARIANT"].ToString(),
-                    uom = dtUsers.Rows[i]["UOM_CODE"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
                     cf = CF,
@@ -247,6 +251,31 @@ namespace RetailSales.Controllers.Master
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
                     lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public JsonResult GetProductJSON(string productid)
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindProduct(productid));
+        }
+
+        public List<SelectListItem> BindProduct(string productid)
+        {
+            try
+            {
+                DataTable dtDesg = ProductdetailService.GetProduct(productid);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PROD_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }

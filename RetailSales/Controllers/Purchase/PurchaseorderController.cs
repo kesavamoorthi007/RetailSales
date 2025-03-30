@@ -56,6 +56,7 @@ namespace RetailSales.Controllers.Purchase
                 {
                     tda = new PurchaseorderItem();
                     tda.Itemlst = BindItem();
+                    tda.Productlst = BindProduct("");
                     tda.Varientlst = BindVarient("");
                     tda.DUOMlst = BindDUOM();
                    
@@ -108,7 +109,9 @@ namespace RetailSales.Controllers.Purchase
                         tda = new PurchaseorderItem();
                         tda.Itemlst = BindItem();
                         tda.Item = dtt.Rows[i]["ITEM"].ToString();
-                        tda.Varientlst = BindVarient(tda.Item);
+                        tda.Productlst = BindProduct(tda.Item);
+                        tda.Product = dtt.Rows[i]["PRODUCT"].ToString();
+                        tda.Varientlst = BindVarient(tda.Product);
                         tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
                         tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                         tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
@@ -227,8 +230,9 @@ namespace RetailSales.Controllers.Purchase
                 {
                     tda = new PurchaseorderItem();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
-                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
@@ -346,6 +350,10 @@ namespace RetailSales.Controllers.Purchase
             //  model.ItemGrouplst = BindItemGrplst(value);
             return Json(BindVarient(id));
         }
+        public JsonResult GetProductJSON(string ItemId)
+        {
+            return Json(BindProduct(ItemId));
+        }
         public JsonResult GetItemGrpJSON()
         {
             PurchaseorderItem model = new PurchaseorderItem();
@@ -394,6 +402,25 @@ namespace RetailSales.Controllers.Purchase
                 throw ex;
             }
         }
+
+        public List<SelectListItem> BindProduct(string id)
+        {
+            try
+            {
+                DataTable dtDesg = PurchaseorderService.GetProduct(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PROD_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<SelectListItem> BindVarient(string id)
         {
             try
@@ -402,7 +429,7 @@ namespace RetailSales.Controllers.Purchase
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["Variant_HSN"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
@@ -598,6 +625,7 @@ namespace RetailSales.Controllers.Purchase
 
 
                 Content += "<table><tr><td>" + item.Item + "-" + "</td>";
+                Content += "  <td>" + item.Product + "-" + "</td>";
                 Content += "  <td>" + item.Varient + "-" + "</td>";
                 Content += "  <td>" + item.UOM + "</td>";
                 Content += "  <td>" + item.Qty + "</td></tr></table>";
@@ -764,8 +792,9 @@ namespace RetailSales.Controllers.Purchase
                     tda = new PurchaseorderItem();
                     tda.UOMlst = BindUOM();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["VARIANT_HSN"].ToString();
-                    //tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();

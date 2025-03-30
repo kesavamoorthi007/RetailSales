@@ -46,36 +46,29 @@ namespace RetailSales.Models
     }
     public class PurchaseorderItem
     {
+        public string ID { get; set; }
+        public string sno { get; set; }
         public List<SelectListItem> Itemlst { get; set; }
         public string saveItemId { get; set; }
         public string Item { get; set; }
+        public List<SelectListItem> Productlst { get; set; }
+        public string Product { get; set; }
         public List<SelectListItem> Varientlst { get; set; }
         public string Varient { get; set; }
-
+        public string Hsn { get; set; }
+        public string Tariff { get; set; }
         public List<SelectListItem> UOMlst { get; set; }
         public string UOM { get; set; }
         public List<SelectListItem> DUOMlst { get; set; }
         public string DestUOM { get; set; }
         public string CF { get; set; }
+        public string Qty { get; set; }
         public string CfQty { get; set; }
         public string Isvalid { get; set; }
-        public string Description { get; set; }
-        public string Qty { get; set; }
-        public string Recived { get; set; }
-        public string Accepted { get; set; }
-        public string Rejected { get; set; }
-        public string exqty { get; set; }
-        public string shortqty { get; set; }
-        public string DiscAmount { get; set; }
-        public string DiscPer { get; set; }
-        public string FrigCharge { get; set; }
-        public string FrieghtAmt { get; set; }
         public string Rate { get; set; }
         public string Amount { get; set; }
-        public string Hsn { get; set; }
-        public string ID { get; set; }
-        public string Tariff { get; set; }
-        public string Bin { get; set; }
+        public string DiscPer { get; set; }
+        public string DiscAmount { get; set; }
         public string CGSTP { get; set; }
         public string SGSTP { get; set; }
         public string IGSTP { get; set; }
@@ -83,8 +76,15 @@ namespace RetailSales.Models
         public string SGST { get; set; }
         public string IGST { get; set; }
         public string Total { get; set; }
-        public string sno { get; set; }
-
+        public string Recived { get; set; }
+        public string Accepted { get; set; }
+        public string Rejected { get; set; }
+        public string exqty { get; set; }
+        public string shortqty { get; set; }
+        public string FrigCharge { get; set; }
+        //public string Description { get; set; }       
+        //public string FrieghtAmt { get; set; }
+        //public string Bin { get; set; }
     }
     public class ListPurchaseordergrid
     {

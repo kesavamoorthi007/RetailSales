@@ -20,7 +20,7 @@ namespace RetailSales.Interface.Master
         DataTable GetDUOM();
         string RemoveChange(string tag, string id);
         string StatusChange(string tag, string id);
-        
+        DataTable GetProduct(string productid);
     }
 }
 

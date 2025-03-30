@@ -33,79 +33,83 @@
                         <form>
                             <br />
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-5 control-label">Doc No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Invoice No :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.HiddenFor(C => C.ID)
                                             @Html.DisplayFor(C => C.doc)
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Doc Date<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Invoice Date :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.DocDate)
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.Suppid)
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div style="height:20px;"></div>
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Name :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.Suppid)
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
 
-                                        <label for="inputName3" class="col-sm-4 control-label">Supplier Address<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Supplier Address :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.Supplieraddress)
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-
-                                        <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.State)
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-
-                                        <label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.City)
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div style="height:20px;"></div>
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Supplier Ref No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>State :</strong><label class="mandatory"></label></label>
+                                        
+                                            @Html.DisplayFor(C => C.State)
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>City :</strong><label class="mandatory"></label></label>
+                                        
+                                            @Html.DisplayFor(C => C.City)
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Ref No :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.refno)
 
-                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Ref Date<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Ref Date :</strong><label class="mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.refdate)
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -120,14 +124,18 @@
                                             <tr>
 
                                                 <th>Item</th>
-                                                <th>Variant - HSN</th>
-                                                
+                                                <th>Product</th>
+                                                <th>Variant </th>
+                                                <th> HSN </th>                                                
                                                 <th>Tax</th>
                                                 <th> Unit </th>
+                                                <th> Dest UOM</th>
+                                                <th>CF</th>
                                                 <th> Qty </th>
+                                                <th>CF Qty</th>
                                                 <th>Rate (₹) </th>
                                                 <th>Amount (₹) </th>
-
+                                                <th>Disc %</th>
                                                 <th> Disc amount (₹)</th>
 
                                                 <th>Total Amount (₹)</th>
@@ -143,19 +151,19 @@
 
                                                     <tr>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Product)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Varient)</td>
-                                                        
+                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Hsn)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Tariff)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].UOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].DestUOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].CF)</td>
                                                         <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].Qty)</td>
+                                                        <td>@Html.DisplayFor(o => o.DirectPurchaseLst[i].CfQty)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].Rate)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].Amount)</td>
-
-                                                        
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].DiscPer)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].DiscAmount)</td>
-
-                                                        
-
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.DirectPurchaseLst[i].Total)</td>
 
                                                     </tr>
@@ -194,7 +202,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>FRIGHT (₹)</th>
+                                                    <th>FREIGHT (₹)</th>
                                                     <td style="text-align: right;">
                                                         @Html.DisplayFor(C => C.Frieghtcharge)
                                                     </td>
@@ -266,48 +274,58 @@
                                                         <div class="form-group">
                                                             <div class="tab-pane active" id="tab-1">
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
-                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">LR.No<label class="Mandatory"></label></label>
-
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.LRno)
-                                                                            </div>
-
-                                                                        </div>
-                                                                        
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label"><strong>LR.No :</strong><label class="Mandatory"></label></label>                                                                           
+                                                                                @Html.DisplayFor(C => C.LRno)                                                                            
+                                                                        </div>                                                                       
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-8">
                                                                         <div class="form-group">
-
-                                                                            <br /><label for="inputName3" class="col-sm-4 control-label">LR.Date<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.LRdate)
-                                                                            </div>
+                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label"><strong>Transporter Name :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.drivername)
                                                                         </div>
                                                                     </div>
+                                                                    
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
-
-                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label">Transporter Name<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.drivername)
-                                                                            </div>
+                                                                            <br /><label for="inputName3" class="col-sm-4 control-label"><strong>LR.Date :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.LRdate)
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-8">
                                                                         <div class="form-group">
-                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
-
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.dispatchname)
-                                                                            </div>
-
+                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label"><strong>Place Of Dispatch :</strong><label class="Mandatory"></label></label>                                                                           
+                                                                                @Html.DisplayFor(C => C.dispatchname)                                                                           
                                                                         </div>
                                                                     </div>
                                                                    
+                                                                </div>
+                                                                <div style="height:10px;"></div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-3 control-label"><strong>Amount In Words :</strong><label class="Mandatory"></label></label>
+
+                                                                            @Html.DisplayFor(C => C.Amountinwords)
+                                                                            
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-3 control-label"><strong>Narration :</strong><label class="Mandatory"></label></label>
+
+                                                                            @Html.DisplayFor(C => C.Narration)
+
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 @*1st tab*@
                                                             </div>
@@ -324,30 +342,7 @@
                                 </div>
                             </div>
 
-                            <div style="height:10px;"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Narration<label class="Mandatory"></label></label>
-                                        
-                                            @Html.DisplayFor(C => C.Narration)
-                                        
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
-                                        
-                                            @Html.DisplayFor(C => C.Amountinwords)
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                            
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>

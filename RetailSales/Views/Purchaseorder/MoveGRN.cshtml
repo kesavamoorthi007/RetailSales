@@ -143,8 +143,9 @@
                                                 <tr>
 
                                                     <th>Item</th>
-                                                    <th>Variant - HSN</th>
-                                                    
+                                                    <th>Product</th>
+                                                    <th>Variant </th>
+                                                    <th> HSN </th>
                                                     <th>Tax</th>
                                                     <th> UOM </th>
                                                     <th> Ordered </th>
@@ -186,15 +187,28 @@
 
                                                         <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
                                                             <td>
-                                                                <span style="width: 200px; display: inline-block;">
+                                                                <span style="width: 100px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].Item)
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Item)
                                                                 </span>
                                                             </td>
                                                             <td>
                                                                 <span style="width: 120px; display: inline-block;">
+                                                                    @Html.DisplayFor(o => o.PurchaseorderLst[i].Product)
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].Product)
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span style="width: 150px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].Varient)
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Varient)
+                                                                </span>
+                                                            </td>
+
+                                                            <td>
+                                                                <span style="width: 80px; display: inline-block;">
+                                                                    @Html.DisplayFor(o => o.PurchaseorderLst[i].Hsn)
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].Hsn)
                                                                 </span>
                                                             </td>
                                                             
@@ -262,8 +276,7 @@
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].SGSTP, new { @id = "SGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGSTP, new { @id = "IGSTP" + i })
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
-                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
-                                                                    @Html.TextBoxFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                     @Html.TextBoxFor(o => o.PurchaseorderLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
                                                                     @Html.TextBoxFor(o => o.PurchaseorderLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
@@ -380,7 +393,7 @@
 
                                                             <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
 
-                                                         @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
                                                          </div>
                                                     </td>
                                                 </tr>
@@ -1084,7 +1097,194 @@
             alert(ex.message);
         }
     }
-    
+
+    function changeDisc(_this, i) {
+        try {
+            var tot = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var totamt = 0;
+
+           
+            var state = document.getElementById("state").value;
+            var qty = document.getElementById("ordqty" + i).value;
+            var discper = document.getElementById("txtDiscPer" + i).value;
+            var up = document.getElementById("txtRate" + i).value;
+            var IGST = document.getElementById("IGSTP" + i).value;
+            var CGST = document.getElementById("CGSTP" + i).value;
+            var SGST = document.getElementById("SGSTP" + i).value;
+            var Disc = document.getElementById("txtDiscAmount" + i).value;
+            var CF = document.getElementById("txtCF" + i).value;
+            if(CF=="0") {
+                CF="1";
+            }
+              
+
+            // Calculate total amount based on quantity and rate
+            tot = qty * up;
+
+            var cfqty = qty * CF;
+
+            // Update the fields for Amount and CFQty
+            document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = cfqty.toFixed(2);
+
+          
+
+            if (discper >= 0) {
+                Disc = (discper / 100) * tot;
+                document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);
+            }
+
+            // Ensure discount doesn't exceed total
+            // if (Disc > tot) {
+            //     Disc = tot;
+            //     document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);
+            // }
+
+            var tottax = eval(tot)- eval(Disc);
+
+            // Calculate tax percentages
+            var igstperc = (eval(tottax) / 100) * IGST;
+            var cgstperc = (eval(tottax) / 100) * CGST;
+            var sgstperc = (eval(tottax) / 100) * SGST;
+
+            // Update hidden fields with calculated values
+
+            if (state == "Tamil Nadu") {
+                document.getElementById("CGST" + i).value = cgstperc.toFixed(2);
+                document.getElementById("SGST" + i).value = sgstperc.toFixed(2);
+                document.getElementById("IGST" + i).value = "0";
+            }
+            else {
+                document.getElementById("IGST" + i).value = igstperc.toFixed(2);
+                document.getElementById("CGST" + i).value ="0";
+                document.getElementById("SGST" + i).value = "0";
+            }
+
+            // document.getElementById("CGST" + i).value = cgstperc.toFixed(2);
+            // document.getElementById("SGST" + i).value = sgstperc.toFixed(2);
+            // document.getElementById("IGST" + i).value = igstperc.toFixed(2);
+
+            // Ensure total tax is correctly calculated
+            var  tottax1 = eval(igstperc) + eval(cgstperc) + eval(sgstperc) + eval(tot) - eval(Disc);
+            
+            // Update the total amount field
+            document.getElementById("txtTotal" + i).value = tottax1.toFixed(2);
+            alert(tottax1);
+            // Calculate totals for all rows
+            var totalAmount = 0;
+            var totalCGST = 0;
+            var netamt = 0;
+            var totalSGST = 0;
+            var totalIGST = 0;
+            var totalDisc = 0;
+
+            var j = 0;
+             
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    var amt = ($(this).find('#txtAmount' + j).val());
+                    if (amt == "")
+                        amt = 0;
+                    totalAmount += eval(amt);
+
+                    var tamt = ($(this).find('#txtTotal' + j).val());
+                    if (tamt == "")
+                        tamt = 0;
+                    netamt += eval(tamt);
+
+                    if (state == "Tamil Nadu") {
+                        var cgst = $(this).find('#CGST' + j.toString()).val();
+                        if (cgst == "")
+                            cgst = 0;
+
+                        totalCGST += eval(cgst);
+                        
+
+                        var sgst = $(this).find('#SGST' + j.toString()).val();
+                        if (sgst == "")
+                            sgst = 0;
+
+                        totalSGST += eval(sgst);
+                        totalIGST += 0;
+                    }
+                    else{
+                        var igst = $(this).find('#IGST' + j.toString()).val();
+                        if (igst == "")
+                            igst = 0;
+
+
+                        totalIGST += eval(igst);
+                        totalSGST += 0;
+
+                        totalCGST += 0;
+                    }
+
+                    // var cgst = ($(this).find('#CGST' + j).val());
+                    // if (cgst == "")
+                    //     cgst = 0;
+                    // totalCGST += cgst;
+
+                    // var sgst = ($(this).find('#SGST' + j).val());
+                    // if (sgst == "")
+                    //     sgst = 0;
+                    // totalSGST += sgst;
+
+                    // var igst = ($(this).find('#IGST' + j).val());
+                    // if (igst == "")
+                    //     igst = 0;
+                    // totalIGST += igst;
+
+                    var dist = ($(this).find('#txtDiscAmount' + j).val());
+                    if (dist == "")
+                        dist = 0;
+                    totalDisc +=  eval(dist);
+                }
+                j += 1;
+            });
+             
+            // Proper rounding to avoid floating-point issues
+            var roundamount = Math.round(netamt.toFixed(2));
+             //alert(roundamount);
+            var round = eval(roundamount) - eval(netamt);
+
+         //   document.getElementById("txtFrieghtcharge").value = totfrieght.toFixed(2);
+           
+            document.getElementById("txtGross").value = totalAmount.toFixed(2);
+           
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            
+            document.getElementById("hidnet").value = netamt.toFixed(2);
+           
+            document.getElementById("txtRound").value = round.toFixed(2);
+           
+
+            if (eval(totalCGST) > 0){
+                document.getElementById("txtCGST").value = totalCGST.toFixed(2);
+              
+                document.getElementById("txtSGST").value = totalSGST.toFixed(2);
+               
+            }
+            if (eval(totalIGST) > 0){
+                document.getElementById("txtIGST").value = totalIGST.toFixed(2);
+                
+            }
+
+            document.getElementById("txtDisc").value = totalDisc.toFixed(2);
+            
+
+            // Convert total amount to words and display
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+        } catch (ex) {
+            alert("Error: " + ex.message);
+        }
+    }
+
+
     // function changeDisc(_this, i) {
     //     try {
     //         var tot = 0;
@@ -1094,7 +1294,7 @@
     //         var igsttotamt = 0;
     //         var disttotamt = 0;
     //         var totamt = 0;
-    //         var qty = parseFloat(document.getElementById("txtRecived" + i).value) || 0;
+    //         var qty = parseFloat(document.getElementById("ordqty" + i).value) || 0;
     //         var discper = parseFloat(document.getElementById("txtDiscPer" + i).value) || 0;
     //         var up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
     //         var IGST = parseFloat(document.getElementById("IGSTP" + i).value) || 0;
