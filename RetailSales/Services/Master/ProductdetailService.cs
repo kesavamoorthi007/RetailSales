@@ -21,11 +21,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM.UOM_CODE,RATE,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM WHERE PRO_DETAIL.IS_ACTIVE = 'Y' ORDER BY PRO_DETAIL.ID DESC";
+                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.ID=PRO_DETAIL.PRODUCTS_NAME WHERE PRO_DETAIL.IS_ACTIVE = 'Y' ORDER BY PRO_DETAIL.ID DESC";
             }
             else
             {
-                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRODUCT_VARIANT,VARIANT_NICKNAME,UOM.UOM_CODE,RATE,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM WHERE PRO_DETAIL.IS_ACTIVE = 'N' ORDER BY PRO_DETAIL.ID DESC";
+                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.ID=PRO_DETAIL.PRODUCTS_NAME WHERE PRO_DETAIL.IS_ACTIVE = 'N' ORDER BY PRO_DETAIL.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -38,7 +38,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditProductdetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,VARIANT_NICKNAME,PRODUCT_DESCRIPTION,UOM,HSN_CODE,RATE,MIN_QTY FROM PRO_DETAIL WHERE ID = '" + id + "' ";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,PRODUCTS_NAME,PRODUCT_DESCRIPTION,UOM,HSN_CODE,RATE,MIN_QTY FROM PRO_DETAIL WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -81,7 +81,7 @@ namespace RetailSales.Services.Master
                     }
                     objCmd.Parameters.Add("@productcategory", SqlDbType.NVarChar).Value = cy.Product;
                     objCmd.Parameters.Add("@productvariant", SqlDbType.NVarChar).Value = cy.Varint;
-                    objCmd.Parameters.Add("@varintnickname", SqlDbType.NVarChar).Value = cy.Varintnic;
+                    objCmd.Parameters.Add("@Productname", SqlDbType.NVarChar).Value = cy.ProName;
                     objCmd.Parameters.Add("@productdescription", SqlDbType.NVarChar).Value = cy.Productdescription;
                     objCmd.Parameters.Add("@hsncode ", SqlDbType.NVarChar).Value = cy.Hsncode;
                     objCmd.Parameters.Add("@uom", SqlDbType.NVarChar).Value = cy.Uom;
@@ -201,6 +201,17 @@ namespace RetailSales.Services.Master
             return dtt;
         }
 
+        public DataTable GetProduct(string productid)
+        {
+            string SvSql = string.Empty;
+            SvSql = "Select PROD_NAME,ID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + productid + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetUom()
         {
             string SvSql = string.Empty;
@@ -226,7 +237,7 @@ namespace RetailSales.Services.Master
         public DataTable GetProductdetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = " SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY WHERE PRO_DETAIL.ID='" + id + "'";
+            SvSql = " SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.ID=PRO_DETAIL.PRODUCTS_NAME WHERE PRO_DETAIL.ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

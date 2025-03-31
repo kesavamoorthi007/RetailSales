@@ -136,18 +136,17 @@
                                             <tr>
 
                                                 <th>Item</th>
-                                                <th>Variant - HSN</th>
-                                                
+                                                <th>Product</th>
+                                                <th>Variant </th>
+                                                <th> HSN </th>
                                                 <th>Tax</th>
                                                 <th> Unit </th>
-                                                <th> Dest UOM</th>
-                                                <th>CF</th>
+                                                
                                                 <th> Qty </th>
-                                                <th>CF Qty</th>
+                                                
                                                 <th>Rate (₹) </th>
                                                 <th>Amount (₹) </th>
-                                                <th>Disc %</th>
-                                                <th> Disc amount (₹)</th>
+                                                
 
 
                                                 <th>Total Amount (₹)</th>
@@ -163,18 +162,15 @@
 
                                                     <tr>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Product)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Varient)</td>
-                                                        
+                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Hsn)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Tariff)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].UOM)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].DestUOM)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].CF)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Qty)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].CfQty)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].Rate)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].Amount)</td>
-                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].DiscPer)</td>
-                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].DiscAmount)</td>
+                                                        
                                                       
                                                         
                                                         
@@ -209,12 +205,12 @@
                                                         @Html.DisplayFor(C => C.Gross)
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th>DISCOUNT (₹)</th>
-                                                    <td style="text-align: right;">
-                                                        @Html.DisplayFor(C => C.Disc)
-                                                    </td>
-                                                </tr>
+                                                // <tr>
+                                                //     <th>DISCOUNT (₹)</th>
+                                                //     <td style="text-align: right;">
+                                                //         @Html.DisplayFor(C => C.Disc)
+                                                //     </td>
+                                                // </tr>
                                                 <tr>
                                                     <th>FREIGHT (₹)</th>
                                                     <td style="text-align: right;">
@@ -288,51 +284,58 @@
                                                         <div class="form-group">
                                                             <div class="tab-pane active" id="tab-1">
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
-                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">LR.No<label class="Mandatory"></label></label>
-
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.LRno)
-                                                                            </div>
-
-                                                                        </div>
-                                                                        
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label"><strong>LR.No :</strong><label class="Mandatory"></label></label>                                                                          
+                                                                                @Html.DisplayFor(C => C.LRno)                                                                           
+                                                                        </div>                                                                       
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-8">
                                                                         <div class="form-group">
-
-                                                                            <br /><label for="inputName3" class="col-sm-4 control-label">LR.Date<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.LRdate)
-                                                                            </div>
+                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label"><strong>Transporter Name :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.drivername)
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-4">
                                                                         <div class="form-group">
-
-                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label">Transporter Name<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.drivername)
-                                                                            </div>
+                                                                            <br /><label for="inputName3" class="col-sm-4 control-label"><strong>LR.Date :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.LRdate)
                                                                         </div>
-                                                                        
-                                                                        
-                                                                    </div>
-                                                                    <div class="col-md-6">
+                                                                    </div>                                                                   
+                                                                    <div class="col-md-8">
                                                                         <div class="form-group">
-                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
+                                                                            <br />  <label for="inputName3" class="col-sm-6 control-label"><strong>Place Of Dispatch :</strong><label class="Mandatory"></label></label>                                                                           
+                                                                                @Html.DisplayFor(C => C.dispatchname)                                                                           
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="height:10px;"></div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
 
-                                                                            <div class="col-sm-8">
-                                                                                @Html.DisplayFor(C => C.dispatchname)
-                                                                            </div>
+                                                                            <br /> <label for="inputName3" class="col-sm-3 control-label"><strong>Amount In Words :</strong><label class="Mandatory"></label></label>
+
+                                                                            @Html.DisplayFor(C => C.Amountinwords)
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-3 control-label"><strong>Narration :</strong><label class="Mandatory"></label></label>
+
+                                                                            @Html.DisplayFor(C => C.Narration)
 
                                                                         </div>
                                                                     </div>
 
                                                                 </div>
+                                                                
                                                                 @*1st tab*@
                                                             </div>
                                                             @*1st tab*@
@@ -347,30 +350,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="height:10px;"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Narration<label class="Mandatory"></label></label>
-                                        
-                                            @Html.DisplayFor(C => C.Narration)
-                                        
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
-                                        
-                                            @Html.DisplayFor(C => C.Amountinwords)
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                            
 
 
                             <div style="height:30px;"></div>

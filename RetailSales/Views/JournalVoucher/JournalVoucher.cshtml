@@ -146,7 +146,7 @@
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.JournalVoucherlst[i].AccName, Model.JournalVoucherlst[i].AccNamelst, "Please Select", new { @class = "form-control _select newcss", @id = "txtAccName" + i, @onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.JournalVoucherlst[i].AccName, Model.JournalVoucherlst[i].AccNamelst, "-- Please Select --", new { @class = "form-control _select newcss", @id = "txtAccName" + i, @onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
 
                                                         </td>
                                                         <td>
@@ -262,7 +262,7 @@
                                                 <div class="form-group">
 
                                                     <br /><label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="mandatory"></label></label>
-                                                    <div class="col-sm-10">
+                                                    <div class="col-sm-6">
                                                         @Html.TextBoxFor(C => C.AmtWd, new { @id = "txtAmtWd", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
                                                         <br />
                                                     </div>
@@ -275,7 +275,7 @@
                                                 <div class="form-group">
 
                                                     <br /><label for="inputName3" class="col-sm-2 control-label">Narration<label class="mandatory">*</label></label>
-                                                    <div class="col-sm-10">
+                                                    <div class="col-sm-6">
                                                         @Html.TextAreaFor(C => C.Narr, new { @id = "txtNarr", @class = "form-control", @TabIndex = 2 })
                                                         <br />
                                                     </div>
@@ -858,7 +858,7 @@
         var index = $("#tbBooks").children("tr").length;
 
         var DBCR = "<td><input id='txtDBCR" + index + "' name='JournalVoucherlst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type='radio' value='Dr'> <label id='mt-radio'>Dr</label><input  id='txtDBCR" + index + "' name='JournalVoucherlst[" + index + "].DBCR' onchange='changeentry(this.value," + index + ")' type = 'radio' value='Cr'> <label id='mt-radio'>Cr</label></td>";
-        var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='AccNamelst[" + index + "].AccName' onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
+        var AccName = "<td><select style = 'width: 200px;' class='form-control _select newcss' id='txtAccName" + index + "' name='JournalVoucherlst[" + index + "].AccName' onchange = 'changeAcc_LedgerItem(this.value," + index + ")'><option value=''>-- Please Select --</option>" + remopt + "</select></td>";
         var DebitAmt = "<td><input class='form-control' id='txtDebitAmt" + index + "' name='JournalVoucherlst[" + index + "].DebitAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)'  style='width: 150px;' type='text' onkeyup = 'totdeAmount(this," + index + ")' /></td>";
         var CreditAmt = "<td><input class='form-control' id='txtCreditAmt" + index + "' name='JournalVoucherlst[" + index + "].CreditAmt' onkeydown = 'return isNumeric2(event.keyCode,this.value)' style='width: 150px;' onkeyup = 'totcrAmount(this," + index + ")' type='text' /></td>";
         var Balance = "<td><input class='form-control' id='txtBalance" + index + "' name='JournalVoucherlst[" + index + "].Balance'  style='width: 150px;' readonly='True' /></td>";

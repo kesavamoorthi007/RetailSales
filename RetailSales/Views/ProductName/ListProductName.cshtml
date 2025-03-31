@@ -1,7 +1,7 @@
-﻿@model RetailSales.Models.Productdetail
+﻿@model RetailSales.Models.Master.ProductName;
 
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "ListProductName";
 
 }
 <partial name="JqxGridPartial" />
@@ -22,7 +22,7 @@
         <ol class="breadcrumb">
             @*  <li> <a href="#">Home</a> </li>
             <li> <a>Master</a> </li> *@
-            <li class="active"> <strong>Variant</strong> </li>
+            <li class="active"> <strong>ProductName</strong> </li>
         </ol>
     </div>
 </div>
@@ -31,7 +31,7 @@
     $(document).ready(function () {
         var source =
         {
-            url: "MyListProductdetailgrid",
+        url: "MyListProductNamegrid",
             data: {
                 strstatus: ""
             },
@@ -40,13 +40,10 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                { name: 'product', type: 'string' },
+                { name: 'category', type: 'string' },
                 { name: 'proname', type: 'string' },
-                { name: 'varint', type: 'string' },
-                { name: 'editrow', type: 'string' },
-                { name: 'delrow', type: 'string' },
-                { name: 'cf', type: 'string' },
-
+                { name: 'edit', type: 'string' },
+                { name: 'delete', type: 'string' },
 
             ],
             id: 'id',
@@ -61,7 +58,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '120%',
+                width: '75%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -83,15 +80,13 @@
 
                 columns: [
 
-                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'product', width: 150 },
+                    { text: 'Product Category', filtertype: 'input', datafield: 'category', width: 200 },
                     { text: 'Product Name', filtertype: 'input', datafield: 'proname', width: 200 },
-                    { text: 'Variant', filtertype: 'checkedlist', datafield: 'varint', width: 220 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'CF', datafield: 'cf', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
+                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},
                 ]
             });
-        $("#ddlStatus").change(function () {
+        $("#ddlstatus").change(function () {
             var value = "Y";
             if ($(this).val() != "") {
                 value = $(this).val();
@@ -115,14 +110,14 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2 ">
-                                @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
+                                @Html.DropDownListFor(n => n.ddlstatus, new SelectListItem[]
                                          { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
-                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
+                                         new { @id = "ddlstatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
                             <div class="col-md-9 ">
                                 <div class=" textalignright">
-                                    <a href="@Url.Action("Productdetail", "Productdetail")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Variant</a>
+                                    <a href="@Url.Action("ProductName", "ProductName")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Product</a>
                                     <br>
                                 </div>
 
@@ -131,7 +126,7 @@
                         <br />
                         <div class="row">
 
-                            <div class="col-md-8">
+                            <div class="col-md-12 ">
                                 <div id="grid">
                                 </div>
                             </div>
@@ -148,5 +143,4 @@
         return confirm("Are you sure you want to delete?");
     }
 </script>
-
 
