@@ -76,7 +76,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetItem()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME FROM PRODUCT";
+            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME,PRODUCT.IS_ACTIVE FROM PRODUCT WHERE PRODUCT.IS_ACTIVE = 'Y' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -87,7 +87,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetProduct(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select PROD_NAME,ID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + id + "'";
+            SvSql = "Select PROD_NAME,ID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + id + "' AND PRO_NAME.IS_ACTIVE = 'Y' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -97,7 +97,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCTS_NAME='" + id + "'";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCTS_NAME='" + id + "' AND PRO_DETAIL.IS_ACTIVE = 'Y'";
             //SvSql = "SELECT ID,CONCAT(PRODUCT_VARIANT, ' - ', HSCODE) AS Variant_HSN FROM PRO_DETAIL JOIN HSNMAST ON HSN_CODE = HSNMASTID WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
