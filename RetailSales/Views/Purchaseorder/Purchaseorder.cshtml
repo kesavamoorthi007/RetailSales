@@ -357,10 +357,10 @@
                                                     <td>
                                                         <div style="display: flex; align-items: center; gap: 10px;">
 
-                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
+                                                            @*<input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">*@
 
 
-                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeFrightTot(this)", @readonly = "readonly" , style = "width: 150px;text-align:right"})
                                                         </div>
                                                     </td>
                                                             
@@ -449,7 +449,7 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
-                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
+                                                                            <br />  <label for="inputName3" class="col-sm-12 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
 
                                                                             <div class="col-sm-8">
                                                                                 @Html.TextBoxFor(C => C.dispatchname, new { @id = "txtdispatchname", @class = "form-control", @TabIndex = 1 })
@@ -869,7 +869,7 @@
             var Fri = document.getElementById("txtFrieghtcharge").value;
 
             var tot = document.getElementById("txtGross").value;
-            var Disc = document.getElementById("txtDisc").value;
+           @* var Disc = document.getElementById("txtDisc").value;*@
             var IGST = document.getElementById("txtIGST").value;
             var CGST = document.getElementById("txtCGST").value;
             var SGST = document.getElementById("txtSGST").value;
@@ -880,8 +880,8 @@
             if (tot == "")
                 tot = 0;
 
-            if (Disc == "")
-                Disc = 0;
+          @*  if (Disc == "")
+                Disc = 0;*@
 
             if (IGST == "")
                 IGST = 0;
@@ -892,7 +892,7 @@
             if (SGST == "")
                 SGST = 0;
 
-            var rej = eval(tot) + eval(Fri) - eval(Disc) + eval(CGST) + eval(SGST) + eval(IGST);
+            var rej = eval(tot) + eval(Fri)@* - eval(Disc)*@ + eval(CGST) + eval(SGST) + eval(IGST);
             //document.getElementById("txtNet").value = rej.toFixed(2);
 
 

@@ -546,8 +546,7 @@ namespace RetailSales.Controllers.Purchase
                         EditRow = "";
                         GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='20' />";
                         View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-
-
+                        DeleteRow = "";
 
                     }
                     else
@@ -557,9 +556,9 @@ namespace RetailSales.Controllers.Purchase
                         EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
                         GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
                         View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-
+                        DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
                     }
-                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
+                    
 
                 }
                 else
@@ -567,6 +566,9 @@ namespace RetailSales.Controllers.Purchase
 
                     MailRow = "";
                     GeneratePDF = "";
+                    EditRow = "";
+                    GoToGRN = "";
+                    View = "";
                     //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                     DeleteRow = "Remove?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
                 }
