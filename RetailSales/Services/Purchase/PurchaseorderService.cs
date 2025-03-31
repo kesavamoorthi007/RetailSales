@@ -20,7 +20,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetUOM()
         {
             string SvSql = string.Empty;
-            SvSql = "  SELECT UOM_CODE,ID FROM UOM";
+            SvSql = "  SELECT UOM_CODE,ID FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -109,7 +109,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetDUOM()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM";
+            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -120,7 +120,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetSupplierDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE.STATE_NAME,CITY,GST_NO,SUPPLIER.ID from SUPPLIER LEFT OUTER JOIN STATE ON STATE.ID=SUPPLIER.STATE WHERE SUPPLIER.ID='" + ItemId + "'";
+            SvSql = "select SUPPLIER_NAME,ADDRESS,STATE.STATE_NAME,CITY,GST_NO,SUPPLIER.ID from SUPPLIER LEFT OUTER JOIN STATE ON STATE.ID=SUPPLIER.STATE WHERE SUPPLIER.ID='" + ItemId + "' AND SUPPLIER.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -141,7 +141,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetHsn(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "select HSN_CODE,ID from PRO_DETAIL WHERE ID='" + id + "'";
+            SvSql = "select HSN_CODE,ID from PRO_DETAIL WHERE ID='" + id + "' AND PRO_DETAIL.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -151,7 +151,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GethsnDetails(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select HSNMASTID from HSNMAST where HSCODE='" + id + "'";
+            SvSql = "Select HSNMASTID from HSNMAST where HSCODE='" + id + "' AND HSNMAST.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -161,7 +161,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetgstDetails(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "select TAXMASTER.TAX_NAME from HSNROW LEFT OUTER JOIN TAXMASTER ON TAXMASTER.ID=HSNROW.TARIFFID where HSNCODEID='" + id + "'";
+            SvSql = "select TAXMASTER.TAX_NAME from HSNROW LEFT OUTER JOIN TAXMASTER ON TAXMASTER.ID=HSNROW.TARIFFID where HSNCODEID='" + id + "' AND TAXMASTER.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
