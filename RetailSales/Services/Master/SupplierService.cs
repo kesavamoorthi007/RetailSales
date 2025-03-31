@@ -83,7 +83,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-                string statename = datatrans.GetDataString("SELECT STATE_NAME FROM STATE WHERE ID='"+cy.State+"'");
+                //string statename = datatrans.GetDataString("SELECT STATE_NAME FROM STATE WHERE ID='"+cy.State+"'");
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("SupplierProc", objConn);
@@ -104,7 +104,7 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@mobilenumber", SqlDbType.NVarChar).Value = cy.Mobile;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = cy.City;
-                    objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = statename;
+                    objCmd.Parameters.Add("@state", SqlDbType.NVarChar).Value = cy.State;
                     //objCmd.Parameters.Add("@country", SqlDbType.NVarChar).Value = cy.Country;
                     objCmd.Parameters.Add("@gst", SqlDbType.NVarChar).Value = cy.Gst;
                     objCmd.Parameters.Add("@emailid", SqlDbType.NVarChar).Value = cy.Email;
