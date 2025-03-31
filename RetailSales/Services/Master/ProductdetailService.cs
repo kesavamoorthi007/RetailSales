@@ -193,7 +193,7 @@ namespace RetailSales.Services.Master
         public DataTable GetCategory()
         {
             string SvSql = string.Empty;
-            SvSql = "Select PRODUCT_NAME,ID From PRODUCT";
+            SvSql = "Select PRODUCT_NAME,ID From PRODUCT WHERE PRODUCT.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -204,7 +204,7 @@ namespace RetailSales.Services.Master
         public DataTable GetProduct(string productid)
         {
             string SvSql = string.Empty;
-            SvSql = "Select PROD_NAME,ID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + productid + "'";
+            SvSql = "Select PROD_NAME,ID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + productid + "' AND PRO_NAME.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -215,7 +215,7 @@ namespace RetailSales.Services.Master
         public DataTable GetUom()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,UOM_CODE FROM UOM";
+            SvSql = "SELECT ID,UOM_CODE FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -226,7 +226,7 @@ namespace RetailSales.Services.Master
         public DataTable GetHsn()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT HSNMASTID,HSCODE FROM HSNMAST";
+            SvSql = "SELECT HSNMASTID,HSCODE FROM HSNMAST WHERE HSNMAST.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -260,7 +260,7 @@ namespace RetailSales.Services.Master
         public DataTable GetSUOM()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM";
+            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -271,7 +271,7 @@ namespace RetailSales.Services.Master
         public DataTable GetDUOM()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM";
+            SvSql = "SELECT UOM.ID,UOM.UOM_CODE FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
