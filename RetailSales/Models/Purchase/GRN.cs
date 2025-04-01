@@ -28,7 +28,65 @@ namespace RetailSales.Models
         public double IGST { get; set; }
         public double SGST { get; set; }
         public double CGST { get; set; }
+
+
+        public string GRNNo { get; set; }
+        public string GRNDate { get; set; }
+        public string SuppName { get; set; }
+        public string SuppAdd { get; set; }
+        public string Country { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string RefNo { get; set; }
+        public string TransName { get; set; }
+        public string PlaceOfDis { get; set; }
+        public string LRNO { get; set; }
+        public string LRDate { get; set; }
+        public string AmtInWords { get; set; }
+        public string Narration { get; set; }
+        public string GrossAmt { get; set; }
+        public string NetAmt { get; set; }
+        public string Fright { get; set; }
+        public string Cgst { get; set; }
+        public string Sgst { get; set; }
+        public string Igst { get; set; }
+        public string RoundAmt { get; set; }
+        public string Disc { get; set; }
+        public List<GRNItem> GRNLst { get; set; }
     }
+
+    public class GRNItem
+    {
+        public string ID { get; set; }
+        public string Item { get; set; }
+        public string Product { get; set; }
+        public string Varient { get; set; }
+        public string Hsn { get; set; }
+        public string Tariff { get; set; }
+        public string UOM { get; set; }
+        public string Ordered { get; set; }
+        public string Recived { get; set; }
+        public string Accepted { get; set; }
+        public string Rejected { get; set; }
+        public string exqty { get; set; }
+        public string shortqty { get; set; }
+        public string DestUOM { get; set; }
+        public string CF { get; set; }
+        public string CfQty { get; set; }
+        public string Rate { get; set; }
+        public string Amount { get; set; }
+        public string DiscPer { get; set; }
+        public string DiscAmount { get; set; }
+        public string CGSTP { get; set; }
+        public string SGSTP { get; set; }
+        public string IGSTP { get; set; }
+        public string CGST { get; set; }
+        public string SGST { get; set; }
+        public string IGST { get; set; }
+        public string Total { get; set; }
+
+    }
+
     public class ListGRNgrid
     {
         public string id { get; set; }
@@ -36,6 +94,7 @@ namespace RetailSales.Models
         public string grndate { get; set; }
         public string sup { get; set; }
         public string net { get; set; }
+        public string accounts { get; set; }
         public string view { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }

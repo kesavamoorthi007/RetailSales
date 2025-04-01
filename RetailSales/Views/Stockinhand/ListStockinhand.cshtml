@@ -41,6 +41,7 @@
             datafields: [
                 
                 { name: 'item', type: 'string' },
+                { name: 'product', type: 'string' },
                 { name: 'variant', type: 'string' },
                 { name: 'uom', type: 'string' },
                 { name: 'qty', type: 'string' },
@@ -57,7 +58,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '75%',
+                width: '90%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -80,7 +81,8 @@
                 columns: [
 
                     //{ text: 'Doc No', filtertype: 'checkedlist', datafield: 'doc', width: 300 },
-                    { text: 'Product Name', filtertype: 'checkedlist', datafield: 'item', width: 300 },
+                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'item', width: 200 },
+                    { text: 'Product Name', filtertype: 'checkedlist', datafield: 'product', width: 200 },
                     { text: 'Variant', filtertype: 'checkedlist', datafield: 'variant', width: 250 },
                     { text: 'Unit', filtertype: 'checkedlist', datafield: 'uom', width: 100 },
                     { text: 'Balance Quantity', filtertype: 'checkedlist', datafield: 'qty', width: 150 },
