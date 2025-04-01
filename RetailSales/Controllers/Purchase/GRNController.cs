@@ -31,6 +31,89 @@ namespace RetailSales.Controllers.Purchase
         {
             return View();
         }
+
+        public IActionResult ViewGRN(string id)
+        {
+            GRN ic = new GRN();
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = GRNService.GetGRN(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.GRNNo = dt.Rows[0]["GRN_NO"].ToString();
+                ic.GRNDate = dt.Rows[0]["GRN_DATE"].ToString();
+                ic.SuppName = dt.Rows[0]["SUP_NAME"].ToString();
+                ic.SuppAdd = dt.Rows[0]["ADDRESS"].ToString();
+                ic.Country = dt.Rows[0]["COUNTRY"].ToString();
+                ic.State = dt.Rows[0]["STATE"].ToString();
+                ic.City = dt.Rows[0]["CITY"].ToString();
+                ic.RefNo = dt.Rows[0]["REF_NO"].ToString();
+                ic.RefDate = dt.Rows[0]["REF_DATE"].ToString();
+                ic.AmtInWords = dt.Rows[0]["AMTINWORDS"].ToString();
+                ic.Narration = dt.Rows[0]["NARRATION"].ToString();
+                ic.TransName = dt.Rows[0]["TRANS_SPORTER"].ToString();
+                ic.LRNO = dt.Rows[0]["LR_NO"].ToString();
+                ic.LRDate = dt.Rows[0]["LR_DATE"].ToString();
+                ic.PlaceOfDis = dt.Rows[0]["PLACE_DIS"].ToString();
+                ic.GrossAmt = dt.Rows[0]["GROSS"].ToString();
+                ic.NetAmt = dt.Rows[0]["NET"].ToString();
+                ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.Fright = dt.Rows[0]["FRIGHTCHARGE"].ToString();
+                ic.Cgst = dt.Rows[0]["CGST"].ToString();
+                ic.Sgst = dt.Rows[0]["SGST"].ToString();
+                ic.Igst = dt.Rows[0]["IGST"].ToString();
+                ic.RoundAmt = dt.Rows[0]["ROUNT_OFF"].ToString();
+                ic.ID = id;
+
+
+            }
+
+            List<GRNItem> TData = new List<GRNItem>();
+            GRNItem tda = new GRNItem();
+
+
+
+            dtt = GRNService.GetGRNItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new GRNItem();
+                    tda.Item = dtt.Rows[i]["ITEM"].ToString();
+                    tda.Product = dtt.Rows[i]["PRODUCT"].ToString();
+                    tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                    tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
+                    tda.UOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.Ordered = dtt.Rows[i]["QTY"].ToString();
+                    tda.Recived = dtt.Rows[i]["RECIVED_QTY"].ToString();
+                    tda.Accepted = dtt.Rows[i]["ACCEPTED_QTY"].ToString();
+                    tda.Rejected = dtt.Rows[i]["REJECTED_QTY"].ToString();
+                    tda.exqty = dtt.Rows[i]["EXCEED_QTY"].ToString();
+                    tda.shortqty = dtt.Rows[i]["SHORT_QTY"].ToString();
+                    tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[i]["CF"].ToString();
+                    tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                    tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
+                    tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
+                    tda.IGSTP = dtt.Rows[i]["IGSTP"].ToString();
+                    tda.CGST = dtt.Rows[i]["CGST"].ToString();
+                    tda.SGST = dtt.Rows[i]["SGST"].ToString();
+                    tda.IGST = dtt.Rows[i]["IGST"].ToString();
+                    tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
+                    tda.DiscAmount = dtt.Rows[i]["DIS_AMOUNT"].ToString();
+                    tda.Total = dtt.Rows[i]["TOTAL_AMOUNT"].ToString();
+                    tda.ID = id;
+                    TData.Add(tda);
+                }
+            }
+            ic.GRNLst = TData;
+            return View(ic);
+        }
+
         public ActionResult MyListGRNgrid(string strStatus)
         {
             List<ListGRNgrid> Reg = new List<ListGRNgrid>();
@@ -42,25 +125,20 @@ namespace RetailSales.Controllers.Purchase
 
 
                 //string EditRow = string.Empty;
+                string Accounts = string.Empty;
                 string View = string.Empty;
-                string DeleteRow = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
 
                     //EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
-                    View = "<a href=GRNAccount?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    Accounts = "<a href=GRNAccount?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
                     //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    View = "<a href=ViewGRN?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/file.png' alt='View' width='20'  /></a>";
                     //DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "";
 
                 }
-                else
-                {
-                    //EditRow = "";
-                    //View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='20' /></a>";
-                }
+                
 
                 Reg.Add(new ListGRNgrid
                 {
@@ -70,8 +148,8 @@ namespace RetailSales.Controllers.Purchase
                     sup = dtUsers.Rows[i]["SUP_NAME"].ToString(),
                     net = dtUsers.Rows[i]["NET"].ToString(),
                     //editrow = EditRow,
+                    accounts = Accounts,
                     view = View,
-                    delrow = DeleteRow,
 
                 });
             }

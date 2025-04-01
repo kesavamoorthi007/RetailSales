@@ -1,0 +1,408 @@
+﻿@model RetailSales.Models.GRN
+@{
+    ViewData["Title"] = "GRN";
+}
+<style>
+    .newwidth {
+        width: 120px;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+</style>
+<div style="height:25px;"></div>
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>View GRN</strong> </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("ViewGRN", "GRN", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>GRN No :</strong><label class="mandatory"></label></label>
+
+                                        @Html.HiddenFor(C => C.ID)
+                                        @Html.DisplayFor(C => C.GRNNo)
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>GRN Date :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.GRNDate)
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Name :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.SuppName)
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Supplier Address :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.SuppAdd)
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>State :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.State)
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>City :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.City)
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:20px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Ref No :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.RefNo)
+
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Ref Date :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.RefDate)
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-md-12" style="overflow-x:scroll; min-width:300px; min-height:100px;">
+                                    @* table id="example7" class="display nowrap table  responsive nowrap table-bordered" *@
+                                        <table class="table table-striped table-hover" id="dataTable">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Item</th>
+                                                    <th>Product</th>
+                                                    <th>Variant </th>
+                                                    <th> HSN </th>
+                                                    <th>Tax</th>
+                                                    <th> Unit </th>
+                                                    <th> Ordered </th>
+                                                    <th> Received </th>
+                                                    <th> Accepted </th>
+                                                    <th> Rejected </th>
+                                                    <th> Exceed </th>
+                                                    <th> Shortage </th>
+                                                    <th> Dest UOM</th>
+                                                    <th>CF</th>
+                                                    <th>CF Qty</th>
+                                                    <th>Rate (₹) </th>
+                                                    <th>Amount (₹) </th>
+                                                    @if (Model.State == "Tamil Nadu")
+                                                    {
+                                                        <th> CGST </th>
+                                                        <th> SGST </th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th> IGST </th>
+                                                    }
+                                                    <th>Disc %</th>
+                                                    <th> Disc amount (₹)</th>
+                                                    <th>Total Amount (₹)</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                @{
+                                                    int i = 0;
+
+                                                    foreach (var item in Model.GRNLst.ToList())
+                                                    {
+
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Item)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Product)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Varient)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Hsn)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Tariff)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].UOM)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Ordered)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Recived)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Accepted)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Rejected)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].exqty)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].shortqty)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].DestUOM)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].CF)</td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].CfQty)</td>
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.GRNLst[i].Rate)</td>
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.GRNLst[i].Amount)</td>
+                                                            @if (Model.State == "Tamil Nadu")
+                                                            {
+                                                                <td>
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].CGSTP, new { @id = "CGSTP" + i })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].SGSTP, new { @id = "SGSTP" + i })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].IGSTP, new { @id = "IGSTP" + i })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                    @Html.DisplayFor(o => o.GRNLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(o => o.GRNLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].CGSTP, new { @id = "CGSTP" + i })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].SGSTP, new { @id = "SGSTP" + i })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].IGSTP, new { @id = "IGSTP" + i })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].CGST, new { @id = "CGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                    @Html.HiddenFor(o => o.GRNLst[i].SGST, new { @id = "SGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                    @Html.DisplayFor(o => o.GRNLst[i].IGST, new { @id = "IGST" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+
+                                                                </td>
+                                                            }
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.GRNLst[i].DiscPer)</td>
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.GRNLst[i].DiscAmount)</td>
+                                                            <td style="text-align: right;">@Html.DisplayFor(o => o.GRNLst[i].Total)</td>
+
+                                                        </tr>
+                                                        //i = i + 1;
+                                                        i++;
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+
+                                <div class="col-md-4" style="overflow-x:scroll; min-width:300px; min-height:300px;">
+
+                                    <table class="table table-striped table-hover" id="dataTable">
+                                        <thead>
+                                        </thead>
+                                        <tbody id="tbBooks">
+                                            @{
+                                                <tr>
+
+                                                    <th>GROSS (₹)</th>
+                                                    <td style="text-align: right;">
+                                                        @Html.DisplayFor(C => C.GrossAmt)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>DISCOUNT (₹)</th>
+                                                    <td style="text-align: right;">
+                                                        @Html.DisplayFor(C => C.Disc)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>FREIGHT (₹)</th>
+                                                    <td style="text-align: right;">
+                                                        @Html.DisplayFor(C => C.Fright)
+                                                    </td>
+                                                </tr>
+                                                if (Model.State == "Tamil Nadu")
+                                                {
+                                                    <tr>
+                                                        <th>CGST</th>
+                                                        <td style="text-align: right;">
+                                                            @Html.DisplayFor(C => C.Cgst)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>SGST</th>
+                                                        <td style="text-align: right;">
+                                                            @Html.DisplayFor(C => C.Sgst)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <th>IGST</th>
+                                                        <td style="text-align: right;">
+                                                            @Html.DisplayFor(C => C.Igst)
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                                <tr>
+                                                    <th> ROUND OFF</th>
+                                                    <td style="text-align: right;">
+                                                        @Html.DisplayFor(C => C.RoundAmt)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th> TOTAL (₹) </th>
+                                                    <td style="text-align: right;">
+                                                        @Html.DisplayFor(C => C.NetAmt)
+                                                        <input type="hidden" id="hidnet" />
+                                                    </td>
+
+
+                                                </tr>
+
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <div class="col-md-8">
+                                    <div class="tabs-container">
+                                        <ul class="nav nav-pills nav-fill">
+                                            @*<li class="active"><a href="#tab-1" data-toggle="tab">Despatch Address</a></li>*@
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Transporter Details</a></li>
+
+
+                                        </ul>
+                                        <div class="tab-content">
+
+
+                                            <div class="tab-pane active" id="tab-1">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <div class="tab-pane active" id="tab-1">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label"><strong>LR.No :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.LRNO)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-6 control-label"><strong>Transporter Name :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.TransName)
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <br /><label for="inputName3" class="col-sm-4 control-label"><strong>LR.Date :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.LRDate)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="form-group">
+                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label"><strong>Place Of Dispatch :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.PlaceOfDis)
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div style="height:10px;"></div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-3 control-label"><strong>Amount In Words :</strong><label class="Mandatory"></label></label>
+
+                                                                            @Html.DisplayFor(C => C.AmtInWords)
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+
+                                                                            <br /> <label for="inputName3" class="col-sm-3 control-label"><strong>Narration :</strong><label class="Mandatory"></label></label>
+
+                                                                            @Html.DisplayFor(C => C.Narration)
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @*1st tab*@
+                                                            </div>
+                                                            @*1st tab*@
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            @* <button type="submit" class="btn btn-success" type="button" id="btnSave">Sales Return</button> *@
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListGRN", "GRN")'">Cancel</button>
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

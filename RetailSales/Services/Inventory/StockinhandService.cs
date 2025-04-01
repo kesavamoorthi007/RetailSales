@@ -19,7 +19,7 @@ namespace RetailSales.Services
         public DataTable GetAllListStockinhand()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT   ITEM_ID,VARIANT,UOM,SUM(BALANCE_QTY) AS BALANCE_QTY FROM INVENTORY_ITEM  GROUP BY ITEM_ID,VARIANT,UOM";
+            SvSql = "SELECT   ITEM_ID,PRODUCT,VARIANT,UOM,SUM(BALANCE_QTY) AS BALANCE_QTY FROM INVENTORY_ITEM  GROUP BY ITEM_ID,PRODUCT,VARIANT,UOM";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

@@ -53,6 +53,7 @@ namespace RetailSales.Controllers
                 {
                     
                     item = dtUsers.Rows[i]["ITEM_ID"].ToString(),
+                    product = dtUsers.Rows[i]["PRODUCT"].ToString(),
                     variant = dtUsers.Rows[i]["VARIANT"].ToString(),
                     uom = dtUsers.Rows[i]["UOM"].ToString(),
                     qty = dtUsers.Rows[i]["BALANCE_QTY"].ToString(),
