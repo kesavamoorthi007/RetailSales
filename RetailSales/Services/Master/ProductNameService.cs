@@ -20,11 +20,11 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT PRO_NAME.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,DESCRIPTION,PRO_NAME.IS_ACTIVE FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.IS_ACTIVE = 'Y' ORDER BY PRO_NAME.ID DESC";
+                SvSql = "SELECT PRO_NAME_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,DESCRIPTION,PRO_NAME.IS_ACTIVE FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.IS_ACTIVE = 'Y' ORDER BY PRO_NAME.PRO_NAME_BASICID DESC";
             }
             else
             {
-                SvSql = "SELECT PRO_NAME.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,DESCRIPTION,PRO_NAME.IS_ACTIVE FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.IS_ACTIVE = 'N' ORDER BY PRO_NAME.ID DESC";
+                SvSql = "SELECT PRO_NAME_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,DESCRIPTION,PRO_NAME.IS_ACTIVE FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.IS_ACTIVE = 'N' ORDER BY PRO_NAME.PRO_NAME_BASICID DESC";
             }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
@@ -36,7 +36,29 @@ namespace RetailSales.Services.Master
         public DataTable GetCategory()
         {
             string SvSql = string.Empty;
-            SvSql = "Select PRODUCT_NAME,ID From PRODUCT";
+            SvSql = "Select PRODUCT_NAME,ID,PRODUCT.IS_ACTIVE From PRODUCT WHERE PRODUCT.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetHsn()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT HSNMASTID,HSCODE FROM HSNMAST WHERE HSNMAST.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetUom()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,UOM_CODE FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -47,7 +69,40 @@ namespace RetailSales.Services.Master
         public DataTable GetEditProductName(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_NAME.ID,PRODUCT_CATEGORY,PROD_NAME,DESCRIPTION FROM PRO_NAME WHERE ID = '" + id + "' ";
+            SvSql = "SELECT PRODUCT_CATEGORY,PROD_NAME,DESCRIPTION FROM PRO_NAME WHERE PRO_NAME.PRO_NAME_BASICID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetEditProductNameItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PRO_NAME_BASICID,PRO_NAME_DETAILID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_NAME_DETAIL WHERE PRO_NAME_DETAIL.PRO_NAME_BASICID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetProductName(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PRODUCT.PRODUCT_NAME,PROD_NAME,DESCRIPTION FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.PRO_NAME_BASICID = '" + id + "' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetProductNameItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PRO_NAME_BASICID,PRO_NAME_DETAILID,PRODUCT_VARIANT,UOM.UOM_CODE,HSNMAST.HSCODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_NAME_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_NAME_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_NAME_DETAIL.HSN_CODE WHERE PRO_NAME_DETAIL.PRO_NAME_BASICID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -65,24 +120,74 @@ namespace RetailSales.Services.Master
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    objConn.Open();
+                    SqlCommand objCmd = new SqlCommand("ProNameProc", objConn);
+                    objCmd.CommandType = CommandType.StoredProcedure;
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into PRO_NAME (PRODUCT_CATEGORY,PROD_NAME,DESCRIPTION) VALUES ('" + cy.Category + "','" + cy.ProName + "','" + cy.Description + "')";
-                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                        objCmds.ExecuteNonQuery();
-
-                        //StatementType = "Insert";
-                        //objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
+                        StatementType = "Insert";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
                     }
                     else
                     {
-                        svSQL = "Update PRO_NAME set PRODUCT_CATEGORY = '" + cy.Category + "',PROD_NAME = '" + cy.ProName + "',DESCRIPTION = '" + cy.Description + "' WHERE PRO_NAME.ID ='" + cy.ID + "'";
-                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                        objCmds.ExecuteNonQuery();
+                        StatementType = "Update";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
+                    }
+                    objCmd.Parameters.Add("@ProdCategory", SqlDbType.NVarChar).Value = cy.Category;
+                    objCmd.Parameters.Add("@ProdName", SqlDbType.NVarChar).Value = cy.ProName;
+                    objCmd.Parameters.Add("@Description", SqlDbType.NVarChar).Value = cy.Description;
+                    objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
+                    try
+                    {
 
-                        //StatementType = "Update";
-                        //objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
+                        objConn.Open();
+                        Object Pid = objCmd.ExecuteScalar();
+                        if (cy.ID != null)
+                        {
+                            Pid = cy.ID;
+                        }
+
+                        if (cy.ProductNameLst != null)
+                        {
+                            if (cy.ID == null)
+                            {
+                                foreach (ProductNameItem cp in cy.ProductNameLst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into PRO_NAME_DETAIL (PRO_NAME_BASICID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                svSQL = "Delete PRO_NAME_DETAIL WHERE PRO_NAME_BASICID='" + cy.ID + "'";
+                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                objCmdd.ExecuteNonQuery();
+                                foreach (ProductNameItem cp in cy.ProductNameLst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into PRO_NAME_DETAIL (PRO_NAME_BASICID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
+                        }
+
+
+
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
                     }
                     objConn.Close();
                 }
@@ -103,7 +208,7 @@ namespace RetailSales.Services.Master
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE PRO_NAME SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE PRO_NAME SET IS_ACTIVE ='N' WHERE PRO_NAME_BASICID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -125,7 +230,7 @@ namespace RetailSales.Services.Master
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE PRO_NAME SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE PRO_NAME SET IS_ACTIVE = 'Y' WHERE PRO_NAME_BASICID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
