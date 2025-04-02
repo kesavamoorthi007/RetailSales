@@ -42,6 +42,7 @@
             datafields: [
                 { name: 'category', type: 'string' },
                 { name: 'proname', type: 'string' },
+                { name: 'view', type: 'string' },
                 { name: 'edit', type: 'string' },
                 { name: 'delete', type: 'string' },
 
@@ -82,6 +83,7 @@
 
                     { text: 'Product Category', filtertype: 'input', datafield: 'category', width: 200 },
                     { text: 'Product Name', filtertype: 'input', datafield: 'proname', width: 200 },
+                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},
                 ]

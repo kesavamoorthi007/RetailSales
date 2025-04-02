@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RetailSales.Interface.Master;
+using RetailSales.Models;
 using RetailSales.Models.Master;
 using RetailSales.Services.Master;
+using RetailSales.Services.Purchase;
 
 namespace RetailSales.Controllers.Master
 {
@@ -19,9 +21,20 @@ namespace RetailSales.Controllers.Master
             ProductName ic = new ProductName();
             ic.Categorylst = BindCategory();
 
+            List<ProductNameItem> TData = new List<ProductNameItem>();
+            ProductNameItem tda = new ProductNameItem();
+
             if (id == null)
             {
+                for (int i = 0; i < 1; i++)
+                {
+                    tda = new ProductNameItem();
+                    tda.UOMlst = BindUOM();
+                    tda.HSNlst = BindHsn();
 
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+                }
             }
             else
             {
@@ -30,12 +43,34 @@ namespace RetailSales.Controllers.Master
                 dt = ProductNameService.GetEditProductName(id);
                 if (dt.Rows.Count > 0)
                 {
-                    ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.Categorylst = BindCategory();
                     ic.Category = dt.Rows[0]["PRODUCT_CATEGORY"].ToString();
                     ic.ProName = dt.Rows[0]["PROD_NAME"].ToString();
                     ic.Description = dt.Rows[0]["DESCRIPTION"].ToString();
+                    ic.ID = id;
+                }
+                DataTable dtt = new DataTable();
+                dtt = ProductNameService.GetEditProductNameItem(id);
+                if (dtt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    {
+                        tda = new ProductNameItem();
+                        tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                        tda.UOMlst = BindUOM();
+                        tda.Uom = dtt.Rows[i]["UOM"].ToString();
+                        tda.HSNlst = BindHsn();
+                        tda.Hsn = dtt.Rows[i]["HSN_CODE"].ToString();
+                        tda.MinQty = dtt.Rows[i]["MIN_QTY"].ToString();
+                        tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                        tda.ProdDesc = dtt.Rows[i]["PRODUCT_DESCRIPTION"].ToString();
+                        tda.ID = id;
+                        tda.Isvalid = "Y";
+                        TData.Add(tda);
+                    }
                 }
             }
+            ic.ProductNameLst = TData;
             return View(ic);
         }
         [HttpPost]
@@ -80,6 +115,99 @@ namespace RetailSales.Controllers.Master
             return View();
         }
 
+        public IActionResult ViewProductName(string id)
+        {
+            ProductName ic = new ProductName();
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = ProductNameService.GetProductName(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.Category = dt.Rows[0]["PRODUCT_NAME"].ToString();
+                ic.ProName = dt.Rows[0]["PROD_NAME"].ToString();
+                ic.Description = dt.Rows[0]["DESCRIPTION"].ToString();
+                ic.ID = id;
+
+
+            }
+
+            List<ProductNameItem> TData = new List<ProductNameItem>();
+            ProductNameItem tda = new ProductNameItem();
+
+
+
+            dtt = ProductNameService.GetProductNameItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new ProductNameItem();
+                    tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Uom = dtt.Rows[i]["UOM_CODE"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSCODE"].ToString();
+                    tda.MinQty = dtt.Rows[i]["MIN_QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.ProdDesc = dtt.Rows[i]["PRODUCT_DESCRIPTION"].ToString();
+                    tda.ID = id;
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+
+                }
+            }
+            ic.ProductNameLst = TData;
+            return View(ic);
+        }
+
+        public JsonResult GetHSNGrpJSON()
+        {
+            ProductNameItem model = new ProductNameItem();
+            model.HSNlst = BindHsn();
+            return Json(BindHsn());
+        }
+        public JsonResult GetUOMGrpJSON()
+        {
+            ProductNameItem model = new ProductNameItem();
+            model.UOMlst = BindUOM();
+            return Json(BindUOM());
+        }
+
+        public List<SelectListItem> BindUOM()
+        {
+            try
+            {
+                DataTable dtDesg = ProductNameService.GetUom();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<SelectListItem> BindHsn()
+        {
+            try
+            {
+                DataTable dtDesg = ProductNameService.GetHsn();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["HSCODE"].ToString(), Value = dtDesg.Rows[i]["HSNMASTID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<SelectListItem> BindCategory()
         {
             try
@@ -109,24 +237,26 @@ namespace RetailSales.Controllers.Master
 
                 string Delete = string.Empty;
                 string Edit = string.Empty;
+                string View = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-
-                    Edit = "<a href=ProductName?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    View = "<a href=ViewProductName?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    Edit = "<a href=ProductName?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
-
+                    View = "";
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
                 Reg.Add(new ProsuctNamegrid
                 {
-                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    id = dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString(),
                     category = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
                     proname = dtUsers.Rows[i]["PROD_NAME"].ToString(),
+                    view = View,
                     edit = Edit,
                     delete = Delete,
 
