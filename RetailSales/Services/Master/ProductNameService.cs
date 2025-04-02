@@ -80,7 +80,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditProductNameItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_NAME_BASICID,ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_DETAIL WHERE PRO_DETAIL.PRO_NAME_BASICID = '" + id + "' ";
+            SvSql = "SELECT PRODUCT_ID,ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -102,7 +102,7 @@ namespace RetailSales.Services.Master
         public DataTable GetProductNameItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_NAME_BASICID,PRO_DETAIL.ID,PRODUCT_VARIANT,UOM.UOM_CODE,HSNMAST.HSCODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.PRO_NAME_BASICID = '" + id + "' ";
+            SvSql = "SELECT PRODUCT_ID,PRO_DETAIL.ID,PRODUCT_VARIANT,UOM.UOM_CODE,HSNMAST.HSCODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.PRODUCT_ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -155,7 +155,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PRO_DETAIL (PRO_NAME_BASICID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -163,7 +163,7 @@ namespace RetailSales.Services.Master
                             }
                             else
                             {
-                                svSQL = "Delete PRO_DETAIL WHERE PRO_NAME_BASICID='" + cy.ID + "'";
+                                svSQL = "Delete PRO_DETAIL WHERE PRODUCT_ID='" + cy.ID + "'";
                                 SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
                                 objCmdd.ExecuteNonQuery();
                                 foreach (ProductNameItem cp in cy.ProductNameLst)
@@ -171,7 +171,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PRO_DETAIL (PRO_NAME_BASICID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
