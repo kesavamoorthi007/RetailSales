@@ -32,10 +32,10 @@ namespace RetailSales.Models
         public string Isvalid { get; set; }
         public List<SelectListItem> Itemlst { get; set; }
         public string Item { get; set; }
+        public List<SelectListItem> Productlst { get; set; }
+        public string Product { get; set; }
         public string saveItemId { get; set; }
         public string Varient { get; set; }
-
-
         public string Unit { get; set; }
         public string Stock { get; set; }
         public string Qty { get; set; }
@@ -44,7 +44,7 @@ namespace RetailSales.Models
         public string Amount { get; set; }
 
         public List<SelectListItem> Varientlst { get; internal set; }
-        public string? Variant { get; internal set; }
+        
         public string ID { get; internal set; }
 
         //public string ID { get; set; }

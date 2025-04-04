@@ -51,7 +51,18 @@ namespace RetailSales.Services.Inventory
         public DataTable GetItem()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME FROM PRODUCT";
+            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME,PRODUCT.IS_ACTIVE FROM PRODUCT WHERE PRODUCT.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetProduct(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "Select PROD_NAME,PRO_NAME_BASICID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + id + "' AND PRO_NAME.IS_ACTIVE = 'Y' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -62,7 +73,7 @@ namespace RetailSales.Services.Inventory
         public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID='" + id + "' AND PRO_DETAIL.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -95,7 +106,7 @@ namespace RetailSales.Services.Inventory
         public DataTable GetEditStockAdjustmentItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT STKADJBASICID,STKADJDETAILID,PRODUCT_NAME,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT FROM STKADJDETAIL  WHERE STKADJDETAIL.STKADJBASICID='" + id + "'";
+            SvSql = "SELECT STKADJBASICID,STKADJDETAILID,PRODUCT_NAME,PRODUCT,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT FROM STKADJDETAIL  WHERE STKADJDETAIL.STKADJBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -117,7 +128,7 @@ namespace RetailSales.Services.Inventory
         public DataTable GetStockAdjustmentItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT STKADJBASICID,PRODUCT.PRODUCT_NAME,PRO_DETAIL.PRODUCT_VARIANT,STKADJDETAIL.UOM,STOCKQTY,QTY,AMOUNT,STKADJDETAIL.RATE FROM STKADJDETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STKADJDETAIL.PRODUCT_NAME LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STKADJDETAIL.VARIANT WHERE STKADJDETAIL.STKADJBASICID='" + id + "'";
+            SvSql = "SELECT STKADJBASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,STKADJDETAIL.UOM,STOCKQTY,QTY,AMOUNT,STKADJDETAIL.RATE FROM STKADJDETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STKADJDETAIL.PRODUCT_NAME LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=STKADJDETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STKADJDETAIL.VARIANT WHERE STKADJDETAIL.STKADJBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -172,7 +183,7 @@ namespace RetailSales.Services.Inventory
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into STKADJDETAIL (STKADJBASICID,PRODUCT_NAME,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.StockQty + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
+                                        svSQL = "Insert into STKADJDETAIL (STKADJBASICID,PRODUCT_NAME,PRODUCT,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.StockQty + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -188,7 +199,7 @@ namespace RetailSales.Services.Inventory
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into STKADJDETAIL (STKADJBASICID,PRODUCT_NAME,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.StockQty + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
+                                        svSQL = "Insert into STKADJDETAIL (STKADJBASICID,PRODUCT_NAME,PRODUCT,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.StockQty + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }

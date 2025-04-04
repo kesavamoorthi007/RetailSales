@@ -43,10 +43,11 @@ namespace RetailSales.Controllers.Master
                 if (dt.Rows.Count > 0)
                 {
                     ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.Categorylst = BindCategory();
                     ic.Product = dt.Rows[0]["PRODUCT_CATEGORY"].ToString();
                     ic.Productlst = BindProduct(ic.Product);
+                    ic.ProName = dt.Rows[0]["PRODUCT_ID"].ToString();
                     ic.Varint = dt.Rows[0]["PRODUCT_VARIANT"].ToString();
-                    ic.ProName = dt.Rows[0]["PRODUCTS_NAME"].ToString();
                     ic.Uom = dt.Rows[0]["UOM"].ToString();
                     ic.Hsncode = dt.Rows[0]["HSN_CODE"].ToString();
                     ic.Minqty = dt.Rows[0]["MIN_QTY"].ToString();

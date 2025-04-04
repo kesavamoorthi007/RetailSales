@@ -39,6 +39,8 @@ namespace RetailSales.Models
         public string saveItemId { get; set; }
         public List<SelectListItem> Itemlst { get; set; }       
         public string Item { get; set; }
+        public List<SelectListItem> Productlst { get; set; }
+        public string Product { get; set; }
         public List<SelectListItem> Varientlst { get; set; }
         public string Varient { get; set; }
         public string Hsn { get; set; }

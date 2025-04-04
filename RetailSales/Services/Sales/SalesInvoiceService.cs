@@ -20,17 +20,29 @@ namespace RetailSales.Services.Sales
         public DataTable GetItem()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME FROM PRODUCT";
+            SvSql = "SELECT PRODUCT.ID,PRODUCT.PRODUCT_NAME,PRODUCT.IS_ACTIVE FROM PRODUCT WHERE PRODUCT.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetProduct(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "Select PROD_NAME,PRO_NAME_BASICID From PRO_NAME WHERE PRO_NAME.PRODUCT_CATEGORY='" + id + "' AND PRO_NAME.IS_ACTIVE = 'Y' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID='" + id + "' AND PRO_DETAIL.IS_ACTIVE = 'Y'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -83,11 +95,11 @@ namespace RetailSales.Services.Sales
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT SALES_INV.ID,SALES_INV.INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,SALES_INV.CUSTOMER,SALES_INV.ADDRESS,SALES_INV.TOTAL_AMOUNT,SALES_INV.IS_ACTIVE,SALES_INV.STATUS FROM SALES_INV WHERE SALES_INV.IS_ACTIVE = 'Y' ORDER BY SALES_INV.ID DESC";
+                SvSql = "SELECT SALES_INV.SAL_INV_BASICID,SALES_INV.INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,SALES_INV.CUSTOMER,SALES_INV.ADDRESS,SALES_INV.NET,SALES_INV.IS_ACTIVE,SALES_INV.STATUS FROM SALES_INV WHERE SALES_INV.IS_ACTIVE = 'Y' ORDER BY SALES_INV.SAL_INV_BASICID DESC";
             }
             else
             {
-                SvSql = "SELECT SALES_INV.ID,SALES_INV.INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,SALES_INV.CUSTOMER,SALES_INV.ADDRESS,SALES_INV.TOTAL_AMOUNT,SALES_INV.IS_ACTIVE,SALES_INV.STATUS FROM SALES_INV WHERE SALES_INV.IS_ACTIVE = 'N' ORDER BY SALES_INV.ID DESC";
+                SvSql = "SELECT SALES_INV.SAL_INV_BASICID,SALES_INV.INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,SALES_INV.CUSTOMER,SALES_INV.ADDRESS,SALES_INV.NET,SALES_INV.IS_ACTIVE,SALES_INV.STATUS FROM SALES_INV WHERE SALES_INV.IS_ACTIVE = 'N' ORDER BY SALES_INV.SAL_INV_BASICID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -100,7 +112,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetSalesInvoice(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,ADDRESS,MOBILE,GROSS,TOTAL_AMOUNT,DISCOUNT,FRIGHT,ROUND_OFF,AMTINWORDS,REMARKS from SALES_INV   where SALES_INV.ID =" + id + "";
+            SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,ADDRESS,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,NET,AMTINWORDS,NARRATION from SALES_INV where SALES_INV.SAL_INV_BASICID =" + id + "";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -110,7 +122,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetSalesInvoiceItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "  SELECT ID,INV_ID,ITEM,VARIENT,UOM,BIN_NO,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISCOUNT,TOTAL FROM SAL_INV_DEATILS WHERE SAL_INV_DEATILS.INV_ID =" + id + "";
+            SvSql = "  SELECT SAL_INV_DETAILID,SAL_INV_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,SAL_INV_DEATILS.HSN_CODE,SAL_INV_DEATILS.UOM,BIN_NO,QTY,DEST_UOM,CF,CF_QTY,SAL_INV_DEATILS.RATE,AMOUNT,DISCOUNT,TOTAL FROM SAL_INV_DEATILS LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=SAL_INV_DEATILS.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=SAL_INV_DEATILS.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=SAL_INV_DEATILS.VARIENT WHERE SAL_INV_DEATILS.SAL_INV_BASICID =" + id + "";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -121,7 +133,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetEditSalesInvoice(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,SALES_INV.ADDRESS,SALES_INV.COUNTRY,SALES_INV.STATE,SALES_INV.CITY,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,TOTAL_AMOUNT,AMTINWORDS,REMARKS FROM SALES_INV WHERE SALES_INV.ID='" + id + "'";
+            SvSql = "SELECT INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,SALES_INV.ADDRESS,SALES_INV.COUNTRY,SALES_INV.STATE,SALES_INV.CITY,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,NET,AMTINWORDS,NARRATION FROM SALES_INV WHERE SALES_INV.SAL_INV_BASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -132,7 +144,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetEditSalesInvoiceItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT INV_ID,ID,ITEM,VARIENT,HSN,SAL_INV_DEATILS.UOM,QTY,DEST_UOM,CF,CF_QTY,SAL_INV_DEATILS.RATE,AMOUNT,DISCOUNT,TOTAL FROM SAL_INV_DEATILS  WHERE SAL_INV_DEATILS.INV_ID='" + id + "'";
+            SvSql = "SELECT SAL_INV_DETAILID,SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,SAL_INV_DEATILS.UOM,QTY,DEST_UOM,CF,CF_QTY,SAL_INV_DEATILS.RATE,AMOUNT,DISCOUNT,TOTAL FROM SAL_INV_DEATILS  WHERE SAL_INV_DEATILS.SAL_INV_BASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -181,8 +193,8 @@ namespace RetailSales.Services.Sales
                         StatementType = "Update";
                         objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
                     }
-                    objCmd.Parameters.Add("@Rt", SqlDbType.NVarChar).Value = cy.InvoiceNo;
-                    objCmd.Parameters.AddWithValue("@Ivdate", cy.InvoiceDate);
+                    objCmd.Parameters.Add("@InvNo", SqlDbType.NVarChar).Value = cy.InvoiceNo;
+                    objCmd.Parameters.AddWithValue("@InvDate", cy.InvoiceDate);
                     objCmd.Parameters.Add("@Customer", SqlDbType.NVarChar).Value = cy.Customer;
                     objCmd.Parameters.Add("@Address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@Country", SqlDbType.NVarChar).Value = "India";
@@ -193,9 +205,9 @@ namespace RetailSales.Services.Sales
                     objCmd.Parameters.Add("@Discount", SqlDbType.Float).Value = cy.Disc;
                     objCmd.Parameters.Add("@Fright", SqlDbType.Float).Value = cy.Frieghtcharge;
                     objCmd.Parameters.Add("@Round", SqlDbType.Float).Value = cy.Round;
-                    objCmd.Parameters.Add("@Total", SqlDbType.Float).Value = cy.Net;
+                    objCmd.Parameters.Add("@Net", SqlDbType.Float).Value = cy.Net;
                     objCmd.Parameters.Add("@Amountinwords", SqlDbType.NVarChar).Value = cy.Amountinwords;
-                    objCmd.Parameters.Add("@Remarks", SqlDbType.NVarChar).Value = cy.Remarks;
+                    objCmd.Parameters.Add("@Narration", SqlDbType.NVarChar).Value = cy.Remarks;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {
@@ -216,7 +228,7 @@ namespace RetailSales.Services.Sales
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into SAL_INV_DEATILS (INV_ID,ITEM,VARIENT,HSN,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.Discount + "','" + cp.Total + "')";
+                                        svSQL = "Insert into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.Discount + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -224,7 +236,7 @@ namespace RetailSales.Services.Sales
                             }
                             else
                             {
-                                svSQL = "Delete SAL_INV_DEATILS WHERE INV_ID='" + cy.ID + "'";
+                                svSQL = "Delete SAL_INV_DEATILS WHERE SAL_INV_BASICID='" + cy.ID + "'";
                                 SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
                                 objCmdd.ExecuteNonQuery();
                                 foreach (SalesInvoiceItem cp in cy.SalesInvoiceLst)
@@ -232,7 +244,7 @@ namespace RetailSales.Services.Sales
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into SAL_INV_DEATILS (INV_ID,ITEM,VARIENT,HSN,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.Discount + "','" + cp.Total + "')";
+                                        svSQL = "Insert into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.Discount + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -271,7 +283,7 @@ namespace RetailSales.Services.Sales
                
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    svSQL = "Insert into SAL_RETURN (INVOICE_NO,INV_DATE,SAL_INVOICE_NO,CUSTOMER,DOC_NO,DOC_DATE,ADDRESS,MOBILE,REMARKS,DISCOUNT,TOTAL,TOTAL_AMOUNT,IS_ACTIVE) (Select INVOICE_NO,INV_DATE,'" + SalesId + "',CUSTOMER,'1','" + DateTime.Now.ToString("dd-MMM-yyyy") + "' ,ADDRESS,MOBILE,REMARKS,DISCOUNT,TOTAL,TOTAL_AMOUNT,'Y' from SALES_INV where SALES_INV.ID='" + SalesId + "')";
+                    svSQL = "Insert into SAL_RETURN (INVOICE_NO,INV_DATE,SAL_INVOICE_NO,CUSTOMER,DOC_NO,DOC_DATE,ADDRESS,MOBILE,REMARKS,DISCOUNT,TOTAL,TOTAL_AMOUNT,IS_ACTIVE) (Select INVOICE_NO,INV_DATE,'" + SalesId + "',CUSTOMER,'1','" + DateTime.Now.ToString("dd-MMM-yyyy") + "' ,ADDRESS,MOBILE,NARRATION,DISCOUNT,TOTAL,NET,'Y' from SALES_INV where SALES_INV.SAL_INV_BASICID='" + SalesId + "')";
                     SqlCommand objCmd = new SqlCommand(svSQL, objConn);
                     try
                     {
@@ -287,7 +299,7 @@ namespace RetailSales.Services.Sales
 
                 using (SqlConnection objConnE = new SqlConnection(_connectionString))
                 {
-                    string Sql = "UPDATE SALES_INV SET STATUS='Generated' where SALES_INV.ID='" + SalesId + "'";
+                    string Sql = "UPDATE SALES_INV SET STATUS='Generated' where SALES_INV.SAL_INV_BASICID='" + SalesId + "'";
                     SqlCommand objCmds = new SqlCommand(Sql, objConnE);
                     objConnE.Open();
                     objCmds.ExecuteNonQuery();
@@ -308,14 +320,14 @@ namespace RetailSales.Services.Sales
         {
             using (SqlConnection db = new SqlConnection(_connectionString))
             {
-                return await db.QueryAsync<ExinvBasicItem>("SELECT ID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, GROSS, DISCOUNT, FRIGHT, ROUND_OFF, NET, AMTINWORDS, REMARKS, IS_ACTIVE, STATUS FROM  SALES_INV  WHERE ID='" + id + "'", commandType: CommandType.Text);
+                return await db.QueryAsync<ExinvBasicItem>("SELECT SAL_INV_BASICID, INVOICE_NO, INV_DATE, CUSTOMER, ADDRESS, MOBILE, GROSS, DISCOUNT, FRIGHT, ROUND_OFF, NET, AMTINWORDS, NARRATION, IS_ACTIVE, STATUS FROM  SALES_INV  WHERE SAL_INV_BASICID='" + id + "'", commandType: CommandType.Text);
             }
         }
         public async Task<IEnumerable<ExinvDetailitem>> GetExinvItemDetail(string id)
         {
             using (SqlConnection db = new SqlConnection(_connectionString))
             {
-                return await db.QueryAsync<ExinvDetailitem>(" SELECT ID, INV_ID, ITEM, VARIENT, UOM, BIN_NO, QTY, RATE, AMOUNT, DISCOUNT, TOTAL FROM SAL_INV_DEATILS where  INV_ID='" + id + "'", commandType: CommandType.Text);
+                return await db.QueryAsync<ExinvDetailitem>(" SELECT SAL_INV_DETAILID, SAL_INV_BASICID, ITEM, PRODUCT, VARIENT, HSN_CODE, UOM, BIN_NO, QTY, DEST_UOM, CF, CF_QTY, RATE, AMOUNT, DISCOUNT, TOTAL FROM SAL_INV_DEATILS where  SAL_INV_BASICID='" + id + "'", commandType: CommandType.Text);
             }
         }
 
@@ -326,7 +338,7 @@ namespace RetailSales.Services.Sales
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE SALES_INV SET IS_ACTIVE ='N' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE SALES_INV SET IS_ACTIVE ='N' WHERE SAL_INV_BASICID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -348,7 +360,7 @@ namespace RetailSales.Services.Sales
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE SALES_INV SET IS_ACTIVE = 'Y' WHERE ID='" + id + "'";
+                    svSQL = "UPDATE SALES_INV SET IS_ACTIVE = 'Y' WHERE SAL_INV_BASICID='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
