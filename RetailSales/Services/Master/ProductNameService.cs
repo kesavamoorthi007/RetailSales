@@ -155,7 +155,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -171,7 +171,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
