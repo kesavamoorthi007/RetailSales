@@ -35,6 +35,7 @@ namespace RetailSales.Controllers.Inventory
                 {
                     tda = new StockAdjustmentItem();
                     tda.Itemlst = BindItem();
+                    tda.Productlst = BindProduct("");
                     tda.Variantlst = BindVariant("");
                     tda.Isvalid = "Y";
                     TData.Add(tda);
@@ -64,7 +65,9 @@ namespace RetailSales.Controllers.Inventory
                         tda = new StockAdjustmentItem();
                         tda.Itemlst = BindItem();
                         tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                        tda.Variantlst = BindVariant(tda.Item);
+                        tda.Productlst = BindProduct(tda.Item);
+                        tda.Product = dtt.Rows[i]["PRODUCT"].ToString();
+                        tda.Variantlst = BindVariant(tda.Product);
                         tda.Variant = dtt.Rows[i]["VARIANT"].ToString();
                         tda.Unit = dtt.Rows[i]["UOM"].ToString();
                         tda.StockQty = dtt.Rows[i]["STOCKQTY"].ToString();
@@ -196,9 +199,8 @@ namespace RetailSales.Controllers.Inventory
                 for(int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new StockAdjustmentItem();
-                    tda.Itemlst = BindItem();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Variantlst = BindVariant(tda.Item);
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
                     tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                     tda.Unit = dtt.Rows[i]["UOM"].ToString();
                     tda.StockQty = dtt.Rows[i]["STOCKQTY"].ToString();
@@ -239,6 +241,11 @@ namespace RetailSales.Controllers.Inventory
             return Json(BindItem());
         }
 
+        public JsonResult GetProductJSON(string ItemId)
+        {
+            return Json(BindProduct(ItemId));
+        }
+
         public JsonResult GetVarientJSON(string id)
         {
             //StockAdjustmentItem model = new StockAdjustmentItem();
@@ -255,6 +262,24 @@ namespace RetailSales.Controllers.Inventory
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
                     lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<SelectListItem> BindProduct(string id)
+        {
+            try
+            {
+                DataTable dtDesg = StockAdjustmentService.GetProduct(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PROD_NAME"].ToString(), Value = dtDesg.Rows[i]["PRO_NAME_BASICID"].ToString() });
                 }
                 return lstdesg;
             }

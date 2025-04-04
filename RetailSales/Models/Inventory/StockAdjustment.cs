@@ -30,9 +30,11 @@ namespace RetailSales.Models.Inventory
     public class StockAdjustmentItem
     {
         public List<SelectListItem> Itemlst { get; set; }
+        public List<SelectListItem> Productlst { get; set; }
         public List<SelectListItem> Variantlst { get; set; }
         public string saveItemId { get; set; }
         public string Item { get; set; }
+        public string Product { get; set; }
         public string Variant { get; set; }
         public string Unit { get; set; }
         public string StockQty { get; set; }

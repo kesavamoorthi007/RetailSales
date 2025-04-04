@@ -109,7 +109,8 @@
                                         <thead>
                                             <tr>
 
-                                                <th>Item</th>
+                                                <th>Product Category</th>
+                                                <th>Product Name</th>
                                                 <th>Variant</th>
                                                 <th>Unit</th>
                                                 <th> Stock </th>
@@ -128,6 +129,7 @@
 
                                                     <tr>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Product)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Varient)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Unit)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Stock)</td>

@@ -22,6 +22,7 @@ namespace RetailSales.Interface.Sales
         DataTable GetEditSalesInvoice(string id);
         DataTable GetEditSalesInvoiceItem(string id);
         string SalesInvoiceCRUD(SalesInvoice cy);
+        DataTable GetProduct(string id);
         //string SalesInvoiceCRUD(Purchaseorder cy);
     }
 }

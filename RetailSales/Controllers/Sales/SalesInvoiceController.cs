@@ -47,6 +47,7 @@ namespace RetailSales.Controllers.Sales
                 {
                     tda = new SalesInvoiceItem();
                     tda.Itemlst = BindItem();
+                    tda.Productlst = BindProduct("");
                     tda.Varientlst = BindVarient("");
                     tda.UOMlst = BindUOM();
                     tda.Isvalid = "Y";
@@ -65,16 +66,16 @@ namespace RetailSales.Controllers.Sales
                     ic.Address = dt.Rows[0]["ADDRESS"].ToString();
                     ic.Statelst = BindState();
                     ic.State = dt.Rows[0]["STATE"].ToString();
-                    ic.Citylst = BindCity("");
+                    ic.Citylst = BindCity(ic.State);
                     ic.City = dt.Rows[0]["CITY"].ToString();                   
                     ic.Mobile = dt.Rows[0]["MOBILE"].ToString();
                     ic.Gross = dt.Rows[0]["GROSS"].ToString();
                     ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
                     ic.Frieghtcharge = dt.Rows[0]["FRIGHT"].ToString();
                     ic.Round = dt.Rows[0]["ROUND_OFF"].ToString();
-                    ic.Net = dt.Rows[0]["TOTAL_AMOUNT"].ToString();
+                    ic.Net = dt.Rows[0]["NET"].ToString();
                     ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
-                    ic.Remarks = dt.Rows[0]["REMARKS"].ToString();                    
+                    ic.Remarks = dt.Rows[0]["NARRATION"].ToString();                    
                     ic.ID = id;
 
                 }
@@ -87,9 +88,11 @@ namespace RetailSales.Controllers.Sales
                         tda = new SalesInvoiceItem();
                         tda.Itemlst = BindItem();
                         tda.Item = dtt.Rows[i]["ITEM"].ToString();
-                        tda.Varientlst = BindVarient(tda.Item);
+                        tda.Productlst = BindProduct(tda.Item);
+                        tda.Product = dtt.Rows[i]["PRODUCT"].ToString();
+                        tda.Varientlst = BindVarient(tda.Product);
                         tda.Varient = dtt.Rows[i]["VARIENT"].ToString();
-                        tda.Hsn = dtt.Rows[i]["HSN"].ToString();
+                        tda.Hsn = dtt.Rows[i]["HSN_CODE"].ToString();
                         tda.UOM = dtt.Rows[i]["UOM"].ToString();
                         tda.Qty = dtt.Rows[i]["QTY"].ToString();
                         tda.UOMlst = BindUOM();
@@ -163,12 +166,12 @@ namespace RetailSales.Controllers.Sales
                 ic.Address = dt.Rows[0]["ADDRESS"].ToString();
                 ic.Mobile = dt.Rows[0]["MOBILE"].ToString();
                 ic.Gross = dt.Rows[0]["GROSS"].ToString();
-                ic.Net = dt.Rows[0]["TOTAL_AMOUNT"].ToString();
+                ic.Net = dt.Rows[0]["NET"].ToString();
                 ic.Disc = dt.Rows[0]["DISCOUNT"].ToString();
                 ic.Frieghtcharge = dt.Rows[0]["FRIGHT"].ToString();
                 ic.Round = dt.Rows[0]["ROUND_OFF"].ToString();
                 ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
-                ic.Remarks = dt.Rows[0]["REMARKS"].ToString();
+                ic.Remarks = dt.Rows[0]["NARRATION"].ToString();
                 ic.ID = id;
 
             }
@@ -183,8 +186,10 @@ namespace RetailSales.Controllers.Sales
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new SalesInvoiceItem();
-                    tda.Item = dtt.Rows[i]["ITEM"].ToString();
-                    tda.Varient = dtt.Rows[i]["VARIENT"].ToString();
+                    tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Hsn = dtt.Rows[i]["HSN_CODE"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.Bin = dtt.Rows[i]["BIN_NO"].ToString();
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
@@ -269,13 +274,13 @@ namespace RetailSales.Controllers.Sales
                     }
                     else
                     {
-                        GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["ID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/back.png' alt='View Details' width='20' /></a>";
-                        EditRow = "<a href=SalesInvoice?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
+                        GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/back.png' alt='View Details' width='20' /></a>";
+                        EditRow = "<a href=SalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
                         report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
 
 
                     }
-                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                     //DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
 
                 }
@@ -283,17 +288,17 @@ namespace RetailSales.Controllers.Sales
                 {
                     GoToSales = "";
                     report = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                     //DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
                 Reg.Add(new SalesInvoicegrid
                 {
-                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    id = dtUsers.Rows[i]["SAL_INV_BASICID"].ToString(),
                     invno = dtUsers.Rows[i]["INVOICE_NO"].ToString(),
                     invdate = dtUsers.Rows[i]["INV_DATE"].ToString(),
                     customer = dtUsers.Rows[i]["CUSTOMER"].ToString(),
                     address = dtUsers.Rows[i]["ADDRESS"].ToString(),
-                    totalamount = dtUsers.Rows[i]["TOTAL_AMOUNT"].ToString(),
+                    totalamount = dtUsers.Rows[i]["NET"].ToString(),
                     editrow = EditRow,
                     move = GoToSales,
                     delrow = DeleteRow,
@@ -377,12 +382,19 @@ namespace RetailSales.Controllers.Sales
             //  model.ItemGrouplst = BindItemGrplst(value);
             return Json(BindCity(cityid));
         }
+
+        public JsonResult GetProductJSON(string ItemId)
+        {
+            return Json(BindProduct(ItemId));
+        }
+
         public JsonResult GetVarientJSON(string id)
         {
             //EnqItem model = new EnqItem();
             //  model.ItemGrouplst = BindItemGrplst(value);
             return Json(BindVarient(id));
         }
+
         public JsonResult GetItemGrpJSON()
         {
             SalesInvoiceItem model = new SalesInvoiceItem();
@@ -464,6 +476,25 @@ namespace RetailSales.Controllers.Sales
                 throw ex;
             }
         }
+
+        public List<SelectListItem> BindProduct(string id)
+        {
+            try
+            {
+                DataTable dtDesg = SalesInvoiceService.GetProduct(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PROD_NAME"].ToString(), Value = dtDesg.Rows[i]["PRO_NAME_BASICID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<SelectListItem> BindVarient(string id)
         {
             try
