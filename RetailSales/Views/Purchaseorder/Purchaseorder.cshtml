@@ -360,7 +360,7 @@
                                                             @*<input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">*@
 
 
-                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeFrightTot(this)", @readonly = "readonly" , style = "width: 150px;text-align:right"})
+                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeFrightTot(this)", @readonly = "readonly", style = "width: 150px;text-align:right", onclick = "changeTot(this)" })
                                                         </div>
                                                     </td>
                                                             

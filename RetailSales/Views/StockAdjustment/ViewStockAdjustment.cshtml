@@ -89,7 +89,8 @@
                                         <thead>
                                             <tr>
 
-                                                <th>Item</th>
+                                                <th>Product Category</th>
+                                                <th>Product Name</th>
                                                 <th>Variant</th>
                                                 <th>Unit</th>
                                                 <th> Stock Qty </th>
@@ -108,6 +109,7 @@
 
                                                     <tr>
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].Product)</td>
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].Variant)</td>
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].Unit)</td>
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].StockQty)</td>

@@ -22,20 +22,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <label for="inputName3" class="col-sm-4 control-label">Invoice No<label class="Mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Invoice No :</strong><label class="Mandatory"></label></label>
+                                        
                                             @Html.HiddenFor(C => C.ID)
                                             @Html.DisplayFor(C => C.InvoiceNo)
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Invoice Date<label class="Mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Invoice Date :</strong><label class="Mandatory"></label></label>
 
-                                        <div class="col-sm-8">
+                                        
                                             @Html.DisplayFor(C => C.InvoiceDate)
-                                        </div>
+                                        
 
                                     </div>
                                 </div>
@@ -46,19 +46,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <label for="inputName3" class="col-sm-4 control-label">Customer<label class="Mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Customer Name :</strong><label class="Mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.Customer)
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Address<label class="Mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Address :</strong><label class="Mandatory"></label></label>
 
-                                        <div class="col-sm-8">
+                                        
                                             @Html.DisplayFor(C => C.Address)
-                                        </div>
+                                        
 
                                     </div>
                                 </div>
@@ -68,105 +68,96 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="Mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Phone No :</strong><label class="Mandatory"></label></label>
+                                        
                                             @Html.DisplayFor(C => C.Mobile)
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Remarks<label class="Mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">
+                                            <strong>Return Type :</strong>
+                                            <label class="mandatory"></label>
+                                        </label>
+                                        
+                                            
+                                                @Html.RadioButtonFor(C => C.Return, "Cash", new { @TabIndex = 2, @id = "Cash", @name = "Cash" })
+                                                <label for="Cash" id="mt-radio">Cash</label>&emsp;
 
-                                        <div class="col-sm-8">
-                                            @Html.DisplayFor(C => C.Remarks)
-                                        </div>
+                                                @Html.RadioButtonFor(C => C.Return, "CreditNote", new { @TabIndex = 3, @id = "Credit", @name = "Credit" })
+                                                <label for="Credit" id="mt-radio">Credit Note</label>&emsp;
 
+                                                @Html.RadioButtonFor(C => C.Return, "Product", new { @TabIndex = 4, @id = "Product", @name = "Product" })
+                                                <label for="Product" id="mt-radio">Product</label>
+
+                                                <br />
+                                            
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <div style="height:20px;"></div>
-                            <div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="inputName3" class="col-sm-4 control-label">
-                Return
-                <label class="mandatory"></label>
-            </label>
-            <div class="col-sm-8">
-                <div class="input-group">
-                    @Html.RadioButtonFor(C => C.Return, "Cash", new { @TabIndex = 2, @id = "Cash", @name = "Cash" })
-                    <label for="Cash" id="mt-radio">Cash</label>&emsp;
-
-                    @Html.RadioButtonFor(C => C.Return, "CreditNote", new { @TabIndex = 3, @id = "Credit", @name = "Credit" })
-                    <label for="Credit" id="mt-radio">Credit Note</label>&emsp;
-
-                    @Html.RadioButtonFor(C => C.Return, "Product", new { @TabIndex = 4, @id = "Product", @name = "Product" })
-                    <label for="Product" id="mt-radio">Product</label>
-
-                    <br />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+                            
 
                             <div style="height:30px;"></div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     
-                                                    <table id="example7" class="display nowrap table  responsive nowrap table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Item</th>
-                                                                <th>Variant</th>
-                                                                <th> UOM </th>
-                                                                @* <th> BIN No </th> *@
-                                                                <th> Qty </th>
-                                                                <th> Return Qty </th>
-                                                                <th> Dest UOM </th>
-                                                                <th> CF </th>
-                                                                <th> CF Qty </th>
-                                                                <th>Rate </th>
-                                                                <th>Amount </th>
-                                                                <th> Discount (%) </th>
-                                                                <th>Total Amount</th>
-                                                            </tr>
-                                                        </thead>
+                                    <table id="example7" class="display nowrap table  responsive nowrap table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product Category</th>
+                                                <th>Product Name</th>
+                                                <th>Variant</th>
+                                                <th>HSN</th>
+                                                <th> UOM </th>
+                                                @* <th> BIN No </th> *@
+                                                <th> Qty </th>
+                                                <th> Return Qty </th>
+                                                <th> Dest UOM </th>
+                                                <th> CF </th>
+                                                <th> CF Qty </th>
+                                                <th>Rate (₹)</th>
+                                                <th>Amount (₹)</th>
+                                                <th> Discount (₹) </th>
+                                                <th>Total Amount (₹)</th>
+                                            </tr>
+                                        </thead>
 
-                                                        <tbody>
-                                                            @{
-                                                                int i = 0;
+                                        <tbody>
+                                            @{
+                                                int i = 0;
 
-                                                                foreach (var item in Model.SalesInvoiceLst.ToList())
-                                                                {
+                                                foreach (var item in Model.SalesInvoiceLst.ToList())
+                                                {
 
-                                                                    <tr>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Item)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Varient)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].UOM)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Qty)</td>
-                                                                        <td>
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Product)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Varient)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Hsn)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].UOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Qty)</td>
+                                                        <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].ReturnQty, new { @id = "txtReturnQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", })
-                                                                        </td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].DestUOM)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].CF)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].CfQty)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Rate)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Amount)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Discount)</td>
-                                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Total)</td>
+                                                        </td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].DestUOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].CF)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].CfQty)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Rate)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Amount)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Discount)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Total)</td>
 
 
-                                                                    </tr>
-                                                                    //i = i + 1;
-                                                                    i++;
-                                                                }
-                                                            }
+                                                    </tr>
+                                                    //i = i + 1;
+                                                    i++;
+                                                }
+                                            }
 
-                                                        </tbody>
-                                                    </table>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                                       
@@ -183,19 +174,19 @@
                                             @{
                                                 <tr>
 
-                                                    <th>GROSS</th>
+                                                    <th>GROSS (₹)</th>
                                                     <td>
                                                         @Html.DisplayFor(C => C.Gross)
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>DISCOUNT</th>
+                                                    <th>DISCOUNT (₹)</th>
                                                     <td>
                                                         @Html.DisplayFor(C => C.Disc)
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Fright</th>
+                                                    <th>FREIGHT (₹)</th>
                                                     <td>
                                                         @Html.DisplayFor(C => C.Frieghtcharge)
                                                     </td>
@@ -207,7 +198,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th> TOTAL </th>
+                                                    <th> TOTAL (₹)</th>
                                                     <td>
                                                         @Html.DisplayFor(C => C.Net)
                                                         <input type="hidden" id="hidnet" />
@@ -224,12 +215,12 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="tabs-container">
-                                        <ul class="nav nav-pills nav-fill">
-                                            @*<li class="active"><a href="#tab-1" data-toggle="tab">Despatch Address</a></li>*@
+                                        @* <ul class="nav nav-pills nav-fill">
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Despatch Address</a></li>
                                             <li class="active"><a href="#tab-1" data-toggle="tab">Details</a></li>
 
 
-                                        </ul>
+                                        </ul> *@
                                         <div class="tab-content">
 
 
@@ -242,11 +233,11 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
-                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label">Amount in Words<label class="Mandatory"></label></label>
+                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label"><strong>Amount in Words :</strong><label class="Mandatory"></label></label>
 
-                                                                            <div class="col-sm-8">
+                                                                            
                                                                                 @Html.DisplayFor(C => C.Amountinwords)
-                                                                            </div>
+                                                                            
 
                                                                         </div>
                                                                     </div>
@@ -255,10 +246,10 @@
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
 
-                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label">Remarks<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label"><strong>Narration :</strong><label class="Mandatory"></label></label>
+                                                                           
                                                                                 @Html.DisplayFor(C => C.Remarks)
-                                                                            </div>
+                                                                            
                                                                         </div>
                                                                     </div>
 

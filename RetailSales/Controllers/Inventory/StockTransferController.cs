@@ -47,6 +47,7 @@ namespace RetailSales.Controllers
                 {
                     tda = new StockTransferItem();
                     tda.Itemlst = BindItem();
+                    tda.Productlst = BindProduct("");
                     tda.Varientlst = BindVarient("");
                     tda.Isvalid = "Y";
                     TData.Add(tda);
@@ -212,6 +213,30 @@ namespace RetailSales.Controllers
         //        throw ex;
         //    }
         //}
+
+        public JsonResult GetProductJSON(string ItemId)
+        {
+            return Json(BindProduct(ItemId));
+        }
+
+        public List<SelectListItem> BindProduct(string id)
+        {
+            try
+            {
+                DataTable dtDesg = StockTransferService.GetProduct(id);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PROD_NAME"].ToString(), Value = dtDesg.Rows[i]["PRO_NAME_BASICID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public JsonResult GetVarientJSON(string id)
         {
             //EnqItem model = new EnqItem();
@@ -380,9 +405,8 @@ namespace RetailSales.Controllers
                 {
 
                     tda = new StockTransferItem();
-                    tda.Itemlst = BindItem();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                    tda.Varientlst = BindVarient(tda.Item);
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
                     tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                     tda.Unit = dtt.Rows[i]["UNIT"].ToString();
                     tda.Stock = dtt.Rows[i]["STOCK"].ToString();
