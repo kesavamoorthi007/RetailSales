@@ -189,18 +189,21 @@
                                                             <td>
                                                                 <span style="width: 100px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].Item)
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].Itemid)
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Item)
                                                                 </span>
                                                             </td>
                                                             <td>
                                                                 <span style="width: 120px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].Product)
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].Productid)
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Product)
                                                                 </span>
                                                             </td>
                                                             <td>
                                                                 <span style="width: 150px; display: inline-block;">
                                                                     @Html.DisplayFor(o => o.PurchaseorderLst[i].Varient)
+                                                                    @Html.HiddenFor(o => o.PurchaseorderLst[i].Varientid)
                                                                     @Html.HiddenFor(o => o.PurchaseorderLst[i].Varient)
                                                                 </span>
                                                             </td>
@@ -249,7 +252,7 @@
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].shortqty, new { @id = "shortqty" + i })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.PurchaseorderLst[i].DestUOM, Model.PurchaseorderLst[i].UOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 120px;", onchange = "changeUOM(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.PurchaseorderLst[i].DestUOM, Model.PurchaseorderLst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 120px;", onchange = "changeUOM(this.value," + i + ")" })
                                                             </td>
                                                             <td>
 
@@ -589,7 +592,7 @@
                 qty = 0;
 
             if (cf == "")
-                cf = 0;
+                cf = 1;
 
                  var cqty = eval(cf) * eval(qty);
                    document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
@@ -1133,11 +1136,21 @@
 
           
 
-            if (discper >= 0) {
-                Disc = (discper / 100) * tot;
-                document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);
+            // if (discper >= 0) {
+            //     Disc = (discper / 100) * tot;
+            //     document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);
+            // }
+            if(discper < 100){
+                    Disc = (discper / 100) * tot;
+                    document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);  // **Fixed formatting issue**
+                    tottax -= Disc;
             }
-
+            else{
+                    alert("Disc % Should not exceed 100");
+                    document.getElementById("txtDiscPer" + i).value = "0";
+                    document.getElementById("txtDiscAmount" + i).value = "0";
+                    document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            }
             // Ensure discount doesn't exceed total
             // if (Disc > tot) {
             //     Disc = tot;
@@ -1173,7 +1186,7 @@
             
             // Update the total amount field
             document.getElementById("txtTotal" + i).value = tottax1.toFixed(2);
-            alert(tottax1);
+            //alert(tottax1);
             // Calculate totals for all rows
             var totalAmount = 0;
             var totalCGST = 0;

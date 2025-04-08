@@ -53,13 +53,25 @@ namespace RetailSales.Services.Sales
         public DataTable GetVarientDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT UOM.UOM_CODE,HSNMAST.HSCODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.ID='" + ItemId + "'";
+            SvSql = "SELECT UOM.ID UOM_ID,UOM.UOM_CODE,HSNMAST.HSCODE,RATE FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.ID='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetStockDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT INVENTORY_ITEM.BALANCE_QTY FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetState()
         {
             string SvSql = string.Empty;
@@ -112,7 +124,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetSalesInvoice(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,ADDRESS,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,NET,AMTINWORDS,NARRATION from SALES_INV where SALES_INV.SAL_INV_BASICID =" + id + "";
+            SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,ADDRESS,STATE.STATE_NAME,CITY.CITY_NAME,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,NET,AMTINWORDS,NARRATION from SALES_INV LEFT OUTER JOIN STATE ON STATE.ID=SALES_INV.STATE LEFT OUTER JOIN CITY ON CITY.ID=SALES_INV.CITY where SALES_INV.SAL_INV_BASICID =" + id + "";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -122,7 +134,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetSalesInvoiceItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "  SELECT SAL_INV_DETAILID,SAL_INV_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,SAL_INV_DEATILS.HSN_CODE,SAL_INV_DEATILS.UOM,BIN_NO,QTY,DEST_UOM,CF,CF_QTY,SAL_INV_DEATILS.RATE,AMOUNT,DISCOUNT,TOTAL FROM SAL_INV_DEATILS LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=SAL_INV_DEATILS.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=SAL_INV_DEATILS.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=SAL_INV_DEATILS.VARIENT WHERE SAL_INV_DEATILS.SAL_INV_BASICID =" + id + "";
+            SvSql = "  SELECT SAL_INV_DETAILID,SAL_INV_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,SAL_INV_DEATILS.HSN_CODE,SAL_INV_DEATILS.UOM,BIN_NO,QTY,DEST_UOM,CF,CF_QTY,SAL_INV_DEATILS.RATE,AMOUNT,DISC_PER,DISCOUNT,TOTAL FROM SAL_INV_DEATILS LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=SAL_INV_DEATILS.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=SAL_INV_DEATILS.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=SAL_INV_DEATILS.VARIENT WHERE SAL_INV_DEATILS.SAL_INV_BASICID =" + id + "";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -228,9 +240,45 @@ namespace RetailSales.Services.Sales
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.Discount + "','" + cp.Total + "')";
+                                        svSQL = "Insert into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISC_PER,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.DiscPer + "','" + cp.Discount + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
+
+                                        double qty = Convert.ToDouble(cp.Qty);
+
+                                        DataTable dt = datatrans.GetData("Select * from INVENTORY_ITEM  where ITEM_ID='" + cp.Item + "' and PRODUCT='" + cp.Product + "' AND VARIANT='" + cp.Varient + "' AND BALANCE_QTY!=0");
+                                        if (dt.Rows.Count > 0)
+                                        {
+                                            for (int i = 0; i < dt.Rows.Count; i++)
+                                            {
+                                                double sqty = Convert.ToDouble(dt.Rows[i]["BALANCE_QTY"].ToString());
+                                                if(sqty >= qty)
+                                                {
+                                                    double bqty = sqty - qty;
+
+                                                    string Sql = string.Empty;
+                                                    Sql = "Update INVENTORY_ITEM SET BALANCE_QTY='" + bqty + "' WHERE INVENTORY_ITEM_ID='" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "'";
+                                                    SqlCommand objCmdsz = new SqlCommand(Sql, objConn);
+                                                    objCmdsz.ExecuteNonQuery();
+
+
+                                                    Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VALUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.DestUOM + "','" + cp.Rate + "','GRN','Y','" + cp.Qty + "','GRN','" + cy.InvoiceDate + "','2024-2025','','') ";
+                                                    SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
+                                                    objCmdsz1.ExecuteNonQuery();
+                                                }
+                                                
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            svSQL = "Insert into INVENTORY_ITEM (ITEM_ID,PRODUCT,VARIANT,BALANCE_QTY) VALUES ('" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Qty + "')";
+                                            objCmds = new SqlCommand(svSQL, objConn);
+                                            objCmds.ExecuteNonQuery();
+                                            svSQL = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,TRANS_QTY) VALUES ('" + dt.Rows[0]["INVENTORY_ITEM_ID"].ToString() + "','" + dt.Rows[0]["SAL_INV_DETAILID"].ToString() + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Qty + "')";
+                                            objCmds = new SqlCommand(svSQL, objConn);
+                                            objCmds.ExecuteNonQuery();
+                                        }
                                     }
                                 }
                             }

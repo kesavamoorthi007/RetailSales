@@ -80,9 +80,9 @@ namespace RetailSales.Controllers.Purchase
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new GRNItem();
-                    tda.Item = dtt.Rows[i]["ITEM"].ToString();
-                    tda.Product = dtt.Rows[i]["PRODUCT"].ToString();
-                    tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
+                    tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
