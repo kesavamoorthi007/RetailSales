@@ -248,10 +248,13 @@
                                                                     </td>
                                                                     <td>
                                                                         @Html.TextBoxFor(o => o.PurchaseorderLst[i].UOM, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                                        @Html.HiddenFor(o => o.PurchaseorderLst[i].UOM, new { @id = "ddlDestUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                                     </td>
                                                                     
                                                                     <td>
+                                                                        @Html.HiddenFor(o => o.PurchaseorderLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 120px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                                         @Html.TextBoxFor(o => o.PurchaseorderLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 120px;",  onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                                        @Html.HiddenFor(o => o.PurchaseorderLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 120px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                                     </td>
                                                                     
                                                                     <td>
@@ -583,10 +586,14 @@
             var IGST = parseFloat(document.getElementById("IGSTP" + i).value) || 0;
             var CGST = parseFloat(document.getElementById("CGSTP" + i).value) || 0;
             var SGST = parseFloat(document.getElementById("SGSTP" + i).value) || 0;
+               var CF = parseFloat(document.getElementById("txtCF" + i).value) || 0;
 
             // Calculate total amount based on quantity and rate
             tot = qty * up;
+            var cfqty = qty * CF;
+
               document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+              document.getElementById("txtCfQty" + i).value = cfqty.toFixed(2);
             // Calculate tax percentages
             var igstperc = (tot / 100) * IGST;
             var cgstperc = (tot / 100) * CGST;
@@ -1075,7 +1082,7 @@
                 document.getElementById("IGSTP" + i).value = result.igst;
                 $("#ddlDestUOM" + i).val(result.uom).trigger('change');
 
-               // document.getElementById("txtCF" + i).value = "1";
+                document.getElementById("txtCF" + i).value = "1";
             },
             error: function () {
                 alert("Data Not Found");

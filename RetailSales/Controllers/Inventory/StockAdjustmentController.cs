@@ -314,6 +314,8 @@ namespace RetailSales.Controllers.Inventory
                 DataTable dt = new DataTable();
                 string unit = "";
                 string rate = "";
+                string stockqty = "";
+
                 dt = StockAdjustmentService.GetVariantDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
@@ -323,8 +325,12 @@ namespace RetailSales.Controllers.Inventory
 
 
                 }
-
-                var result = new { unit = unit, rate = rate };
+                dt = StockAdjustmentService.GetStockDetails(ItemId);
+                if (dt.Rows.Count > 0)
+                {
+                    stockqty = dt.Rows[0]["BALANCE_QTY"].ToString();
+                }
+                var result = new { unit = unit, rate = rate, stockqty = stockqty };
                 return Json(result);
             }
             catch (Exception ex)

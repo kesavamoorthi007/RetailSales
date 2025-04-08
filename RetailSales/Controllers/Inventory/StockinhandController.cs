@@ -52,9 +52,9 @@ namespace RetailSales.Controllers
                 Reg.Add(new Stockinhandgrid
                 {
                     
-                    item = dtUsers.Rows[i]["ITEM_ID"].ToString(),
-                    product = dtUsers.Rows[i]["PRODUCT"].ToString(),
-                    variant = dtUsers.Rows[i]["VARIANT"].ToString(),
+                    item = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
+                    product = dtUsers.Rows[i]["PROD_NAME"].ToString(),
+                    variant = dtUsers.Rows[i]["PRODUCT_VARIANT"].ToString(),
                     uom = dtUsers.Rows[i]["UOM"].ToString(),
                     qty = dtUsers.Rows[i]["BALANCE_QTY"].ToString(),
 

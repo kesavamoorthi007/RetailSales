@@ -109,7 +109,7 @@
                                                 <th> Stock Qty </th>
                                                 <th> Qty </th>
                                                 <th>Rate (₹) </th>
-                                                <th>Amount </th>
+                                                <th>Amount (₹)</th>
                                                 <th></th>
                                         </thead>
                                         <tbody id="tbBooks">
@@ -138,7 +138,7 @@
                                                         </td>
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].StockQty, new { @id = "txtStockQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].StockQty, new { @id = "txtStockQty" + i, @class = "form-control", style = "width: 80px;", type = "number", @readonly = "readonly", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.StockAdjustmentList[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
@@ -402,7 +402,7 @@
             success: function (result) {
                 document.getElementById("txtUnit" + i).value = result.unit;
                 document.getElementById("txtRate" + i).value = result.rate;
-
+                document.getElementById("txtStockQty" + i).value = result.stockqty;
 
             },
             error: function () {
@@ -504,7 +504,7 @@
        
         var Unit = "<td><input class='form-control' id='txtUnit" + index + "' name='StockAdjustmentList[" + index + "].Unit'  style='width: 80px;' readonly='True' /></td>";
 
-        var StockQty = "<td><input class='form-control' id='txtStockQty" + index + "' name='StockAdjustmentList[" + index + "].StockQty'  style='width: 80px;' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeQty(this," + index + ")' /></td>";
+        var StockQty = "<td><input class='form-control' id='txtStockQty" + index + "' name='StockAdjustmentList[" + index + "].StockQty'  style='width: 80px;' readonly='True' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeQty(this," + index + ")' /></td>";
 
         var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='StockAdjustmentList[" + index + "].Qty'  style='width: 80px;' min='0'' max='99' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeQty(this," + index + ")' /></td>";
 
