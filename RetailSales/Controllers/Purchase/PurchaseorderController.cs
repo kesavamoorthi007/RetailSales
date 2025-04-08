@@ -385,6 +385,25 @@ namespace RetailSales.Controllers.Purchase
                 throw ex;
             }
         }
+        public List<SelectListItem> BindDUOM(string id)
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("SELECT C.DEST_UOM,C.CF,U.UOM_CODE FROM UOM_CONVERT C,UOM U WHERE U.ID=C.DEST_UOM AND C.PRO_ID='" + id + "'");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public List<SelectListItem> BindItem()
         {
             try
@@ -792,15 +811,15 @@ namespace RetailSales.Controllers.Purchase
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new PurchaseorderItem();
-                    tda.UOMlst = BindUOM();
+                    tda.UOMlst = BindDUOM(dtt.Rows[i]["ID"].ToString());
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
                     tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
-                    tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
-                    tda.CF = dtt.Rows[i]["CONVT_FACTOR"].ToString();
+                    tda.DestUOM = dtt.Rows[i]["UOM"].ToString();
+                    tda.CF = "1";
                     tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();

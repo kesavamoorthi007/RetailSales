@@ -12,9 +12,15 @@ namespace RetailSales.Controllers.Master
     public class ProductNameController : Controller
     {
         IProductNameService ProductNameService;
-        public ProductNameController(IProductNameService _ProductNameService)
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
+
+        public ProductNameController(IProductNameService _ProductNameService, IConfiguration _configuratio)
         {
             ProductNameService = _ProductNameService;
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
         }
         public IActionResult ProductName(string id)
         {
@@ -149,7 +155,7 @@ namespace RetailSales.Controllers.Master
                     tda.MinQty = dtt.Rows[i]["MIN_QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.ProdDesc = dtt.Rows[i]["PRODUCT_DESCRIPTION"].ToString();
-                    tda.ID = id;
+                    tda.ID = dtt.Rows[i]["ID"].ToString();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
 
@@ -189,7 +195,112 @@ namespace RetailSales.Controllers.Master
                 throw ex;
             }
         }
+        public List<SelectListItem> BindSUOM(string id)
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public IActionResult AddCF(string id)
+        {
+            Productdetail ic = new Productdetail();
 
+
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = datatrans.GetData(" SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PRO_DETAIL.PRODUCT_ID WHERE PRO_DETAIL.ID='" + id + "'");
+            if (dt.Rows.Count > 0)
+            {
+                ic.Product = dt.Rows[0]["PRODUCT_NAME"].ToString();
+                ic.ProName = dt.Rows[0]["PROD_NAME"].ToString();
+                ic.Varint = dt.Rows[0]["PRODUCT_VARIANT"].ToString();
+
+            }
+
+            List<ProductDetailTable> TData = new List<ProductDetailTable>();
+            ProductDetailTable tda = new ProductDetailTable();
+
+          
+          
+                dtt = datatrans.GetData("SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CF FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID = '" + id + "' ");
+                if (dtt.Rows.Count > 0) 
+                { 
+                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    {
+                        tda = new ProductDetailTable();
+                        tda.ProID = dtt.Rows[i]["PRO_ID"].ToString();
+                        tda.SUOMlst = BindUOM();
+                        tda.DUOMlst = BindUOM();
+                        tda.Src = dtt.Rows[i]["SRC_UOM"].ToString();
+                        tda.Des = dtt.Rows[i]["DEST_UOM"].ToString();
+                        tda.CF = dtt.Rows[i]["CF"].ToString();
+                        tda.Isvalid = "Y";
+                        TData.Add(tda);
+                    }
+                 }
+                else
+                {
+
+                    for (int i = 0; i < 1; i++)
+                    {
+                        tda = new ProductDetailTable();
+                        tda.SUOMlst = BindUOM();
+                        tda.DUOMlst = BindUOM();
+                        tda.ProID = id;
+                        tda.Isvalid = "Y";
+                        TData.Add(tda);
+                    }
+                }
+            
+            ic.ProductDetailTablelst = TData;
+            return View(ic);
+        }
+        [HttpPost]
+        public ActionResult AddCF(Productdetail cy, string id)
+        {
+            try
+            {
+                cy.ID = id;
+                string Strout = ProductNameService.CFCRUD(cy, id);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (cy.ID == null)
+                    {
+                        TempData["notice"] = "UOM Converted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "UOM Converted Successfully...!";
+                    }
+                    return RedirectToAction("ListProductdetail");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit Productdetail";
+                    TempData["notice"] = Strout;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RedirectToAction("ListProductdetail");
+        }
         public List<SelectListItem> BindHsn()
         {
             try

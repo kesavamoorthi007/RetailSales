@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using RetailSales.Models;
 using RetailSales.Models.Master;
 
 namespace RetailSales.Interface.Master
@@ -16,5 +17,6 @@ namespace RetailSales.Interface.Master
         string ProductNameCRUD(ProductName cy);
         string RemoveChange(string tag, string id);
         string StatusChange(string tag, string id);
+        string CFCRUD(Productdetail cy, string proid);
     }
 }

@@ -155,9 +155,25 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+
+                               //         svSQL = "if exists(Select ID from PRO_DETAIL where PRODUCT_ID = '" + Pid + "' and PRODUCT_VARIANT = '" + cp.Variant + @"')
+                               //begin 
+                               //    update VITAL_BOOKING set RESULT = '" + ap.B_Pulse + "' where BOOKING_BASIC_ID = '" + ap.AppID + "' and VITAL_NAME = '" + ap.B_Pulse_ID + @"' 
+                               //end else begin  
+                               //       Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + @"') SELECT SCOPE_IDENTITY()
+                               //end";
+                                       
+
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "') SELECT SCOPE_IDENTITY()";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                                        objCmds.ExecuteNonQuery();
+                                        Object Cid = objCmds.ExecuteScalar();
+                                        string proid = Cid.ToString();
+
+                                        svSQL = @"INSERT INTO UOM_CONVERT (SRC_UOM, DEST_UOM, CF, IS_ACTIVE, PRO_ID)
+                                                SELECT UOM, UOM, 1, 'Y', ID FROM PRO_DETAIL WHERE ID='"+ proid + "'";
+                                        SqlCommand objCmds1 = new SqlCommand(svSQL, objConn);
+                                        objCmds1.ExecuteNonQuery();
+
                                     }
                                 }
                             }
@@ -171,9 +187,15 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "')";
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "') SELECT SCOPE_IDENTITY()";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                                        objCmds.ExecuteNonQuery();
+                                        Object Cid = objCmds.ExecuteScalar();
+                                        string proid = Cid.ToString();
+
+                                        svSQL = @"INSERT INTO UOM_CONVERT (SRC_UOM, DEST_UOM, CF, IS_ACTIVE, PRO_ID)
+                                                SELECT UOM, UOM, 1, 'Y', ID FROM PRO_DETAIL WHERE ID='" + proid + "'";
+                                        SqlCommand objCmds1 = new SqlCommand(svSQL, objConn);
+                                        objCmds1.ExecuteNonQuery();
                                     }
                                 }
                             }
@@ -200,7 +222,73 @@ namespace RetailSales.Services.Master
 
             return msg;
         }
+        public string CFCRUD(Productdetail cy, string proid)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty;
+                string svSQL = "";
 
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+
+                    try
+                    {
+
+                        objConn.Open();
+                        proid = cy.ID;
+                        if (cy.ProductDetailTablelst != null)
+                        {
+                            if (cy.ID == null)
+                            {
+                                foreach (ProductDetailTable cp in cy.ProductDetailTablelst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
+                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                objCmdd.ExecuteNonQuery();
+                                foreach (ProductDetailTable cp in cy.ProductDetailTablelst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
+        }
         public string StatusChange(string tag, string id)
         {
             try
