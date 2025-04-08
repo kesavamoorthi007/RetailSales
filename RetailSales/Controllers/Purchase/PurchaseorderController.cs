@@ -811,10 +811,18 @@ namespace RetailSales.Controllers.Purchase
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new PurchaseorderItem();
+<<<<<<< HEAD
                     tda.UOMlst = BindDUOM(dtt.Rows[i]["ID"].ToString());
+=======
+                    tda.UOMlst = BindUOM();
+                    tda.DUOMlst = BindDUOM();
+>>>>>>> 8e047fb206cae2411895da64465377a572b4a226
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Itemid = dtt.Rows[i]["ITEM"].ToString();
                     tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Productid = dtt.Rows[i]["PRODUCT"].ToString();
                     tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Varientid = dtt.Rows[i]["VARIANT"].ToString();
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();

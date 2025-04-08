@@ -139,12 +139,14 @@
                                                 <th>Variant</th>
                                                 <th> HSN </th>
                                                 <th> UOM </th>
+                                                <th>Stock Qty</th>
                                                 <th> Qty </th>
                                                 <th> Dest UOM </th>
                                                 <th> CF </th>
                                                 <th> CF Qty</th>
                                                 <th>Rate (₹) </th>
                                                 <th>Amount (₹)</th>
+                                                <th>Disc %</th>
                                                 <th> Discount (₹) </th>
                                                 <th>Total Amount (₹)</th>
                                                 <th></th>
@@ -176,6 +178,9 @@
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].UOM, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].StockQty, new { @id = "txtStockQty" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
@@ -194,6 +199,9 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeDisc(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Discount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
@@ -510,6 +518,8 @@
                  document.getElementById("txtUOM" + i).value = result.uom;
                  document.getElementById("txtHsn" + i).value = result.hsn;
                  document.getElementById("txtRate" + i).value = result.rate;
+                 $("#ddlDestUOM" + i).val(result.uom).trigger('change');
+                 document.getElementById("txtStockQty" + i).value = result.stockqty;
 
              },
              error: function () {
@@ -714,7 +724,7 @@
             var tot = eval(qty) * eval(up) ;
             var cfqty = eval(qty) * eval(CF) ;
             document.getElementById("txtAmount" + i).value = tot.toFixed(2);
-            document.getElementById("txtCfQty" + i).value = qty;
+            document.getElementById("txtCfQty" + i).value = cfqty;
 
             var dis = eval(tot);
 
@@ -775,6 +785,92 @@
         }
         catch (ex) {
             alert(ex.message);
+        }
+    }
+
+    function changeDisc(_this, i) {
+        try {
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var totamt = 0;
+            var qty = parseFloat(document.getElementById("txtQty" + i).value) || 0;
+            var discper = parseFloat(document.getElementById("txtDiscPer" + i).value) || 0;
+            var up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
+            var Disc = parseFloat(document.getElementById("txtDiscAmount" + i).value) || 0;
+            var CF = parseFloat(document.getElementById("txtCF" + i).value) || 0;
+
+            // Calculate total amount based on quantity and rate
+            tot = qty * up;
+
+            // Calculate CF quantity
+            var cfqty = qty * CF;
+
+            // Update the fields for Amount and CFQty
+            document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = cfqty.toFixed(2);
+
+            var tottax = tot;
+
+            // Ensure txtDiscAmount is updated correctly if nothing is entered
+            if (isNaN(discper) || discper === 0) {  // **Added validation to reset discount when blank**
+                document.getElementById("txtDiscAmount" + i).value = "0.00";
+            } else {
+                if(discper < 100){
+                    Disc = (discper / 100) * tot;
+                    document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);  // **Fixed formatting issue**
+                    tottax -= Disc;
+                }
+                else{
+                    alert("Disc % Should not exceed 100");
+                    document.getElementById("txtDiscPer" + i).value = "0";
+                    document.getElementById("txtDiscAmount" + i).value = "0";
+                    document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+                }
+            }
+            document.getElementById("txtTotal" + i).value = tottax.toFixed(2);
+
+            // Calculate totals for all rows
+            var totalAmount = 0;
+            var totalCGST = 0;
+            var netamt = 0;
+            var totalSGST = 0;
+            var totalIGST = 0;
+            var totalDisc = 0;
+            var j = 0;
+
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    var amt = parseFloat($(this).find('#txtAmount' + j).val()) || 0;
+                    totalAmount += amt;
+
+                    var tamt = parseFloat($(this).find('#txtTotal' + j).val()) || 0;
+                    netamt += tamt;
+
+                    var dist = parseFloat($(this).find('#txtDiscAmount' + j).val()) || 0;
+                    totalDisc += dist;
+                }
+                j += 1;
+            });
+
+            // Calculate rounded amount and update fields
+            var roundedAmount = Math.round(netamt.toFixed(2));
+            var roundDiff = roundedAmount - netamt;
+
+            document.getElementById("txtGross").value = totalAmount.toFixed(2);
+            document.getElementById("txtNet").value = roundedAmount.toFixed(2);
+            document.getElementById("hidnet").value = netamt.toFixed(2);
+            document.getElementById("txtRound").value = roundDiff.toFixed(2);
+            document.getElementById("txtDisc").value = totalDisc.toFixed(2);
+
+            // Convert total amount to words and display
+            document.getElementById("Amountinwords").value = withDecimal(roundedAmount.toFixed(2));
+
+        } catch (ex) {
+            alert("Error: " + ex.message);
         }
     }
      
@@ -1096,11 +1192,11 @@
 
         var Varient = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlVarient" + index + "' name='SalesInvoiceLst[" + index + "].Varient' onchange = 'changeVarientItem(this.value," + index + ")'><option value=''>--Please select--</option></select></td>";
 
-
         var Hsn = "<td><input class='form-control' id='txtHsn" + index + "' name='SalesInvoiceLst[" + index + "].Hsn'  style='width: 120px;' onkeydown='return isNumeric2(event.keyCode,this.value)' readonly='True' /></td>";
 
-
         var UOM = "<td><input class='form-control' id='txtUOM" + index + "' name='SalesInvoiceLst[" + index + "].UOM'  style='width: 120px;' type='text'  readonly='True' /></td>";
+
+        var StockQty = "<td><input class='form-control' id='txtStockQty" + index + "' name='SalesInvoiceLst[" + index + "].StockQty'  style='width: 120px;' type='text'  readonly='True' /></td>";
 
         var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='SalesInvoiceLst[" + index + "].Qty'  style='width: 80px;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
 
@@ -1114,6 +1210,8 @@
 
         var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='SalesInvoiceLst[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' readonly='True' /></td>";
 
+        var DiscPer = "<td><input class='form-control' id='txtDiscPer" + index + "' name='SalesInvoiceLst[" + index + "].DiscPer'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' onkeyup = 'changeDisc(this.value," + index + ")' /></td>";
+
         var Discount = "<td><input class='form-control' id='txtDiscAmount" + index + "' name='SalesInvoiceLst[" + index + "].Discount'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' onkeyup = 'changeQty(this.value," + index + ")' /></td>";
 
         var Total = "<td><input class='form-control' id='txtTotal" + index + "' name='SalesInvoiceLst[" + index + "].Total'  style='width: 120px; text-align: right;' onkeydown='return isNumeric2(event.keyCode,this.value)' value='0' onkeyup = 'changeQty(this.value," + index + ")' readonly='True' /></td>";
@@ -1122,7 +1220,7 @@
         var removeCell = "<td><input id='Isvalid" + index + "' name='SalesInvoiceLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='SalesInvoiceLst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Product + Varient  + Hsn  + UOM + Qty + DestUOM + CF + CfQty + Rate + Amount + Discount + Total + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Product + Varient  + Hsn  + UOM + StockQty + Qty + DestUOM + CF + CfQty + Rate + Amount + DiscPer + Discount + Total + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 

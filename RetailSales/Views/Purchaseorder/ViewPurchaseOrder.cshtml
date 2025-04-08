@@ -166,7 +166,10 @@
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Varient)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Hsn)</td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Tariff)</td>
-                                                        <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].UOM)</td>
+                                                        <td>
+                                                            @Html.DisplayFor(o => o.PurchaseorderLst[i].UOM)
+                                                            @Html.HiddenFor(o => o.PurchaseorderLst[i].UOM)
+                                                        </td>
                                                         <td>@Html.DisplayFor(o => o.PurchaseorderLst[i].Qty)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].Rate)</td>
                                                         <td style="text-align: right;">@Html.DisplayFor(o => o.PurchaseorderLst[i].Amount)</td>

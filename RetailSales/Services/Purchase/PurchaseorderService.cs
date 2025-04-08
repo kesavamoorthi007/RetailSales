@@ -191,7 +191,11 @@ namespace RetailSales.Services.Purchase
         public DataTable GetPurchasOrderItem(string id)
         {
             string SvSql = string.Empty;
+<<<<<<< HEAD
             SvSql = "SELECT PRO_DETAIL.ID,POBASICID,PODETAILID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,PODETAIL.HSN,PODETAIL.TARIFF,PODETAIL.UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,PODETAIL.RATE,AMOUNT,FRIGHT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PODETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT WHERE PODETAIL.POBASICID='" + id + "'";
+=======
+            SvSql = "SELECT POBASICID,PODETAILID,PODETAIL.ITEM,PRODUCT.PRODUCT_NAME,PODETAIL.PRODUCT,PRO_NAME.PROD_NAME,PODETAIL.VARIANT,PRO_DETAIL.PRODUCT_VARIANT,PODETAIL.HSN,PODETAIL.TARIFF,PODETAIL.UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,PODETAIL.RATE,AMOUNT,FRIGHT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PODETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT WHERE PODETAIL.POBASICID='" + id + "'";
+>>>>>>> 8e047fb206cae2411895da64465377a572b4a226
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -296,7 +300,7 @@ namespace RetailSales.Services.Purchase
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,PRODUCT,VARIANT,HSN,TARIFF,UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT,DISC_PER) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.Qty + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "','" + cp.DiscPer + "')";
+                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,PRODUCT,VARIANT,HSN,TARIFF,UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT,DISC_PER) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.UOM + "','" + cp.CF + "','" + cp.Qty + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "','" + cp.DiscPer + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -312,7 +316,7 @@ namespace RetailSales.Services.Purchase
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,PRODUCT,VARIANT,HSN,TARIFF,UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT,DISC_PER) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.Qty + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "','" + cp.DiscPer + "')";
+                                        svSQL = "Insert into PODETAIL (POBASICID,ITEM,PRODUCT,VARIANT,HSN,TARIFF,UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,RATE,AMOUNT,FRIGHT,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT,DISC_PER) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.UOM + "','" + cp.CF + "','" + cp.Qty + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "','" + cp.DiscPer + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -373,20 +377,21 @@ namespace RetailSales.Services.Purchase
 
                     foreach (PurchaseorderItem cp in cy.PurchaseorderLst)
                     {
-                        string SvSql2 = "Insert into GRN_DETAIL (GRN_BASIC_ID,ITEM,PRODUCT,VARIANT,HSN,TARIFF,UOM,QTY,RECIVED_QTY,RATE,AMOUNT,FRIGHT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT,DEST_UOM,CF,CF_QTY,ACCEPTED_QTY,REJECTED_QTY,EXCEED_QTY,SHORT_QTY) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Recived + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscPer + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Accepted + "','" + cp.Rejected + "','" + cp.exqty + "','" + cp.shortqty + "')";
+                        string SvSql2 = "Insert into GRN_DETAIL (GRN_BASIC_ID,ITEM,PRODUCT,VARIANT,HSN,TARIFF,UOM,QTY,RECIVED_QTY,RATE,AMOUNT,FRIGHT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT,DEST_UOM,CF,CF_QTY,ACCEPTED_QTY,REJECTED_QTY,EXCEED_QTY,SHORT_QTY) VALUES ('" + Pid + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.Hsn + "','" + cp.Tariff + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.Recived + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.FrigCharge + "','" + cp.DiscPer + "','" + cp.DiscAmount + "','" + cp.CGSTP + "','" + cp.SGSTP + "','" + cp.IGSTP + "','" + cp.CGST + "','" + cp.SGST + "','" + cp.IGST + "','" + cp.Total + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Accepted + "','" + cp.Rejected + "','" + cp.exqty + "','" + cp.shortqty + "')";
                         SqlCommand objCmddts = new SqlCommand(SvSql2, objConn);
                         objConn.Open();
                         objCmddts.ExecuteNonQuery();
                         objConn.Close();
 
-                        string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "',5,'" + cp.UOM + "','" + cp.Qty + "','N','2024-2025','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
+                        //string varient = datatrans.GetDataString("SELECT ID FROM PRO_DETAIL WHERE PRODUCT_VARIANT='" + cp.Varient + "'");
+                        string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "',5,'" + cp.UOM + "','" + cp.Qty + "','N','2024-2025','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
                         SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
                         objConn.Open();
                         Object Pid1 = objCmddtss.ExecuteScalar();
 
                         objConn.Close();
 
-                        string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Y','" + cp.Qty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
+                        string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Y','" + cp.Qty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
                         SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
                         objConn.Open();
                         objCmddtsss.ExecuteNonQuery();

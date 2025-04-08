@@ -45,6 +45,7 @@ namespace RetailSales.Models
         public string Varient { get; set; }
         public string Hsn { get; set; }
         public string UOM { get; set; }
+        public string StockQty { get; set; }
         public string Qty { get; set; }
         public List<SelectListItem> UOMlst { get; set; }
         public string DestUOM { get; set; }
@@ -52,6 +53,7 @@ namespace RetailSales.Models
         public string CfQty { get; set; }
         public string Rate { get; set; }
         public string Amount { get; set; }
+        public string DiscPer { get; set; }
         public string Discount { get; set; }
         public string Total { get; set; }
         public string Isvalid { get; set; }             
@@ -70,6 +72,7 @@ namespace RetailSales.Models
         public string address { get; set; }
         public string totalamount { get; set; }
         public string editrow { get; set; }
+        public string view { get; set; }
         public string move { get; set; }
         public string delrow { get; set; }
         public string report { get; set; }

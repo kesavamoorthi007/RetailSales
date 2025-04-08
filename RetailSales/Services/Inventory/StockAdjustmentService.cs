@@ -92,6 +92,17 @@ namespace RetailSales.Services.Inventory
             return dtt;
         }
 
+        public DataTable GetStockDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT INVENTORY_ITEM.BALANCE_QTY FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetEditStockAdjustment(string id)
         {
             string SvSql = string.Empty;
@@ -186,6 +197,83 @@ namespace RetailSales.Services.Inventory
                                         svSQL = "Insert into STKADJDETAIL (STKADJBASICID,PRODUCT_NAME,PRODUCT,VARIANT,UOM,STOCKQTY,QTY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.StockQty + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
+
+                                        if(cy.Type == "Addition")
+                                        {
+                                            double qty = Convert.ToDouble(cp.Qty);
+
+                                            DataTable dt = datatrans.GetData("Select * from INVENTORY_ITEM  where ITEM_ID='" + cp.Item + "' and PRODUCT='" + cp.Product + "' AND VARIANT='" + cp.Variant + "' AND BALANCE_QTY!=0");
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                for (int i = 0; i < dt.Rows.Count; i++)
+                                                {
+                                                    double sqty = Convert.ToDouble(dt.Rows[i]["BALANCE_QTY"].ToString());
+                                                    if (sqty >= qty || sqty <= qty)
+                                                    {
+                                                        double bqty = sqty + qty;
+
+                                                        string Sql = string.Empty;
+                                                        Sql = "Update INVENTORY_ITEM SET BALANCE_QTY='" + bqty + "' WHERE INVENTORY_ITEM_ID='" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "'";
+                                                        SqlCommand objCmdsz = new SqlCommand(Sql, objConn);
+                                                        objCmdsz.ExecuteNonQuery();
+
+
+                                                        Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VLAUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "',) ";
+                                                        SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
+                                                        objCmdsz1.ExecuteNonQuery();
+                                                    }
+
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                svSQL = "Insert into INVENTORY_ITEM (ITEM_ID,PRODUCT,VARIANT,BALANCE_QTY) VALUES ('" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
+                                                objCmds = new SqlCommand(svSQL, objConn);
+                                                objCmds.ExecuteNonQuery();
+                                                svSQL = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,TRANS_QTY) VALUES ('" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
+                                                objCmds = new SqlCommand(svSQL, objConn);
+                                                objCmds.ExecuteNonQuery();
+                                            }
+                                        }
+                                        if (cy.Type == "Deduction")
+                                        {
+                                            double qty = Convert.ToDouble(cp.Qty);
+
+                                            DataTable dt = datatrans.GetData("Select * from INVENTORY_ITEM  where ITEM_ID='" + cp.Item + "' and PRODUCT='" + cp.Product + "' AND VARIANT='" + cp.Variant + "' AND BALANCE_QTY!=0");
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                for (int i = 0; i < dt.Rows.Count; i++)
+                                                {
+                                                    double sqty = Convert.ToDouble(dt.Rows[i]["BALANCE_QTY"].ToString());
+                                                    if (sqty >= qty)
+                                                    {
+                                                        double bqty = sqty + qty;
+
+                                                        string Sql = string.Empty;
+                                                        Sql = "Update INVENTORY_ITEM SET BALANCE_QTY='" + bqty + "' WHERE INVENTORY_ITEM_ID='" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "'";
+                                                        SqlCommand objCmdsz = new SqlCommand(Sql, objConn);
+                                                        objCmdsz.ExecuteNonQuery();
+
+
+                                                        //Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VLAUES ('" + dt.Rows[i]["INV_ITEM_ID"].ToString() + "',) ";
+                                                        //SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
+                                                        //objCmdsz1.ExecuteNonQuery();
+                                                    }
+
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                svSQL = "Insert into INVENTORY_ITEM (ITEM_ID,PRODUCT,VARIANT,BALANCE_QTY) VALUES ('" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
+                                                objCmds = new SqlCommand(svSQL, objConn);
+                                                objCmds.ExecuteNonQuery();
+                                                //svSQL = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,TRANS_QTY) VALUES ('" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
+                                                //objCmds = new SqlCommand(svSQL, objConn);
+                                                //objCmds.ExecuteNonQuery();
+                                            }
+                                        }
                                     }
                                 }
                             }

@@ -676,9 +676,18 @@
             if (isNaN(discper) || discper === 0) {  // **Added validation to reset discount when blank**
                 document.getElementById("txtDiscAmount" + i).value = "0.00";
             } else {
-                Disc = (discper / 100) * tot;
-                document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);  // **Fixed formatting issue**
-                tottax -= Disc;
+                if(discper < 100){
+                    Disc = (discper / 100) * tot;
+                    document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);  // **Fixed formatting issue**
+                    tottax -= Disc;
+                }
+                else{
+                    alert("Disc % Should not exceed 100");
+                    document.getElementById("txtDiscPer" + i).value = "0";
+                    document.getElementById("txtDiscAmount" + i).value = "0";
+                    document.getElementById("txtAmount" + i).value = tot.toFixed(2);
+                }
+                
             }
 
             // Calculate tax percentages
@@ -919,9 +928,16 @@
             if (tot == "")
                 tot = 0;
 
-
-            var rej = eval(tot) - eval(Disc) ;
-            document.getElementById("txtNet").value = rej.toFixed(2);
+            if(Disc < tot){
+                var rej = eval(tot) - eval(Disc) ;
+                document.getElementById("txtNet").value = rej.toFixed(2);
+            }
+            else{
+                alert("Discount is higher than Total");
+                document.getElementById("txtDisc" + i).value = "0";
+                document.getElementById("txtNet" + i).value = tot.toFixed(2);
+            }
+            
 
 
             var roundamount = Math.round(rej);

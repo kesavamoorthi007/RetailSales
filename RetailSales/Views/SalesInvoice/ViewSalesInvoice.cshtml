@@ -1,0 +1,262 @@
+﻿@model RetailSales.Models.SalesInvoice
+@{
+    ViewData["Title"] = "Sales Invoice";
+}
+<style>
+    .newwidth {
+        width: 120px;
+    }
+</style>
+
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("ViewSalesInvoice", "SalesInvoice", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Invoice No :</strong><label class="Mandatory"></label></label>
+                                        @Html.HiddenFor(C => C.ID)
+                                        @Html.DisplayFor(C => C.InvoiceNo)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Invoice Date :</strong><label class="Mandatory"></label></label>
+                                        @Html.DisplayFor(C => C.InvoiceDate)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Customer Name :</strong><label class="Mandatory"></label></label>
+                                        @Html.DisplayFor(C => C.Customer)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Address :</strong><label class="Mandatory"></label></label>
+                                        @Html.DisplayFor(C => C.Address)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>State :</strong><label class="Mandatory"></label></label>
+                                        @Html.DisplayFor(C => C.State)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>City :</strong><label class="Mandatory"></label></label>
+                                        @Html.DisplayFor(C => C.City)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Phone No :</strong><label class="Mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.Mobile)
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <table id="example7" class="display nowrap table  responsive nowrap table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product Category</th>
+                                                <th>Product Name</th>
+                                                <th>Variant</th>
+                                                <th>HSN</th>
+                                                <th> UOM </th>
+                                                <th> Qty </th>
+                                                <th> Dest UOM </th>
+                                                <th> CF </th>
+                                                <th> CF Qty </th>
+                                                <th>Rate (₹)</th>
+                                                <th>Amount (₹)</th>
+                                                <th>Disc %</th>
+                                                <th> Discount (₹) </th>
+                                                <th>Total Amount (₹)</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @{
+                                                int i = 0;
+
+                                                foreach (var item in Model.SalesInvoiceLst.ToList())
+                                                {
+
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Product)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Varient)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Hsn)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].UOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].Qty)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].DestUOM)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].CF)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceLst[i].CfQty)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Rate)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Amount)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].DiscPer)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Discount)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceLst[i].Total)</td>
+
+
+                                                    </tr>
+                                                    //i = i + 1;
+                                                    i++;
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+
+                                <div class="col-md-4" style="overflow-x:scroll; min-width:300px; min-height:300px;">
+
+                                    <table class="table table-striped table-hover" id="dataTable">
+                                        <thead>
+                                        </thead>
+                                        <tbody id="tbBooks">
+                                            @{
+                                                <tr>
+
+                                                    <th>GROSS (₹)</th>
+                                                    <td>
+                                                        @Html.DisplayFor(C => C.Gross)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>DISCOUNT (₹)</th>
+                                                    <td>
+                                                        @Html.DisplayFor(C => C.Disc)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>FREIGHT (₹)</th>
+                                                    <td>
+                                                        @Html.DisplayFor(C => C.Frieghtcharge)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th> ROUND OFF</th>
+                                                    <td>
+                                                        @Html.DisplayFor(C => C.Round)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th> TOTAL (₹)</th>
+                                                    <td>
+                                                        @Html.DisplayFor(C => C.Net)
+                                                        <input type="hidden" id="hidnet" />
+                                                    </td>
+
+
+                                                </tr>
+
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="tabs-container">
+                                        @* <ul class="nav nav-pills nav-fill">
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Despatch Address</a></li>
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Details</a></li>
+
+
+                                        </ul> *@
+                                        <div class="tab-content">
+
+
+                                            <div class="tab-pane active" id="tab-1">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <div class="tab-pane active" id="tab-1">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <br />  <label for="inputName3" class="col-sm-4 control-label"><strong>Amount in Words :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.Amountinwords)
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-4 control-label"><strong>Narration :</strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.Remarks)
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                @*1st tab*@
+                                                            </div>
+                                                            @*1st tab*@
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListSalesInvoice", "SalesInvoice")'">Cancel</button>
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
