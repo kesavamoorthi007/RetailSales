@@ -811,7 +811,7 @@ namespace RetailSales.Controllers.Purchase
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new PurchaseorderItem();
-                    tda.UOMlst = BindUOM();
+                    tda.DUOMlst = BindDUOM(dtt.Rows[i]["ID"].ToString());
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Itemid = dtt.Rows[i]["ITEM"].ToString();
                     tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
