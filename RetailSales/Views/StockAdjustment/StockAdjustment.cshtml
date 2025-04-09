@@ -41,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Location<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-5">
                                             @Html.DropDownListFor(C => C.Location, Model.Locationlst, "---Plaese Select---", new { @id = "txtLocation", @class = "form-control _select", @TabIndex = 1 })<br />
                                             @Html.HiddenFor(C => C.ID)
                                         </div> 
@@ -54,9 +54,9 @@
                                             <div class="input-group">
 
                                                 @Html.RadioButtonFor(C => C.Type, "Addition", new { @TabIndex = 2 })
-                                                <label id="mt-radio">Addition</label>&emsp;
+                                                <label id="mt-radio">Addition (+)</label>&emsp;
                                                 @Html.RadioButtonFor(C => C.Type, "Deduction", new { @TabIndex = 2 })
-                                                <label id="mt-radio">Deduction</label>
+                                                <label id="mt-radio">Deduction (-)</label>
                                             </div>
                                         </div>                                        
                                     </div>
@@ -68,8 +68,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-5 control-label">Stock Adjustment Number<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.DocId, new { @id = "txtDocId", @class = "form-control", @TabIndex = 1 })<br />
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(C => C.DocId, new { @id = "txtDocId", @class = "form-control", @TabIndex = 1, @readonly = "readonly" })<br />
                                             
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Date<label class="mandatory">*</label></label>
-                                        <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
+                                        <div class="input-group date form_date col-sm-2" data-date="" data-date-format="dd-M-yyyy" style="width: 200px">
                                             @Html.TextBoxFor(C => C.DocDate, new { @id = "txtDocDate", @class = "form-control", @TabIndex = 2, @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
@@ -107,9 +107,9 @@
                                                 <th>Variant</th>
                                                 <th> Unit </th>
                                                 <th> Stock Qty </th>
-                                                <th> Qty </th>
-                                                <th>Rate (₹) </th>
-                                                <th>Amount (₹)</th>
+                                                <th> Adjust Qty </th>
+                                                @* <th>Rate (₹) </th>
+                                                <th>Amount (₹)</th> *@
                                                 <th></th>
                                         </thead>
                                         <tbody id="tbBooks">
@@ -145,10 +145,10 @@
                                                         </td>
 
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.HiddenFor(o => o.StockAdjustmentList[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
+                                                            @Html.HiddenFor(o => o.StockAdjustmentList[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.StockAdjustmentList[i].Isvalid, new { @id = "Isvalid" + i })
@@ -264,7 +264,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Stock Adjustment Number");
+                alert("Please Select Date");
                 return false;
             }
             else {
@@ -339,6 +339,22 @@
                 }
                 j += 1;
             });
+            if (document.getElementById("txtReason").value == "") {
+                isValid = false;
+                $(txtReason).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Narration");
+                return false;
+            }
+            else {
+                $(txtReason).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
 
            
 
@@ -362,10 +378,10 @@
     function changeProductDetails(ItemId,i) {
          $.ajax({
              url: 'GetProductJSON',
-             type: "POST",  // Fixed missing type
+             type: "POST",  
                data: { "ItemId": ItemId },
              success: function (change) {
-                 PopulateDropDown("#ddlProduct" + i, change); // Fixed incorrect selector
+                 PopulateDropDown("#ddlProduct" + i, change); 
 
                  // Call changeVarientItem only after success
                 var selectedItem = $("#ddlProduct" + i).val();
@@ -508,9 +524,9 @@
 
         var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='StockAdjustmentList[" + index + "].Qty'  style='width: 80px;' min='0'' max='99' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeQty(this," + index + ")' /></td>";
 
-        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='StockAdjustmentList[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeQty(this," + index + ")' style='width: 80px; text-align: right;' /></td>";
+        var Rate = "<td><input type='hidden' class='form-control' id='txtRate" + index + "' name='StockAdjustmentList[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeQty(this," + index + ")' style='width: 80px; text-align: right;' /></td>";
 
-        var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='StockAdjustmentList[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 80px;' onkeyup = 'changeQty(this," + index + ")' readonly='True' /></td>";
+        var Amount = "<td><input type='hidden' class='form-control' id='txtAmount" + index + "' name='StockAdjustmentList[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 80px;' onkeyup = 'changeQty(this," + index + ")' readonly='True' /></td>";
 
         var removeCell = "<td><input id='Isvalid" + index + "' name='StockAdjustmentList[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='StockAdjustmentList.Index' type='hidden' value='" + index + "'  /></td>";
 
