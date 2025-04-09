@@ -6,6 +6,7 @@ using RetailSales.Services;
 using static RetailSales.Models.StockTransferItem;
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
+using RetailSales.Services.Sales;
 
 namespace RetailSales.Controllers
 {
@@ -165,7 +166,7 @@ namespace RetailSales.Controllers
 
                 string uom = "";
                 string rate = "";
-                string amount = "";
+                string stockqty = "";
                 dt = StockTransferService.GetVarientDetails(ItemId);
 
                 if (dt.Rows.Count > 0)
@@ -176,8 +177,13 @@ namespace RetailSales.Controllers
 
 
                 }
+                dt = StockTransferService.GetStockDetails(ItemId);
+                if (dt.Rows.Count > 0)
+                {
+                    stockqty = dt.Rows[0]["BALANCE_QTY"].ToString();
+                }
 
-                var result = new { uom = uom, rate = rate };
+                var result = new { uom = uom, rate = rate, stockqty = stockqty };
                 return Json(result);
             }
             catch (Exception ex)

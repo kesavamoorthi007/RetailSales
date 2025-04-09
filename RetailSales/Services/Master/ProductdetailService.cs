@@ -49,7 +49,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditProductdetailTable(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CONVRT_FACTOR FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID = '" + id + "' ";
+            SvSql = "SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CF FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -250,7 +250,7 @@ namespace RetailSales.Services.Master
         {
             string SvSql = string.Empty;
             //SvSql = " SELECT UOM_CONVERT.ID,PRO_ID,UOM.UOM_CODE,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM WHERE UOM_CONVERT.ID='" + id + "'";
-            SvSql = " SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID='" + id + "'";
+            SvSql = " SELECT UOM_CONVERT.PRO_ID,SRC_UOM,DEST_UOM,CF,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT WHERE UOM_CONVERT.PRO_ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

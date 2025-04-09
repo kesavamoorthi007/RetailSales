@@ -17,8 +17,10 @@ namespace RetailSales.Controllers.Inventory
         IConfiguration? _configuratio;
         private string? _connectionString;
         DataTransactions datatrans;
-        public StockAdjustmentController(IStockAdjustmentService _StockAdjustmentService)
-        {           
+        public StockAdjustmentController(IStockAdjustmentService _StockAdjustmentService, IConfiguration _configuratio)
+        {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             StockAdjustmentService = _StockAdjustmentService;
         }
         public IActionResult StockAdjustment(string id)
@@ -27,6 +29,12 @@ namespace RetailSales.Controllers.Inventory
             ic.Locationlst = BindLocation();
             ic.Type = "Addition";
             ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            DataTable dtv = datatrans.GetSequence("Stock Adjustment");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.DocId = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
+
             List<StockAdjustmentItem> TData = new List<StockAdjustmentItem>();
             StockAdjustmentItem tda = new StockAdjustmentItem();
             if (id == null)
