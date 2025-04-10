@@ -3,6 +3,7 @@ using RetailSales.Controllers.Purchase;
 using RetailSales.Interface.Master;
 using RetailSales.Interface.Purchase;
 using RetailSales.Models;
+using RetailSales.Models.Master;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -138,6 +139,17 @@ namespace RetailSales.Services.Purchase
             return dtt;
         }
 
+        public DataTable GetHsn()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT HSNMASTID,HSCODE FROM HSNMAST WHERE HSNMAST.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetHsn(string id)
         {
             string SvSql = string.Empty;
@@ -210,6 +222,196 @@ namespace RetailSales.Services.Purchase
             adapter.Fill(dtt);
             return dtt;
         }
+
+        public DataTable GetState()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select STATE_NAME,ID from STATE WHERE STATE.IS_ACTIVE = 'Y' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCity(string cityid)
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,ID from CITY WHERE STATE_ID = '" + cityid + "' AND CITY.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetCategory()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CATGRY_NAME,ID from SUPPL_CATGRY WHERE SUPPL_CATGRY.IS_ACTIVE = 'Y' ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public string SupplierCRUD(string Category, string SupplierName, string SupplierAdd, string Days, string GST, string State, String City, string Mobile, string Landline, string Email)
+        {
+            string id = "";
+            try
+            {
+                string StatementType = string.Empty; string svSQL = "";
+
+                //svSQL = " SELECT Count(CITY_NAME) as cnt FROM M_CITY WHERE CITY_NAME =LTRIM(RTRIM('" + category + "')) ";
+                //if (datatrans.GetDataId(svSQL) > 0)
+                //{
+                //    msg = "SUB CITY Already Existed";
+                //    return msg;
+                //}
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    svSQL = "Insert into SUPPLIER (SUPP_CAT,SUPPLIER_NAME,ADDRESS,CR_DAYS,GST_NO,STATE,CITY,MOBILE_NO,LANDLINE_NO,EMAIL_ID) VALUES ('" + Category + "','" + SupplierName + "','" + SupplierAdd + "','" + Days + "','" + GST + "','" + State + "','" + City + "','" + Mobile + "','" + Landline + "','" + Email + "') SELECT SCOPE_IDENTITY()";
+
+                    SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                    objConn.Open();
+                    Object Cid = objCmds.ExecuteScalar();
+                    objConn.Close();
+                    id = Cid.ToString();
+                }
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return id;
+        }
+
+        public DataTable GetProdCategory()
+        {
+            string SvSql = string.Empty;
+            SvSql = "Select PRODUCT_NAME,ID,PRODUCT.IS_ACTIVE From PRODUCT WHERE PRODUCT.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public string ProductNameCRUD(Purchaseorder cy)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty;
+                string svSQL = "";
+
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    SqlCommand objCmd = new SqlCommand("ProNameProc", objConn);
+                    objCmd.CommandType = CommandType.StoredProcedure;
+                    if (cy.ID == null)
+                    {
+                        StatementType = "Insert";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        StatementType = "Update";
+                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
+                    }
+                    objCmd.Parameters.Add("@ProdCategory", SqlDbType.NVarChar).Value = cy.ProdCat;
+                    objCmd.Parameters.Add("@ProdName", SqlDbType.NVarChar).Value = cy.Product;
+                    objCmd.Parameters.Add("@Description", SqlDbType.NVarChar).Value = cy.Description;
+                    objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
+                    try
+                    {
+
+                        objConn.Open();
+                        Object Pid = objCmd.ExecuteScalar();
+                        if (cy.ID != null)
+                        {
+                            Pid = cy.ID;
+                        }
+
+                        if (cy.PurchaseorderLst != null)
+                        {
+                            if (cy.ID == null)
+                            {
+                                foreach (PurchaseorderItem cp in cy.PurchaseorderLst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.ProdCat + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "') SELECT SCOPE_IDENTITY()";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        Object Cid = objCmds.ExecuteScalar();
+                                        string proid = Cid.ToString();
+
+                                        svSQL = @"INSERT INTO UOM_CONVERT (SRC_UOM, DEST_UOM, CF, IS_ACTIVE, PRO_ID)
+                                                SELECT UOM, UOM, 1, 'Y', ID FROM PRO_DETAIL WHERE ID='" + proid + "'";
+                                        SqlCommand objCmds1 = new SqlCommand(svSQL, objConn);
+                                        objCmds1.ExecuteNonQuery();
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                svSQL = "Delete PRO_DETAIL WHERE PRODUCT_ID='" + cy.ID + "'";
+                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                objCmdd.ExecuteNonQuery();
+                                foreach (PurchaseorderItem cp in cy.PurchaseorderLst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "') SELECT SCOPE_IDENTITY()";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        Object Cid = objCmds.ExecuteScalar();
+                                        string proid = Cid.ToString();
+
+                                        svSQL = @"INSERT INTO UOM_CONVERT (SRC_UOM, DEST_UOM, CF, IS_ACTIVE, PRO_ID)
+                                                SELECT UOM, UOM, 1, 'Y', ID FROM PRO_DETAIL WHERE ID='" + proid + "'";
+                                        SqlCommand objCmds1 = new SqlCommand(svSQL, objConn);
+                                        objCmds1.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+
+                        }
+
+
+
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
+        }
+
+        //public string ProductNameCRUD(string category, string product, string description, string varient, string uOM, string hsn, string minQty, string rate, string prodDesc)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
         public string PurchaseorderCRUD(Purchaseorder cy)
         {
             string msg = "";
@@ -386,7 +588,6 @@ namespace RetailSales.Services.Purchase
                         SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
                         objConn.Open();
                         Object Pid1 = objCmddtss.ExecuteScalar();
-
                         objConn.Close();
 
                         string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Y','" + cp.Qty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
@@ -466,5 +667,7 @@ namespace RetailSales.Services.Purchase
             return "";
 
         }
+
+        
     }
 }

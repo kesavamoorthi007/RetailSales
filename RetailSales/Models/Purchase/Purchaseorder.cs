@@ -7,14 +7,21 @@ namespace RetailSales.Models
         public Purchaseorder()
         {
             this.Suplst = new List<SelectListItem>();
+            this.Catlst = new List<SelectListItem>();
+            this.Statelst = new List<SelectListItem>();
+            this.Citylst = new List<SelectListItem>();
+            this.Categorylst = new List<SelectListItem>();
         }
         public string Companyname { get; set; }
         public string Suppid { get; set; }
         public List<SelectListItem> Suplst { get; set; }
+        
         public string refno { get; set; }
         public string po { get; set; }
         public string Country { get; set; }
+        public List<SelectListItem> Statelst { get; set; }
         public string State { get; set; }
+        public List<SelectListItem> Citylst { get; set; }
         public string City { get; set; }
         public string refdate { get; set; }
         public string Noofrows { get; set; }
@@ -42,6 +49,16 @@ namespace RetailSales.Models
         public string LRno { get; set; }
         public string dispatchname { get; set; }
         public string LRdate { get; set; }
+        public List<SelectListItem> Catlst { get; set; }
+        public string Category { get; set; }
+        public string Days { get; set; }
+        public string Mobile { get; set; }
+        public string Landline { get; set; }
+        public string Email { get; set; }
+        public string Product { get; set; }
+        public string Description { get; set; }
+        public List<SelectListItem> Categorylst { get; set; }
+        public string ProdCat { get; set; }
         public List<PurchaseorderItem> PurchaseorderLst { get; set; }
     }
     public class PurchaseorderItem
@@ -58,6 +75,7 @@ namespace RetailSales.Models
         public List<SelectListItem> Varientlst { get; set; }
         public string Varient { get; set; }
         public string Varientid { get; set; }
+        public List<SelectListItem> Hsnlst { get; set; }
         public string Hsn { get; set; }
         public string Tariff { get; set; }
         public List<SelectListItem> UOMlst { get; set; }
@@ -85,8 +103,8 @@ namespace RetailSales.Models
         public string exqty { get; set; }
         public string shortqty { get; set; }
         public string FrigCharge { get; set; }
-        //public string Description { get; set; }       
-        //public string FrieghtAmt { get; set; }
+        public string MinQty { get; set; }       
+        public string ProdDesc { get; set; }
         //public string Bin { get; set; }
     }
     public class ListPurchaseordergrid

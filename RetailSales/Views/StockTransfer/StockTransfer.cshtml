@@ -137,7 +137,7 @@
                                                 <th> Stock </th>
                                                 <th> Qty </th>
                                                 <th> Rate (₹) </th>
-                                                <th> Amount </th>
+                                                <th> Amount (₹)</th>
                                                 <th></th>
                                         </thead>
                                         <tbody id="tbBooks">
@@ -419,7 +419,7 @@
             success: function (result) {
                 document.getElementById("txtUOM" + i).value = result.uom;
                 document.getElementById("txtRate" + i).value = result.rate;
-
+                  document.getElementById("txtStock" + i).value = result.stockqty;
 
             },
             error: function () {
@@ -502,7 +502,7 @@
 
         var Unit = "<td><input class='form-control' id='txtUOM" + index + "' name='StockTransferItemLst[" + index + "].Unit'  style='width: 80px;' readonly='True' /></td>";
 
-        var Stock = "<td><input class='form-control' id='txtStock" + index + "' name='StockTransferItemLst[" + index + "].Bin'  style='width: 80px;' onkeydown='return isNumeric2(event.keyCode,this.value)' readonly='True' /></td>";
+         var Stock = "<td><input class='form-control' id='txtStock" + index + "' name='StockTransferItemLst[" + index + "].Stock'  style='width: 80px;' onkeydown='return isNumeric2(event.keyCode,this.value)' readonly='True' /></td>";
 
         var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='StockTransferItemLst[" + index + "].Qty'  style='width: 80px;' min='0'' max='99' onkeyup = 'changeQty(this.value," +index + ")'  /></td>";
 

@@ -124,7 +124,7 @@ namespace RetailSales.Controllers.Master
             {
                 tda.Src = dtt.Rows[0]["SRC_UOM"].ToString();
                 tda.Des = dtt.Rows[0]["DEST_UOM"].ToString();
-                tda.CF = dtt.Rows[0]["CONVRT_FACTOR"].ToString();
+                tda.CF = dtt.Rows[0]["CF"].ToString();
                 tda.Isvalid = "Y";
             }
             else 
@@ -156,7 +156,7 @@ namespace RetailSales.Controllers.Master
                     tda.DUOMlst = BindDUOM();
                     tda.Src = dtt.Rows[i]["SRC_UOM"].ToString();
                     tda.Des = dtt.Rows[i]["DEST_UOM"].ToString();
-                    tda.CF = dtt.Rows[i]["CONVRT_FACTOR"].ToString();
+                    tda.CF = dtt.Rows[i]["CF"].ToString();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }

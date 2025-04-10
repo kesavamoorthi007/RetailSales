@@ -155,6 +155,25 @@ namespace RetailSales.Services.Inventory
                 string StatementType = string.Empty;
                 string svSQL = "";
 
+                if (cy.ID == null)
+                {
+                    datatrans = new DataTransactions(_connectionString);
+
+
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'SA' AND IS_ACTIVE = 'Y'");
+                    string DocId = string.Format("{0}{1}{2}", "SA/", "24-25/", (idc + 1).ToString());
+
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='SA' AND IS_ACTIVE ='Y'";
+                    try
+                    {
+                        datatrans.UpdateStatus(updateCMd);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    cy.DocId = DocId;
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("StkadjBasicProc", objConn);
@@ -218,7 +237,7 @@ namespace RetailSales.Services.Inventory
                                                         objCmdsz.ExecuteNonQuery();
 
 
-                                                        Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VLAUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "',) ";
+                                                        Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VALUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','','" + cp.Rate + "','Stock Adjustment','Plus','" + cp.Qty + "','Stock Adjustment','" + cy.DocDate + "','2024-2025','','') ";
                                                         SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
                                                         objCmdsz1.ExecuteNonQuery();
                                                     }
@@ -228,12 +247,19 @@ namespace RetailSales.Services.Inventory
                                             }
                                             else
                                             {
-                                                svSQL = "Insert into INVENTORY_ITEM (ITEM_ID,PRODUCT,VARIANT,BALANCE_QTY) VALUES ('" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
-                                                objCmds = new SqlCommand(svSQL, objConn);
-                                                objCmds.ExecuteNonQuery();
-                                                svSQL = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,TRANS_QTY) VALUES ('" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
-                                                objCmds = new SqlCommand(svSQL, objConn);
-                                                objCmds.ExecuteNonQuery();
+                                                
+                                                
+                                                string svSQL1 = "Insert into INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,BALANCE_QTY,MONTH,LOCATION_ID,FINANCIAL_YEAR) VALUES ('" + cy.DocId + "','" + cy.DocDate + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.Rate + "','" + cp.Qty + "','" + DateTime.Now.ToString("MMMM") + "','Godown','2024-2025')";
+                                                SqlCommand objCmddtss = new SqlCommand(svSQL1, objConn);
+                                                Object Pid1 = objCmddtss.ExecuteScalar();
+                                                
+
+                                                string svSQL2 = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid1 + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.Rate + "','Stock Adjustment','Plus','" + cp.Qty + "','Stock Adjustment','" + cy.DocDate + "','2024-2025')";
+                                                SqlCommand objCmddtsss = new SqlCommand(svSQL2, objConn);
+                                                objCmddtsss.ExecuteNonQuery();
+                                                
+                                                
+                                                
                                             }
                                         }
                                         if (cy.Type == "Deduction")
@@ -248,7 +274,7 @@ namespace RetailSales.Services.Inventory
                                                     double sqty = Convert.ToDouble(dt.Rows[i]["BALANCE_QTY"].ToString());
                                                     if (sqty >= qty)
                                                     {
-                                                        double bqty = sqty + qty;
+                                                        double bqty = sqty - qty;
 
                                                         string Sql = string.Empty;
                                                         Sql = "Update INVENTORY_ITEM SET BALANCE_QTY='" + bqty + "' WHERE INVENTORY_ITEM_ID='" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "'";
@@ -256,9 +282,9 @@ namespace RetailSales.Services.Inventory
                                                         objCmdsz.ExecuteNonQuery();
 
 
-                                                        //Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VLAUES ('" + dt.Rows[i]["INV_ITEM_ID"].ToString() + "',) ";
-                                                        //SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
-                                                        //objCmdsz1.ExecuteNonQuery();
+                                                        Sql = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VALUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','','" + cp.Rate + "','Stock Adjustment','Minus','" + cp.Qty + "','Stock Adjustment','" + cy.DocDate + "','2024-2025','','') ";
+                                                        SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
+                                                        objCmdsz1.ExecuteNonQuery();
                                                     }
 
 
@@ -266,12 +292,21 @@ namespace RetailSales.Services.Inventory
                                             }
                                             else
                                             {
-                                                svSQL = "Insert into INVENTORY_ITEM (ITEM_ID,PRODUCT,VARIANT,BALANCE_QTY) VALUES ('" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
-                                                objCmds = new SqlCommand(svSQL, objConn);
-                                                objCmds.ExecuteNonQuery();
-                                                //svSQL = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,ITEM_ID,PRODUCT,VARIANT,TRANS_QTY) VALUES ('" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Qty + "')";
-                                                //objCmds = new SqlCommand(svSQL, objConn);
-                                                //objCmds.ExecuteNonQuery();
+                                                
+                                                
+                                                string svSQL1 = "Insert into INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,BALANCE_QTY,MONTH,LOCATION_ID,FINANCIAL_YEAR) VALUES ('" + cy.DocId + "','" + cy.DocDate + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.Rate + "','" + cp.Qty + "','" + DateTime.Now.ToString("MMMM") + "','Godown','2024-2025')";
+                                                SqlCommand objCmddtss = new SqlCommand(svSQL1, objConn);
+                                                Object Pid1 = objCmddtss.ExecuteScalar();
+                                                
+                                                
+
+                                                string svSQL2 = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid1 + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Variant + "','" + cp.Unit + "','" + cp.Rate + "','Stock Adjustment','Minus','" + cp.Qty + "','Stock Adjustment','" + cy.DocDate + "','2024-2025')";
+                                                SqlCommand objCmddtsss = new SqlCommand(svSQL2, objConn);
+                                                objCmddtsss.ExecuteNonQuery();
+                                                
+                                                
+                                                
+                                                
                                             }
                                         }
                                     }
