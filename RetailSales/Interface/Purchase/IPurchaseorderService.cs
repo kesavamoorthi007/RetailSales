@@ -25,5 +25,13 @@ namespace RetailSales.Interface.Purchase
         DataTable GetUOM();
         IEnumerable<PurchaseorderItem> GetAllPurchaseOrderItem(string id);
         DataTable GetProduct(string productid);
+        DataTable GetState();
+        DataTable GetCity(string cityid);
+        DataTable GetCategory();
+        string SupplierCRUD(string category, string supplierName, string supplierAdd, string days, string gST, string state, string city, string mobile, string landline, string email);
+        DataTable GetHsn();
+        string ProductNameCRUD(Purchaseorder cy);
+        DataTable GetProdCategory();
+        //string ProductNameCRUD(string category, string product, string description, string varient, string uOM, string hsn, string minQty, string rate, string prodDesc);
     }
 }

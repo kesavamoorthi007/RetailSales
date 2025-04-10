@@ -115,8 +115,8 @@
                                                 <th>Unit</th>
                                                 <th> Stock </th>
                                                 <th> Qty </th>
-                                                <th> Rate </th>
-                                                <th> Amount </th>
+                                                <th> Rate (₹)</th>
+                                                <th> Amount (₹)</th>
                                                 <th></th>
                                         </thead>
 
@@ -134,8 +134,8 @@
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Unit)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Stock)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Qty)</td>
-                                                        <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Rate)</td>
-                                                        <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Amount)</td>
+                                                        <td style="text-align: right">@Html.DisplayFor(o => o.StockTransferItemLst[i].Rate)</td>
+                                                        <td style="text-align: right">@Html.DisplayFor(o => o.StockTransferItemLst[i].Amount)</td>
                                                     </tr>
                                                     //i = i + 1;
                                                     i++;
