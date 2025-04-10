@@ -1283,7 +1283,7 @@
 
         var Varient = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlVarient" + index + "' name='PurchaseorderLst[" + index + "].Varient' onchange = 'changeVarientItem(this.value," + index + ")'><option value=''>--Please select--</option></select></td>";
 
-        var Add = '<td><a href="/Purchaseorder/AddProductName" class="fancybox" data-fancybox-type="iframe"><img src="../Images/plus.png" alt="Add"></a></td>';
+        var Add = '<td><a href="AddProductName" class="fancybox" data-fancybox-type="iframe"><img src="../Images/plus.png" alt="Add"></a></td>';
 
         @* var Add = "<td><a href="@Url.Action("AddSupplier", "Purchaseorder")" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></td>" *@
 
@@ -1327,26 +1327,26 @@
             $('._select').select2();
         });
         updateSerialNumbers();
-         var fancybox123;
-    jQuery(document).ready(function ($) {
-        $(".fancybox").fancybox({
-            width: '80%',
-            height: '10%',
-            arrows: false,
+            var fancybox123;
+       jQuery(document).ready(function ($) {
+           $(".fancybox").fancybox({
+               width: '80%',
+               height: '10%',
+               arrows: false,
 
-        });
-        fancybox123 = $.fancybox;
-    });
+           });
+           fancybox123 = $.fancybox;
+       });
 
-    function close_popup() {
-        fancybox123.close();
-        $(".fancybox1").fancybox({
-            width: '100%',
-            height: '100%',
-            arrows: false,
-        });
-        $(".fancybox1").eq(0).trigger('click');
-    }
+       function close_popup() {
+           fancybox123.close();
+           $(".fancybox1").fancybox({
+               width: '100%',
+               height: '100%',
+               arrows: false,
+           });
+           $(".fancybox1").eq(0).trigger('click');
+       }
     }
 
 
