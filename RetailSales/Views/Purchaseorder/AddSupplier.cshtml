@@ -1,8 +1,8 @@
-﻿@model RetailSales.Models.DirectPurchase
+﻿@model RetailSales.Models.Purchaseorder
 
 @{
     Layout = "_PopupLayout";
-    ViewData["Title"] = "DirectPurchase";
+    ViewData["Title"] = "Purchaseorder";
 }
 <style>
     .mandatory {
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <br />
                         <div class="row">
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <br />
                         <div class="row">
@@ -130,12 +130,12 @@
                             </div>
 
                         </div>
-                        
+
 
                         <div style="height:30px;"></div>
                         <input type="submit" class="btn btn-success" value="Save" id="btnSave" />
                         <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
-                        
+
                     </form>
 
                 </div>
@@ -301,7 +301,7 @@
                  var Mobile = document.getElementById("txtMobile").value;
                  var Landline = document.getElementById("txtLandline").value;
                  var Email = document.getElementById("txtEmail").value;
-                 
+
 
                 $.ajax({
                     type: "POST",
@@ -323,6 +323,7 @@
 
     });
 </script>
+
 
 
 

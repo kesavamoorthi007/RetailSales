@@ -1,0 +1,419 @@
+﻿@model RetailSales.Models.Purchaseorder
+
+@{
+    Layout = "_PopupLayout";
+    ViewData["Title"] = "Purchaseorder";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+<div style="height:25px;"></div>
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Add Product Name</strong> </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("AddProductName", "Purchaseorder", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">Product Category<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.ProdCat, Model.Categorylst, "---Please Select---", new { @id = "ddlProduct", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Product Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Product, new { @id = "txtProName", @class = "form-control", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Description<label class="mandatory"></label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <p style="float:right;"> <input type="button" value="Add Row" onclick="AddRow()" class="btn btn-primary" /></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <div class="col-md-12" style="overflow-x:scroll; min-width:250px; min-height:180px;">
+                                        <table class="table table-striped table-hover" id="dataTable">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Variant </th>
+                                                    <th>Unit</th>
+                                                    <th> HSN </th>
+                                                    <th>Min Qty </th>
+                                                    <th>Rate (₹) </th>
+                                                    <th>Product Description </th>
+                                            </thead>
+
+                                            <tbody id="tbBooks">
+                                                @{
+
+                                                    int i = 0;
+                                                    int j = 1;
+
+                                                    foreach (var item in Model.PurchaseorderLst.ToList())
+                                                    {
+                                                        <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Varient, new { @class = "form-control", @id = "txtVarient" + i, style = "width: 220px;" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.DropDownListFor(o => o.PurchaseorderLst[i].UOM, Model.PurchaseorderLst[i].UOMlst, "---Please Select---", new { @id = "ddlUOM" + i, @class = "form-control _select newcss", style = "width: 100px;" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.DropDownListFor(o => o.PurchaseorderLst[i].Hsn, Model.PurchaseorderLst[i].Hsnlst, "---Please Select---", new { @id = "ddlHsn" + i, @class = "form-control _select newcss", style = "width: 100px;" })
+                                                            </td>
+                                                            <td>
+
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].MinQty, new { @id = "txtMinQty" + i, @class = "form-control", style = "width: 100px;" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;" })
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.TextAreaFor(o => o.PurchaseorderLst[i].ProdDesc, new { @id = "txtProdDesc" + i, @class = "form-control", style = "width: 150px;" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
+                                                                <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="PurchaseorderLst.Index" type="hidden" value="@(i)" />
+                                                            </td>
+                                                        </tr>
+                                                        i = i + 1;
+                                                        j = j + 1;
+
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Save</button>
+                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $('._select').select2();
+    });
+
+    function PopulateDropDown(dropDownId, list) {
+        //alert(list);
+        $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+        $(dropDownId).trigger("liszt:updated");
+    }
+    
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("ddlProduct").value == "") {
+                isValid = false;
+                $(ddlProduct).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Product Category");
+                return false;
+            }
+            else {
+                $(ddlProduct).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            if (document.getElementById("txtProName").value == "") {
+                isValid = false;
+                $(txtProName).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Product Name");
+                return false;
+            }
+            else {
+                $(txtProName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+
+                    if ($(this).find('#txtVarient' + j.toString()).val() == "" || $(this).find('#txtVarient' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtVarient' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Variant");
+                        $(this).find('#txtVarient' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtVarient' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#ddlUOM' + j.toString()).val() != "" || $(this).find('#ddlUOM' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlUOM' + j.toString()).val() == "" || $(this).find('#ddlUOM' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlUOM' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select UOM");
+                            $(this).find('#ddlUOM' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlUOM' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#ddlHsn' + j.toString()).val() != "" || $(this).find('#ddlHsn' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlHsn' + j.toString()).val() == "" || $(this).find('#ddlHsn' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlHsn' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select HSN");
+                            $(this).find('#ddlHsn' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlHsn' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#txtMinQty' + j.toString()).val() == "" || $(this).find('#txtMinQty' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtMinQty' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Min Qty");
+                        $(this).find('#txtMinQty' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtMinQty' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#txtRate' + j.toString()).val() == "" || $(this).find('#txtRate' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtRate' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Rate");
+                        $(this).find('#txtRate' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtRate' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+
+
+                }
+                j += 1;
+            });
+
+             if (isValid == false){
+                  e.preventDefault();
+             }
+             @* else{
+                 var Category = document.getElementById("ddlProduct").value;
+                 var Product = document.getElementById("txtProName").value;
+                 var Description = document.getElementById("txtDescription").value;
+                 var Varient = document.getElementById("txtVarient").value;
+                 var UOM = document.getElementById("ddlUOM").value;
+                 var Hsn = document.getElementById("ddlHsn").value;
+                 var MinQty = document.getElementById("txtMinQty").value;
+                 var Rate = document.getElementById("txtRate").value;
+                 var ProdDesc = document.getElementById("txtProdDesc").value;
+                 
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "SaveProductName",
+                    data: { "Category": Category, "Product": Product,"Description": Description,"Varient": Varient,"UOM": UOM,"Hsn": Hsn,"MinQty": MinQty,"Rate": Rate,"ProdDesc": ProdDesc, },
+                    success: function (r) {
+                        //alert(r.id)
+                            window.parent.AddProductName(Category,r.id,Description,Varient,UOM,Hsn,MinQty,Rate,ProdDesc);
+                       window.parent.jQuery.fancybox.close();
+                    }
+                });
+
+             } *@
+        });
+
+    });
+
+    function AddRow() {
+        var opt = "";
+        var rem= "";
+        $.ajax({
+             type: "POST",
+             url: 'GetUOMGrpJSON',
+             success: function (data) {
+
+                 $.each(data, function () {
+                     opt += "<option value=" + this.value + ">" + this.text + "</option>";
+                 });
+                 $.ajax({
+                      type: "POST",
+             url: 'GetHSNGrpJSON',
+             success: function (data) {
+
+                 $.each(data, function () {
+                     rem += "<option value=" + this.value + ">" + this.text + "</option>";
+                 });
+                         AppendRow(opt, rem);
+             }
+         })
+         }
+         })
+    }
+    function removeRow(id) {
+        var table = document.getElementById("dataTable");
+        var rowCount = table.rows.length;
+        var row = document.getElementById('trBook' + id);
+        var j = 0;
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+                j += 1;
+            }
+        });
+        if (j > 1) {
+            row.style.display = "none";
+            document.getElementById('Isvalid' + id).value = "N";
+        }
+        else {
+            alert("Cannot delete all the rows.")
+        }
+    }
+    function AppendRow(opt,rem) {
+        var index = $("#tbBooks").children("tr").length;
+
+        var Varient = "<td><input class='form-control' id='txtVarient" + index + "' name='PurchaseorderLst[" + index + "].Varient'  style='width: 220px;' type = 'text' </td>";
+
+        var Uom = "<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddlUOM" + index + "' name='PurchaseorderLst[" + index + "].Uom'><option value=''>--Please select--</option>" + opt + "</select></td>";
+
+        var Hsn = "<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddlHsn" + index + "' name='PurchaseorderLst[" + index + "].Hsn'><option value=''>--Please select--</option>" + rem + "</select></td>";
+
+        var MinQty = "<td><input class='form-control' id='txtMinQty" + index + "' name='PurchaseorderLst[" + index + "].MinQty'  style='width: 100px;' type = 'Number'</td>";
+
+        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='PurchaseorderLst[" + index + "].Rate'  style='width: 100px; text-align: right;' </td>";
+
+        var ProdDesc = "<td><input class='form-control' id='txtProdDesc" + index + "' name='PurchaseorderLst[" + index + "].ProdDesc'  style='width: 150px;' type = 'text' /></td>";
+
+        var removeCell = "<td><input id='Isvalid" + index + "' name='PurchaseorderLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='PurchaseorderLst.Index' type='hidden' value='" + index + "'  /></td>";
+
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Varient + Uom + Hsn + MinQty + Rate + ProdDesc + removeCell + "</tr>";
+        //alert(Packing);
+        $("#tbBooks").append(newRow);
+
+        $(function () {
+            $('._select').select2();
+        });
+    }
+
+
+</script>
+
+
+
