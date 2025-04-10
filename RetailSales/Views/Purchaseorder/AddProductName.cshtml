@@ -314,6 +314,9 @@
              if (isValid == false){
                   e.preventDefault();
              }
+             else{
+                  window.parent.jQuery.fancybox.close();
+             }
              @* else{
                  var Category = document.getElementById("ddlProduct").value;
                  var Product = document.getElementById("txtProName").value;
