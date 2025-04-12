@@ -39,6 +39,10 @@ namespace RetailSales.Models
         public string CF { get; set; }
         public string saveItemId { get; set; }
         public string Isvalid { get; set; }
+        public string UOM { get; set; }
+        public string ProdRate { get; set; }
+        public string Percentage { get; set; }
+        public string SalesRate { get; set; }
     }
 
     public class Productdetailgrid

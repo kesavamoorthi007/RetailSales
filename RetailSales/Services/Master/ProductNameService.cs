@@ -247,7 +247,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -264,7 +264,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }

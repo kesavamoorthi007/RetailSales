@@ -42,7 +42,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group d-flex align-items-center">
-                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Product Category :</strong><label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-7 control-label"><strong>Product Category :</strong><label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.HiddenFor(C => C.ID)
                                             <div class="ml-2">@Html.DisplayFor(C => C.Product)</div>
@@ -88,6 +88,9 @@
                                                 <th>Source UOM</th>
                                                 <th>Destination UOM</th>
                                                 <th>CF</th>
+                                                <th>Product Rate (₹)</th>
+                                                <th>Percent (%)</th>
+                                                <th>Sales Rate (₹)</th>
                                                 <th></th>
                                         </thead>
 
@@ -100,17 +103,26 @@
                                                 foreach (var item in Model.ProductDetailTablelst.ToList())
                                                 {
                                                     <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
-                                                        <td>
-                                                            @Html.DropDownListFor(o => o.ProductDetailTablelst[i].Src, Model.ProductDetailTablelst[i].SUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlSUOM" + i, style = "width: 220px;" })
+                                                        <td style="text-align: center;">
+                                                            @Html.DisplayFor(o => o.ProductDetailTablelst[i].UOM)
+                                                            @Html.HiddenFor(o => o.ProductDetailTablelst[i].UOM, new { @id = "txtUOM" + i })
                                                             @Html.HiddenFor(o => o.ProductDetailTablelst[i].saveItemId)
                                                         </td>
-                                                        <td>
+                                                        <td style="width:150px;">
                                                             @Html.DropDownListFor(o => o.ProductDetailTablelst[i].Des, Model.ProductDetailTablelst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDUOM" + i, style = "width: 220px;" })
                                                         </td>
-
-                                                        <td>
-                                                            
+                                                        <td style="width:100px;">
                                                             @Html.TextBoxFor(o => o.ProductDetailTablelst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;", Type="number" })
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            @Html.DisplayFor(o => o.ProductDetailTablelst[i].ProdRate)
+                                                            @Html.HiddenFor(o => o.ProductDetailTablelst[i].ProdRate, new { @id = "txtProdRate" + i })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.ProductDetailTablelst[i].Percentage, new { @id = "txtPercentage" + i, @class = "form-control", style = "width: 100px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeDisc(this," + i + ")" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(o => o.ProductDetailTablelst[i].SalesRate, new { @id = "txtSalesRate" + i, @class = "form-control", style = "width: 100px; text-align: right;", Type = "number", @readonly = "readonly"})
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.ProductDetailTablelst[i].Isvalid, new { @id = "Isvalid" + i })
@@ -146,6 +158,39 @@
     $(function () {
         $('._select').select2();
     });
+
+    function changeDisc(_this, i) {
+        try {
+            var i = 0;
+            var prodRate = parseFloat(document.getElementById("txtProdRate" + i).value) || 0;
+            var Percent = parseFloat(document.getElementById("txtPercentage" + i).value) || 0;
+
+
+            salespercrate = (prodRate * Percent) / 100;
+            total = prodRate + salespercrate;
+
+            document.getElementById("txtSalesRate" + i).value = total.toFixed(2);
+
+
+        } catch (ex) {
+            alert("Error: " + ex.message);
+        }
+    }
+
+         @* function changeDisc(_this, i) {
+        try {
+            let prodRate = parseFloat(document.getElementById("txtProdRate" + i).value) || 0;
+            let percent = parseFloat(document.getElementById("txtPercentage" + i).value) || 0;
+
+            let salesPerCrate = (prodRate * percent) / 100;
+            let total = prodRate + salesPerCrate;
+
+            document.getElementById("txtSalesRate" + i).value = total.toFixed(2);
+        } catch (ex) {
+            alert("Error: " + ex.message);
+        }
+    } *@
+
 
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
@@ -268,28 +313,23 @@
     } *@
     function AddRow() {
         var opt = "";
-        var rem= "";
-        $.ajax({
-            type: "POST",
-            url: 'GetUOMGrpJSON',
-            success: function (data) {
-
-                $.each(data, function () {
-                    opt += "<option value=" + this.value + ">" + this.text + "</option>";
-                });
+        var i = 0;
+        var UOM = document.getElementById("txtUOM" + i);
+        var ProdRate = document.getElementById("txtProdRate" + i);
+        
+        
                 $.ajax({
                      type: "POST",
             url: 'GetUOMGrpJSON',
             success: function (data) {
 
                 $.each(data, function () {
-                    rem += "<option value=" + this.value + ">" + this.text + "</option>";
+                    opt += "<option value=" + this.value + ">" + this.text + "</option>";
                 });
-                AppendRow(opt,rem);
+                AppendRow(opt,UOM.value,ProdRate.value);
+                
             }
         }) 
-        }
-        })
     }
     function removeRow(id) {
         var table = document.getElementById("dataTable");
@@ -309,25 +349,34 @@
             alert("Cannot delete all the rows.")
         }
     }
-    function AppendRow(opt,rem) {
+    function AppendRow(opt,UOM,ProdRate)
+    {
         var index = $("#tbBooks").children("tr").length;
 
-        var Src = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlSUOM" + index + "' name='ProductDetailTablelst[" + index + "].Src'><option value=''>---Please select---</option>" + opt + "</select></td>";
+        var UOMcell = "<td style='text-align: center;'><label> " + UOM + " </label> </td>";
 
-        var Des = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlDUOM" + index + "' name='ProductDetailTablelst[" + index + "].Des'><option value=''>--Please select--</option>" + rem + "</select></td>";
+        var Des = "<td><select style = 'width: 150px;' class='form-control _select newcss' id='ddlDUOM" + index + "' name='ProductDetailTablelst[" + index + "].Des'><option value=''>--Please select--</option>" + opt + "</select></td>";
 
-        var CF = "<td><input class='form-control' id='txtCF" + index + "' name='ProductDetailTablelst[" + index + "].CF'  style='width: 80px;' min='0'' max='99' /></td>";
+        var CF = "<td><input class='form-control' id='txtCF" + index + "' name='ProductDetailTablelst[" + index + "].CF'  style='width: 80px;' min='0' max='99' /></td>";
+
+        var ProdRatecell = "<td style='text-align: center;'><label> " + ProdRate + " </label> </td>";
+        
+        var Percentage = "<td><input class='form-control' id='txtPercentage" + index + "' name='ProductDetailTablelst[" + index + "].Percentage'  style='width: 100px;' min='0' max='99' onkeyup = 'changeDisc(this.value," + index + ")' /></td>";
+
+        var SalesRate = "<td><input class='form-control' id='txtSalesRate" + index + "' name='ProductDetailTablelst[" + index + "].SalesRate'  style='width: 100px; text-align: right;' readonly = 'true'  /></td>";
 
         var removeCell = "<td><input id='Isvalid" + index + "' name='ProductDetailTablelst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='ProductDetailTablelst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Src + Des + CF + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + UOMcell + Des + CF + ProdRatecell + Percentage + SalesRate + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
         $(function () {
             $('._select').select2();
         });
+
+
     }
     
 
