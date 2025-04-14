@@ -42,9 +42,13 @@ namespace RetailSales.Controllers.Accounts
                 if (dt.Rows.Count > 0)
                 {
                     ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.accclasslist = BindAccClass();
                     ic.AccountClass = dt.Rows[0]["ACC_CLASS"].ToString();
+                    ic.acctypelist = BindAccType();
                     ic.AccountType = dt.Rows[0]["ACC_TYPE_CODE"].ToString();
+                   
                     ic.AccountGroupName = dt.Rows[0]["ACC_GRP_NAME"].ToString();
+                    ic.ID = id;
                 }
             }
             return View(ic);
