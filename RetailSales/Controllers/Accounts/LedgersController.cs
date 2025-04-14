@@ -36,6 +36,7 @@ namespace RetailSales.Controllers.Accounts
                 if (dt.Rows.Count > 0)
                 {
                     ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.AccountGroupList = BindAccountGroup();
                     ic.AccountGroup = dt.Rows[0]["ACC_GRP_CODE"].ToString();
                     ic.LedgerName = dt.Rows[0]["LEDGER_NAME"].ToString();
                     ic.AllowZeroValue = dt.Rows[0]["ALLOW_ZERO_VAL"].ToString();
