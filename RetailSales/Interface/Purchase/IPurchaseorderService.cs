@@ -32,6 +32,7 @@ namespace RetailSales.Interface.Purchase
         DataTable GetHsn();
         string ProductNameCRUD(Purchaseorder cy);
         DataTable GetProdCategory();
+        //string SupplierCRUD(Purchaseorder cy);
         //string ProductNameCRUD(string category, string product, string description, string varient, string uOM, string hsn, string minQty, string rate, string prodDesc);
     }
 }

@@ -1115,6 +1115,23 @@
        
     }
 
+    function AddSupplier() {
+        
+        $.ajax({
+                url: "GetSupplierJSON",
+                type: "post",
+                cache: false,
+                success: function (response) {
+                    PopulateDropDown("#ddlSupplier", response);
+                // $(ddlSupplier).select2().val(id).trigger("change");
+                //  document.getElementById("txtsubcategory").value =category;
+                },
+                error: function () {
+                    alert("Please Select Supplier");
+                }
+        });
+    }
+
     function changesupplier(supid) {
         $.ajax({
             url: 'GetSupplierDetails',

@@ -331,22 +331,16 @@ namespace RetailSales.Services.Purchase
             return dtt;
         }
 
-        public string SupplierCRUD(string Category, string SupplierName, string SupplierAdd, string Days, string GST, string State, String City, string Mobile, string Landline, string Email)
+        public string SupplierCRUD(string Category, string Suppid, string SupplierAdd, string Days, string GST, string State, String City, string Mobile, string Landline, string Email)
         {
             string id = "";
             try
             {
                 string StatementType = string.Empty; string svSQL = "";
 
-                //svSQL = " SELECT Count(CITY_NAME) as cnt FROM M_CITY WHERE CITY_NAME =LTRIM(RTRIM('" + category + "')) ";
-                //if (datatrans.GetDataId(svSQL) > 0)
-                //{
-                //    msg = "SUB CITY Already Existed";
-                //    return msg;
-                //}
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    svSQL = "Insert into SUPPLIER (SUPP_CAT,SUPPLIER_NAME,ADDRESS,CR_DAYS,GST_NO,STATE,CITY,MOBILE_NO,LANDLINE_NO,EMAIL_ID) VALUES ('" + Category + "','" + SupplierName + "','" + SupplierAdd + "','" + Days + "','" + GST + "','" + State + "','" + City + "','" + Mobile + "','" + Landline + "','" + Email + "') SELECT SCOPE_IDENTITY()";
+                    svSQL = "Insert into SUPPLIER (SUPP_CAT,SUPPLIER_NAME,ADDRESS,CR_DAYS,GST_NO,STATE,CITY,MOBILE_NO,LANDLINE_NO,EMAIL_ID) VALUES ('" + Category + "','" + Suppid + "','" + SupplierAdd + "','" + Days + "','" + GST + "','" + State + "','" + City + "','" + Mobile + "','" + Landline + "','" + Email + "') SELECT SCOPE_IDENTITY()";
 
                     SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                     objConn.Open();

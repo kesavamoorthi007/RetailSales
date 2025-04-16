@@ -47,7 +47,7 @@ namespace RetailSales.Services.Accounts
         public DataTable GetAccountType()
         {
             string SvSql = string.Empty;
-            SvSql = "select ACC_TYPE_CODE,ACC_TYPE_NAME from ACC_TYPE where IS_ACTIVE='Y' AND COMP_CODE='028' ";
+            SvSql = "select ID,ACC_TYPE_NAME from ACC_TYPE where IS_ACTIVE='Y' AND COMP_CODE='028' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -73,11 +73,11 @@ namespace RetailSales.Services.Accounts
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT ACC_GROUP.ID,ACC_GROUP.ACC_CLASS,ACC_TYPE.ACC_TYPE_NAME,ACC_GROUP.ACC_GRP_NAME,ACC_GROUP.IS_ACTIVE FROM ACC_GROUP LEFT OUTER JOIN ACC_TYPE ON ACC_TYPE.ACC_TYPE_CODE=ACC_GROUP.ACC_TYPE_CODE WHERE ACC_GROUP.IS_ACTIVE = 'Y' ORDER BY ACC_GROUP.ID DESC";
+                SvSql = "SELECT ACC_GROUP.ID,ACC_GROUP.ACC_CLASS,ACC_TYPE.ACC_TYPE_NAME,ACC_GROUP.ACC_GRP_NAME,ACC_GROUP.IS_ACTIVE FROM ACC_GROUP LEFT OUTER JOIN ACC_TYPE ON ACC_TYPE.ID=ACC_GROUP.ACC_TYPE_CODE WHERE ACC_GROUP.IS_ACTIVE = 'Y' ORDER BY ACC_GROUP.ID DESC";
             }
             else
             {
-                SvSql = "SELECT ACC_GROUP.ID,ACC_GROUP.ACC_CLASS,ACC_TYPE.ACC_TYPE_NAME,ACC_GROUP.ACC_GRP_NAME,ACC_GROUP.IS_ACTIVE FROM ACC_GROUP LEFT OUTER JOIN ACC_TYPE ON ACC_TYPE.ACC_TYPE_CODE=ACC_GROUP.ACC_TYPE_CODE WHERE ACC_GROUP.IS_ACTIVE = 'N' ORDER BY ACC_GROUP.ID DESC";
+                SvSql = "SELECT ACC_GROUP.ID,ACC_GROUP.ACC_CLASS,ACC_TYPE.ACC_TYPE_NAME,ACC_GROUP.ACC_GRP_NAME,ACC_GROUP.IS_ACTIVE FROM ACC_GROUP LEFT OUTER JOIN ACC_TYPE ON ACC_TYPE.ID=ACC_GROUP.ACC_TYPE_CODE WHERE ACC_GROUP.IS_ACTIVE = 'N' ORDER BY ACC_GROUP.ID DESC";
             }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);

@@ -440,6 +440,13 @@ namespace RetailSales.Controllers.Purchase
             return Json(BindCity(cityid));
         }
 
+        public JsonResult GetSupplierJSON()
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindSupplier());
+        }
+
         public JsonResult SaveSupplier(string Category, string SupplierName, string SupplierAdd, string Days, string GST, string State, String City, string Mobile, string Landline, string Email)
         {
 
@@ -1098,7 +1105,7 @@ namespace RetailSales.Controllers.Purchase
         {
             try
             {
-                DataTable dtDesg = datatrans.GetData("select ID,SUPPLIER_NAME from SUPPLIER where IS_ACTIVE='Y'");
+                DataTable dtDesg = datatrans.GetData("select ID,SUPPLIER_NAME from SUPPLIER where SUPPLIER.IS_ACTIVE='Y'");
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {

@@ -366,10 +366,10 @@ namespace RetailSales.Controllers.Purchase
             return Json(BindCity(cityid));
         }
 
-        public JsonResult SaveSupplier(string Category, string SupplierName, string SupplierAdd, string Days,string GST, string State, String City, string Mobile, string Landline, string Email)
+        public JsonResult SaveSupplier(string Category, string Suppid, string SupplierAdd, string Days,string GST, string State, String City, string Mobile, string Landline, string Email)
         {
             
-            string id = DirectPurchaseService.SupplierCRUD(Category,SupplierName, SupplierAdd,Days,GST,State,City,Mobile,Landline,Email);
+            string id = DirectPurchaseService.SupplierCRUD(Category, Suppid, SupplierAdd,Days,GST,State,City,Mobile,Landline,Email);
             var result = new { id = id };
             return Json(result);
         }
@@ -476,7 +476,7 @@ namespace RetailSales.Controllers.Purchase
         {
             try
             {
-                DataTable dtDesg = datatrans.GetData("select ID,SUPPLIER_NAME from SUPPLIER where IS_ACTIVE='Y'");
+                DataTable dtDesg = datatrans.GetData("select ID,SUPPLIER_NAME from SUPPLIER where SUPPLIER.IS_ACTIVE='Y'");
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -627,6 +627,12 @@ namespace RetailSales.Controllers.Purchase
             {
                 throw ex;
             }
+        }
+        public JsonResult GetSupplierJSON()
+        {
+            //EnqItem model = new EnqItem();
+            //  model.ItemGrouplst = BindItemGrplst(value);
+            return Json(BindSupplier());
         }
         public JsonResult GetVarientJSON(string id)
         {
