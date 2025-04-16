@@ -12,7 +12,12 @@
         left: 5px;
     }
 </style>
-
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
 <div class="wrapper-content ">
     <div class="row">
         <div class="col-lg-12">
@@ -21,123 +26,123 @@
                     <h5 style="font-size:14px">Add Supplier @Html.DisplayFor(C => C.Suppid)</h5>
                     <hr>
 
-                    <form>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-5 control-label">Supplier Category<label class="mandatory">*</label></label>
-                                    <div class="col-sm-8">
-                                        @Html.DropDownListFor(C => C.Category, Model.Catlst, "--Please Select--", new { @id = "ddlCategory", @Class = "form-control _select", @TabIndex = 1 })
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Category<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.Category, Model.Catlst, "--Please Select--", new { @id = "ddlCategory", @Class = "form-control _select", @TabIndex = 1 })
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Suppid, new { @id = "txtSuppid", @class = "form-control", @TabIndex = 2 })
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Address</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextAreaFor(C => C.Supplieraddress, new { @id = "txtSuppadd", @class = "form-control", @TabIndex = 2 })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputname3" class="col-sm-4 control-label">Credit Days<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Days, new { @id = "txtDays", @class = "form-control", @TabIndex = 2 })
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Suppid, new { @id = "txtSuppid", @class = "form-control", @TabIndex = 2 })
-                                        @Html.HiddenFor(C => C.ID)
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.GST, new { @id = "gstNumber", @class = "form-control", @TabIndex = 2, oninput = "this.value = this.value.toUpperCase()" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Mobile, new { @id = "txtMobile", @class = "form-control", @TabIndex = 2, type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">State</label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1, onchange = "changecity(this.value)" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">City</label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Landline No</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Landline, new { @id = "txtLandline", @class = "form-control", @TabIndex = 2, type = "number" })
 
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-5 control-label">Supplier Address</label>
-                                    <div class="col-sm-8">
-                                        @Html.TextAreaFor(C => C.Supplieraddress, new { @id = "txtSuppadd", @class = "form-control", @TabIndex = 2 })
-
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputname3" class="col-sm-4 control-label">Credit Days<label class="mandatory">*</label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Days, new { @id = "txtDays", @class = "form-control", @TabIndex = 2 })
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Email ID</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @TabIndex = 2 })
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.GST, new { @id = "gstNumber", @class = "form-control", @TabIndex = 2, oninput = "this.value = this.value.toUpperCase()" })
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="mandatory">*</label></label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Mobile, new { @id = "txtMobile", @class = "form-control", @TabIndex = 2, type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
-
-                                    </div>
-                                </div>
                             </div>
 
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">State</label>
-                                    <div class="col-sm-8">
-                                        @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1, onchange = "changecity(this.value)" })
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">City</label>
-                                    <div class="col-sm-8">
-                                        @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
+                            <div style="height:30px;"></div>
+                            <input type="button" class="btn btn-success" value="Save" id="btnSave" />
+                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">Landline No</label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Landline, new { @id = "txtLandline", @class = "form-control", @TabIndex = 2, type = "number" })
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inputName3" class="col-sm-4 control-label">Email ID</label>
-                                    <div class="col-sm-8">
-                                        @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @TabIndex = 2 })
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div style="height:30px;"></div>
-                        <input type="submit" class="btn btn-success" value="Save" id="btnSave" />
-                        <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
-
-                    </form>
-
+                        </form>
+                    
                 </div>
             </div>
         </div>
@@ -163,7 +168,6 @@
         }
     }
     function PopulateDropDown(dropDownId, list) {
-        //alert(list);
         $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
         if (list != null && list.length > 0) {
             $(dropDownId).removeAttr("disabled");
@@ -191,7 +195,7 @@
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
-            if (document.getElementById("ddlCategory").value == "" || document.getElementById("ddlCategory").value == 0) {
+            if (document.getElementById("ddlCategory").value == "" ){
                 isValid = false;
                 $(ddlCategory).css({
                     "border": "1px solid red",
@@ -207,7 +211,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtSuppid").value == "" || document.getElementById("txtSuppid").value == 0) {
+            if (document.getElementById("txtSuppid").value == "" ){
                 isValid = false;
                 $(txtSuppid).css({
                     "border": "1px solid red",
@@ -223,7 +227,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtDays").value == "" || document.getElementById("txtDays").value == 0) {
+            if (document.getElementById("txtDays").value == "" ){
                 isValid = false;
                 $(txtDays).css({
                     "border": "1px solid red",
@@ -239,7 +243,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("gstNumber").value == "" || document.getElementById("gstNumber").value == 0) {
+            if (document.getElementById("gstNumber").value == "" ){
                 isValid = false;
                 $(gstNumber).css({
                     "border": "1px solid red",
@@ -269,7 +273,7 @@
         //   // document.getElementById('gstError').style.display = 'inline';
         //}
 
-            if (document.getElementById("txtMobile").value == "" || document.getElementById("txtMobile").value == 0) {
+            if (document.getElementById("txtMobile").value == "" ){
                 isValid = false;
                 $(txtMobile).css({
                     "border": "1px solid red",
@@ -309,11 +313,11 @@
                     data: { "Category": Category, "SupplierName": SupplierName,"SupplierAdd": SupplierAdd,"Days": Days,"GST": GST,"State": State,"City": City,"Mobile": Mobile,"Landline": Landline,"Email": Email, },
                     success: function (r) {
                         //alert(r.id)
-                           // window.parent.AddSupplier(Category,r.id);
-                       window.parent.jQuery.fancybox.close();
+                            window.parent.AddSupplier();
+                            window.parent.jQuery.fancybox.close();
                     }
                 });
-
+                 
              }
 
 

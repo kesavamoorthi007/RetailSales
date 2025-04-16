@@ -41,12 +41,11 @@ namespace RetailSales.Controllers.Accounts
                 dt = AccountGroupService.GetEditAccountGroupDetail(id);
                 if (dt.Rows.Count > 0)
                 {
-                    ic.ID = dt.Rows[0]["ID"].ToString();
+                    //ic.ID = dt.Rows[0]["ID"].ToString();
                     ic.accclasslist = BindAccClass();
                     ic.AccountClass = dt.Rows[0]["ACC_CLASS"].ToString();
                     ic.acctypelist = BindAccType();
                     ic.AccountType = dt.Rows[0]["ACC_TYPE_CODE"].ToString();
-                   
                     ic.AccountGroupName = dt.Rows[0]["ACC_GRP_NAME"].ToString();
                     ic.ID = id;
                 }
@@ -119,7 +118,7 @@ namespace RetailSales.Controllers.Accounts
                 List<SelectListItem> lstdesg1 = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg1.Rows.Count; i++)
                 {
-                    lstdesg1.Add(new SelectListItem() { Text = dtDesg1.Rows[i]["ACC_TYPE_NAME"].ToString(), Value = dtDesg1.Rows[i]["ACC_TYPE_CODE"].ToString() });
+                    lstdesg1.Add(new SelectListItem() { Text = dtDesg1.Rows[i]["ACC_TYPE_NAME"].ToString(), Value = dtDesg1.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg1;
             }

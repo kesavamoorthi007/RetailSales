@@ -74,10 +74,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-6 control-label">Supplier Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-10">
+                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
                                             @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ",new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
                                             
                                         </div>
@@ -1169,6 +1169,23 @@
             error: function () {
                 alert("Please Select Product");
             }
+        });
+    }
+
+    function AddSupplier() {
+       
+        $.ajax({
+              url: "GetSupplierJSON",
+              type: "post",
+              cache: false,
+              success: function (response) {
+                  PopulateDropDown("#ddlSupplier", response);
+                 // $(ddlSupplier).select2().val(id).trigger("change");
+                //  document.getElementById("txtsubcategory").value =category;
+              },
+              error: function () {
+                  alert("Please Select Supplier");
+              }
         });
     }
 

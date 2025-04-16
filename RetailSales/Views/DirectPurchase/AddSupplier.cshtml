@@ -133,7 +133,7 @@
                         
 
                         <div style="height:30px;"></div>
-                        <input type="submit" class="btn btn-success" value="Save" id="btnSave" />
+                        <input type="button" class="btn btn-success" value="Save" id="btnSave"  />
                         <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
                         
                     </form>
@@ -292,7 +292,7 @@
              }
              else{
                  var Category = document.getElementById("ddlCategory").value;
-                 var SupplierName = document.getElementById("txtSuppid").value;
+                 var Suppid = document.getElementById("txtSuppid").value;
                  var SupplierAdd = document.getElementById("txtSuppadd").value;
                  var Days = document.getElementById("txtDays").value;
                  var GST = document.getElementById("gstNumber").value;
@@ -306,11 +306,13 @@
                 $.ajax({
                     type: "POST",
                     url: "SaveSupplier",
-                    data: { "Category": Category, "SupplierName": SupplierName,"SupplierAdd": SupplierAdd,"Days": Days,"GST": GST,"State": State,"City": City,"Mobile": Mobile,"Landline": Landline,"Email": Email, },
+                    data: { "Category": Category, "Suppid": Suppid,"SupplierAdd": SupplierAdd,"Days": Days,"GST": GST,"State": State,"City": City,"Mobile": Mobile,"Landline": Landline,"Email": Email },
                     success: function (r) {
                         //alert(r.id)
-                            window.parent.AddSupplier(Category,r.id,SupplierAdd,Days,GST,State,City,Mobile,Landline,Email);
-                       window.parent.jQuery.fancybox.close();
+                        // var newOption = new Option(Suppid, r.id, false, true); // auto-select new item
+                        // $("#txtSuppid").append(newOption);
+                            window.parent.AddSupplier();
+                            window.parent.jQuery.fancybox.close();
                     }
                 });
 

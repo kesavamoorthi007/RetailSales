@@ -37,6 +37,7 @@ namespace RetailSales.Controllers.Master
                 {
 
                     //ic.ID = dt.Rows[0]["ID"].ToString();
+                    ic.Accounttypelst = BindAccounttype();
                     ic.Accounttype = dt.Rows[0]["ACC_TYPE"].ToString();
                     ic.Accountname = dt.Rows[0]["ACC_NAME"].ToString();
                     ic.Accountnumber = dt.Rows[0]["ACC_NO"].ToString();
@@ -51,7 +52,7 @@ namespace RetailSales.Controllers.Master
                     ic.City = dt.Rows[0]["BR_CITY"].ToString();
                     ic.Bsrcode = dt.Rows[0]["BSR_CODE"].ToString();
                     ic.Ifsccode = dt.Rows[0]["IFSC_CODE"].ToString();
-
+                    ic.ID = id;
                 }
 
 
