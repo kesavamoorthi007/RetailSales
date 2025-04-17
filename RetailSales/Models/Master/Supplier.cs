@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RetailSales.Models
 {
@@ -25,6 +26,9 @@ namespace RetailSales.Models
         public string Gst { get; set; }
         public string Mobile { get; set; }
         public string Landline { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
         public string Address { get; set; }
         public string ddlstatus { get; set; }
