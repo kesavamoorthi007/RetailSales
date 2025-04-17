@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RetailSales.Models
 {
@@ -45,6 +46,9 @@ namespace RetailSales.Models
         public string GST { get; set; }
         public string  Mobile { get; set; }
         public string Landline { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
         public List<DirectPurchaseItem> DirectPurchaseLst { get; set; }
     }
