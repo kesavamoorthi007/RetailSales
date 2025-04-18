@@ -285,5 +285,60 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
 
+            if (document.getElementById("mt-radio").value == "") {
+                isValid = false;
+                $(mt-radio).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Return Type");
+                return false;
+            }
+            else {
+                $(mt-radio).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+                    if ($(this).find('#txtReturnQty' + j.toString()).val() == "" || $(this).find('#txtReturnQty' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtReturnQty' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Return Qty");
+                        $(this).find('#txtReturnQty' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtReturnQty' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+
+
+                }
+                j += 1;
+            });
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>
 

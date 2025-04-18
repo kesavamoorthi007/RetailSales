@@ -53,7 +53,15 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Mobile, new { @id = "txtMobile", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Mobile, new
+                                                {
+                                                    @id = "txtMobile",
+                                                    @class = "form-control",
+                                                    @TabIndex = 1,
+                                                    @maxlength = "10",
+                                                    @type = "tel",
+                                                    @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
+                                                })
 
                                         </div>
                                     </div>
@@ -103,7 +111,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Email ID<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @type = "email", @TabIndex = 2 })
 
                                         </div>
                                     </div>
@@ -229,7 +237,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter City");
+                alert("Please Select City");
                 return false;
             }
             else {

@@ -81,7 +81,15 @@
                                     <div class="form-group">
                                         <br> <label for="inputName3" class="col-sm-6 control-label">Mobile No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.PhoneNo, new { @id = "txtPhoneNo", @class = "form-control", @TabIndex = 1,type="number" })
+                                            @Html.TextBoxFor(C => C.PhoneNo, new
+                                                {
+                                                    @id = "txtPhoneNo",
+                                                    @class = "form-control",
+                                                    @TabIndex = 1,
+                                                    @maxlength = "10",
+                                                    @type = "tel",
+                                                    @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
+                                                })
 
                                         </div>
                                     </div>
@@ -112,7 +120,7 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-6 control-label">E-Mail<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @type = "email", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
                                 </div>
@@ -210,24 +218,6 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtCustomerCode").value == "") {
-                isValid = false;
-                $(txtCustomerCode).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Customer Code");
-                return false;
-            }
-            else {
-                $(txtCustomerCode).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-           
-            
             
             if (document.getElementById("txtPhoneNo").value == "") {
                 isValid = false;
