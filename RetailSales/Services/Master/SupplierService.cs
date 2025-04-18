@@ -74,7 +74,18 @@ namespace RetailSales.Services.Master
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
-        } 
+        }
+
+        public DataTable GetPincodeDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "select CITY_NAME,PINCODE,CITY.ID from CITY WHERE CITY.CITY_NAME='" + ItemId + "' AND CITY.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
 
         public string SupplierCRUD(Supplier cy)
         {
@@ -190,5 +201,7 @@ namespace RetailSales.Services.Master
             return "";
 
         }
+
+        
     }
 }

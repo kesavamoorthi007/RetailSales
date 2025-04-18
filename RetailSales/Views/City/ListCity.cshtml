@@ -46,6 +46,7 @@
                 { name: 'counid', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
+                { name: 'pincode', type: 'string' },
 
             ],
             id: 'id',
@@ -60,7 +61,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '80%',
+                width: '90%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -85,6 +86,7 @@
                     { text: 'Country Name', filtertype: 'input', datafield: 'counid', width: 200 },
                     { text: 'State name', filtertype: 'input', datafield: 'statid', width: 200 },
                     { text: 'City Name', filtertype: 'checkedlist', datafield: 'ciname', width: 200 },
+                    { text: 'Pin Code', filtertype: 'input', datafield: 'pincode', width: 150 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
