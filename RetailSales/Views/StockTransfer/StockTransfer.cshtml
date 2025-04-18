@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Transfer No<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Transfer No<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Documentid, new { @id = "txtDocumentid", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Transfer Date<label class="mandatory">*</label></label>
+                                        <br><label for="inputName3" class="col-sm-4 control-label">Transfer Date<label class="mandatory"></label></label>
                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
                                             @Html.TextBoxFor(C => C.DocumentDate, new { @id = "txtDocumentDate", @class = "form-control", @TabIndex = 2})
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">From Location<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">From Location<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Flocation, new { @id = "txtFlocation", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">To Location<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">To Location<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.Tlocation, new { @id = "txtTlocation", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
@@ -76,42 +76,23 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">From BinID<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">From BinID<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.FBin, Model.FBinlst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.FBin, Model.FBinlst, "--Please Select--", new { @id = "ddlFBin", @Class = "form-control _select", @TabIndex = 1 })
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <br /><label for="inputName3" class="col-sm-4 control-label">To BinID<label class="mandatory"></label></label>
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">To BinID<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.DropDownListFor(C => C.TBin, Model.TBinlst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.TBin, Model.TBinlst, "--Please Select--", new { @id = "ddlTBin", @Class = "form-control _select", @TabIndex = 1 })
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-@*
-                            <div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="btn-group">
-                                        <p style="float:right;"> <input type="button" value="Add Row" onclick="AddRow()" class="btn btn-primary" /></p>
-                                    </div>
-                                </div>
-                            </div>*@
-                            @*<div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">Browse order<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Order, new { @id = "Order", @class = "form-control", @TabIndex = 1 })
-                                        </div>
-                                    </div>
-                                </div>
-                             </div>*@
 
                               <div style="height:30px;"></div>
                             <div class="row">
@@ -257,6 +238,39 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
+              if (document.getElementById("ddlFBin").value == "") {
+                 isValid = false;
+                  $(ddlFBin).css({
+                     "border": "1px solid red",
+                     "background": "#FFCECE"
+                 });
+
+                  alert("Please Select From BinID");
+                 return false;
+             }
+             else {
+                  $(ddlFBin).css({
+                     "border": "",
+                     "background": ""
+                 });
+             }
+               if (document.getElementById("ddlTBin").value == "") {
+                 isValid = false;
+                  $(ddlTBin).css({
+                     "border": "1px solid red",
+                     "background": "#FFCECE"
+                 });
+
+                  alert("Please Select To BinID");
+                 return false;
+             }
+             else {
+                  $(ddlTBin).css({
+                     "border": "",
+                     "background": ""
+                 });
+             }
+
             var j = 0;
             $('tr.chkitemlst').each(function () {
                 if ($(this).css('display') !== 'none') {
@@ -270,7 +284,7 @@
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select Item");
+                            alert("Please Select Product Category");
                             $(this).find('#ddlItem' + j.toString()).focus();
                             return false;
                         }
@@ -281,6 +295,44 @@
                             });
                         }
                     }
+                       if ($(this).find('#ddlProduct' + j.toString()).val() != "" || $(this).find('#ddlProduct' + j.toString()).val() != "0") {
+
+                           if ($(this).find('#ddlProduct' + j.toString()).val() == "" || $(this).find('#ddlProduct' + j.toString()).val() == 0) {
+                             isValid = false;
+                              $(this).find('#ddlProduct' + j.toString()).css({
+                                 "border": "1px solid red",
+                                 "background": "#FFCECE"
+                             });
+                             alert("Please Select Product Name");
+                              $(this).find('#ddlProduct' + j.toString()).focus();
+                             return false;
+                         }
+                         else {
+                              $(this).find('#ddlProduct' + j.toString()).css({
+                                 "border": "",
+                                 "background": ""
+                             });
+                         }
+                     }
+                        if ($(this).find('#ddlVarient' + j.toString()).val() != "" || $(this).find('#ddlVarient' + j.toString()).val() != "0") {
+
+                           if ($(this).find('#ddlVarient' + j.toString()).val() == "" || $(this).find('#ddlVarient' + j.toString()).val() == 0) {
+                             isValid = false;
+                              $(this).find('#ddlVarient' + j.toString()).css({
+                                 "border": "1px solid red",
+                                 "background": "#FFCECE"
+                             });
+                             alert("Please Select Variant");
+                              $(this).find('#ddlVarient' + j.toString()).focus();
+                             return false;
+                         }
+                         else {
+                              $(this).find('#ddlVarient' + j.toString()).css({
+                                 "border": "",
+                                 "background": ""
+                             });
+                         }
+                     }
                     if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
                         isValid = false;
                         $(this).find('#txtQty' + j.toString()).css({

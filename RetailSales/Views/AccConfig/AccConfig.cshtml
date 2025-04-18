@@ -347,7 +347,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter Trasaction Name");
+                alert("Please Enter Transaction Name");
                 return false;
             }
             else {
@@ -357,7 +357,88 @@
                 });
             }
             
-            
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+                    if ($(this).find('#txtType' + j.toString()).val() == "" || $(this).find('#txtType' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtType' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Type");
+                        $(this).find('#txtType' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtType' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#txtTname' + j.toString()).val() == "" || $(this).find('#txtTname' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtTname' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Name");
+                        $(this).find('#txtTname' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtTname' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#txtSchname' + j.toString()).val() == "" || $(this).find('#txtSchname' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtSchname' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Scheme");
+                        $(this).find('#txtSchname' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtSchname' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#ddlledger' + j.toString()).val() != "" || $(this).find('#ddlledger' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlledger' + j.toString()).val() == "" || $(this).find('#ddlledger' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlledger' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Ledger");
+                            $(this).find('#ddlledger' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlledger' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+
+
+                }
+                j += 1;
+            });
 
 
             if (isValid == false)

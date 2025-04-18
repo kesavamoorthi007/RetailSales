@@ -54,7 +54,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Invoice No<label class="mandatory">*</label></label>
+                                        <br /> <label for="inputName3" class="col-sm-4 control-label">Invoice No<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
                                             @Html.TextBoxFor(C => C.InvoiceNo, new { @id = "txtInvoiceNo", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Invoice Date<label class="mandatory">*</label></label>
+                                        <br><label for="inputName3" class="col-sm-4 control-label">Invoice Date<label class="mandatory"></label></label>
                                         @* <div class="col-sm-8">
                                     @Html.TextBoxFor(C => C.InvoiceDate, new { @id = "txtInvoiceDate", @class = "form-control", @TabIndex = 1, @readonly = true })
                                     </div>*@
@@ -112,7 +112,15 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-5 control-label">Phone No<label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Mobile, new { @id = "Mobile", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.Mobile, new
+                                                {
+                                                    @id = "Mobile",
+                                                    @class = "form-control",
+                                                    @TabIndex = 1,
+                                                    @maxlength = "10",
+                                                    @type = "tel",
+                                                    @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
+                                                })
                                         </div>
                                     </div>
                                 </div>
@@ -432,6 +440,7 @@
         $('.to_date').datetimepicker('setStartDate', minDate);
 
     });
+
     function changeUOM(ItemId, i) {
          var uom =document.getElementById("txtUOM" + i).value;
          var qty =document.getElementById("txtQty" + i).value;

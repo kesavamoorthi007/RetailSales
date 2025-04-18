@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Employee Name<label class="mandatory">*</label></label>
+                                                <br><label for="inputName3" class="col-sm-5 control-label">Employee Name<label class="mandatory">*</label></label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(C => C.Ename, new { @id = "txtEname", @class = "form-control", @TabIndex = 1 })
                                                 </div>
@@ -100,7 +100,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Birth<label class="mandatory">*</label></label>
+                                                <br><label for="inputName3" class="col-sm-4 control-label">Date Of Birth<label class="mandatory"></label></label>
 
                                                 <div class="input-group date form_date col-sm-4" data-date="" data-date-format="dd-M-yyyy">
                                                     @Html.TextBoxFor(C => C.Dbirth, new { @id = "Dbirth", @class = "form-control", @readonly = true })
@@ -179,9 +179,17 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br><label for="inputName3" class="col-sm-4 control-label">Mobile<label class="mandatory">*</label></label>
+                                                <br><label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="mandatory">*</label></label>
                                                 <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Mobile, new { @id = "txtmobile", @class = "form-control", @TabIndex = 1,type="number" })
+                                                    @Html.TextBoxFor(C => C.Mobile, new
+                                                        {
+                                                            @id = "txtmobile",
+                                                            @class = "form-control",
+                                                            @TabIndex = 1,
+                                                            @maxlength = "10",
+                                                            @type = "tel",
+                                                            @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
+                                                        })
                                                 </div>
                                             </div>
                                         </div>
@@ -190,7 +198,7 @@
                                             <div class="form-group">
                                                 <br> <label for="inputName3" class="col-sm-4 control-label">Email<label class="mandatory"></label></label>
                                                 <div class="col-sm-8">
-                                                    @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @Type = "email", @TabIndex = 1 })
                                                 </div>
                                             </div>
                                         </div>

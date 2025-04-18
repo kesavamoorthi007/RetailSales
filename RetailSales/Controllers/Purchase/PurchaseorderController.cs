@@ -806,6 +806,13 @@ namespace RetailSales.Controllers.Purchase
             });
 
         }
+
+        public IActionResult GeneratePdf(string id)
+        {
+            GeneratePdf ic = new GeneratePdf();
+            return View();
+        }
+
         public ActionResult SendMail(string id)
         {
             PromotionMail P = new PromotionMail();
@@ -949,9 +956,6 @@ namespace RetailSales.Controllers.Purchase
             //TempData["SuccessMessage"] = "✅ Email sent successfully!";
             return RedirectToAction("ListPurchaseorder");
         }
-
-
-
 
         public IActionResult MoveGRN(string id)
         {
