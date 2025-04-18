@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-5 control-label">Customer Address<label class="mandatory"></label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
                                 </div>
@@ -201,10 +201,10 @@
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeDisc(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px;", @onkeyup = "changeDisc(this," + i + ")" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Discount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Discount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @readonly = "readonly", @onkeyup = "changeQty(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
@@ -295,7 +295,7 @@
                                     <div class="tabs-container">
                                         <ul class="nav nav-tabs">
                                             @*<li class="active"><a href="#tab-1" data-toggle="tab">Despatch Address</a></li>*@
-                                            <li class="active"><a href="#tab-1" data-toggle="tab">Details</a></li>
+                                            <li class="active"><a href="#tab-1" data-toggle="tab"></a></li>
 
 
                                         </ul>
@@ -1265,12 +1265,31 @@
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select Item");
+                            alert("Please Select Product Category");
                             $(this).find('#ddlItem' + j.toString()).focus();
                             return false;
                         }
                         else {
                             $(this).find('#ddlItem' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#ddlProduct' + j.toString()).val() != "" || $(this).find('#ddlProduct' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlProduct' + j.toString()).val() == "" || $(this).find('#ddlProduct' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlProduct' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Product Name");
+                            $(this).find('#ddlProduct' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlProduct' + j.toString()).css({
                                 "border": "",
                                 "background": ""
                             });
@@ -1313,25 +1332,7 @@
                             "background": ""
                         });
                     }
-                    if ($(this).find('#ddlDestUOM' + j.toString()).val() != "" || $(this).find('#ddlDestUOM' + j.toString()).val() != "0") {
-
-                        if ($(this).find('#ddlDestUOM' + j.toString()).val() == "" || $(this).find('#ddlDestUOM' + j.toString()).val() == 0) {
-                            isValid = false;
-                            $(this).find('#ddlDestUOM' + j.toString()).css({
-                                "border": "1px solid red",
-                                "background": "#FFCECE"
-                            });
-                            alert("Please Select Dest UOM");
-                            $(this).find('#ddlDestUOM' + j.toString()).focus();
-                            return false;
-                        }
-                        else {
-                            $(this).find('#ddlDestUOM' + j.toString()).css({
-                                "border": "",
-                                "background": ""
-                            });
-                        }
-                    }
+                    
 
                 }
                 j += 1;

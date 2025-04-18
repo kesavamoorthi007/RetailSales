@@ -17,6 +17,7 @@ namespace RetailSales.Models
 
         public string? ID { get; set; }
         public string? CityName { get; set; }
+        public string PinCode { get; set; }
         public string? StateId { get; set; }
         public string? CountryId { get; set; }
 
@@ -35,6 +36,7 @@ namespace RetailSales.Models
         public string? ciname { get; set; }
         public string? statid { get; set; }
         public string? counid { get; set; }
+        public string? pincode { get; set; }
         public string? editrow { get; set; }
         public string? delrow { get; set; }
     }

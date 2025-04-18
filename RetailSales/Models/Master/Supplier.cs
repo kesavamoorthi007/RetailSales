@@ -21,14 +21,12 @@ namespace RetailSales.Models
         public string Category { get; set; }
        
         public string Days { get; set; }
+        public string Pincode { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Gst { get; set; }
         public string Mobile { get; set; }
         public string Landline { get; set; }
-
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
         public string Address { get; set; }
         public string ddlstatus { get; set; }
