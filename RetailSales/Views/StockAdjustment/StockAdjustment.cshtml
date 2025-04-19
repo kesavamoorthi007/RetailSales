@@ -257,22 +257,7 @@
                     "background": ""
                 });
             }
-            if (document.getElementById("txtDocId").value == "") {
-                isValid = false;
-                $(txtDocId).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select Date");
-                return false;
-            }
-            else {
-                $(txtDocId).css({
-                    "border": "",
-                    "background": ""
-                });
-            }                     
+                              
 
             var j = 0;
             $('tr.chkitemlst').each(function () {
@@ -287,12 +272,31 @@
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select Item");
+                            alert("Please Select Product Category");
                             $(this).find('#ddlItem' + j.toString()).focus();
                             return false;
                         }
                         else {
                             $(this).find('#ddlItem' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#ddlProduct' + j.toString()).val() != "" || $(this).find('#ddlProduct' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlProduct' + j.toString()).val() == "" || $(this).find('#ddlProduct' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlProduct' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Product Name");
+                            $(this).find('#ddlProduct' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlProduct' + j.toString()).css({
                                 "border": "",
                                 "background": ""
                             });
@@ -324,7 +328,7 @@
                             "background": "#FFCECE"
                         });
 
-                        alert("Please Enter Qty");
+                        alert("Please Enter Adjust Qty");
                         $(this).find('#txtQty' + j.toString()).focus();
                         return false;
 

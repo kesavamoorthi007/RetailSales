@@ -1355,7 +1355,7 @@
                     "background": "#FFCECE"
                 });
 
-                alert("Please Enter SupplierName");
+                alert("Please Enter Supplier Name");
                 return false;
             }
             else {
@@ -1378,7 +1378,7 @@
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select Item");
+                            alert("Please Select Product Category");
                             $(this).find('#ddlItem' + j.toString()).focus();
                             return false;
                         }
@@ -1397,7 +1397,7 @@
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select Product");
+                            alert("Please Select Product Name");
                             $(this).find('#ddlProduct' + j.toString()).focus();
                             return false;
                         }
@@ -1427,25 +1427,7 @@
                             });
                         }
                     }
-                    if ($(this).find('#ddlDestUOM' + j.toString()).val() != "" || $(this).find('#ddlDestUOM' + j.toString()).val() != "0") {
-
-                        if ($(this).find('#ddlDestUOM' + j.toString()).val() == "" || $(this).find('#ddlDestUOM' + j.toString()).val() == 0) {
-                            isValid = false;
-                            $(this).find('#ddlDestUOM' + j.toString()).css({
-                                "border": "1px solid red",
-                                "background": "#FFCECE"
-                            });
-                            alert("Please Select DestUOM");
-                            $(this).find('#ddlDestUOM' + j.toString()).focus();
-                            return false;
-                        }
-                        else {
-                            $(this).find('#ddlDestUOM' + j.toString()).css({
-                                "border": "",
-                                "background": ""
-                            });
-                        }
-                    }
+                    
                     if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
                         isValid = false;
                         $(this).find('#txtQty' + j.toString()).css({
@@ -1464,24 +1446,7 @@
                             "background": ""
                         });
                     }
-                    if ($(this).find('#txtCfQty' + j.toString()).val() == "" || $(this).find('#txtCfQty' + j.toString()).val() == "0") {
-                        isValid = false;
-                        $(this).find('#txtCfQty' + j.toString()).css({
-                            "border": "1px solid red",
-                            "background": "#FFCECE"
-                        });
-
-                        alert("Please Enter CfQty");
-                        $(this).find('#txtCfQty' + j.toString()).focus();
-                        return false;
-
-                    }
-                    else {
-                        $(this).find('#txtCfQty' + j.toString()).css({
-                            "border": "",
-                            "background": ""
-                        });
-                    }
+                    
 
                 }
                 j += 1;

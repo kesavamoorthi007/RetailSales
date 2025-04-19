@@ -752,20 +752,20 @@ namespace RetailSales.Controllers.Purchase
                     if (dtUsers.Rows[i]["STATUS"].ToString() == "GRN Generated")
                     {
                         MailRow = "";
-                        GeneratePDF = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                        GeneratePDF = "<a href=GeneratePdf?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                         EditRow = "";
                         GoToGRN = "<img src='../Images/tick.png' alt='Moved to GRN' width='20' />";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                         DeleteRow = "";
 
                     }
                     else
                     {
                         MailRow = "<a href=SendMail?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/gmail.png' alt='Send Email' width='20' /></a>";
-                        GeneratePDF = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                        GeneratePDF = "<a href=GeneratePdf?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                         EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
                         GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
-                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                        View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                         DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
                     }
                     
@@ -806,6 +806,47 @@ namespace RetailSales.Controllers.Purchase
             });
 
         }
+
+        public IActionResult GeneratePdf(string id)
+        {
+            GeneratePdf ic = new GeneratePdf();
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+            dt = PurchaseorderService.GetGeneratePdf(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.PoNo = dt.Rows[0]["PONO"].ToString();
+                ic.PoDate = dt.Rows[0]["PODATE"].ToString();
+                ic.SuppName = dt.Rows[0]["SUPPLIER_NAME"].ToString();
+                ic.SuppAdd = dt.Rows[0]["ADDRESS"].ToString();
+                ic.GSTNo = dt.Rows[0]["GST_NO"].ToString();
+                ic.ID = id;
+
+            }
+
+            List<GeneratePdfItem> TData = new List<GeneratePdfItem>();
+            GeneratePdfItem tda = new GeneratePdfItem();
+
+            dtt = PurchaseorderService.GetGeneratePdfItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new GeneratePdfItem();
+                    tda.Category = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+                    tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.ID = id;
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+
+                }
+            }
+            ic.GeneratePdfLst = TData;
+            return View(ic);
+        }
+
         public ActionResult SendMail(string id)
         {
             PromotionMail P = new PromotionMail();
@@ -949,9 +990,6 @@ namespace RetailSales.Controllers.Purchase
             //TempData["SuccessMessage"] = "✅ Email sent successfully!";
             return RedirectToAction("ListPurchaseorder");
         }
-
-
-
 
         public IActionResult MoveGRN(string id)
         {

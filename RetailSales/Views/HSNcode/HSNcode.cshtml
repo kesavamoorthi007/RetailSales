@@ -273,24 +273,33 @@
                 });
             }
         
-            //   if (document.getElementById("txtPer").value == ""||document.getElementById("txtPer").value == 0) {
-            //     isValid = false;
-            //     $(txtPer).css({
-            //         "border": "1px solid red",
-            //         "background": "#FFCECE"
-            //     });
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
 
-            //     alert("Please Enter Percentage");
-            //     return false;
-            // }
-            // else {
-            //     $(txtPer).css({
-            //         "border": "",
-            //         "background": ""
-            //     });
-            // }
-           
-      
+                    if ($(this).find('#ddltariff' + j.toString()).val() != "" || $(this).find('#ddltariff' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddltariff' + j.toString()).val() == "" || $(this).find('#ddltariff' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddltariff' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Tax");
+                            $(this).find('#ddltariff' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddltariff' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+
+                    }
+                j += 1;
+            });
 
 
 

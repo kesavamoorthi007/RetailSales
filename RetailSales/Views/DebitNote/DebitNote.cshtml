@@ -40,7 +40,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Voucher No<label class="mandatory">*</label></label>
+
+                                        <label for="inputName3" class="col-sm-4 control-label">Voucher No<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
                                             @Html.HiddenFor(C => C.ID)
@@ -50,9 +51,10 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Voucher Date<label class="mandatory">*</label></label>
+
+                                        <label for="inputName3" class="col-sm-4 control-label">Voucher Date<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
+                                            <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
                                                 @Html.TextBoxFor(C => C.VocDate, new { @id = "txtVocDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px", @readonly = "readonly" })
                                                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
@@ -448,38 +450,33 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            if (document.getElementById("txtVocNo").value == "") {
-                isValid = false;
-                $(txtVocNo).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
 
-                alert("Please Enter Voucher No");
-                return false;
-            }
-            else {
-                $(txtVocNo).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("txtVocDate").value == "") {
-                isValid = false;
-                $(txtVocDate).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
+                    if ($(this).find('#txtAccName' + j.toString()).val() != "" || $(this).find('#txtAccName' + j.toString()).val() != "0") {
 
-                alert("Please Select Voucher Date");
-                return false;
-            }
-            else {
-                $(txtVocDate).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+                        if ($(this).find('#txtAccName' + j.toString()).val() == "" || $(this).find('#txtAccName' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#txtAccName' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Account Name");
+                            $(this).find('#txtAccName' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#txtAccName' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+
+                    }
+                j += 1;
+            });
             
             if (isValid == false)
                 e.preventDefault();

@@ -183,7 +183,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetPurchasOrder(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PONO,FORMAT(POBASIC.PODATE, 'MM/dd/yyyy') AS PODATE,SUPPLIER.SUPPLIER_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,POBASIC.GST_NO,REF_NO,FORMAT(POBASIC.REF_DATE, 'MM/dd/yyyy') AS REF_DATE,POBASIC.GST_NO,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,FORMAT(POBASIC.LR_DATE, 'MM/dd/yyyy') AS LR_DATE,PLACE_DIS,GROSS,NET,CGST,SGST,IGST,ROUNT_OFF,DISCOUNT,FRIGHTCHARGE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME WHERE POBASIC.POBASICID='" + id + "'";
+            SvSql = "SELECT PONO,FORMAT(POBASIC.PODATE, 'MM/dd/yyyy') AS PODATE,SUPPLIER.SUPPLIER_NAME,POBASIC.ADDRESS,POBASIC.COUNTRY,POBASIC.STATE,POBASIC.CITY,REF_NO,FORMAT(POBASIC.REF_DATE, 'MM/dd/yyyy') AS REF_DATE,POBASIC.GST_NO,AMTINWORDS,NARRATION,TRANS_SPORTER,LR_NO,FORMAT(POBASIC.LR_DATE, 'MM/dd/yyyy') AS LR_DATE,PLACE_DIS,GROSS,NET,CGST,SGST,IGST,ROUNT_OFF,DISCOUNT,FRIGHTCHARGE FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME WHERE POBASIC.POBASICID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -200,12 +200,31 @@ namespace RetailSales.Services.Purchase
             adapter.Fill(dtt);
             return dtt;
         }
+        public DataTable GetGeneratePdf(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PONO,FORMAT(POBASIC.PODATE, 'MM/dd/yyyy') AS PODATE,SUPPLIER.SUPPLIER_NAME,POBASIC.ADDRESS,POBASIC.GST_NO FROM POBASIC LEFT OUTER JOIN SUPPLIER ON SUPPLIER.ID=POBASIC.SUP_NAME WHERE POBASIC.POBASICID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetGeneratePdfItem(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT PRO_DETAIL.ID,POBASICID,PODETAILID,PODETAIL.ITEM,PRODUCT.PRODUCT_NAME,PODETAIL.PRODUCT,PRO_NAME.PROD_NAME,PODETAIL.VARIANT,PRO_DETAIL.PRODUCT_VARIANT,QTY FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PODETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT WHERE PODETAIL.POBASICID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetPurchasOrderItem(string id)
         {
             string SvSql = string.Empty;
-
             SvSql = "SELECT PRO_DETAIL.ID,POBASICID,PODETAILID,PODETAIL.ITEM,PRODUCT.PRODUCT_NAME,PODETAIL.PRODUCT,PRO_NAME.PROD_NAME,PODETAIL.VARIANT,PRO_DETAIL.PRODUCT_VARIANT,PODETAIL.HSN,PODETAIL.TARIFF,PODETAIL.UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,PODETAIL.RATE,AMOUNT,FRIGHT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PODETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT WHERE PODETAIL.POBASICID='" + id + "'";
-
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
