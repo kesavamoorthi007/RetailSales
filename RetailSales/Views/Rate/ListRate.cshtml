@@ -8,14 +8,14 @@
 <script type="text/javascript" src="~/jqwidgets/jqxgrid.columnsresize.js"></script>
 <script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
 
-
 <script type="text/javascript">
     @if (TempData["notice"] != null)
     {
         @:alert('@TempData["notice"]');
     }
 </script>
-<div style="height:25px;"></div>
+
+
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
@@ -40,13 +40,12 @@
                 // synchronize with the server - send update command
             },
             datafields: [
-                //{ name: 'docno', type: 'string' },
-                { name: 'docdate', type: 'string' },
-                { name: 'validfrom', type: 'string' },
-                { name: 'validto', type: 'string' },
-                { name: 'editrow', type: 'string' },
-                { name: 'revision', type: 'string' },
-                { name: 'delrow', type: 'string' },
+                { name: 'product', type: 'string' },
+                { name: 'proname', type: 'string' },
+                { name: 'varint', type: 'string' },
+                { name: 'cf', type: 'string' },
+
+
             ],
             id: 'id',
         };
@@ -60,7 +59,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '75%',
+                width: '120%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -82,13 +81,10 @@
 
                 columns: [
 
-                    //{ text: 'Doc No', filtertype: 'checkedlist', datafield: 'docno', width: 120 },
-                    { text: 'Doc Date', filtertype: 'input', datafield: 'docdate', width: 150 },
-                    { text: 'Valid From', filtertype: 'input', datafield: 'validfrom', width: 150 },
-                    { text: 'Valid To', filtertype: 'input', datafield: 'validto', width: 150 },
-                    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Revision', datafield: 'revision', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'product', width: 150 },
+                    { text: 'Product Name', filtertype: 'input', datafield: 'proname', width: 200 },
+                    { text: 'Variant', filtertype: 'checkedlist', datafield: 'varint', width: 220 },
+                    { text: 'Rate', datafield: 'cf', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -116,22 +112,16 @@
                         <div class="row">
                             <div class="col-md-2 ">
                                 @Html.DropDownListFor(n => n.ddlStatus, new SelectListItem[]
-                                { new SelectListItem() {Text = "Enabled", Value="Y"},
+                                         { new SelectListItem() {Text = "Enabled", Value="Y"},
                                 new SelectListItem() {Text = "Disabled", Value="N"}},
-                                new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
+                                         new { @id = "ddlStatus", Class = "dropdownlist margin_bottom_new form-control" })
                             </div>
-                            <div class="col-md-9 ">
-                                <div class=" textalignright">
-                                    <a href="@Url.Action("Rate", "Rate")" class="btn  btn-round btn-primary" style="float: right; color:white;">Add Rate</a>
-                                    <br>
-                                </div>
-
-                            </div>
+                            
                         </div>
                         <br />
                         <div class="row">
 
-                            <div class="col-md-12 ">
+                            <div class="col-md-8">
                                 <div id="grid">
                                 </div>
                             </div>

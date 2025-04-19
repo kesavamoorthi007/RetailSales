@@ -122,45 +122,54 @@ namespace RetailSales.Controllers.Master
             dtt = ProductdetailService.GetProductdetailTable(id);
             if (dtt.Rows.Count > 0)
             {
-                tda.Src = dtt.Rows[0]["SRC_UOM"].ToString();
-                tda.Des = dtt.Rows[0]["DEST_UOM"].ToString();
-                tda.CF = dtt.Rows[0]["CF"].ToString();
-                tda.Isvalid = "Y";
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new ProductDetailTable();
+                    tda.ProID = dtt.Rows[i]["PRO_ID"].ToString();
+                    //tda.SUOMlst = BindUOM();
+                    tda.DUOMlst = BindUOM();
+                    tda.UOM = dtt.Rows[i]["UOM_CODE"].ToString();
+                    tda.Des = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[i]["CF"].ToString();
+                    tda.ProdRate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+                }
             }
-            else 
+            else
             {
+
                 for (int i = 0; i < 1; i++)
                 {
                     tda = new ProductDetailTable();
-                    tda.SUOMlst = BindSUOM();
-                    tda.DUOMlst = BindDUOM();
-                    //tda.CF = dtt.Rows[i]["CONVRT_FACTOR"].ToString();
+                    //tda.SUOMlst = BindUOM();
+                    tda.DUOMlst = BindUOM();
                     tda.ProID = id;
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
             }
-            if (id == null)
-            {
+            //if (id == null)
+            //{
 
-            }
-            else
-            {
-                dtt = ProductdetailService.GetEditProductdetailTable(id);
-                //if (dtt.Rows.Count > 0)
-                for (int i = 0; i < dtt.Rows.Count; i++)
-                {
-                    tda = new ProductDetailTable();
-                    tda.ProID = dtt.Rows[i]["PRO_ID"].ToString();
-                    tda.SUOMlst = BindSUOM();
-                    tda.DUOMlst = BindDUOM();
-                    tda.Src = dtt.Rows[i]["SRC_UOM"].ToString();
-                    tda.Des = dtt.Rows[i]["DEST_UOM"].ToString();
-                    tda.CF = dtt.Rows[i]["CF"].ToString();
-                    tda.Isvalid = "Y";
-                    TData.Add(tda);
-                }
-            }
+            //}
+            //else
+            //{
+            //    dtt = ProductdetailService.GetEditProductdetailTable(id);
+            //    //if (dtt.Rows.Count > 0)
+            //    for (int i = 0; i < dtt.Rows.Count; i++)
+            //    {
+            //        tda = new ProductDetailTable();
+            //        tda.ProID = dtt.Rows[i]["PRO_ID"].ToString();
+            //        tda.SUOMlst = BindSUOM();
+            //        tda.DUOMlst = BindDUOM();
+            //        tda.Src = dtt.Rows[i]["SRC_UOM"].ToString();
+            //        tda.Des = dtt.Rows[i]["DEST_UOM"].ToString();
+            //        tda.CF = dtt.Rows[i]["CF"].ToString();
+            //        tda.Isvalid = "Y";
+            //        TData.Add(tda);
+            //    }
+            //}
             ic.ProductDetailTablelst = TData;
             return View(ic);
         }
