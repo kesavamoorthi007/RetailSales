@@ -250,7 +250,7 @@ namespace RetailSales.Controllers.Master
 
           
           
-                dtt = datatrans.GetData("SELECT UOM_CONVERT.PRO_ID,UOM.UOM_CODE,DEST_UOM,CF,PRO_DETAIL.RATE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=UOM_CONVERT.PRO_ID WHERE UOM_CONVERT.PRO_ID = '" + id + "' ");
+                dtt = datatrans.GetData("SELECT UOM_CONVERT.PRO_ID,UOM.UOM_CODE,DEST_UOM,CF FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=UOM_CONVERT.PRO_ID WHERE UOM_CONVERT.PRO_ID = '" + id + "' ");
                 if (dtt.Rows.Count > 0) 
                 { 
                     for (int i = 0; i < dtt.Rows.Count; i++)
@@ -262,7 +262,6 @@ namespace RetailSales.Controllers.Master
                         tda.UOM = dtt.Rows[i]["UOM_CODE"].ToString();
                         tda.Des = dtt.Rows[i]["DEST_UOM"].ToString();
                         tda.CF = dtt.Rows[i]["CF"].ToString();
-                        tda.ProdRate = dtt.Rows[i]["RATE"].ToString();
                         tda.Isvalid = "Y";
                         TData.Add(tda);
                     }

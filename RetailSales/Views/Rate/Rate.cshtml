@@ -1,4 +1,4 @@
-﻿@model RetailSales.Models.Master.Rate
+﻿@* @model RetailSales.Models.Master.Rate
 
 @{
     ViewData["Title"] = "Rate";
@@ -71,15 +71,7 @@
                                     </div>
                                 </div>
                             </div>                          
-                            @* <div style="height:30px;"></div>
-                        <div class="row">
-                        <div class="col-md-12">
-                        <div class="btn-group">
-                        <p style="float:right;"> <input type="button" value="Add Row" onclick="AddRow()" class="btn btn-primary" /></p>
-                        </div>
-                        </div>
-                        </div> *@
-
+                            
                             <div style="height:30px;"></div>
                             <div class="row">
                                 <div class="col-md-12" style="overflow-x:scroll; min-width:300px; min-height:300px;">
@@ -189,112 +181,7 @@
         $('.to_date').datetimepicker('setStartDate', minDate);
 
     });
-    //$(function () {
-    //    $('._select').select2();
-    //});
-    //$(document).ready(function () {
-    //    $('#btnSave').click(function (e) {
-    //        var isValid = true;
-
-    @* if (document.getElementById("ValidDate").value == "") {
-        isValid = false;
-        $(ValidDate).css({
-        "border": "1px solid red",
-        "background": "#FFCECE"
-        });
-
-        alert("Please Select Valid From Date");
-        return false;
-        }
-        else {
-        $(ValidDate).css({
-        "border": "",
-        "background": ""
-        });*@
-
-        //var j = 0;
-        //$('tr.chkitemlst').each(function () {
-        //    if ($(this).css('display') !== 'none') {
-
-
-        //        if ($(this).find('#ddlItem' + j.toString()).val() != "" || $(this).find('#ddlItem' + j.toString()).val() != "0") {
-
-        //            if ($(this).find('#ddlItem' + j.toString()).val() == "" || $(this).find('#ddlItem' + j.toString()).val() == 0) {
-        //                isValid = false;
-        //                $(this).find('#ddlItem' + j.toString()).css({
-        //                    "border": "1px solid red",
-        //                    "background": "#FFCECE"
-        //                });
-        //                alert("Please Select Item");
-        //                $(this).find('#ddlItem' + j.toString()).focus();
-        //                return false;
-        //            }
-        //            else {
-        //                $(this).find('#ddlItem' + j.toString()).css({
-        //                    "border": "",
-        //                    "background": ""
-        //                });
-        //            }
-        //        }
-        //                if ($(this).find('#txtQty' + j.toString()).val() == "" || $(this).find('#txtQty' + j.toString()).val() == "0") {
-        //                    isValid = false;
-        //                    $(this).find('#txtQty' + j.toString()).css({
-        //                        "border": "1px solid red",
-        //                        "background": "#FFCECE"
-        //                    });
-
-        //                    alert("Please Enter Qty");
-        //                    $(this).find('#txtQty' + j.toString()).focus();
-        //                    return false;
-
-        //                }
-        //                else {
-        //                    $(this).find('#txtQty' + j.toString()).css({
-        //                        "border": "",
-        //                        "background": ""
-        //                    });
-        //                }
-
-        //            }
-        //            j += 1;
-        //        });
-
-
-
-        //        if (isValid == false)
-        //            e.preventDefault();
-        //    });
-
-        //});
-        //function changeItemDetails(ItemId, i) {
-        //    $.ajax({
-        //        url: 'GetItemDetails',
-        //        data: { "ItemId": ItemId },
-        //        type: "GET",
-        //        success: function (result) {
-        //            document.getElementById("txtUnit" + i).value = result.unit;
-        //        },
-        //        error: function () {
-        //            alert("Data Not Found");
-        //        }
-        //    });
-        //}
-
-    @*  function changeVariantDetails(id, i) {
-        $.ajax({
-        url: 'GetVarientJSON',
-        type: "post",
-        data: { 'id': id },
-        cache: false,
-        success: function (response) {
-        PopulateDropDown("#ddlVarient" + i, response);
-        },
-        error: function () {
-        debugger;
-        alert("Please Select Product");
-        }
-        });
-        }*@
+    
         function PopulateDropDownn(dropDownId, list) {
             //alert(list);
             $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
@@ -313,20 +200,7 @@
             element.value = element.value.substr(0, max_chars);
         }
     }
-    //function AddRow() {
-    //    var opt = "";
-    //    $.ajax({
-    //        type: "POST",
-    //        url: 'GetItemGrpJSON',
-    //        success: function (data) {
-
-    //            $.each(data, function () {
-    //                opt += "<option value=" + this.value + ">" + this.text + "</option>";
-    //            });
-    //            AppendRow(opt);
-    //        }
-    //    })
-    //}
+    
     function removeRow(id) {
         var table = document.getElementById("dataTable");
         var rowCount = table.rows.length;
@@ -346,35 +220,8 @@
         }
     }
 
-
-        //function AppendRow(opt) {
-        //    var index = $("#tbBooks").children("tr").length;
-
-        //    var Item = "<td><input class='form-control' id='txtUnit" + index + "' name='RateList[" + index + "].Item'  style='width: 200px;' type='text'  /></td>"";
-
-        //    var Varient = "<td><input class='form-control' id='txtUnit" + index + "' name='RateList[" + index + "].Varient'  style='width: 200px;' type='text'  /></td>"; ";
-
-        //    var UOM = "<td><input class='form-control' id='txtUnit" + index + "' name='RateList[" + index + "].Unit'  style='width: 200px;' type='text'   /></td>";
-
-        //    var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='RateList[" + index + "].Rate1'  style='width: 80px;' type='text'  /></td>";
-
-
-        //      var removeCell = "<td><input id='Isvalid" + index + "' name='RateList[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='RateList.Index' type='hidden' value='" + index + "'  /></td>";
-
-
-        //    var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Varient + UOM  + Rate + removeCell +  "</tr>";
-        //    //alert(Packing);
-        //    $("#tbBooks").append(newRow);
-
-        //    $(function () {
-        //        $('._select').select2();
-        //    });
-
-
-        //}
-
-
 </script>
 
 
 
+ *@

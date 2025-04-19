@@ -31,11 +31,13 @@ namespace RetailSales.Services.Master
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT RATE_BASIC.RATE_BASIC_ID,CONVERT(varchar, RATE_BASIC.DOC_DATE, 106) AS DOC_DATE,CONVERT(varchar, RATE_BASIC.VALID_FROM, 106) AS VALID_FROM,CONVERT(varchar, RATE_BASIC.VALID_TO, 106) AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.RATE_BASIC_ID DESC";
+                //SvSql = "SELECT PRO_NAME_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_NAME.IS_ACTIVE FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.IS_ACTIVE = 'Y' ORDER BY PRO_NAME.PRO_NAME_BASICID DESC";
+                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PRO_DETAIL.PRODUCT_ID WHERE PRO_DETAIL.IS_ACTIVE = 'Y' ORDER BY PRO_DETAIL.ID DESC";
             }
             else
             {
-                SvSql = "SELECT RATE_BASIC.RATE_BASIC_ID,CONVERT(varchar, RATE_BASIC.DOC_DATE, 106) AS DOC_DATE,CONVERT(varchar, RATE_BASIC.VALID_FROM, 106) AS VALID_FROM,CONVERT(varchar, RATE_BASIC.VALID_TO, 106) AS VALID_TO,RATE_BASIC.IS_ACTIVE FROM RATE_BASIC WHERE RATE_BASIC.IS_ACTIVE = 'Y' ORDER BY RATE_BASIC.RATE_BASIC_ID DESC";
+                //SvSql = "SELECT PRO_NAME_BASICID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_NAME.IS_ACTIVE FROM PRO_NAME LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_NAME.PRODUCT_CATEGORY WHERE PRO_NAME.IS_ACTIVE = 'N' ORDER BY PRO_NAME.PRO_NAME_BASICID DESC";
+                SvSql = "SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PRO_DETAIL.PRODUCT_ID WHERE PRO_DETAIL.IS_ACTIVE = 'N' ORDER BY PRO_DETAIL.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -100,7 +102,42 @@ namespace RetailSales.Services.Master
             return dtt;
         }
 
-        public string RateCRUD(Rate cy)
+        public DataTable GetUom()
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT ID,UOM_CODE FROM UOM WHERE UOM.IS_ACTIVE = 'Y'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetRateView(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = " SELECT PRO_DETAIL.ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PRO_DETAIL.PRODUCT_CATEGORY LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=PRO_DETAIL.PRODUCT_ID WHERE PRO_DETAIL.ID='" + id + "'";
+            //SvSql = " SELECT PRO_DETAIL.ID,PN1.PRODUCT_CATEGORY AS ProductCategory,PN1.PROD_NAME AS ProductName,PRO_DETAIL.PRODUCT_VARIANT,PRO_DETAIL.IS_ACTIVE FROM PRO_DETAIL LEFT OUTER JOIN PRO_NAME PN1 ON PN1.PRO_NAME_BASICID = PRO_DETAIL.PRODUCT_ID LEFT OUTER JOIN PRO_NAME PN2 ON PN2.PRO_NAME_BASICID = PRO_DETAIL.PRODUCT_ID WHERE PRO_DETAIL.ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetRateViewTable(string id)
+        {
+            string SvSql = string.Empty;
+            //SvSql = " SELECT UOM_CONVERT.ID,PRO_ID,UOM.UOM_CODE,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM WHERE UOM_CONVERT.ID='" + id + "'";
+            SvSql = " SELECT UOM_CONVERT.PRO_ID,UOM.UOM_CODE,unit.UOM_CODE DEST_UOM,CF,RATE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM LEFT OUTER JOIN UOM unit ON unit.ID=UOM_CONVERT.DEST_UOM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=UOM_CONVERT.PRO_ID WHERE UOM_CONVERT.PRO_ID='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public string RateCRUD(Rate cy, string proid)
         {
             string msg = "";
             try
@@ -110,71 +147,38 @@ namespace RetailSales.Services.Master
                 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    SqlCommand objCmd = new SqlCommand("RatePro", objConn);
-                    objCmd.CommandType = CommandType.StoredProcedure;
-                    if (cy.ID == null)
-                    {
-                        StatementType = "Insert";
-                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        StatementType = "Update";
-                        objCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = cy.ID;
-                    }
-                    //objCmd.Parameters.Add("@docno", SqlDbType.NVarChar).Value = cy.DocNo;
-                    objCmd.Parameters.AddWithValue("@docdate", cy.DocDate);
-                    objCmd.Parameters.AddWithValue("@validfrom", cy.ValidFrom);
-                    objCmd.Parameters.AddWithValue("@validto", cy.ValidTo);
-                    objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {
 
                         objConn.Open();
-                        Object Pid = objCmd.ExecuteScalar();
-                        if (cy.ID != null)
-                        {
-                            Pid = cy.ID;
-                        }
-
-                        if (cy.RateListIdem != null)
+                        proid = cy.ID;
+                        if (cy.RateListItemlst != null)
                         {
                             if (cy.ID == null)
                             {
-                                foreach (RateList cp in cy.RateListIdem)
+                                foreach (RateListItem cp in cy.RateListItemlst)
                                 {
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "INSERT INTO RATE_DETAIL (RATE_BASIC_ID, ITEM_NAME, VARIANT, UNIT, RATE) " +
-                   "VALUES ('" + Pid + "','" 
-                               + cp.Item.Replace("'", "''") + "','" 
-                               + cp.Varient.Replace("'", "''") + "','" 
-                               + cp.Unit.Replace("'", "''") + "','" 
-                               + cp.Rate1 + "')";
-                                        //svSQL = "Insert into RATE_DETAIL (RATE_BASIC_ID,ITEM_NAME,VARIANT,UNIT,RATE) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate1 + "')"; 
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
+
                                 }
                             }
                             else
-                            {  
-                                svSQL = "Delete RATE_DETAIL WHERE RATE_BASIC_ID='" + cy.ID + "'";
+                            {
+                                svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
                                 SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
                                 objCmdd.ExecuteNonQuery();
-                                foreach (RateList cp in cy.RateListIdem)
+                                foreach (RateListItem cp in cy.RateListItemlst)
                                 {
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "INSERT INTO RATE_DETAIL (RATE_BASIC_ID, ITEM_NAME, VARIANT, UNIT, RATE) " +
-                   "VALUES ('" + Pid + "','"
-                               + cp.Item.Replace("'", "''") + "','"
-                               + cp.Varient.Replace("'", "''") + "','"
-                               + cp.Unit.Replace("'", "''") + "','"
-                               + cp.Rate1 + "')";
-                                        //svSQL = "Insert into RATE_DETAIL (RATE_BASIC_ID,ITEM_NAME,VARIANT,UNIT,RATE) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Varient + "', + cp.Unit + '" ,'" + cp.Rate1 + "')"; 
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -182,10 +186,6 @@ namespace RetailSales.Services.Master
                             }
 
                         }
-
-
-
-
                     }
 
                     catch (Exception ex)

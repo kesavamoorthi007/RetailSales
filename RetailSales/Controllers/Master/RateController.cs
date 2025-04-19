@@ -19,62 +19,111 @@ namespace RetailSales.Controllers.Master
         {
             RateService = _RateService;
         }
-        public IActionResult Rate(string id)
+        //public IActionResult Rate(string id)
+        //{
+        //    Rate ic = new Rate();
+        //    ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
+
+        //    List<RateList> TData = new List<RateList>();
+        //    RateList tda = new RateList();
+        //    if (id == null)
+        //    {
+        //        DataTable dtt = new DataTable();
+        //        dtt = RateService.GetproductDetail(id);
+
+        //        if (dtt.Rows.Count > 0)
+        //        {
+        //            for (int i = 0; i < dtt.Rows.Count; i++)
+        //            {
+        //                tda = new RateList();
+        //                tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
+        //                tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+        //                tda.Unit = dtt.Rows[i]["UOM"].ToString();                        
+        //                tda.Isvalid = "Y";
+        //                TData.Add(tda);
+        //            }
+
+        //        }  
+        //    }
+        //    else
+        //    {
+        //        DataTable dt = new DataTable();
+        //        dt = RateService.GetEditRate(id);
+        //        if (dt.Rows.Count > 0)
+        //        {
+        //            //ic.DocNo = dt.Rows[0]["DOC_NO"].ToString();
+        //            ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString(); 
+        //            ic.ValidFrom = dt.Rows[0]["VALID_FROM"].ToString();
+        //            ic.ValidTo = dt.Rows[0]["VALID_TO"].ToString();
+        //            ic.ID = id;
+        //        }
+        //        DataTable dtt = new DataTable();
+        //        dtt = RateService.GetEditRateDetail(id);
+        //        if (dtt.Rows.Count > 0)
+        //        {
+        //            for (int i = 0; i < dtt.Rows.Count; i++)
+        //            {
+        //                tda = new RateList();
+        //                tda.Item = dtt.Rows[i]["ITEM_NAME"].ToString();
+        //                tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
+        //                tda.Unit = dtt.Rows[i]["UNIT"].ToString();
+        //                tda.Rate1 = dtt.Rows[i]["RATE"].ToString();
+        //                tda.ID = id;
+        //                tda.Isvalid = "Y";
+        //                TData.Add(tda);
+        //            }                      
+        //        }
+        //    }
+        //    ic.RateListIdem = TData;
+        //    return View(ic);
+        //}
+
+        public IActionResult RateView(string id)
         {
             Rate ic = new Rate();
-            ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
 
-            List<RateList> TData = new List<RateList>();
-            RateList tda = new RateList();
-            if (id == null)
+            DataTable dt = new DataTable();
+            DataTable dtt = new DataTable();
+
+            dt = RateService.GetRateView(id);
+            if (dt.Rows.Count > 0)
             {
-                DataTable dtt = new DataTable();
-                dtt = RateService.GetproductDetail(id);
+                ic.Product = dt.Rows[0]["PRODUCT_NAME"].ToString();
+                ic.ProName = dt.Rows[0]["PROD_NAME"].ToString();
+                ic.Varint = dt.Rows[0]["PRODUCT_VARIANT"].ToString();
 
-                if (dtt.Rows.Count > 0)
-                {
-                    for (int i = 0; i < dtt.Rows.Count; i++)
-                    {
-                        tda = new RateList();
-                        tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-                        tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-                        tda.Unit = dtt.Rows[i]["UOM"].ToString();                        
-                        tda.Isvalid = "Y";
-                        TData.Add(tda);
-                    }
-
-                }  
             }
-            else
+
+            List<RateListItem> TData = new List<RateListItem>();
+            RateListItem tda = new RateListItem();
+
+            dtt = RateService.GetRateViewTable(id);
+            if (dtt.Rows.Count > 0)
             {
-                DataTable dt = new DataTable();
-                dt = RateService.GetEditRate(id);
-                if (dt.Rows.Count > 0)
+                for (int i = 0; i < dtt.Rows.Count; i++)
                 {
-                    //ic.DocNo = dt.Rows[0]["DOC_NO"].ToString();
-                    ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString(); 
-                    ic.ValidFrom = dt.Rows[0]["VALID_FROM"].ToString();
-                    ic.ValidTo = dt.Rows[0]["VALID_TO"].ToString();
-                    ic.ID = id;
-                }
-                DataTable dtt = new DataTable();
-                dtt = RateService.GetEditRateDetail(id);
-                if (dtt.Rows.Count > 0)
-                {
-                    for (int i = 0; i < dtt.Rows.Count; i++)
-                    {
-                        tda = new RateList();
-                        tda.Item = dtt.Rows[i]["ITEM_NAME"].ToString();
-                        tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
-                        tda.Unit = dtt.Rows[i]["UNIT"].ToString();
-                        tda.Rate1 = dtt.Rows[i]["RATE"].ToString();
-                        tda.ID = id;
-                        tda.Isvalid = "Y";
-                        TData.Add(tda);
-                    }                      
+                    tda = new RateListItem();
+
+                    tda.SrcUom = dtt.Rows[0]["UOM_CODE"].ToString();
+                    tda.DestUom = dtt.Rows[0]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[0]["CF"].ToString();
+                    tda.ProdRate = dtt.Rows[0]["RATE"].ToString();
+                    TData.Add(tda);
                 }
             }
-            ic.RateListIdem = TData;
+            //else
+            //{
+
+            //    for (int i = 0; i < 1; i++)
+            //    {
+            //        tda = new RateListItem();
+            //        //tda.SUOMlst = BindUOM();
+            //        tda.ProID = id;
+            //        tda.Isvalid = "Y";
+            //        TData.Add(tda);
+            //    }
+            //}
+            ic.RateListItemlst = TData;
             return View(ic);
         }
 
@@ -85,7 +134,7 @@ namespace RetailSales.Controllers.Master
             try
             {
                 cy.ID = id;
-                string Strout = RateService.RateCRUD(cy);
+                string Strout = RateService.RateCRUD(cy,id);
                 if (string.IsNullOrEmpty(Strout))
                 {
                     if (cy.ID == null)
@@ -114,6 +163,23 @@ namespace RetailSales.Controllers.Master
             return View(cy);
         }
 
+        public List<SelectListItem> BindUOM()
+        {
+            try
+            {
+                DataTable dtDesg = RateService.GetUom();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         //anoter     
         //public JsonResult GetItemGrpJSON()
@@ -210,34 +276,27 @@ namespace RetailSales.Controllers.Master
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
 
-                string Delete = string.Empty;
-                string Edit = string.Empty;
-                //string GoToSales = string.Empty;
-                string Revision = string.Empty;
+                
+                string CF = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    Revision = "<a href=RateView?id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    Edit = "<a href=Rate?id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    CF = "<a href=RateView?id=" + dtUsers.Rows[i]["ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                 }
                 else
                 {
 
-                    Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["RATE_BASIC_ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    CF = "";
                 }
 
                 Reg.Add(new RateGrid
                 {
-                    id = dtUsers.Rows[i]["RATE_BASIC_ID"].ToString(),
-                    //docno = dtUsers.Rows[i]["DOC_NO"].ToString(),
-                    docdate = dtUsers.Rows[i]["DOC_DATE"].ToString(),
-                    validfrom = dtUsers.Rows[i]["VALID_FROM"].ToString(),
-                    validto = dtUsers.Rows[i]["VALID_TO"].ToString(),
-                    editrow = Edit,                    
-                    delrow = Delete,
-                    revision = Revision,
+                    id = dtUsers.Rows[i]["ID"].ToString(),
+                    product = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
+                    proname = dtUsers.Rows[i]["PROD_NAME"].ToString(),
+                    varint = dtUsers.Rows[i]["PRODUCT_VARIANT"].ToString(),
+                    cf = CF,
+
 
                 });
             }
@@ -248,46 +307,7 @@ namespace RetailSales.Controllers.Master
             });
 
         }
-        public IActionResult RateView(string id)
-        {
-            Rate ic = new Rate();
-
-            DataTable dt = new DataTable();
-            DataTable dtt = new DataTable();
-
-            dt = RateService.GetEditRate(id);
-            if (dt.Rows.Count > 0)
-            {
-                ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString();
-                ic.ValidFrom = dt.Rows[0]["VALID_FROM"].ToString();
-                ic.ValidTo = dt.Rows[0]["VALID_TO"].ToString();                                                  
-                ic.ID = id;
-
-            }
-                 
-            List<RateList> TData = new List<RateList>();
-            RateList tda = new RateList();
-
-
-
-
-            dtt = RateService.GetEditRateDetail(id);
-            if (dtt.Rows.Count > 0)
-            {
-                for (int i = 0; i < dtt.Rows.Count; i++)
-                {
-                    tda = new RateList();
-                    tda.Item = dtt.Rows[i]["ITEM_NAME"].ToString();
-                    tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
-                    tda.Unit = dtt.Rows[i]["UNIT"].ToString();
-                    tda.Rate1 = dtt.Rows[i]["RATE"].ToString();                  
-                    tda.ID = id;
-                    TData.Add(tda);
-                }
-            }
-            ic.RateListIdem = TData;
-            return View(ic);
-        }
+        
 
         public ActionResult DeleteMR(string tag, string id)
         {
