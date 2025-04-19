@@ -41,8 +41,9 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
+
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Transfer No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Documentid, new { @id = "txtDocumentid", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
                                     </div>
@@ -58,8 +59,9 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
+
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">From Location<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Flocation, new { @id = "txtFlocation", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
                                     </div>
@@ -68,16 +70,18 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
+
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">To Location<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Tlocation, new { @id = "txtTlocation", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+
                                         <br /><label for="inputName3" class="col-sm-4 control-label">From BinID<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.FBin, Model.FBinlst, "--Please Select--", new { @id = "ddlFBin", @Class = "form-control _select", @TabIndex = 1 })
 
                                         </div>
@@ -85,14 +89,16 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+
                                         <br /><label for="inputName3" class="col-sm-4 control-label">To BinID<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.TBin, Model.TBinlst, "--Please Select--", new { @id = "ddlTBin", @Class = "form-control _select", @TabIndex = 1 })
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                               <div style="height:30px;"></div>
                             <div class="row">

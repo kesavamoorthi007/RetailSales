@@ -45,7 +45,7 @@
                                 <div class="form-group">
 
                                         <br />  <label for="inputName3" class="col-sm-4 control-label">HSN Code<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.HCode, new { @id = "txtHCode",autocomplete="off", @class = "form-control", @TabIndex = 1,@onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                             @Html.HiddenFor(C => C.createby)
                                         </div>
@@ -58,7 +58,7 @@
                                 <div class="form-group">
 
                                         <br />  <label for="inputName3" class="col-sm-4 control-label">Description<label class="mandatory"></label></label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Dec, new { @id = "txtDec", @class = "form-control", @TabIndex = 1,autocomplete="off" })
                                             @Html.HiddenFor(C => C.ID)
                                     </div>
@@ -72,7 +72,7 @@
 
                                         <br />  <label for="inputName3" class="col-sm-4 control-label">Percentage<label class="mandatory">*</label></label>
                                        
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
 
                                              @Html.TextBoxFor(C => C.Per, new { @id = "txtPer", @class = "form-control", @TabIndex = 1,autocomplete="off" })
 
@@ -88,7 +88,7 @@
                                     <div class="form-group">
 
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">SGST%<label class="mandatory"></label></label>
-                                          <div class="col-sm-8">
+                                          <div class="col-sm-12">
 
                                             @Html.DropDownListFor(C => C.SGst, Model.SGstlst,"Please Select", new { @id = "ddlSGst", @Class = "form-control _select", @TabIndex = 1 })
 
@@ -103,7 +103,7 @@
                                     <div class="form-group">
 
                                       <br />  <label for="inputName3" class="col-sm-4 control-label">IGST%<label class="mandatory"></label></label>
-                                          <div class="col-sm-8">
+                                          <div class="col-sm-12">
 
                                             @Html.DropDownListFor(C => C.IGst, Model.IGstlst,"Please Select", new { @id = "ddlIGst", @Class = "form-control _select", @TabIndex = 1 })
 

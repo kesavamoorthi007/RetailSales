@@ -59,8 +59,8 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="inputName3" class="col-sm-4 control-label">From<label class="mandatory">*</label></label>
-            <div class="col-sm-8">
-                <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+            <div class="col-sm-12">
+                <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                     @Html.TextBoxFor(C => C.AccountClass, new { @id = "txtVocDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px" })
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -70,8 +70,8 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="inputName3" class="col-sm-4 control-label">To<label class="mandatory">*</label></label>
-            <div class="col-sm-8">
-                <div class="input-group date to_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+            <div class="col-sm-12">
+                <div class="input-group date to_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                      @Html.TextBoxFor(C => C.AccountClass, new { @id = "txtVocDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px" })
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -79,7 +79,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="col-sm-8 mt-5">
+        <div class="col-sm-12 mt-5">
             <button type="submit" class="btn btn-success" type="button" id="btnSave" onclick="loadReport()">Search</button>
         </div>
         
@@ -91,7 +91,7 @@
     <div class="col-md-5">
         <label for="inputName3" class="col-sm-3 control-label">From Date  <label class="mandatory"></label></label>
         <div class="col-sm-9">
-            <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+            <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                 <input id="SStart" class="form-control" readonly="readonly" value="@strfrom" />
                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
@@ -103,7 +103,7 @@
         <label for="inputName3" class="col-sm-3 control-label"> To date  <label class="mandatory"></label></label>
         <div class="col-sm-9">
 
-            <div class="input-group date to_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+            <div class="input-group date to_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
 
                 <input id="SEnd" class="form-control" readonly="readonly" value="@strTo" />
                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>

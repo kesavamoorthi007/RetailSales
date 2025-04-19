@@ -86,7 +86,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-5 control-label">PO No<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.po, new { @id = "txtpo", @class = "form-control", @TabIndex = 1, @readonly = true })
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
@@ -96,7 +96,7 @@
                                     <div class="form-group">
                                         
                                         <label for="inputName3" class="col-sm-4 control-label">PO Date<label class="mandatory">*</label></label>
-                                        <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                        <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                                             @Html.TextBoxFor(C => C.Podate, new { @id = "Podate", @class = "form-control", @TabIndex = 2, @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
@@ -110,11 +110,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory"> *   </label>   <a href="@Url.Action("AddSupplier", "Purchaseorder")" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /> </a> </label>
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ", new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
+                                            
                                         </div>
-                                        <div class="col-sm-1"><a href="@Url.Action("AddSupplier", "Purchaseorder")" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></div>
+                                       @* <div class="col-sm-1"></div>*@
                                     </div>
                                 </div>
                             </div>
@@ -124,8 +125,8 @@
                                     <div class="form-group">
 
                                         <label for="inputName3" class="col-sm-4 control-label">Supplier Address<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
-                                            @Html.TextAreaFor(C => C.Supplieraddress, new { @id = "txtSupplieraddress", @class = "form-control", @TabIndex = 1,style ="height: 100px; width: 250px", @readonly = true })
+                                        <div class="col-sm-12">
+                                            @Html.TextAreaFor(C => C.Supplieraddress, new { @id = "txtSupplieraddress", @class = "form-control", @TabIndex = 1,style ="height: 100px;", @readonly = true })
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +134,7 @@
                                     <div class="form-group">
 
                                         <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.State, new { @id = "txtState", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
                                     </div>
@@ -142,7 +143,7 @@
                                     <div class="form-group">
 
                                         <label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.City, new { @id = "txtCity", @class = "form-control", @TabIndex = 1, @readonly = true })
                                         </div>
                                     </div>
@@ -153,7 +154,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">GST No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.GST, new { @id = "txtGST", @class = "form-control", @TabIndex = 1, @readonly = true })
 
                                         </div>
@@ -162,7 +163,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Supplier Ref No<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.refno, new { @id = "txtrefno", @class = "form-control", @TabIndex = 1 })<br />
 
                                         </div>
@@ -175,7 +176,7 @@
                                             @Html.TextBoxFor(C => C.refdate, new { @id = "refdate", @class = "form-control", @TabIndex = 2, @size = "20", style = "width: 170px", @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
-                                        @* <div class="input-group date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                        @* <div class="input-group date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                                             @Html.TextBoxFor(C => C.refdate, new { @id = "refdate", @class = "form-control", @TabIndex = 2, @type = "date", @size = "32" })
                                             
                                         </div> *@
@@ -183,19 +184,18 @@
                                 </div>
                             </div>
                             <div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Enter No. Of Rows<label class="mandatory"></label></label>
-                                        @* <input type="number" id="txtNoRows" name="Qty" min="1" max="20" class="form-control" onkeyup="createrows(this)" /> *@
-                                         <div class="col-sm-8">
-                                            <input type="number" id="txtNoRows"  oninput="generateRows()" min="1" max="20" class="form-control">
 
-@*                                         <input type="number" id="txtNoRows" min="1" max="20" class="form-control" oninput="validateQty(this)" onkeydown="return isNumeric2(event.keyCode, this.value)" />
- *@                                        </div>
+                             <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-12 control-label"><strong>Enter No. Of Rows :</strong><label class="mandatory"></label></label>
+                                        <input type="number" id="txtNoRows"  oninput="generateRows()" min="1" max="20" class="form-control">
                                     </div>
                                 </div>
+      
+
                             </div>
+                     
                             <div style="height:30px;"></div>
                             <div class="row">
                                 <div class="col-lg-12 ">
@@ -391,37 +391,15 @@
                                 </div>
 
 
-
-
-
-
-
                                 <div class="col-md-8">
-                                    <div class="tabs-container">
-                                        <ul class="nav nav-tabs">
-                                            @*<li class="active"><a href="#tab-1" data-toggle="tab">Despatch Address</a></li>*@
-                                            <li class="active"><a href="#tab-1" data-toggle="tab">Transporter Details</a></li>
-
-
-                                        </ul>
-                                        <div class="tab-content">
-
-
-                                            <div class="tab-pane active" id="tab-1">
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-
-
-                                                            <div class="tab-pane active" id="tab-1">
+                              <h4>Transporter Details</h4>
 
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
                                                                             <br /> <label for="inputName3" class="col-sm-4 control-label">LR.No<label class="Mandatory"></label></label>
 
-                                                                            <div class="col-sm-8">
+                                                                            <div class="col-sm-12">
                                                                                 @Html.TextBoxFor(C => C.LRno, new { @id = "txtLRno", @class = "form-control", @TabIndex = 1 })
                                                                             </div>
 
@@ -431,11 +409,11 @@
                                                                         <div class="form-group">
 
                                                                             <br /><label for="inputName3" class="col-sm-4 control-label">LR.Date<label class="Mandatory"></label></label>
-                                                                            <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                                                            <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                                                                                 @Html.TextBoxFor(C => C.LRdate, new { @id = "LRdate", @class = "form-control", @TabIndex = 2, @size = "32", @readonly = true })
                                                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                                             </div>
-                                                                            @* <div class="input-group date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                                                            @* <div class="input-group date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                                                                                 @Html.TextBoxFor(C => C.LRdate, new { @id = "LRdate", @class = "form-control", @TabIndex = 2, @type = "date", @size = "32" })
                                                                                  
                                                                             </div> *@
@@ -448,7 +426,7 @@
                                                                         <div class="form-group">
 
                                                                             <br /> <label for="inputName3" class="col-sm-6 control-label">Transporter Name<label class="Mandatory"></label></label>
-                                                                            <div class="col-sm-8">
+                                                                            <div class="col-sm-12">
 
                                                                                 @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @class = "form-control", @TabIndex = 1 })
                                                                             </div>
@@ -459,7 +437,7 @@
                                                                         <div class="form-group">
                                                                             <br />  <label for="inputName3" class="col-sm-12 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
 
-                                                                            <div class="col-sm-8">
+                                                                            <div class="col-sm-12">
                                                                                 @Html.TextBoxFor(C => C.dispatchname, new { @id = "txtdispatchname", @class = "form-control", @TabIndex = 1 })
                                                                             </div>
 
@@ -477,7 +455,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                           
+                                                            </div>
+                                                         
+
+                                 
+                            </div>
+
+                                <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
 
@@ -488,20 +473,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                @*1st tab*@
-                                                            </div>
-                                                            @*1st tab*@
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>

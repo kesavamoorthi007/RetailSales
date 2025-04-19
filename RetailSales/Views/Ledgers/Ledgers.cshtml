@@ -41,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Account Group<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.AccountGroup, Model.AccountGroupList, "---Plaese Select---", new { @id = "txtAccountGroup", @class = "form-control _select", @TabIndex = 1 })<br />
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
@@ -50,7 +50,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Ledger Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.LedgerName, new { @id = "txtLedgerName", @class = "form-control", @TabIndex = 1 })<br />
 
                                         </div>
@@ -62,8 +62,9 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+
                                         <label for="inputName3" class="col-sm-4 control-label">Allow Zero Value<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @* <form asp-action="SomeAction" asp-controller="SomeController">
                                                 <label>
                                                     <input type="radio" name="MyRadioField" value="Yes" checked /> Yes
@@ -85,7 +86,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Total Opening Balance<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.TotalOpeningBalance, new { @id = "txtTotalOpeningBalance", @class = "form-control", @TabIndex = 1 })<br />
 
                                         </div>
@@ -100,7 +101,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Ledger Notes<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextAreaFor(C => C.LedgerNotes, new { @id = "txtLedgerNotes", @class = "form-control", @TabIndex = 1 }) <br />
 
                                         </div>

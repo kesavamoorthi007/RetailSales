@@ -44,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Country Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.ConName, Model.Cuntylst, "---Please Select---", new { @id = "ddlconName", @Class = "form-control _select", @TabIndex = 1 })
                                             @Html.HiddenFor(C => C.ID)
                                             
@@ -57,7 +57,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">State Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.StatName, new { @id = "txtStateName", @class = "form-control", @TabIndex = 1 })
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
@@ -69,7 +69,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">State code<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.StatCode, new { @id = "txtStateCode", @class = "form-control", @TabIndex = 1 })
 
                                         </div>

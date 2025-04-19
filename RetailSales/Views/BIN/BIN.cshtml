@@ -42,7 +42,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Bin No<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
 
                                             @Html.TextBoxFor(C => C.BINID, new { @id = "txtBINID", @class = "form-control", @TabIndex = 1 })<br />
                                             @Html.HiddenFor(C => C.ID)
@@ -55,7 +55,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Location<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.Location, Model.locationlist, "---Please Select---", new { @id = "txtlocation", @class = "form-control _select", @TabIndex = 1 })<br />
                                             @* @Html.TextBoxFor(C => C.Location, new { @id = "txtlocation", @class = "form-control", @TabIndex = 1 })<br /> *@
                                         </div>
@@ -67,7 +67,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Description</label> <br />
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
