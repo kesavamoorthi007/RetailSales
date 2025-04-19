@@ -41,7 +41,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Voucher No<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 2,@readonly = "readonly"})
                                             @Html.HiddenFor(C => C.ID)
 
@@ -52,8 +52,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Voucher Date<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
-                                            <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                        <div class="col-sm-12">
+                                            <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
                                                 @Html.TextBoxFor(C => C.VocDate, new { @id = "txtVocDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px", @readonly = "readonly" })
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
@@ -151,7 +151,7 @@
                                     <div class="form-group">
 
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Total Debit Amount<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.totdeb, new { @id = "totdeb", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
 
                                             <br />
@@ -163,7 +163,7 @@
                                     <div class="form-group">
 
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Total Credit Amount<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.totcri, new { @id = "totcri", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
                                             <br />
                                         </div>

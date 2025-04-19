@@ -41,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Country Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.CountryId, Model.colist, "---Please Select---", new { @id = "txtCountryId", @class = "form-control _select", @TabIndex = 1, onchange = "changestate(this.value)" })<br />
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br/><label for="inputName3" class="col-sm-4 control-label">State Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.StateId, Model.stlist, "---Please Select---", new { @id = "txtStateId", @class = "form-control _select", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">City Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.CityName, new { @id = "txtCityName", @class = "form-control", @TabIndex = 1 })
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
@@ -78,7 +78,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Pin Code<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.PinCode, new { @id = "txtPinCode", @class = "form-control", @type = "number", @maxlength = "6", @TabIndex = 1 })
                                         </div>
                                     </div>

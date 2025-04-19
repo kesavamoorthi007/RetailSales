@@ -1,6 +1,8 @@
 ﻿using System.Data;
+using DocumentFormat.OpenXml.VariantTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Reporting.Map.WebForms.BingMaps;
 using RetailSales.Interface.Master;
 using RetailSales.Models;
 using RetailSales.Models.Master;
@@ -70,7 +72,7 @@ namespace RetailSales.Controllers.Master
                         tda.MinQty = dtt.Rows[i]["MIN_QTY"].ToString();
                         tda.Rate = dtt.Rows[i]["RATE"].ToString();
                         tda.ProdDesc = dtt.Rows[i]["PRODUCT_DESCRIPTION"].ToString();
-                        tda.ID = id;
+                        tda.ID = dtt.Rows[i]["ID"].ToString();
                         tda.Isvalid = "Y";
                         TData.Add(tda);
                     }
@@ -114,6 +116,20 @@ namespace RetailSales.Controllers.Master
             }
 
             return View(cy);
+        }
+        public JsonResult deletevariant(string ItemId)
+        {
+            var result ="";
+            string cnt = datatrans.GetDataString("SELECT count(*) as cunt FROM PODETAIL WHERE VARIANT = '"+ ItemId + "'");
+            if (Convert.ToInt32(cnt) > 0)
+            {
+                result = "The variant already linked with the Transaction.So do not delete.";
+            }
+            else
+            {
+                result = ProductNameService.VariantDelete(ItemId);
+            }
+             return Json(result);
         }
 
         public IActionResult ListProductName()

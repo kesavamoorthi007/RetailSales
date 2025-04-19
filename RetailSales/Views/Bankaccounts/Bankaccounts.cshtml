@@ -37,7 +37,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Account Type<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.Accounttype, Model.Accounttypelst, "--Please Select--", new { @id = "ddlAccounttype", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -45,7 +45,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-6 control-label">Account Holder's Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Accountname, new { @id = "txtAccountname", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-5 control-label">Account Number<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Accountnumber, new { @id = "txtAccountnumber", @class = "form-control",type="number", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Bank Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Bankname, new { @id = "txtBankname", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Branch Name<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Branchname, new { @id = "txtBranchname", @class = "form-control", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Branch Address<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextAreaFor(C => C.Branchaddress, new { @id = "txtBranchaddress", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Country<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.Country, Model.Countrylst, "--Please Select--", new { @id = "ddlCountry", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">BSR Code<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Bsrcode, new { @id = "txtBsrcode", @class = "form-control",type="number", @TabIndex = 1 })<br />
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">IFSC Code<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Ifsccode, new { @id = "txtIfsccode", @class = "form-control", @TabIndex = 1 })
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
@@ -133,7 +133,7 @@
                                @* <div class="col-lg-4">
                                     <div class="form-group">
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">Is Default<label class="mandatory">*</label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.CheckBoxFor(C => C.Isdefault, new { @id = "txtIsdefault", @class = "form-check-input" })
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                                 @*<div class="col-lg-4">
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Opening Balance<label class="mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Openingbalance, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@
                         <div class="col-lg-6">
                         <div class="form-group">
                         <br> <label for="inputName3" class="col-sm-4 control-label">UOM<label class="mandatory">*</label></label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                         @Html.TextBoxFor(C => C.Uom, new { @id = "txtCategory", @class = "form-control", @TabIndex = 1 })<br />
                         </div>
                         </div>

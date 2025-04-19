@@ -18,5 +18,6 @@ namespace RetailSales.Interface.Master
         string RemoveChange(string tag, string id);
         string StatusChange(string tag, string id);
         string CFCRUD(Productdetail cy, string proid);
+        string VariantDelete(string id);
     }
 }

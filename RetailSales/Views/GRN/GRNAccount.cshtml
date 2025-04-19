@@ -118,7 +118,7 @@
                                             <div class="form-group">
                                             
                                                 <label for="inputName3" class="col-sm-4 control-label">Total Amount<label class="Mandatory"></label></label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-12">
                                                     @Html.TextBoxFor(C => C.TotalAmt ,new { @id = "txTotalCRamt", @Class = "form-control", @TabIndex = 1 ,@readonly=true})
                                                 </div>
                                             </div>
@@ -133,7 +133,7 @@
                                             <div class="form-group">
                                             
                                                 <label for="inputName3" class="col-sm-4 control-label">Total Credit Amount<label class="Mandatory"></label></label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-12">
                                                     @Html.TextBoxFor(C => C.TotalCRAmt ,new { @id = "txTotalCRamt", @Class = "form-control", @TabIndex = 1,style="text-align:right" ,@readonly=true})<br />
                                                 </div>
                                             </div>
@@ -142,7 +142,7 @@
                                             <div class="form-group">
                                                 <label for="inputName3" class="col-sm-4 control-label">Total Debit Amount<label class="Mandatory"></label></label>
                                               
-                                                      <div class="col-sm-8">
+                                                      <div class="col-sm-12">
                                                         <input type="hidden" id="hidnet" /> 
 												 @Html.TextBoxFor(C => C.TotalDRAmt, new { @id = "txTotalDRamt", @class = "form-control", @TabIndex = 2,onkeydown = "return isNumeric2(event.keyCode,this.value)",style="text-align:right" ,@readonly=true})<br />
 												</div>
@@ -154,7 +154,7 @@
                                     <div class="form-group">
 
                                         <label for="inputName3" class="col-sm-4 control-label">Net Amount<label class="Mandatory"></label></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.TotalNetmt ,new { @id = "txTotalNetmt", @Class = "form-control", @TabIndex = 1 ,@readonly=true,style="text-align:right"})<br />
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                                             <div class="form-group">
                                             
                                                 <label for="inputName3" class="col-sm-2 control-label">Amount In words<label class="Mandatory"></label></label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-12">
                                                     @Html.TextBoxFor(C => C.Amtinwords ,new { @id = "txtAinWords", @Class = "form-control", @TabIndex = 1 ,@readonly=true}) <br />
                                                 </div>
                                             </div>
@@ -178,7 +178,7 @@
                                             <div class="form-group">
                                             
                                                 <label for="inputName3" class="col-sm-2 control-label">Voucher Memo<label class="Mandatory"></label></label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-12">
                                                     @Html.TextBoxFor(C => C.Vmemo ,new { @id = "txtVmemo", @Class = "form-control", @TabIndex = 1 })
                                                 </div>
                                             </div>
