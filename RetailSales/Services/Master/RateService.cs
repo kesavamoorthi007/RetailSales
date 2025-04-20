@@ -184,14 +184,14 @@ namespace RetailSales.Services.Master
 
                                         if (cy.ID == null)
                                         {
-                                            svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
+                                            svSQL = "Insert into UOM_CONVERT (PRO_ID,PERCENTAGE,SALES_RATE) VALUES ('" + proid + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                             SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                             objCmds.ExecuteNonQuery();
                                         }
                                         else
                                         {
                                             //svSQL = "UPDATE UOM_CONVERT SET SRC_UOM='" + cp.SrcUom + "',DEST_UOM='" + cp.DestUom + "',CF='" + cp.CF + "',PERCENT='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE ID='" + cy.ID + "'";
-                                            svSQL = "UPDATE UOM_CONVERT SET SRC_UOM='" + cp.SrcUom + "',DEST_UOM='" + cp.DestUom + "',CF='" + cp.CF + "',PERCENTAGE='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE PRO_ID='" + proid + "'";
+                                            svSQL = "UPDATE UOM_CONVERT SET PERCENTAGE='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE PRO_ID='" + proid + "'";
                                             SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                             objCmds.ExecuteNonQuery();
                                         }
