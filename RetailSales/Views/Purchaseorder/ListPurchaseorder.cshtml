@@ -64,7 +64,7 @@
         );
 
             var linkrenderer1 = function (row, column, value) {
-        return '<a href="' + value + '" onclick="return ConfirmDelete()"><img  src="../Images/Inactive.png"  style="text-align: center; margin-top: 5px;padding-left:25px;"/></a>';
+        return '<a href="' + value + '" class="fancybox" data-fancybox-type="iframe"><img src="../Images/pdficon.png" alt="View Details" width="20" /></a>';
     }
 
         $("#grid").jqxGrid(
@@ -96,12 +96,15 @@
                     { text: 'Supplier Name', filtertype: 'input', datafield: 'sup', width: 260 },
                     { text: 'Ref No', filtertype: 'input', datafield: 'refno', width: 100 },
                     { text: 'Send Mail', datafield: 'mailrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                    { text: 'Generate PDF', datafield: 'pdf', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                    { text: 'Generate PDF', datafield: 'pdf', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80},
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                     { text: 'Move To GRN', datafield: 'move', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 120 },
                     { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                     //{ text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                 ]
+
+
+
             });
         $("#ddlStatus").change(function () {
             var value = "Y";
@@ -113,6 +116,14 @@
             };
             $("#grid").jqxGrid({ source: source });
         });
+         $("#grid").on("bindingcomplete", function () {
+  $(".fancybox").fancybox({
+            width: '1000px',
+            height: '1000px',
+            arrows: false,
+            //autoSize : false
+        }); // or Fancybox v3+
+});
     });
 
 </script>
@@ -161,18 +172,18 @@
         
     }
 </script>
-    <a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a>
-    <a class="fancyboxe1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a>
+
+    <a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 1000px;"></a>
     <link rel="stylesheet" href="@Url.Content("~/css/jquery.fancybox.css?v=2.1.5")" type="text/css" media="screen" />
     <script type="text/javascript" src="@Url.Content("~/css/jquery.fancybox.pack.js?v=2.1.5")"></script>
 <script type="text/javascript">
     var fancybox123;
     jQuery(document).ready(function ($) {
         $(".fancybox").fancybox({
-            width: '80%',
-            height: '10%',
+            width: '1000px',
+            height: '1000px',
             arrows: false,
-
+            //autoSize : false
         });
         fancybox123 = $.fancybox;
     });

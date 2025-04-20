@@ -18,24 +18,32 @@
         @:alert('@TempData["notice"]');
     }
 </script>
+@**@
+
 <div class="container">
+   
+
+    <div class="row">
+           <div class="col-sm-12 text-left mt-3">
+                            <button class="btn btn-outline-success me-2" type="button" onclick="printInvoice()">Print</button>
+                            <button class="btn btn-outline-primary me-2" type="button" onclick="myFunction()">PDF</button>
+                            <button class="btn btn-outline-secondary me-2" type="button" causesvalidation="false" onClick="window.parent.jQuery.fancybox.close();">Close</button>
+                        </div>
+    </div>
+     <br />
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <div class="invoice">
-                        <div>
+                      
                             @using (Html.BeginForm("GeneratePdf", "Purchaseorder", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
-                                <div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="media">
-                                                @* <div class="media-left"><img class="img-fluid for-light media-object img-60" src="../assets/images/logo/logo_dark.png" alt="logo-light"><img class="img-fluid for-dark media-object img-60" src="../assets/images/logo/logo.png" alt="logo-dark"></div>
-                                                <div class="media-body m-l-20 text-right">
-                                                    <p>hello@Riho.in<br><span>289-335-5590</span></p>
-                                                </div> *@
+                                               
                                             </div>
                                             <!-- End Info-->
                                         </div>
@@ -51,7 +59,6 @@
                                             <!-- End Title-->
                                         </div>
                                     </div>
-                                </div>
                                 <hr>
                                 <!-- End InvoiceTop-->
                                 <div class="row">
@@ -74,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="text-md-end" id="project">
+                                        <div class="" id="project">
                                             <div class="media-body m-l-50">
                                             
                                                 <p>
@@ -139,12 +146,8 @@
                                 </div>
                             <!-- End InvoiceBot-->
                             }
-                        </div>
-                        <div class="col-sm-12 text-center mt-3">
-                            <button class="btn btn-outline-success me-2" type="button" onclick="myFunction()">Print</button>
-                            <button class="btn btn-outline-primary me-2" type="button" onclick="myFunction()">PDF</button>
-                            <button class="btn btn-outline-secondary me-2" type="button" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'">Cancel</button>
-                        </div>
+                       
+                     
                         <!-- End Invoice-->
                         <!-- End Invoice Holder-->
                         <!-- Container-fluid Ends-->
@@ -154,3 +157,12 @@
         </div>
     </div>
 </div>
+<script>
+function printInvoice() {
+  const printContents = document.querySelector('.invoice').innerHTML;
+  const originalContents = document.body.innerHTML;
+  document.body.innerHTML = printContents;
+  window.print();
+  document.body.innerHTML = originalContents;
+}
+</script>

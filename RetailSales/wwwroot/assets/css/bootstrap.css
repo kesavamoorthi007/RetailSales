@@ -11824,6 +11824,26 @@ textarea.form-control-lg {
   }
 }
 @media print {
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .invoice {
+        width: 100%;
+        padding: 20px;
+        text-align: center; /* Example: center all content */
+    }
+
+        .invoice h1, .invoice p {
+            text-align: center; /* Specific element alignment */
+        }
+
+    /* Remove buttons or navbars during print */
+    button, .no-print {
+        display: none !important;
+    }
   .d-print-inline {
     display: inline !important;
   }
