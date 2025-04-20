@@ -400,13 +400,17 @@ namespace RetailSales.Controllers.Sales
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
                     uomid = dt.Rows[0]["UOM_ID"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
-                    rate = dt.Rows[0]["RATE"].ToString();
+                    rate = dt.Rows[0]["SALES_RATE"].ToString();
                     
                 }
                 dt = SalesInvoiceService.GetStockDetails(ItemId);
                 if (dt.Rows.Count > 0)
                 {
                     stockqty = dt.Rows[0]["BALANCE_QTY"].ToString();
+                }
+                else
+                {
+                    stockqty = "0";
                 }
 
                 var result = new { uomid = uomid, uom = uom, hsn = hsn, rate = rate, stockqty = stockqty };

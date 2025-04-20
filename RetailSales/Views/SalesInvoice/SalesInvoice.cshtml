@@ -493,11 +493,11 @@
             success: function (change) {
                 PopulateDropDown("#ddlProduct" + i, change); // Fixed incorrect selector
 
-                // Call changeVarientItem only after success
+                @* // Call changeVarientItem only after success
                var selectedItem = $("#ddlProduct" + i).val();
                 if (selectedItem) {
                     changeVarientItem(selectedItem, i);
-                }
+                } *@
             },
             error: function () {
                 alert("Please Select Product");

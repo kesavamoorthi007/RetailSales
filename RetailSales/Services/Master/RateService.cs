@@ -159,29 +159,43 @@ namespace RetailSales.Services.Master
                                 foreach (RateListItem cp in cy.RateListItemlst)
                                 {
 
-                                    if (cp.Isvalid == "Y")
-                                    {
+                                    //if (cp.Isvalid == "Y")
+                                    //{
                                         svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
-                                    }
+                                    //}
 
                                 }
                             }
                             else
                             {
-                                svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
-                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
-                                objCmdd.ExecuteNonQuery();
+                                //svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
+                                //SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                //objCmdd.ExecuteNonQuery();
                                 foreach (RateListItem cp in cy.RateListItemlst)
                                 {
 
-                                    if (cp.Isvalid == "Y")
-                                    {
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
-                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                                        objCmds.ExecuteNonQuery();
-                                    }
+                                    //if (cp.Isvalid == "Y")
+                                    //{
+                                        //svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
+                                        //SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        //objCmds.ExecuteNonQuery();
+
+                                        if (cy.ID == null)
+                                        {
+                                            svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
+                                            SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                            objCmds.ExecuteNonQuery();
+                                        }
+                                        else
+                                        {
+                                            //svSQL = "UPDATE UOM_CONVERT SET SRC_UOM='" + cp.SrcUom + "',DEST_UOM='" + cp.DestUom + "',CF='" + cp.CF + "',PERCENT='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE ID='" + cy.ID + "'";
+                                            svSQL = "UPDATE UOM_CONVERT SET SRC_UOM='" + cp.SrcUom + "',DEST_UOM='" + cp.DestUom + "',CF='" + cp.CF + "',PERCENTAGE='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE PRO_ID='" + proid + "'";
+                                            SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                            objCmds.ExecuteNonQuery();
+                                        }
+                                    //}
                                 }
                             }
 

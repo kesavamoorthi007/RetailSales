@@ -111,24 +111,11 @@ namespace RetailSales.Controllers.Master
                     TData.Add(tda);
                 }
             }
-            //else
-            //{
-
-            //    for (int i = 0; i < 1; i++)
-            //    {
-            //        tda = new RateListItem();
-            //        //tda.SUOMlst = BindUOM();
-            //        tda.ProID = id;
-            //        tda.Isvalid = "Y";
-            //        TData.Add(tda);
-            //    }
-            //}
             ic.RateListItemlst = TData;
             return View(ic);
         }
-
         [HttpPost]
-        public ActionResult Rate(Rate cy, string id)
+        public ActionResult RateView(Rate cy, string id)
         {
 
             try
