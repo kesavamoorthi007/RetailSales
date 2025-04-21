@@ -30,6 +30,13 @@ namespace RetailSales.Controllers
             LoginViewModel L = new LoginViewModel();
             return View(L);
         }
+        public IActionResult Login1(string returnUrl = "")
+        {
+            // var model = new LoginViewModel { ReturnUrl = returnUrl };
+            ViewBag.ReturnUrl = returnUrl;
+            LoginViewModel L = new LoginViewModel();
+            return View(L);
+        }
         [HttpPost]
         public IActionResult Login(LoginViewModel model )
         { 
