@@ -1,5 +1,6 @@
 ﻿@model RetailSales.Models.SalesInvoice
 @{
+    Layout = "_PopupLayout";
     ViewData["Title"] = "Sales Invoice";
 }
 <style>
@@ -7,8 +8,16 @@
         width: 120px;
     }
 </style>
+<div style="height:25px;"></div>
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
 
-
+        <ol class="breadcrumb">
+            <li class="active"> <strong>View Sales Invoice</strong> </li>
+        </ol>
+    </div>
+</div>
+<div style="height:25px;"></div>
 <div class="wrapper-content ">
     <div class="row">
         <div class="col-lg-12">
@@ -245,8 +254,8 @@
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
-                            
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListSalesInvoice", "SalesInvoice")'">Cancel</button>
+
+                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
 
 
                         </form>

@@ -387,6 +387,17 @@
         }
         $(dropDownId).trigger("liszt:updated");
     }
+    function PopulateDropDown1(dropDownId, list,rvalue) {
+        //alert(rvalue);
+        $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+        $(dropDownId).val(rvalue).trigger('change');
+    }
     function changecity(STATE_NAME) {
         $.ajax({
             url: "GetCityJSON",
@@ -529,10 +540,23 @@
              success: function (result) {
                  document.getElementById("txtUOM" + i).value = result.uom;
                  document.getElementById("txtHsn" + i).value = result.hsn;
-                 $("#ddlDestUOM" + i).val(result.uom).trigger('change');
+                 //$("#ddlDestUOM" + i).val(result.uom).trigger('change');
                  document.getElementById("txtStockQty" + i).value = result.stockqty;
                  document.getElementById("txtRate" + i).value = result.rate;
                  
+                 $.ajax({
+              url: "GetUOMJSON",
+              type: "post",
+               data: { "ItemId": ItemId},
+              cache: false,
+              success: function (response) {
+                  PopulateDropDown1("#ddlDestUOM"+i, response,result.uom);
+
+              },
+              error: function () {
+                  alert("Please Select Supplier");
+              }
+            });
              },
              error: function () {
                  alert("Data Not Found");

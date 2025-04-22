@@ -64,7 +64,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetStockDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT INVENTORY_ITEM.BALANCE_QTY FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
+            SvSql = "SELECT SUM(BALANCE_QTY) AS TotalBalance FROM INVENTORY_ITEM WHERE VARIANT = '" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -240,7 +240,7 @@ namespace RetailSales.Services.Sales
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Irt into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISC_PER,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.DiscPer + "','" + cp.Discount + "','" + cp.Total + "')";
+                                        svSQL = "Insert into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISC_PER,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.DiscPer + "','" + cp.Discount + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
 

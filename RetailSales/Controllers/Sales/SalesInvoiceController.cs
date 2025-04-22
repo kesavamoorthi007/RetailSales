@@ -325,7 +325,7 @@ namespace RetailSales.Controllers.Sales
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewSalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    View = "<a href=ViewSalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
                     if (dtUsers.Rows[i]["STATUS"].ToString() == "Generated")
                     {
@@ -410,7 +410,7 @@ namespace RetailSales.Controllers.Sales
                 dt = SalesInvoiceService.GetStockDetails(ItemId);
                 if (dt.Rows.Count > 0)
                 {
-                    stockqty = dt.Rows[0]["BALANCE_QTY"].ToString();
+                    stockqty = dt.Rows[0]["TotalBalance"].ToString();
                 }
                 else
                 {
@@ -481,6 +481,28 @@ namespace RetailSales.Controllers.Sales
             SalesInvoiceItem model = new SalesInvoiceItem();
             model.Itemlst = BindItem();
             return Json(BindItem());
+        }
+
+        public JsonResult GetUOMJSON(string ItemId)
+        {
+            return Json(BindUOM(ItemId));
+        }
+        public List<SelectListItem> BindUOM(string ItemId)
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("SELECT UC.ID,U.UOM_CODE FROM UOM_CONVERT UC LEFT JOIN UOM U ON UC.DEST_UOM=U.ID where PRO_ID='" + ItemId + "'");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public JsonResult GetUOMGrpJSON()
