@@ -240,7 +240,7 @@ namespace RetailSales.Services.Sales
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISC_PER,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.DiscPer + "','" + cp.Discount + "','" + cp.Total + "')";
+                                        svSQL = "Irt into SAL_INV_DEATILS (SAL_INV_BASICID,ITEM,PRODUCT,VARIENT,HSN_CODE,UOM,QTY,DEST_UOM,CF,CF_QTY,RATE,AMOUNT,DISC_PER,DISCOUNT,TOTAL) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Hsn + "','" + cp.UOM + "','" + cp.Qty + "','" + cp.DestUOM + "','" + cp.CF + "','" + cp.CfQty + "','" + cp.Rate + "','" + cp.Amount + "','" + cp.DiscPer + "','" + cp.Discount + "','" + cp.Total + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
 

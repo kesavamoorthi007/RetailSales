@@ -180,20 +180,20 @@ namespace RetailSales.Controllers.Purchase
             {
 
 
-                string EditRow = string.Empty;
+                
                 string View = string.Empty;
                 string DeleteRow = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    EditRow = "<a href=DirectPurchase?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    
                     DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
                     View = "";
-                    EditRow = "";
+                    
                     DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
 
@@ -205,7 +205,6 @@ namespace RetailSales.Controllers.Purchase
                     sup = dtUsers.Rows[i]["SUPPLIER_NAME"].ToString(),
                     refno = dtUsers.Rows[i]["REF_NO"].ToString(),
                     net = dtUsers.Rows[i]["NET"].ToString(),
-                    editrow = EditRow,
                     view = View,
                     delrow = DeleteRow,
 
@@ -365,7 +364,27 @@ namespace RetailSales.Controllers.Purchase
             //  model.ItemGrouplst = BindItemGrplst(value);
             return Json(BindCity(cityid));
         }
-
+        public JsonResult GetUOMJSON(string ItemId)
+        {
+            return Json(BindUOM(ItemId));
+        }
+        public List<SelectListItem> BindUOM(string ItemId)
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("SELECT UC.ID,U.UOM_CODE FROM UOM_CONVERT UC LEFT JOIN UOM U ON UC.DEST_UOM=U.ID where PRO_ID='"+ ItemId  + "'");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public JsonResult SaveSupplier(string Category, string Suppid, string SupplierAdd, string Days,string GST, string State, String City, string Mobile, string Landline, string Email)
         {
             
@@ -608,11 +627,11 @@ namespace RetailSales.Controllers.Purchase
 
 
 
-                dt = datatrans.GetData("SELECT CONVRT_FACTOR FROM UOM_CONVERT WHERE SRC_UOM = '" + uom + "' AND DEST_UOM ='" + ItemId + "'");
+                dt = datatrans.GetData("SELECT CF FROM UOM_CONVERT WHERE SRC_UOM = '" + uom + "' AND DEST_UOM ='" + ItemId + "'");
 
                 if (dt.Rows.Count > 0)
                 {
-                    cf = dt.Rows[0]["CONVRT_FACTOR"].ToString();
+                    cf = dt.Rows[0]["CF"].ToString();
 
                 }
                 else

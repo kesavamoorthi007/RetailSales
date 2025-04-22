@@ -1030,11 +1030,11 @@
             success: function (change) {
                 PopulateDropDown("#ddlProduct" + i, change); // Fixed incorrect selector
 
-                // Call changeVarientItem only after success
+                @* // Call changeVarientItem only after success
                var selectedItem = $("#ddlProduct" + i).val();
                 if (selectedItem) {
                     changeVarientItem(selectedItem, i);
-                } 
+                } *@ 
             },
             error: function () {
                 alert("Please Select Product");
@@ -1179,14 +1179,14 @@
     @* function changeUOM(ItemId, i) {
          var uom =document.getElementById("txtUOM" + i).value;
          var qty =document.getElementById("txtQty" + i).value;
-
+         var proid=document.getElementById("hdvariant" + i).value;
          if (qty == "")
                 qty = 0;
 
 
           $.ajax({
               url: 'GetUOMDetail',
-              data: { "ItemId": ItemId, "uom": uom },
+              data: { "ItemId": ItemId, "uom": uom, "proid": proid },
              type: "GET",
              success: function (result) {
 

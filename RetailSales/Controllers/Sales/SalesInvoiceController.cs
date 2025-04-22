@@ -401,7 +401,11 @@ namespace RetailSales.Controllers.Sales
                     uomid = dt.Rows[0]["UOM_ID"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
                     rate = dt.Rows[0]["SALES_RATE"].ToString();
-                    
+                    if (rate == "")
+                    {
+                        rate = "0";
+                    }
+
                 }
                 dt = SalesInvoiceService.GetStockDetails(ItemId);
                 if (dt.Rows.Count > 0)
@@ -432,11 +436,11 @@ namespace RetailSales.Controllers.Sales
 
 
 
-                dt = datatrans.GetData("SELECT CONVRT_FACTOR FROM UOM_CONVERT WHERE SRC_UOM = '" + uom  + "' AND DEST_UOM ='" + ItemId + "'");
+                dt = datatrans.GetData("SELECT CF FROM UOM_CONVERT WHERE SRC_UOM = '" + uom  + "' AND DEST_UOM ='" + ItemId + "'");
 
                 if (dt.Rows.Count > 0)
                 {
-                    cf = dt.Rows[0]["CONVRT_FACTOR"].ToString();
+                    cf = dt.Rows[0]["CF"].ToString();
 
                 }
                 else 
