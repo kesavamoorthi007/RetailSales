@@ -108,6 +108,8 @@ namespace RetailSales.Controllers.Master
                     tda.DestUom = dtt.Rows[0]["DEST_UOM"].ToString();
                     tda.CF = dtt.Rows[0]["CF"].ToString();
                     tda.ProdRate = dtt.Rows[0]["RATE"].ToString();
+                    tda.Percentage = dtt.Rows[0]["PERCENTAGE"].ToString();
+                    tda.SalesRate = dtt.Rows[0]["SALES_RATE"].ToString();
                     TData.Add(tda);
                 }
             }

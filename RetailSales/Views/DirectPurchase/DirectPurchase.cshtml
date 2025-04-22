@@ -206,6 +206,7 @@
                                                             </td>
                                                             <td>
                                                                 @Html.TextBoxFor(o => o.DirectPurchaseLst[i].UOM, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                                @Html.HiddenFor(o => o.DirectPurchaseLst[i].UOM, new { @id = "txtUOM" + i })
                                                             </td>
                                                             <td>
                                                                 @Html.DropDownListFor(o => o.DirectPurchaseLst[i].DestUOM, Model.DirectPurchaseLst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 220px;", onchange = "changeUOM(this.value," + i + ")" })
@@ -501,6 +502,17 @@
             });
         }
         $(dropDownId).trigger("liszt:updated");
+    }
+    function PopulateDropDown1(dropDownId, list,rvalue) {
+        //alert(list);
+        $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+        $(dropDownId).val(rvalue).trigger('change');
     }
 
     function changeQty(_this, i) {
@@ -1133,11 +1145,11 @@
             success: function (change) {
                 PopulateDropDown("#ddlProduct" + i, change); // Fixed incorrect selector
 
-                // Call changeVarientItem only after success
+                @* // Call changeVarientItem only after success
                var selectedItem = $("#ddlProduct" + i).val();
                 if (selectedItem) {
                     changeVarientItem(selectedItem, i);
-                }
+                } *@
             },
             error: function () {
                 alert("Please Select Product");
@@ -1163,6 +1175,9 @@
     }
 
     function changeVarientItem(ItemId, i) {
+             
+
+
         var cusid = document.getElementById("ddlSupplier").value;
         $.ajax({
             url: 'GetVarientDetails',
@@ -1176,7 +1191,22 @@
                 document.getElementById("CGSTP" + i).value = result.cgst;
                 document.getElementById("SGSTP" + i).value = result.sgst;
                 document.getElementById("IGSTP" + i).value = result.igst;
-                $("#ddlDestUOM" + i).val(result.uom).trigger('change');
+                //$("#ddlDestUOM" + i).val(result.uom).trigger('change');
+
+                $.ajax({
+              url: "GetUOMJSON",
+              type: "post",
+               data: { "ItemId": ItemId},
+              cache: false,
+              success: function (response) {
+                  PopulateDropDown1("#ddlDestUOM"+i, response,result.uom);
+
+              },
+              error: function () {
+                  alert("Please Select Supplier");
+              }
+            });
+
 
                 document.getElementById("txtCF" + i).value = "1";
             },
@@ -1184,6 +1214,8 @@
                 alert("Data Not Found");
             }
         });
+
+    
 
         var j = 0;
         var itemSelected = ItemId;  // Current item ID selected
@@ -1281,7 +1313,7 @@
     function changeUOM(ItemId, i) {
          var uom =document.getElementById("txtUOM" + i).value;
          var qty =document.getElementById("txtQty" + i).value;
-
+         
          if (qty == "")
                 qty = 0;
 
@@ -1427,6 +1459,26 @@
              $('._select').select2();
          });
          updateSerialNumbers();
+         var fancybox123;
+       jQuery(document).ready(function ($) {
+           $(".fancybox").fancybox({
+               width: '80%',
+               height: '10%',
+               arrows: false,
+
+           });
+           fancybox123 = $.fancybox;
+       });
+
+       function close_popup() {
+           fancybox123.close();
+           $(".fancybox1").fancybox({
+               width: '100%',
+               height: '100%',
+               arrows: false,
+           });
+           $(".fancybox1").eq(0).trigger('click');
+       }
      }
      function updateSerialNumbers() {
          $("#tbBooks tr.chkitemlst").each(function (idx) {

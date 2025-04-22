@@ -529,10 +529,10 @@
              success: function (result) {
                  document.getElementById("txtUOM" + i).value = result.uom;
                  document.getElementById("txtHsn" + i).value = result.hsn;
-                 document.getElementById("txtRate" + i).value = result.rate;
                  $("#ddlDestUOM" + i).val(result.uom).trigger('change');
                  document.getElementById("txtStockQty" + i).value = result.stockqty;
-
+                 document.getElementById("txtRate" + i).value = result.rate;
+                 
              },
              error: function () {
                  alert("Data Not Found");
@@ -695,110 +695,66 @@
         }
     }
       
+
     function changeQty(_this, i) {
         try {
-            var GTot = 0;
-            var j = 0;
-            var qty = 0;
-            var tot = 0;
-            var totfrieght = 0;
-            var cgsttotamt = 0;
-            var sgsttotamt = 0;
-            var igsttotamt = 0;
-            var disttotamt = 0;
-            var totdis = 0;
-            var tpknc = 0;
-            var tochr = 0;
-            var tsdis = 0;
-            var totamt = 0;
-            var totamount = 0;
-            var qty = document.getElementById("txtQty" + i).value || 0;
+            let totamt = 0;
+            let totamount = 0;
+            let disttotamt = 0;
+            let j = 0;
 
-            var up = document.getElementById("txtRate" + i).value || 0;
+            let qty = parseFloat(document.getElementById("txtQty" + i).value) || 0;
+            let sqty = parseFloat(document.getElementById("txtStockQty" + i).value) || 0;
+            let up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
+            let disc = parseFloat(document.getElementById("txtDiscAmount" + i).value) || 0;
+            let cf = parseFloat(document.getElementById("txtCF" + i).value) || 0;
 
-           
-            var Disc = document.getElementById("txtDiscAmount" + i).value || 0;
-            var CF = document.getElementById("txtCF" + i).value || 0;
-
-            if (qty == "")
+            // Check if quantity exceeds stock
+            if (qty > sqty) {
+                alert("Entered Qty is higher than Stock Qty");
                 qty = 0;
+                document.getElementById("txtQty" + i).value = "0";
+                
+            }
 
-            if (up == "")
-                up = 0;
+            let amount = qty * up;
+            let cfQty = qty * cf;
+            let totalAfterDisc = amount - disc;
 
-                if (CF == "")
-                CF = 0;
+            // Update calculated values to UI
+            document.getElementById("txtAmount" + i).value = amount.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = cfQty;
+            document.getElementById("txtTotal" + i).value = totalAfterDisc.toFixed(2);
 
-
-            if (Disc == "")
-                Disc = 0;
-
-            var tot = eval(qty) * eval(up) ;
-            var cfqty = eval(qty) * eval(CF) ;
-            document.getElementById("txtAmount" + i).value = tot.toFixed(2);
-            document.getElementById("txtCfQty" + i).value = cfqty;
-
-            var dis = eval(tot);
-
-
-            var tottax = eval(dis);
-
-            var totdis = eval(tottax) - eval(Disc);
-
-
-            document.getElementById("txtTotal" + i).value = totdis.toFixed(2);
-
-
+            // Loop through all visible item rows
             $('tr.chkitemlst').each(function () {
                 if ($(this).css('display') !== 'none') {
+                    let amt = parseFloat($(this).find('[id^="txtAmount"]').val()) || 0;
+                    let total = parseFloat($(this).find('[id^="txtTotal"]').val()) || 0;
+                    let discount = parseFloat($(this).find('[id^="txtDiscAmount"]').val()) || 0;
 
-                    var amt = $(this).find('#txtAmount' + j.toString()).val() || 0;
-                    if (amt == "")
-                        amt = 0;
-
-                    totamt += eval(amt);
-
-
-                    var tamt = $(this).find('#txtTotal' + j.toString()).val() || 0;
-                    if (tamt == "")
-                        tamt = 0;
-
-                    totamount += eval(tamt);
-                   
-
-                    var dist = $(this).find('#txtDiscAmount' + j.toString()).val() || 0;
-                    if (dist == "")
-                        dist = 0;
-
-                    disttotamt += eval(dist);
-
-
-
-
-
+                    totamt += amt;
+                    totamount += total;
+                    disttotamt += discount;
                 }
-                j += 1;
+                j++;
             });
-            var roundamount = Math.round(totamount);
 
-            var round = eval(roundamount) - eval(totamount);
+            // Rounding and summary updates
+            let roundamount = Math.round(totamount);
+            let round = roundamount - totamount;
 
             document.getElementById("txtGross").value = totamt.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
             document.getElementById("hidnet").value = roundamount.toFixed(2);
-
-
             document.getElementById("txtRound").value = round.toFixed(2);
-
-
             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
 
-
-        }
-        catch (ex) {
+        } catch (ex) {
             alert(ex.message);
         }
     }
+
 
     function changeDisc(_this, i) {
         try {

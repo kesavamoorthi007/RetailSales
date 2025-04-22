@@ -45,7 +45,7 @@
                 { name: 'sup', type: 'string' },
                 { name: 'refno', type: 'string' },
                 { name: 'net', type: 'string' },
-                { name: 'editrow', type: 'string' },
+                //{ name: 'editrow', type: 'string' },
                 { name: 'view', type: 'string' },
                 //{ name: 'delrow', type: 'string' },
 
@@ -60,6 +60,9 @@
             }
         }
         );
+         var linkrenderer1 = function (row, column, value) {
+        return '<a href="' + value + '" class="fancybox" data-fancybox-type="iframe"><img src="../Images/pdficon.png" alt="View Details" width="20" /></a>';
+    }
 
         $("#grid").jqxGrid(
             {
@@ -105,6 +108,14 @@
             };
             $("#grid").jqxGrid({ source: source });
         });
+              $("#grid").on("bindingcomplete", function () {
+      $(".fancybox").fancybox({
+                width: '1000px',
+                height: '1000px',
+                arrows: false,
+                //autoSize : false
+            }); // or Fancybox v3+
+    });
     });
 
 </script>
@@ -153,17 +164,17 @@
     }
 </script>
 <a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a>
-<a class="fancyboxe1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a>
+@* <a class="fancyboxe1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 760px;"></a> *@
 <link rel="stylesheet" href="@Url.Content("~/css/jquery.fancybox.css?v=2.1.5")" type="text/css" media="screen" />
 <script type="text/javascript" src="@Url.Content("~/css/jquery.fancybox.pack.js?v=2.1.5")"></script>
 <script type="text/javascript">
     var fancybox123;
     jQuery(document).ready(function ($) {
         $(".fancybox").fancybox({
-            width: '80%',
-            height: '10%',
+            width: '1000px',
+            height: '1000px',
             arrows: false,
-
+            //autoSize : false
         });
         fancybox123 = $.fancybox;
     });
