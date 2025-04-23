@@ -214,6 +214,11 @@ namespace RetailSales.Controllers.Sales
         public IActionResult ViewSalesReturn(string id)
         {
             SalesInvoice ic = new SalesInvoice();
+            DataTable dtv = datatrans.GetSequence("Sales Return");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.DocNo = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
             DataTable dt = new DataTable();
             DataTable dtt = new DataTable();
 
@@ -258,6 +263,7 @@ namespace RetailSales.Controllers.Sales
                     tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
+                    tda.DiscPer = dtt.Rows[i]["DISC_PER"].ToString();
                     tda.Discount = dtt.Rows[i]["DISCOUNT"].ToString();
                     tda.Total = dtt.Rows[i]["TOTAL"].ToString();
                     tda.ID = id;
@@ -273,7 +279,7 @@ namespace RetailSales.Controllers.Sales
             try
             {
                 Cy.ID = id;
-                string Strout = SalesInvoiceService.InvoicetoReturn(Cy.ID);
+                string Strout = SalesInvoiceService.InvoicetoReturn(Cy);
                 if (string.IsNullOrEmpty(Strout))
                 {
                     if (Cy.ID == null)
@@ -336,7 +342,7 @@ namespace RetailSales.Controllers.Sales
                     }
                     else
                     {
-                        GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/back.png' alt='View Details' width='20' /></a>";
+                        GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/back.png' alt='View Details' width='20' /></a>";
                         //EditRow = "<a href=SalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
                         report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
 

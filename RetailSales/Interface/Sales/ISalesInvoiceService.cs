@@ -10,7 +10,7 @@ namespace RetailSales.Interface.Sales
         DataTable GetVariant(string id);
         DataTable GetVarientDetails(string id);
         DataTable GetSalesInvoice(string id);
-        string InvoicetoReturn(string id);
+        string InvoicetoReturn(SalesInvoice id);
         DataTable GetSalesInvoiceItem(string id);
         Task<IEnumerable<ExinvBasicItem>> GetBasicItem(string id);
         Task<IEnumerable<ExinvDetailitem>> GetExinvItemDetail(string id);
