@@ -325,17 +325,30 @@ namespace RetailSales.Services.Sales
 
             return msg;
         }
-        public string InvoicetoReturn(string SalesId)
+        public string InvoicetoReturn(SalesInvoice cy)
         {
             string msg = "";
             try
             {
                 string StatementType = string.Empty; string svSQL = "";
                 datatrans = new DataTransactions(_connectionString);
-               
+
+                int idc = datatrans.GetDataId("SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'SR' AND IS_ACTIVE = 'Y'");
+                string docno = string.Format("{0}{1}{2}", "SR/", "24-25/", (idc + 1).ToString());
+
+                string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='SR' AND IS_ACTIVE ='Y'";
+                try
+                {
+                    datatrans.UpdateStatus(updateCMd);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
-                    svSQL = "Insert into SAL_RETURN (INVOICE_NO,INV_DATE,SAL_INVOICE_NO,CUSTOMER,DOC_NO,DOC_DATE,ADDRESS,MOBILE,REMARKS,DISCOUNT,TOTAL,TOTAL_AMOUNT,IS_ACTIVE) (Select INVOICE_NO,INV_DATE,'" + SalesId + "',CUSTOMER,'1','" + DateTime.Now.ToString("dd-MMM-yyyy") + "' ,ADDRESS,MOBILE,NARRATION,DISCOUNT,TOTAL,NET,'Y' from SALES_INV where SALES_INV.SAL_INV_BASICID='" + SalesId + "')";
+                    svSQL = "Insert into SAL_RETURN (INVOICE_NO,INV_DATE,SAL_INVOICE_NO,CUSTOMER,DOC_NO,DOC_DATE,ADDRESS,MOBILE,REMARKS,DISCOUNT,TOTAL,TOTAL_AMOUNT,RETURN_TYPE,IS_ACTIVE) (Select INVOICE_NO,INV_DATE,'" + cy.ID + "',CUSTOMER,'" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "' ,ADDRESS,MOBILE,NARRATION,DISCOUNT,NET,GROSS,'" + cy.Return + "','Y' from SALES_INV where SALES_INV.SAL_INV_BASICID='" + cy.ID + "')";
                     SqlCommand objCmd = new SqlCommand(svSQL, objConn);
                     try
                     {
@@ -351,7 +364,7 @@ namespace RetailSales.Services.Sales
 
                 using (SqlConnection objConnE = new SqlConnection(_connectionString))
                 {
-                    string Sql = "UPDATE SALES_INV SET STATUS='Generated' where SALES_INV.SAL_INV_BASICID='" + SalesId + "'";
+                    string Sql = "UPDATE SALES_INV SET STATUS='Generated' where SALES_INV.SAL_INV_BASICID='" + cy.ID + "'";
                     SqlCommand objCmds = new SqlCommand(Sql, objConnE);
                     objConnE.Open();
                     objCmds.ExecuteNonQuery();

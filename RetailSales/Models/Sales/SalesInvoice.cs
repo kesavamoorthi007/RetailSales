@@ -15,6 +15,7 @@ namespace RetailSales.Models
         public List<SelectListItem> Citylst;
         public string ID { get; set; }
         public string InvoiceNo { get; set; }
+        public string DocNo { get; set; }
         public string InvoiceDate { get; set; }
         public string Customer { get; set; }
         public string Address { get; set; }
