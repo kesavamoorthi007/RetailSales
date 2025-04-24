@@ -15,6 +15,6 @@ namespace RetailSales.Interface.Master
         DataTable GetState();
         DataTable GetCity(string cityid);
         DataTable GetCategory();
-        DataTable GetPincodeDetails(string ItemId);
+        
     }
 }
