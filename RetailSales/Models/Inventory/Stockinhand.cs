@@ -19,6 +19,7 @@
         public string doc { get; set; }
         public string item { get; set; }
         public string product { get; set; }
+        public string location { get; set; }
         public string qty { get; set; }
         public string variant { get; set; }
         public string uom { get; set; }

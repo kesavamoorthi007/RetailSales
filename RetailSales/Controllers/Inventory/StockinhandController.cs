@@ -51,7 +51,7 @@ namespace RetailSales.Controllers
 
                 Reg.Add(new Stockinhandgrid
                 {
-                    
+                    location = dtUsers.Rows[i]["LOCATION_ID"].ToString(),
                     item = dtUsers.Rows[i]["PRODUCT_NAME"].ToString(),
                     product = dtUsers.Rows[i]["PROD_NAME"].ToString(),
                     variant = dtUsers.Rows[i]["PRODUCT_VARIANT"].ToString(),

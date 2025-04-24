@@ -126,6 +126,23 @@ namespace RetailSales.Models
             }
             return Date1.Year;
         }
+        public string GetCurrentFYear(DateTime date)
+        {
+            int startYear, endYear;
+
+            if (date.Month >= 4) // April or later
+            {
+                startYear = date.Year;
+                endYear = date.Year + 1;
+            }
+            else // January to March
+            {
+                startYear = date.Year - 1;
+                endYear = date.Year;
+            }
+
+            return $"{startYear}-{endYear}";
+        }
         public int GetDataId(String sql)
         {
             DataTable _dt = new DataTable();

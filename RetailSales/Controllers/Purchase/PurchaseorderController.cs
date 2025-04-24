@@ -765,7 +765,7 @@ namespace RetailSales.Controllers.Purchase
                         MailRow = "<a href=SendMail?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/gmail.png' alt='Send Email' width='20' /></a>";
                        // GeneratePDF = "<a href=GeneratePdf?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                         EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
-                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
+                        GoToGRN = "<a href=MoveGRN?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
                         View = "<a href=ViewPurchaseOrder?id=" + dtUsers.Rows[i]["POBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                         DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["POBASICID"].ToString() + "";
                     }

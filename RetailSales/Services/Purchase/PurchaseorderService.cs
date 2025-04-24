@@ -603,7 +603,7 @@ namespace RetailSales.Services.Purchase
                         Object Pid1 = objCmddtss.ExecuteScalar();
                         objConn.Close();
 
-                        string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Y','" + cp.Qty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
+                        string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.Qty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
                         SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
                         objConn.Open();
                         objCmddtsss.ExecuteNonQuery();

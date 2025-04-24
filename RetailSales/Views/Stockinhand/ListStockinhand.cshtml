@@ -45,6 +45,7 @@
                 { name: 'variant', type: 'string' },
                 { name: 'uom', type: 'string' },
                 { name: 'qty', type: 'string' },
+                { name: 'location', type: 'string' },
             ],
             id: 'id',
         };
@@ -58,36 +59,47 @@
 
         $("#grid").jqxGrid(
             {
-                width: '90%',
+                width: '100%',
                 source: dataAdapter,
-                height: 450,
+                height: 850,
                 source: source,
                 //autoheight: true,
                 sortable: true,
                 filterable: true,
-                groupable: false,
-                pageable: true,
+                groupable: true,
+                pageable: false,
                 showfilterbar: true,
                 theme: 'ui-start',
                 //showfilterrow: true,
                 //theme: 'fresh',
-                autorowheight: true,
+                //autorowheight: true,
                 filterbarmode: 'simple',
                 enablebrowserselection: true,
                 columnsresize: true,
                 selectionmode: 'multiplerowsextended',
                 keyboardnavigation: false,
-
+                showgroupaggregates: true,
+                showstatusbar: true,
+                showaggregates: true,
+                groups: ['product'],
                 columns: [
-
-                    //{ text: 'Doc No', filtertype: 'checkedlist', datafield: 'doc', width: 300 },
-                    { text: 'Product Category', filtertype: 'checkedlist', datafield: 'item', width: 200 },
-                    { text: 'Product Name', filtertype: 'checkedlist', datafield: 'product', width: 200 },
-                    { text: 'Variant', filtertype: 'checkedlist', datafield: 'variant', width: 250 },
+                     { text: 'Location', filtertype: 'checkedlist', groupable: true, datafield: 'location', width: 200 },
+                    { text: 'Product Category', filtertype: 'checkedlist', groupable: true, datafield: 'item', width: 200 },
+                    { text: 'Product Name', filtertype: 'checkedlist', groupable: true, datafield: 'product', width: 200 },
+                    { text: 'Variant', filtertype: 'checkedlist', groupable: true, datafield: 'variant', width: 250 },
                     { text: 'Unit', filtertype: 'checkedlist', datafield: 'uom', width: 100 },
-                    { text: 'Balance Quantity', filtertype: 'checkedlist', datafield: 'qty', width: 150 },
-                //    { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                //    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
+                     {
+                      text: 'Balance Quantity', datafield: 'qty', aggregates: ["sum"], cellsalign: 'right',
+                      cellsrenderer: function (row, column, value, defaultRender, column, rowData) {
+                          if (value.toString().indexOf("Sum") >= 0) {
+                              return defaultRender.replace("Sum", "TotL");
+                          }
+                      },
+                      aggregatesrenderer: function (aggregates, column, element) {
+                          var renderstring = '<div style="position: relative; margin-top: 4px; margin-right:5px; text-align: right; overflow: hidden;">' + "Total" + ': ' + aggregates.sum + '</div>';
+                          return renderstring;
+                      }
+                  }
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -99,6 +111,7 @@
                 strstatus: value
             };
             $("#grid").jqxGrid({ source: source });
+           // $("#grid").jqxGrid('collapseallgroups');
         });
     });
 
