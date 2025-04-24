@@ -48,11 +48,11 @@ namespace RetailSales.Services
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT CITY.ID,CITY.CITY_NAME,COUNTRY.COUNTRY_NAME,STATE.STATE_NAME,CITY.PINCODE,CITY.IS_ACTIVE FROM CITY LEFT OUTER JOIN COUNTRY ON COUNTRY.ID=CITY.COUNTRY_ID LEFT OUTER JOIN STATE ON STATE.ID=CITY.STATE_ID WHERE CITY.IS_ACTIVE = 'Y' ORDER BY CITY.ID DESC";
+                SvSql = "SELECT CITY.ID,CITY.CITY_NAME,COUNTRY.COUNTRY_NAME,STATE.STATE_NAME,CITY.IS_ACTIVE FROM CITY LEFT OUTER JOIN COUNTRY ON COUNTRY.ID=CITY.COUNTRY_ID LEFT OUTER JOIN STATE ON STATE.ID=CITY.STATE_ID WHERE CITY.IS_ACTIVE = 'Y' ORDER BY CITY.ID DESC";
             }
             else
             {
-                SvSql = "SELECT CITY.ID,CITY.CITY_NAME,COUNTRY.COUNTRY_NAME,STATE.STATE_NAME,CITY.PINCODE,CITY.IS_ACTIVE FROM CITY LEFT OUTER JOIN COUNTRY ON COUNTRY.ID=CITY.COUNTRY_ID LEFT OUTER JOIN STATE ON STATE.ID=CITY.STATE_ID WHERE CITY.IS_ACTIVE = 'N' ORDER BY CITY.ID DESC";
+                SvSql = "SELECT CITY.ID,CITY.CITY_NAME,COUNTRY.COUNTRY_NAME,STATE.STATE_NAME,CITY.IS_ACTIVE FROM CITY LEFT OUTER JOIN COUNTRY ON COUNTRY.ID=CITY.COUNTRY_ID LEFT OUTER JOIN STATE ON STATE.ID=CITY.STATE_ID WHERE CITY.IS_ACTIVE = 'N' ORDER BY CITY.ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -67,7 +67,7 @@ namespace RetailSales.Services
         public DataTable GetEditCityDetail(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ID,CITY_NAME,STATE_ID,COUNTRY_ID,PINCODE FROM CITY WHERE ID = '" + id + "' ";
+            SvSql = "SELECT ID,CITY_NAME,STATE_ID,COUNTRY_ID FROM CITY WHERE ID = '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -134,7 +134,7 @@ namespace RetailSales.Services
                 if (ic.ID == null)
                 {
 
-                    svSQL = "SELECT Count(CITY_NAME) as cnt FROM CITY WHERE CITY_NAME = LTRIM(RTRIM('" + ic.CityName + "')) and STATE_ID = LTRIM(RTRIM('" + ic.StateId + "')) and COUNTRY_ID = LTRIM(RTRIM('" + ic.CountryId + "')) and PINCODE = LTRIM(RTRIM('" + ic.PinCode + "'))";
+                    svSQL = "SELECT Count(CITY_NAME) as cnt FROM CITY WHERE CITY_NAME = LTRIM(RTRIM('" + ic.CityName + "')) and STATE_ID = LTRIM(RTRIM('" + ic.StateId + "')) and COUNTRY_ID = LTRIM(RTRIM('" + ic.CountryId + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
                         msg = "City Name Already Existed";
@@ -158,7 +158,6 @@ namespace RetailSales.Services
                     objCmd.Parameters.Add("@cityname", SqlDbType.NVarChar).Value = ic.CityName;
                     objCmd.Parameters.Add("@stateid", SqlDbType.NVarChar).Value = ic.StateId;
                     objCmd.Parameters.Add("@countryid", SqlDbType.NVarChar).Value = ic.CountryId;
-                    objCmd.Parameters.Add("@pincode", SqlDbType.NVarChar).Value = ic.PinCode;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {

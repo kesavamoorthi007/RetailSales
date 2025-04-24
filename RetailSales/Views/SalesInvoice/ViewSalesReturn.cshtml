@@ -405,9 +405,9 @@
                 document.getElementById("txtDiscAmount" + i).value = "0.00";
             } else {
                 if(discper < 100){
-                    Disc = (discper / 100) * amount;
-                    document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);  // **Fixed formatting issue**
-                    tottax -= Disc;
+                    disc = (discper / 100) * amount;
+                    document.getElementById("txtDiscAmount" + i).value = disc.toFixed(2);  // **Fixed formatting issue**
+                    tottax -= disc;
                 }
                 else{
                     alert("Disc % Should not exceed 100");
@@ -436,7 +436,7 @@
             let round = roundamount - totamount;
 
             document.getElementById("txtGross").value = totamt.toFixed(2);
-            document.getElementById("txtDisc").value = Disc.toFixed(2);
+            document.getElementById("txtDisc").value = disc.toFixed(2);
             document.getElementById("txtNet").value = roundamount.toFixed(2);
             document.getElementById("hidnet").value = roundamount.toFixed(2);
             document.getElementById("txtRound").value = round.toFixed(2);

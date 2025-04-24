@@ -47,7 +47,7 @@ namespace RetailSales.Controllers
                     ic.stlist = BindState(ic.CountryId);
                     ic.StateId = dt.Rows[0]["STATE_ID"].ToString();
                     ic.CityName = dt.Rows[0]["CITY_NAME"].ToString();
-                    ic.PinCode = dt.Rows[0]["PINCODE"].ToString();
+                    
                 }
             }
             return View(ic);
@@ -169,7 +169,7 @@ namespace RetailSales.Controllers
                     ciname = dtUsers.Rows[i]["CITY_NAME"].ToString(),
                     statid = dtUsers.Rows[i]["STATE_NAME"].ToString(),
                     counid = dtUsers.Rows[i]["COUNTRY_NAME"].ToString(),
-                    pincode = dtUsers.Rows[i]["PINCODE"].ToString(),
+                    
                     editrow = EditRow,
                     delrow = DeleteRow,
 
