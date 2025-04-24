@@ -107,28 +107,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Pin Code</label>
-                                        <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Pincode, new { @id = "txtPincode", @type = "number", @class = "form-control", @readonly = "readonly", @TabIndex = 2 })
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Email ID</label>
-                                        <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @Type = "email", @TabIndex = 2 })
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                           </div>
-                            <br />
-                            <div class="row">
-                                
-                                <div class="col-md-4">
-                                    <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Mobile No<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.Mobile, new
@@ -146,6 +124,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Email ID</label>
+                                        <div class="col-sm-12">
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @Type = "email", @TabIndex = 2 })
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                            <br />
+                            <div class="row">
+                                
+                                
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Landline No</label>
@@ -213,22 +205,7 @@
             }
         });
     }
-    function changepincode(pinid) {
-        $.ajax({
-            url: 'GetPincodeDetails',
-            data: { "ItemId": pinid },
-            type: "GET",
-            success: function (result) {
-
-                document.getElementById("txtPincode").value = result.pin;
-                
-
-            },
-            error: function () {
-                alert("Data Not Found");
-            }
-        });
-    }
+    
     $(function () {
         $('._select').select2();
     });

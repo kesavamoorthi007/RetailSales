@@ -198,30 +198,7 @@ namespace RetailSales.Controllers.Master
             });
 
         }
-        public ActionResult GetPincodeDetails(string ItemId)
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-                string pin = "";
-                
-                dt = SupplierService.GetPincodeDetails(ItemId);
-
-                if (dt.Rows.Count > 0)
-                {
-                    pin = dt.Rows[0]["PINCODE"].ToString();
-                    
-                }
-
-                var result = new { pin = pin };
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+        
         public ActionResult DeleteMR(string tag, string id)
         {
 
