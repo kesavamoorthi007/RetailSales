@@ -250,9 +250,13 @@ namespace RetailSales.Controllers.Purchase
                 {
 
                     //EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
-                    Accounts = "<a href=GRNAccount?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
-                    //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    if (dtUsers.Rows[i]["PAYMENT_TAG"].ToString() == "0")
+                    {
+                        Accounts = "<a href=GRNAccount?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
+                        //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    }
                     View = "<a href=ViewGRN?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/file.png' alt='View' width='20'  /></a>";
+
                     Move = "<a href=MoveStock?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
                     //DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "";
 
@@ -319,7 +323,7 @@ namespace RetailSales.Controllers.Purchase
         {
             GRN grn = new GRN();
             DataTable dt = new DataTable();
-            dt = datatrans.GetData("SELECT NARRATION,AMTINWORDS,GRN_NO,GRN_DATE,SUP_NAME,REF_NO,REF_DATE,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF FROM GRN_BASIC WHERE GRN_BASIC_ID='" + id + "'");
+            dt = datatrans.GetData("SELECT NARRATION,AMTINWORDS,GRN_NO,GRN_DATE,SUP_NAME,REF_NO,REF_DATE,GROSS,NET,DISCOUNT,FRIGHTCHARGE,CGST,SGST,IGST,ROUNT_OFF FROM GRN_BASIC WHERE PAYMENT_TAG='0' AND GRN_BASIC_ID='" + id + "'");
             grn.GRNID = id;
             grn.RefDate = DateTime.Now.ToString("dd-MMM-yyyy");
             grn.createdby = Request.Cookies["UserName"];
@@ -389,7 +393,7 @@ namespace RetailSales.Controllers.Purchase
                 grn.IGST = Convert.ToDouble(dt.Rows[0]["IGST"].ToString() == "" ? "0" : dt.Rows[0]["IGST"].ToString());
              
                // DataTable dtParty = datatrans.GetData("select P.ACCOUNTNAME from GRNBLBASIC G,PARTYMAST P where G.PARTYID=P.PARTYMASTID AND G.GRNBLBASICID='" + id + "'");
-                string mid = "3883";
+                string mid = datatrans.GetDataString("select P.LEDGER_ID from GRN_BASIC G,SUPPLIER P where G.SUP_ID=P.ID AND G.GRN_BASIC_ID='" + id + "'");
                 grn.mid = mid;
                 if (grn.Net > 0)
                 {
@@ -541,6 +545,24 @@ namespace RetailSales.Controllers.Purchase
                     tda.symbol = "-";
                     TData.Add(tda);
                 }
+                if (grn.Round < 0)
+                {
+                    tda = new GRNAccount();
+                    // tda.CRDRLst = BindCRDRLst();
+                    tda.Ledgerlist = BindLedgerLst();
+                    tda.Ledgername = roundoffledger;
+                    tda.mid = roundoffledger;
+                    tda.CRAmount = 0;
+                    tda.DRAmount = grn.Round;
+                    tda.TypeName = "ROUND OFF";
+                    tda.Isvalid = "Y";
+                    tda.CRDR = "Dr";
+                    tda.crdrh = "Dr";
+                    totalcredit += tda.CRAmount;
+                    totaldebit += tda.DRAmount;
+                    tda.symbol = "+";
+                    TData.Add(tda);
+                }
                 if (grn.Gross > 0)
                 {
                       tda = new GRNAccount();
@@ -570,5 +592,45 @@ namespace RetailSales.Controllers.Purchase
             //grn.Accconfiglst = BindAccconfig();
             return View(grn);
         }
+
+        [HttpPost]
+        public ActionResult GRNAccount(GRN Cy, string id)
+        {
+
+            try
+            {
+                // Cy.GRNID = id;
+                string Strout = GRNService.GRNACCOUNT(Cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (Cy.GRNID == null)
+                    {
+                        TempData["notice"] = "GRN Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "GRN Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListGRN");
+                }
+
+                else
+                {
+                    ViewBag.PageTitle = "Edit GRN";
+                    TempData["notice"] = Strout;
+                    //return View();
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(Cy);
+        }
+
+
     }
 }

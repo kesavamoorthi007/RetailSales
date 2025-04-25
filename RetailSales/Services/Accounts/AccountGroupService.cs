@@ -199,22 +199,16 @@ namespace RetailSales.Services.Accounts
         public DataTable GetDaydet(string strfrom, string strTo, string strStatus)
         {
             string SvSql = string.Empty;
-            //SvSql = "SELECT VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME , MID, DEBIT_AMT, CREDIT_AMT,TRANS_TYPE = 'Credit',THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1  ";
-            SvSql = "SELECT VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE, T1.ID, VOUCH_MEMO, TRANS_TYPE, VOUCH_NAME AS MID, DEBIT_AMT AS DBAMOUNT, CREDIT_AMT AS CRAMOUNT, CASE WHEN TRANS_TYPE = 'Credit' THEN CR_LDGR_NAME ELSE DR_LDGR_NAME END AS ledger, REF_TYPE FROM ACC_VOUCHER T1 WHERE ID BETWEEN  1 AND  (SELECT MAX(ID)  FROM ACC_VOUCHER)  ";
-            //WHERE T1.TRANS_STATUS='OPEN'
-            //SvSql = "select VOUCH_NO,FORMAT(T1.VOUCH_DATE, 'dd-MM-yyyy') AS VOUCH_DATE,T1.ID,VOUCH_MEMO,TRANS_TYPE,VOUCH_NAME, MID,DEBIT_AMT,CREDIT_AMT from ACC_VOUCHER T1 ";
+            SvSql = "SELECT T2.TRANS2ID, T1.T1VCHNO, FORMAT(T1.T1VCHDT, 'dd-MMM-yyyy') AS T1VCHDT, T1.TRANS1ID, T1.T1TYPE, T1.T1NARR, T2.DBCR, M.LEDGER_NAME AS MID, T2.DBAMOUNT, T2.CRAMOUNT FROM TRANS1 T1 JOIN TRANS2 T2 ON T1.TRANS1ID = T2.TRANS1ID JOIN ACC_LEDGER M ON M.ID = T2.MID   ";
             if (!string.IsNullOrEmpty(strfrom) && !string.IsNullOrEmpty(strTo))
             {
-                if (strStatus == "Y" || strStatus == null)
+               
+               SvSql += " WHERE T1.T1VCHDT > DATEADD(DAY, -30, GETDATE())";
+          }else
                 {
-                    SvSql += "and T1.IS_ACTIVE ='Y' and T1.VOUCH_DATE BETWEEN '" + strfrom + "' and '" + strTo + "'";
+                    SvSql += " Where T1.T1VCHDT BETWEEN '" + strfrom + "' and '" + strTo + "'";
                 }
-                else
-                {
-                    SvSql += "and T1.IS_ACTIVE ='N' and T1.VOUCH_DATE BETWEEN '" + strfrom + "' and '" + strTo + "'";
-                }
-            }
-            SvSql += " Order by T1.VOUCH_DATE ASC  ";
+            SvSql += " ORDER BY T2.TRANS2ID  ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

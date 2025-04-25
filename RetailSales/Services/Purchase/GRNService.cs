@@ -19,11 +19,11 @@ namespace RetailSales.Services.Purchase
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE FROM GRN_BASIC   WHERE GRN_BASIC.IS_ACTIVE = 'Y' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
+                SvSql = "SELECT GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE,PAYMENT_TAG FROM GRN_BASIC   WHERE GRN_BASIC.IS_ACTIVE = 'Y' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
             }
             else
             {
-                SvSql = "SELECT GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE FROM GRN_BASIC  WHERE GRN_BASIC.IS_ACTIVE = 'N' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
+                SvSql = "SELECT GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE,PAYMENT_TAG FROM GRN_BASIC  WHERE GRN_BASIC.IS_ACTIVE = 'N' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -102,6 +102,121 @@ namespace RetailSales.Services.Purchase
             }
             return "";
 
+        }
+
+        public string GRNACCOUNT(GRN cy)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty; string svSQL = "";
+                datatrans = new DataTransactions(_connectionString);
+                string Location = "12418000000423";
+                string parentdocid = "";
+                DataTable dtt = new DataTable();
+                dtt = datatrans.GetData("select GRN_NO,GRN_DATE ,SUP_ID PARTYID from GRN_BASIC where GRN_BASIC_ID='" + cy.GRNID + "'");
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+
+                {
+                    objConn.Open();
+
+                    using (SqlCommand command = objConn.CreateCommand())
+                    {
+                        SqlTransaction transaction = objConn.BeginTransaction();
+                        command.Transaction = transaction;
+
+                        try
+                            {
+                                ////////////////////transaction
+                                int t2cunt = 0;
+                                double grossamt = 0;
+                                string Grossledger = "";
+                                double totgst = 0;
+                                double netamt = 0;
+                                foreach (GRNAccount cp in cy.Acclst)
+                                {
+                                    t2cunt += 1;
+                                    if (cp.TypeName == "GROSS")
+                                    {
+                                        grossamt += cp.DRAmount;
+                                        Grossledger = cp.Ledgername;
+                                    }
+                                    if (cp.TypeName == "CGST")
+                                    {
+                                        totgst += cp.DRAmount;
+                                    }
+                                    if (cp.TypeName == "SGST")
+                                    {
+                                        totgst += cp.DRAmount;
+                                    }
+                                    if (cp.TypeName == "IGST")
+                                    {
+                                        totgst += cp.DRAmount;
+                                    }
+                                    if (cp.TypeName == "NET")
+                                    {
+                                        netamt = cp.CRAmount;
+                                    }
+                                }
+                                DataTable dtv = datatrans.GetData("select PREFIX,LAST_NUMBER LASTNO from Sequence where TRANSECTION_TYPE='vchpr' AND IS_ACTIVE='Y'");
+                                string vNo = dtv.Rows[0]["PREFIX"].ToString() + dtv.Rows[0]["LASTNO"].ToString();
+                                long vnno = Convert.ToInt64(dtv.Rows[0]["LASTNO"].ToString());
+                                string mno = DateTime.Now.ToString("yyyyMM");
+
+                                command.CommandText = "Insert into TRANS1 (T1SOURCEID,T1TYPE,T1VCHNO,CURRENCYID,EXCHANGERATE,T1REFNO,T1REFDT,MONTHNO,T1HIDBMID,T1HIDBAMT,T1HICRMID,T1HICRAMT,T1PARTYID,T1PARTYAMT,T1VCHDT,T1NARR,T2COUNT,VTYPE,AMTWD,USERNAME,MODIFIEDON,TOTGST) VALUES " +
+                                    "('" + cy.GRNID + "','pu','" + vNo + "','1','1','" + dtt.Rows[0]["GRN_NO"].ToString() + "','" + dtt.Rows[0]["GRN_DATE"].ToString() + "','" + mno + "','" + Grossledger + "','" + grossamt + "','" + cy.mid + "','" + netamt + "','" + dtt.Rows[0]["PARTYID"].ToString() + "','" + netamt + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cy.Vmemo + "','" + t2cunt + "','R','" + cy.Amtinwords + "','" + cy.createdby + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + totgst + "') SELECT SCOPE_IDENTITY();";
+                                Object TRANS1 = command.ExecuteScalar();
+
+                            foreach (GRNAccount cp in cy.Acclst)
+                                {
+                                    if (cp.IsDisable == true)
+                                    {
+                                        cp.Ledgername = cp.mid;
+                                        cp.CRDR = cp.crdrh;
+                                    }
+                                    string mledger = "";
+                                    if (cp.TypeName == "NET")
+                                    {
+                                        mledger = Grossledger;
+
+                                    }
+                                    else
+                                    {
+                                        mledger = cy.mid;
+                                    }
+
+                                    command.CommandText = "Insert into TRANS2 (TRANS1ID,DBCR,MID,NDBAMOUNT,DBAMOUNT,NCRAMOUNT,CRAMOUNT,EXRATE,SDBAMOUNT,SCRAMOUNT,T2VCHDT,T2TYPE,T2VCHSTATUS) VALUES " +
+                                    "('" + TRANS1 + "','" + cp.CRDR + "','" + cp.Ledgername + "','" + cp.DRAmount + "','" + cp.DRAmount + "','" + cp.CRAmount + "','" + cp.CRAmount + "','1','" + cp.DRAmount + "','" + cp.CRAmount + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','pu','N')";
+                                    command.ExecuteNonQuery();
+                                    
+                                }
+                            
+                                command.CommandText = " UPDATE Sequence SET LAST_NUMBER ='" + (vnno + 1).ToString() + "' where TRANSECTION_TYPE='vchpr' AND IS_ACTIVE='Y' ";
+                                command.ExecuteNonQuery();
+
+                                command.CommandText = "UPDATE GRN_BASIC SET PAYMENT_TAG ='1' WHERE GRN_BASIC_ID='" + cy.GRNID + "'";
+                                command.ExecuteNonQuery();
+
+                                ///////////////////transaction
+                                transaction.Commit();
+                            }
+                            catch (DataException e)
+                            {
+                                transaction.Rollback();
+                                Console.WriteLine(e.ToString());
+                                Console.WriteLine("Neither record was written to database.");
+                            }
+                        }
+                    }
+                }           
+
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
         }
     }
 }
