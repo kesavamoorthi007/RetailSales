@@ -16,10 +16,12 @@ namespace RetailSales.Services
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public AccConfigService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AccConfigService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         
@@ -60,7 +62,7 @@ namespace RetailSales.Services
                 string StatementType = string.Empty;
                 string svSQL = "";
                 string sv = "";
-                
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (cy.ID == null)
                 {
 
@@ -92,15 +94,20 @@ namespace RetailSales.Services
                     
                     objCmd.Parameters.Add("@TName", SqlDbType.NVarChar).Value = cy.TransactionName;
                     objCmd.Parameters.Add("@Tid", SqlDbType.NVarChar).Value = cy.TransactionID;
-                    
                     objCmd.Parameters.Add("@Scheme", SqlDbType.NVarChar).Value = cy.Scheme;
                     objCmd.Parameters.Add("@Descrip", SqlDbType.NVarChar).Value = cy.SchemeDes;
-
                     objCmd.Parameters.Add("@Bid", SqlDbType.Int).Value = "0";
-                    objCmd.Parameters.Add("@Crby", SqlDbType.NVarChar).Value = cy.CreatBy;
-                    objCmd.Parameters.Add("@Cron", SqlDbType.Date).Value = DateTime.Now;
                     objCmd.Parameters.Add("@Cudate", SqlDbType.Date).Value = DateTime.Now;
-
+                    if (cy.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     //objCmd.Parameters.Add("@OUTID", SqlDbType.Int).Direction = ParameterDirection.Output;
 

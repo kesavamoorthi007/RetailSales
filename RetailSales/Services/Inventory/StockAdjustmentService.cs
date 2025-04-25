@@ -12,10 +12,12 @@ namespace RetailSales.Services.Inventory
 
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public StockAdjustmentService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public StockAdjustmentService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DataTable GetAllStockAdjustment(string strStatus)
@@ -154,7 +156,7 @@ namespace RetailSales.Services.Inventory
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (cy.ID == null)
                 {
                     datatrans = new DataTransactions(_connectionString);
@@ -193,6 +195,16 @@ namespace RetailSales.Services.Inventory
                     objCmd.Parameters.Add("@docid", SqlDbType.NVarChar).Value = cy.DocId;
                     objCmd.Parameters.AddWithValue("@docdate", cy.DocDate);
                     objCmd.Parameters.Add("@reason", SqlDbType.NVarChar).Value = cy.Reason;
+                    if (cy.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {

@@ -10,10 +10,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public StateService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public StateService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -64,7 +66,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (Ic.ID == null)
                 {
 
@@ -92,6 +94,16 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@statecode", SqlDbType.NVarChar).Value = Ic.StatCode;
                     objCmd.Parameters.Add("@statename", SqlDbType.NVarChar).Value = Ic.StatName;
                     objCmd.Parameters.Add("@countrycode", SqlDbType.NVarChar).Value = Ic.ConName;
+                    if (Ic.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {

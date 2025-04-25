@@ -56,9 +56,9 @@ namespace RetailSales.Controllers.Accounts
 
         public ActionResult AccountGroup(AccountGroup cy, string id)
         {
-
+            ViewBag.PageTitle = "AccountGroup";
             try
-             {
+            {
                 cy.ID = id;
                 string Strout = AccountGroupService.AccountGroupCRUD(cy);
                 if (string.IsNullOrEmpty(Strout))
@@ -78,6 +78,7 @@ namespace RetailSales.Controllers.Accounts
                 {
                     ViewBag.PageTitle = "Edit AccountGroup";
                     TempData["notice"] = Strout;
+                    return RedirectToAction("AccountGroup");
                 }
 
                 // }

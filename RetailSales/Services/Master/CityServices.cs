@@ -9,10 +9,12 @@ namespace RetailSales.Services
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public CityServices(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CityServices(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // used for country binding and retrieving from database
@@ -130,7 +132,7 @@ namespace RetailSales.Services
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (ic.ID == null)
                 {
 
@@ -158,6 +160,16 @@ namespace RetailSales.Services
                     objCmd.Parameters.Add("@cityname", SqlDbType.NVarChar).Value = ic.CityName;
                     objCmd.Parameters.Add("@stateid", SqlDbType.NVarChar).Value = ic.StateId;
                     objCmd.Parameters.Add("@countryid", SqlDbType.NVarChar).Value = ic.CountryId;
+                    if (ic.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {

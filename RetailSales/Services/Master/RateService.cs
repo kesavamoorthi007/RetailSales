@@ -10,10 +10,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public RateService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public RateService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
        
         //public DataTable GetItemDetails(string ItemId)
@@ -144,7 +146,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-                
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     try
@@ -161,7 +163,7 @@ namespace RetailSales.Services.Master
 
                                     //if (cp.Isvalid == "Y")
                                     //{
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENT,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     //}
@@ -184,14 +186,14 @@ namespace RetailSales.Services.Master
 
                                         if (cy.ID == null)
                                         {
-                                            svSQL = "Insert into UOM_CONVERT (PRO_ID,PERCENTAGE,SALES_RATE) VALUES ('" + proid + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
+                                            svSQL = "Insert into UOM_CONVERT (PRO_ID,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
                                             SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                             objCmds.ExecuteNonQuery();
                                         }
                                         else
                                         {
                                             //svSQL = "UPDATE UOM_CONVERT SET SRC_UOM='" + cp.SrcUom + "',DEST_UOM='" + cp.DestUom + "',CF='" + cp.CF + "',PERCENT='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE ID='" + cy.ID + "'";
-                                            svSQL = "UPDATE UOM_CONVERT SET PERCENTAGE='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE PRO_ID='" + proid + "'";
+                                            svSQL = "UPDATE UOM_CONVERT SET PERCENTAGE='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "',UPDATED_BY='" + userId + "',UPDATED_ON='" + DateTime.Now + "' WHERE PRO_ID='" + proid + "'";
                                             SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                             objCmds.ExecuteNonQuery();
                                         }

@@ -10,10 +10,12 @@ namespace RetailSales.Services.Accounts
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public LedgersService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LedgersService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         //public DataTable GetLedgers()
@@ -76,6 +78,17 @@ namespace RetailSales.Services.Accounts
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+                if (cy.ID == null)
+                {
+
+                    svSQL = "SELECT Count(LEDGER_NAME) as cnt FROM ACC_LEDGER WHERE LEDGER_NAME = LTRIM(RTRIM('" + cy.LedgerName + "')) ";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Ledger Name Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("LedgersProc", objConn);
@@ -97,16 +110,14 @@ namespace RetailSales.Services.Accounts
                     objCmd.Parameters.Add("@allowzerovalue", SqlDbType.NVarChar).Value = cy.AllowZeroValue;
                     objCmd.Parameters.Add("@totopenbal", SqlDbType.NVarChar).Value = cy.TotalOpeningBalance;
                     objCmd.Parameters.Add("@ledgernotes", SqlDbType.NVarChar).Value = cy.LedgerNotes;
-
-
                     if (cy.ID == null)
                     {
-                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = "CreateBy";
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
                         objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
                     }
                     else
                     {
-                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = "UpdateBy";
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
                         objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
                     }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
