@@ -51,7 +51,7 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult Company(Company cy, string id)
         {
-
+            ViewBag.PageTitle = "Company";
             try
             {
                 cy.ID = id;
@@ -73,7 +73,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit Company";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("Company");
                 }
 
                 // }

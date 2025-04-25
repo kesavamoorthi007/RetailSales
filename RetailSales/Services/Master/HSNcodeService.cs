@@ -27,16 +27,16 @@ namespace RetailSales.Services.Master
                 string StatementType = string.Empty;
                 string svSQL = "";
                 string sv = "";
-                //if (ss.ID == null)
-                //{
+                if (ss.ID == null)
+                {
 
-                //    svSQL = " SELECT Count(HSNCODE) as cnt FROM HSNCODE WHERE HSNCODE = LTRIM(RTRIM('" + ss.HCode + "'))";
-                //    if (datatrans.GetDataId(svSQL) > 0)
-                //    {
-                //        msg = "HsnCode Already Existed";
-                //        return msg;
-                //    }
-                //}
+                    svSQL = " SELECT Count(HSCODE) as cnt FROM HSNMAST WHERE HSCODE = LTRIM(RTRIM('" + ss.HCode + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "HSN Code Already Exist";
+                        return msg;
+                    }
+                }
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {

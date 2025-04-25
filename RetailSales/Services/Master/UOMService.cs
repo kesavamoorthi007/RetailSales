@@ -42,7 +42,16 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                if (cy.ID == null)
+                {
 
+                    svSQL = "SELECT Count(UOM_CODE) as cnt FROM UOM WHERE UOM_CODE = LTRIM(RTRIM('" + cy.UOMCODE + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "UOM Code Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();

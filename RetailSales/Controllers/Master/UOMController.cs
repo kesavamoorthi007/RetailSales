@@ -46,7 +46,7 @@ namespace RetailSales.Controllers.Master
 
         public ActionResult UOM(UOM cy, string id)
         {
-
+            ViewBag.PageTitle = "UOM";
             try
             {
                 cy.ID = id;
@@ -68,6 +68,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit UOM";
                     TempData["notice"] = Strout;
+                    return RedirectToAction("UOM");
                 }
                 
             }

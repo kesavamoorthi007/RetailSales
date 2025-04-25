@@ -117,7 +117,16 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                if (cy.ID == null)
+                {
 
+                    svSQL = "SELECT Count(PROD_NAME) as cnt FROM PRO_NAME WHERE PROD_NAME = LTRIM(RTRIM('" + cy.ProName + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Product Name Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("ProNameProc", objConn);

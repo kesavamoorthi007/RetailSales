@@ -43,7 +43,7 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult State(State Ic, string id)
         {
-
+            ViewBag.PageTitle = "State";
             try
             {
                 Ic.ID = id;
@@ -65,7 +65,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit State";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("State");
                 }
 
                 // }

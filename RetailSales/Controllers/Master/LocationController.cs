@@ -46,7 +46,7 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult Location(Location cy, string id)
         {
-
+            ViewBag.PageTitle = "Location";
             try
             {
                 cy.ID = id;
@@ -68,7 +68,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit Location";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("Location");
                 }
 
                 // }

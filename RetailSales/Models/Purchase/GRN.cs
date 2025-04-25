@@ -84,6 +84,13 @@ namespace RetailSales.Models
         public string SGST { get; set; }
         public string IGST { get; set; }
         public string Total { get; set; }
+        public string ShopQty { get; set; }
+        public List<SelectListItem> ShopBinlist { get; set; }
+        public string ShopBin { get; set; }
+        public string GodownQty { get; set; }
+        public List<SelectListItem> GodownBinlist { get; set; }
+        public string GodownBin { get; set; }
+        public string Isvalid { get; set; }
 
     }
 
@@ -96,6 +103,7 @@ namespace RetailSales.Models
         public string net { get; set; }
         public string accounts { get; set; }
         public string view { get; set; }
+        public string move { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
         

@@ -83,9 +83,9 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Employee No<label class="mandatory">*</label></label>
+                                                <br /> <label for="inputName3" class="col-sm-4 control-label">Employee No<label class="mandatory"></label></label>
                                                 <div class="col-sm-12">
-                                                    @Html.TextBoxFor(C => C.EmpId, new { @id = "txtEmpId", @class = "form-control", @TabIndex = 1 })
+                                                    @Html.TextBoxFor(C => C.EmpId, new { @id = "txtEmpId", @class = "form-control", @TabIndex = 1, @readonly = "readonly" })
                                                     @Html.HiddenFor(C => C.ID)
                                                 </div>
                                             </div>
@@ -220,7 +220,7 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <br /><label for="inputName3" class="col-sm-5 control-label">Account Number<label class="mandatory">*</label></label>
-                                                <div class="col-sm-7">
+                                                <div class="col-sm-12">
                                                     @Html.TextBoxFor(C => C.AccNumber, new { @id = "txtAccount", @class = "form-control", @TabIndex = 1 })
                                                 </div>
                                             </div>
@@ -301,22 +301,7 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            if (document.getElementById("txtEmpId").value == "") {
-                isValid = false;
-                $(txtEmpId).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter Employee No");
-                return false;
-            }
-            else {
-                $(txtEmpId).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+            
             if (document.getElementById("txtEname").value == "") {
                 isValid = false;
                 $(txtEname).css({
