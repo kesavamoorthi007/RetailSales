@@ -41,7 +41,7 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult TaxMaster(TaxMaster cy, string id)
         {
-
+            ViewBag.PageTitle = "TaxMaster";
             try
             {
                 cy.ID = id;
@@ -63,6 +63,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit Tax";
                     TempData["notice"] = Strout;
+                    return RedirectToAction("TaxMaster");
                 }
 
             }

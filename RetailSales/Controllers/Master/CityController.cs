@@ -57,6 +57,7 @@ namespace RetailSales.Controllers
         // action after i/p submitted
         public ActionResult City(City Ic, string id)
         {
+            ViewBag.PageTitle = "City";
             try
             {
                 Ic.ID = id;
@@ -78,7 +79,7 @@ namespace RetailSales.Controllers
                 {
                     ViewBag.PageTitle = "Edit City";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("City");
                 }
 
                 // }
@@ -87,6 +88,7 @@ namespace RetailSales.Controllers
             {
                 throw ex;
             }
+            
             return View(Ic);
         }
 

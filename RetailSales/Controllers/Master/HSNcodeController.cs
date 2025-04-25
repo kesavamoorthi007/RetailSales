@@ -76,8 +76,45 @@ namespace RetailSales.Controllers
             st.hsnlst = TData;
             return View(st);
         }
+        [HttpPost]
+        public ActionResult HSNcode(HSNcode ss, string id)
+        {
+            ViewBag.PageTitle = "HSNcode";
+            try
+            {
+                ss.ID = id;
+                string Strout = HSNcodeService.HSNcodeCRUD(ss);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (ss.ID == null)
+                    {
+                        TempData["notice"] = " HSNcode Inserted Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = " HSNcode Updated Successfully...!";
+                    }
+                    return RedirectToAction("ListHSNcode");
+                }
 
-       
+                else
+                {
+                    ViewBag.PageTitle = "Edit HSNcode";
+                    TempData["notice"] = Strout;
+                    return RedirectToAction("HSNcode");
+
+                }
+
+                // }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return View(ss);
+        }
+
         public JsonResult GettariffJSON()
         {
             //DeductionItem model = new DeductionItem();
@@ -104,43 +141,7 @@ namespace RetailSales.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult HSNcode(HSNcode ss, string id)
-        {
-
-            try
-            {
-                ss.ID = id;
-                string Strout = HSNcodeService.HSNcodeCRUD(ss);
-                if (string.IsNullOrEmpty(Strout))
-                {
-                    if (ss.ID == null)
-                    {
-                        TempData["notice"] = " HSNcode Inserted Successfully...!";
-                    }
-                    else
-                    {
-                        TempData["notice"] = " HSNcode Updated Successfully...!";
-                    }
-                    return RedirectToAction("ListHSNcode");
-                }
-
-                else
-                {
-                    ViewBag.PageTitle = "Edit HSNcode";
-                    TempData["notice"] = Strout;
-                    //return View();
-                }
-
-                // }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return View(ss);
-        }
+        
 
         //public List<SelectListItem> BindCGst()
         //{

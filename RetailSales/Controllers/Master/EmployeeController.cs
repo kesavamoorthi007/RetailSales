@@ -16,11 +16,15 @@ namespace RetailSales.Controllers.Master
     public class EmployeeController : Controller
     {
         IEmployeeService EmployeeService;
-
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
         private object grid;
 
-        public EmployeeController(IEmployeeService _EmployeeService)
+        public EmployeeController(IEmployeeService _EmployeeService, IConfiguration _configuratio)
         {
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
             EmployeeService = _EmployeeService;
         }
         public IActionResult Employee(string id)
@@ -33,6 +37,11 @@ namespace RetailSales.Controllers.Master
             ic.Countrylst = BindCountry();
             ic.Statelst = BindState();
             ic.Citylst = BindCity();
+            DataTable dtv = datatrans.GetSequence("Employee");
+            if (dtv.Rows.Count > 0)
+            {
+                ic.EmpId = dtv.Rows[0]["PREFIX"].ToString() + "/" + dtv.Rows[0]["SUFFIX"].ToString() + "/" + dtv.Rows[0]["last"].ToString();
+            }
             if (id == null)
             {
 

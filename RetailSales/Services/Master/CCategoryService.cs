@@ -102,7 +102,7 @@ namespace RetailSales.Services.Master
                     svSQL = "SELECT Count(CUSTOMER_CATEGORY) as cnt FROM CUSTOMER_CATEGORY_MASTER WHERE CUSTOMER_CATEGORY = LTRIM(RTRIM('" + cy.Category + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
-                        msg = "Customer Category Already Existed";
+                        msg = "Customer Category Already Exist";
                         return msg;
                     }
                 }

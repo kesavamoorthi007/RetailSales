@@ -39,7 +39,7 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult CCategory(CCategory cy, string id)
         {
-
+            ViewBag.PageTitle = "CCategory";
             try
             {
                 cy.ID = id;
@@ -59,9 +59,9 @@ namespace RetailSales.Controllers.Master
 
                 else
                 {
-                    ViewBag.PageTitle = "Edit Category";
+                    ViewBag.PageTitle = "Edit CCategory";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("CCategory");
                 }
 
                 // }

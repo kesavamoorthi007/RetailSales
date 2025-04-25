@@ -87,7 +87,7 @@ namespace RetailSales.Services.Master
                     svSQL = "SELECT Count(COMPANY_NAME) as cnt FROM COMPANY WHERE COMPANY_NAME = LTRIM(RTRIM('" + cy.CompanyName + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
-                        msg = "Company Name Already Existed";
+                        msg = "Company Name Already Exist";
                         return msg;
                     }
                 }

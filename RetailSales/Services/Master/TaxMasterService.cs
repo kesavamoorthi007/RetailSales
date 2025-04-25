@@ -54,7 +54,16 @@ namespace RetailSales.Services.Master
                 string StatementType = string.Empty;
                 string svSQL = "";
                 string Tax = cy.TaxName + " " + cy.Percentage + "%";
+                if (cy.ID == null)
+                {
 
+                    svSQL = "SELECT Count(TAX_NAME) as cnt FROM TAXMASTER WHERE TAX_NAME = LTRIM(RTRIM('" + cy.TaxName + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Tax Name Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();

@@ -60,7 +60,8 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult Supplier(Supplier cy, string id)
         {
-
+            ViewBag.PageTitle = "Supplier";
+            
             try
             {
                 cy.ID = id;
@@ -69,11 +70,11 @@ namespace RetailSales.Controllers.Master
                 {
                     if (cy.ID == null)
                     {
-                        TempData["notice"] = "Supplier Details Inserted Successfully...!";
+                        TempData["notice"] = "Supplier Inserted Successfully...!";
                     }
                     else
                     {
-                        TempData["notice"] = "Supplier Details Updated Successfully...!";
+                        TempData["notice"] = "Supplier Updated Successfully...!";
                     }
                     return RedirectToAction("ListSupplier");
                 }
@@ -82,6 +83,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit Supplier";
                     TempData["notice"] = Strout;
+                    return RedirectToAction("Supplier");
                 }
 
                 // }

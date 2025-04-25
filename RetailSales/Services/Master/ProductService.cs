@@ -57,7 +57,7 @@ namespace RetailSales.Services.Master
                     svSQL = "SELECT Count(PRODUCT_NAME) as cnt FROM PRODUCT WHERE PRODUCT_NAME = LTRIM(RTRIM('" + cy.ProductName + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
-                        msg = "Product Name Already Existed";
+                        msg = "Product Name Already Exist";
                         return msg;
                     }
                 }
