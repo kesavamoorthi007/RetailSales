@@ -241,6 +241,100 @@
                     e.preventDefault();
         });
      }
+     $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+                    if ($(this).find('#txtShopQty' + j.toString()).val() == "" || $(this).find('#txtShopQty' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtShopQty' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Shop Qty");
+                        $(this).find('#txtShopQty' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtShopQty' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+
+                    if ($(this).find('#ddlShopBin' + j.toString()).val() != "" || $(this).find('#ddlShopBin' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlShopBin' + j.toString()).val() == "" || $(this).find('#ddlShopBin' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlShopBin' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select BIN No");
+                            $(this).find('#ddlShopBin' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlShopBin' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#txtGodownQty' + j.toString()).val() == "" || $(this).find('#txtGodownQty' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtGodownQty' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Godown Qty");
+                        $(this).find('#txtGodownQty' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtGodownQty' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    if ($(this).find('#ddlGodownBin' + j.toString()).val() != "" || $(this).find('#ddlGodownBin' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlGodownBin' + j.toString()).val() == "" || $(this).find('#ddlGodownBin' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlGodownBin' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select BIN No");
+                            $(this).find('#ddlGodownBin' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlGodownBin' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    
+                }
+                j += 1;
+            });
+
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
 </script>
 
 
