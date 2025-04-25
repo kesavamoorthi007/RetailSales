@@ -192,16 +192,16 @@ namespace RetailSales.Controllers.Accounts
 
                 Reg.Add(new ListDayItems
                 {
-                    id = dtUsers.Rows[i]["ID"].ToString(),
-                    vocherno = dtUsers.Rows[i]["VOUCH_NO"].ToString(),
-                    vocherdate = dtUsers.Rows[i]["VOUCH_DATE"].ToString(),
-                    tratype = dtUsers.Rows[i]["REF_TYPE"].ToString(),
-                    vocmemo = dtUsers.Rows[i]["VOUCH_MEMO"].ToString(),
+                    id = dtUsers.Rows[i]["TRANS2ID"].ToString(),
+                    vocherno = dtUsers.Rows[i]["T1VCHNO"].ToString(),
+                    vocherdate = dtUsers.Rows[i]["T1VCHDT"].ToString(),
+                    tratype = dtUsers.Rows[i]["T1TYPE"].ToString(),
+                    vocmemo = dtUsers.Rows[i]["T1NARR"].ToString(),
                     vtype = dtUsers.Rows[i]["MID"].ToString(),
-                    type = dtUsers.Rows[i]["TRANS_TYPE"].ToString(),
-                    ledgercode = dtUsers.Rows[i]["ledger"].ToString(),
-                    debitamount = dtUsers.Rows[i]["DBAMOUNT"].ToString(),
-                    creditamount = dtUsers.Rows[i]["CRAMOUNT"].ToString(),
+                    type = dtUsers.Rows[i]["DBCR"].ToString(),
+                    ledgercode = dtUsers.Rows[i]["MID"].ToString(),
+                    debitamount = dtUsers.Rows[i]["DBCR"].ToString()== "Dr" ? dtUsers.Rows[i]["DBAMOUNT"].ToString() :"",
+                    creditamount = dtUsers.Rows[i]["DBCR"].ToString() == "Cr" ? dtUsers.Rows[i]["CRAMOUNT"].ToString() : "",
                 });
             }
 

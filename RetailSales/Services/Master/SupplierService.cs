@@ -1,5 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.AspNetCore.Http;
 using RetailSales.Interface.Master;
 using RetailSales.Models;
 
@@ -9,10 +11,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public SupplierService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SupplierService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DataTable GetAllSupplierGRID(string strStatus)
@@ -83,6 +87,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 //string statename = datatrans.GetDataString("SELECT STATE_NAME FROM STATE WHERE ID='"+cy.State+"'");
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
@@ -112,21 +117,41 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@creditdays", SqlDbType.NVarChar).Value = cy.Days;
                     if (cy.ID == null)
                     {
-                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = "CreateBy";
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
                         objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
                     }
                     else
                     {
-                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = "UpdateBy";
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
                         objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
                     }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {
                         objConn.Open();
-                        objCmd.ExecuteNonQuery();
+                        Object Sid = objCmd.ExecuteScalar();
+                        if (cy.ID != null)
+                        {
+                            Sid = cy.ID;
+                        }
+                        if (cy.ID == null)
+                        {
+                            string acc_gorup = datatrans.GetDataString("select ACC_GRP_CODE from ACC_GROUP where ACC_GRP_NAME='Sundry Creditors' AND IS_ACTIVE='Y'");
 
-                    }
+                            string Sql = @"INSERT INTO ACC_LEDGER (ACC_GRP_CODE, LEDGER_NAME, ALLOW_ZERO_VAL, TOTAL_OPEN_BAL, LDGR_NOTES, CREATED_BY, CREATED_ON, IS_ACTIVE,LDGR_CURR) VALUES ('"+ acc_gorup + "', '"+ cy.Supp + "','Y','0', '','"+ userId + "', '" + DateTime.Now.ToString("dd-MMM-yyyy") + "', 'Y','INR') SELECT SCOPE_IDENTITY();";
+                            SqlCommand objCmdsz1 = new SqlCommand(Sql, objConn);
+                            Object Cid = objCmdsz1.ExecuteScalar();
+                            string proid = Cid.ToString();
+
+                            svSQL = @"UPDATE SUPPLIER SET LEDGER_ID='"+ proid + "' WHERE ID='" + Sid + "'";
+                            SqlCommand objCmds1 = new SqlCommand(svSQL, objConn);
+                            objCmds1.ExecuteNonQuery();
+
+                        }
+                     
+
+
+                        }
                     catch (Exception ex)
                     {
                         System.Console.WriteLine("Exception: {0}", ex.ToString());

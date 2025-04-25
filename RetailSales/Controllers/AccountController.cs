@@ -49,7 +49,7 @@ namespace RetailSales.Controllers
             {
 
 
-                string _selUser = @"select USER_NAME,PASSWORD FROM USER_REGIST where USER_NAME='" + model.Username + "' and  PASSWORD='" + model.Password + "' ";
+                string _selUser = @"select ID,USER_NAME,PASSWORD FROM USER_REGIST where USER_NAME='" + model.Username + "' and  PASSWORD='" + model.Password + "' ";
 
 
                 DataTable _dtUser = new DataTable();
@@ -62,8 +62,8 @@ namespace RetailSales.Controllers
                     //    option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
                     //else
                     option.Expires = DateTime.Now.AddMonths(3);
-                    //Response.Cookies.Append("UserId", _dtUser.Rows[0]["EMPMASTID"].ToString(), option);
-                    //Response.Cookies.Append("UserName", _dtUser.Rows[0]["Username"].ToString(), option);
+                    Response.Cookies.Append("UserId", _dtUser.Rows[0]["ID"].ToString(), option);
+                    Response.Cookies.Append("UserName", _dtUser.Rows[0]["USER_NAME"].ToString(), option);
                     //Response.Cookies.Append("Department", _dtUser.Rows[0]["empdept"].ToString(), option);
                     //HttpContext.Session.SetString("UserId", _dtUser.Rows[0]["EMPMASTID"].ToString());
                     //HttpContext.Session.SetString("UserName", _dtUser.Rows[0]["Username"].ToString());

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using RetailSales.Models;
+using System.Data;
 
 namespace RetailSales.Interface.Purchase
 {
@@ -8,5 +9,6 @@ namespace RetailSales.Interface.Purchase
         DataTable GetGRN(string id);
         DataTable GetGRNItem(string id);
         string StatusChange(string tag, string id);
+        string GRNACCOUNT(GRN cy);
     }
 }
