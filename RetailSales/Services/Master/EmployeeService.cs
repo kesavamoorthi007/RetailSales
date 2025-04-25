@@ -65,9 +65,24 @@ namespace RetailSales.Services.Master
                 string svSQL = "";
 
                 if (cy.ID == null)
-                {                            
+                {
+                    datatrans = new DataTransactions(_connectionString);
 
-                   
+
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'EMP' AND IS_ACTIVE = 'Y'");
+                    string EmpId = string.Format("{0}{1}{2}", "EMP/", "24-25/", (idc + 1).ToString());
+
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='EMP' AND IS_ACTIVE ='Y'";
+                    try
+                    {
+                        datatrans.UpdateStatus(updateCMd);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    cy.EmpId = EmpId;
+
                 }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {

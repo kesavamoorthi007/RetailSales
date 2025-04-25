@@ -41,19 +41,6 @@
                                 <div class="col-lg-3"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Bin No<label class="mandatory">*</label></label>
-                                        <div class="col-sm-12">
-
-                                            @Html.TextBoxFor(C => C.BINID, new { @id = "txtBINID", @class = "form-control", @TabIndex = 1 })<br />
-                                            @Html.HiddenFor(C => C.ID)
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Location<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
                                             @Html.DropDownListFor(C => C.Location, Model.locationlist, "---Please Select---", new { @id = "txtlocation", @class = "form-control _select", @TabIndex = 1 })<br />
@@ -62,6 +49,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br /><label for="inputName3" class="col-sm-4 control-label">Bin No<label class="mandatory">*</label></label>
+                                        <div class="col-sm-12">
+
+                                            @Html.TextBoxFor(C => C.BINID, new { @id = "txtBINID", @class = "form-control", @TabIndex = 1 })
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="row">
                                 <div class="col-lg-3"></div>
                                 <div class="col-md-6">
@@ -101,23 +102,6 @@
     $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
-
-            if (document.getElementById("txtBINID").value == "") {
-                isValid = false;
-                $(txtBINID).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Enter BIN No");
-                return false;
-            }
-            else {
-                $(txtBINID).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
             if (document.getElementById("txtlocation").value == "" ) {
                 isValid = false;
                 $(txtlocation).css({
@@ -134,6 +118,23 @@
                     "background": ""
                 });
             }
+            if (document.getElementById("txtBINID").value == "") {
+                isValid = false;
+                $(txtBINID).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter BIN No");
+                return false;
+            }
+            else {
+                $(txtBINID).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            
             if (isValid == false)
                 e.preventDefault();
         });

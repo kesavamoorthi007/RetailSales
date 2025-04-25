@@ -238,42 +238,7 @@
                 });
             }
            
-            
-
-            if (document.getElementById("ddlState").value == "") {
-                isValid = false;
-                $(ddlState).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select State");
-                return false;
-            }
-            else {
-                $(ddlState).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            if (document.getElementById("ddlCity").value == "") {
-                isValid = false;
-                $(ddlCity).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
-
-                alert("Please Select City");
-                return false;
-            }
-            else {
-                $(ddlCity).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
-            
-
+        
             if (isValid == false)
                 e.preventDefault();
         });

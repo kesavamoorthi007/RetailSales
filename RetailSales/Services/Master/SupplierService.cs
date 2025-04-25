@@ -89,6 +89,17 @@ namespace RetailSales.Services.Master
                 string svSQL = "";
                 var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 //string statename = datatrans.GetDataString("SELECT STATE_NAME FROM STATE WHERE ID='"+cy.State+"'");
+                if (cy.ID == null)
+                {
+
+                    svSQL = "SELECT Count(SUPPLIER_NAME) as cnt FROM SUPPLIER WHERE SUPPLIER_NAME = LTRIM(RTRIM('" + cy.Supp + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Supplier Name Already Exist";
+                        return msg;
+                    }
+                }
+
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("SupplierProc", objConn);

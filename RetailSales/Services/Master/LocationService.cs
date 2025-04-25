@@ -52,8 +52,17 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                if (cy.ID == null)
+                {
 
-               
+                    svSQL = "SELECT Count(LOCATION_NAME) as cnt FROM LOCATION WHERE LOCATION_NAME = LTRIM(RTRIM('" + cy.Locationname + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Location Name Already Exist";
+                        return msg;
+                    }
+                }
+
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("LocationProc", objConn);

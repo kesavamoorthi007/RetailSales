@@ -85,7 +85,7 @@ namespace RetailSales.Controllers.Master
 
         public ActionResult ProductName(ProductName cy, string id)
         {
-
+            ViewBag.PageTitle = "ProductName";
             try
             {
                 cy.ID = id;
@@ -107,6 +107,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit Product";
                     TempData["notice"] = Strout;
+                    return RedirectToAction("ProductName");
                 }
 
             }

@@ -23,7 +23,16 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                if (cy.ID == null)
+                {
 
+                    svSQL = "SELECT Count(BINID) as cnt FROM BINMASTER WHERE BINID = LTRIM(RTRIM('" + cy.BINID + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Bin No Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();

@@ -54,7 +54,16 @@ namespace RetailSales.Services
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                if (cy.ID == null)
+                {
 
+                    svSQL = "SELECT Count(TRANSECTION_TYPE) as cnt FROM SEQUENCE WHERE TRANSECTION_TYPE = LTRIM(RTRIM('" + cy.Transection + "'))";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Transection Type Already Exist";
+                        return msg;
+                    }
+                }
 
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {

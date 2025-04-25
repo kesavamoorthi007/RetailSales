@@ -68,10 +68,10 @@ namespace RetailSales.Services.Master
                 if (Ic.ID == null)
                 {
 
-                    svSQL = "SELECT Count(STATE_CODE) as cnt FROM STATE WHERE STATE_CODE = LTRIM(RTRIM('" + Ic.StatCode + "')) and STATE_NAME = LTRIM(RTRIM('" + Ic.StatName + "')) ";
+                    svSQL = "SELECT Count(STATE_NAME) as cnt FROM STATE WHERE STATE_NAME = LTRIM(RTRIM('" + Ic.StatName + "')) ";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
-                        msg = "State Name Already Existed";
+                        msg = "State Name Already Exist";
                         return msg;
                     }
                 }

@@ -45,7 +45,7 @@ namespace RetailSales.Controllers.Master
 
         public ActionResult BIN(BIN cy, string id)
         {
-
+            ViewBag.PageTitle = "BIN";
             try
             {
                 cy.ID = id;
@@ -67,6 +67,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit BIN";
                     TempData["notice"] = Strout;
+                    return RedirectToAction("BIN");
                 }
 
             }

@@ -134,10 +134,10 @@ namespace RetailSales.Services
                 if (ic.ID == null)
                 {
 
-                    svSQL = "SELECT Count(CITY_NAME) as cnt FROM CITY WHERE CITY_NAME = LTRIM(RTRIM('" + ic.CityName + "')) and STATE_ID = LTRIM(RTRIM('" + ic.StateId + "')) and COUNTRY_ID = LTRIM(RTRIM('" + ic.CountryId + "'))";
+                    svSQL = "SELECT Count(CITY_NAME) as cnt FROM CITY WHERE CITY_NAME = LTRIM(RTRIM('" + ic.CityName + "'))";
                     if (datatrans.GetDataId(svSQL) > 0)
                     {
-                        msg = "City Name Already Existed";
+                        msg = "City Name Already Exist";
                         return msg;
                     }
                 }
