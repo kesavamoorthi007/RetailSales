@@ -11,10 +11,12 @@ namespace RetailSales.Services.Accounts
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public AccountGroupService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AccountGroupService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
-            datatrans = new DataTransactions(_connectionString); 
+            datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // used for Account Class binding and retrieving from database
@@ -93,6 +95,17 @@ namespace RetailSales.Services.Accounts
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+                if (cy.ID == null)
+                {
+
+                    svSQL = "SELECT Count(ACC_GRP_NAME) as cnt FROM ACC_GROUP WHERE ACC_GRP_NAME = LTRIM(RTRIM('" + cy.AccountGroupName + "')) ";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "Account Group Name Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     SqlCommand objCmd = new SqlCommand("AccGrpProc", objConn);
@@ -116,12 +129,12 @@ namespace RetailSales.Services.Accounts
 
                     if (cy.ID == null)
                     {
-                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = "CreateBy";
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
                         objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
                     }
                     else
                     {
-                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = "UpdateBy";
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
                         objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
                     }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;

@@ -62,7 +62,7 @@ namespace RetailSales.Controllers.Master
         [HttpPost]
         public ActionResult Bankaccounts(Bankaccounts Ic, string id)
         {
-
+            ViewBag.PageTitle = "Bankaccounts";
             try
             {
                 Ic.ID = id;
@@ -84,7 +84,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit Bankaccounts";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("Bankaccounts");
                 }
 
                 // }

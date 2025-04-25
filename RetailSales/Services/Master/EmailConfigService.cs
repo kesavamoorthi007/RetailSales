@@ -10,10 +10,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public EmailConfigService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public EmailConfigService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public string EmailConfigCRUD(EmailConfig cy)
@@ -23,20 +25,20 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();
                     if (cy.ID == null)
                     {
-                        svSQL = "INSERT INTO EMAIL_CONFIG (SMTP_HOST,PORT_NO,EMAIL_ID,PASSWORD,SSL,SIGNATURE,CREATED_BY,CREATED_ON) VALUES ('" + cy.Smtphost + "','" + cy.Portno + "','" + cy.Emailid + "','" + cy.Password + "','" + cy.SSL + "','" + cy.Signature + "','" + cy.CreatedBy + "','" + cy.CreatedOn + "')";
+                        svSQL = "INSERT INTO EMAIL_CONFIG (SMTP_HOST,PORT_NO,EMAIL_ID,PASSWORD,SSL,SIGNATURE,CREATED_BY,CREATED_ON) VALUES ('" + cy.Smtphost + "','" + cy.Portno + "','" + cy.Emailid + "','" + cy.Password + "','" + cy.SSL + "','" + cy.Signature + "','" + userId + "','" + DateTime.Now + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
                     }
                     else
                     {
-                        svSQL = "UPDATE EMAIL_CONFIG SET SMTP_HOST = '" + cy.Smtphost + "',PORT_NO = '" + cy.Portno + "',EMAIL_ID = '" + cy.Emailid + "',PASSWORD = '" + cy.Password + "',SSL = '" + cy.SSL + "',SIGNATURE = '" + cy.Signature + "',UPDATED_BY = '" + cy.UpdatedBy + "',UPDATED_ON = '" + cy.UpdatedOn + "' WHERE EMAIL_CONFIG.ID ='" + cy.ID + "'";
+                        svSQL = "UPDATE EMAIL_CONFIG SET SMTP_HOST = '" + cy.Smtphost + "',PORT_NO = '" + cy.Portno + "',EMAIL_ID = '" + cy.Emailid + "',PASSWORD = '" + cy.Password + "',SSL = '" + cy.SSL + "',SIGNATURE = '" + cy.Signature + "',UPDATED_BY = '" + userId + "',UPDATED_ON = '" + DateTime.Now + "' WHERE EMAIL_CONFIG.ID ='" + cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 

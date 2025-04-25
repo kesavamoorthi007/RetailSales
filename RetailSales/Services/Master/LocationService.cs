@@ -11,10 +11,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public LocationService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LocationService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DataTable GetAllLocationGRID(string strStatus)
@@ -52,6 +54,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (cy.ID == null)
                 {
 
@@ -80,6 +83,16 @@ namespace RetailSales.Services.Master
                     objCmd.Parameters.Add("@locationname", SqlDbType.NVarChar).Value = cy.Locationname;
                     objCmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = cy.Address;
                     objCmd.Parameters.Add("@bin", SqlDbType.NVarChar).Value = cy.Bin;
+                    if (cy.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {

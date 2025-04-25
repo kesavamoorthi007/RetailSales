@@ -10,10 +10,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public BINService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public BINService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public string BINCRUD(BIN cy)
@@ -23,6 +25,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (cy.ID == null)
                 {
 
@@ -38,7 +41,7 @@ namespace RetailSales.Services.Master
                     objConn.Open();
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into BINMASTER (BINID,LOCID,BINDESC,CREATED_BY,CREATED_ON) VALUES ('" + cy.BINID + "','" + cy.Location + "','" + cy.Description + "','" + cy.Createdby + "','" + cy.Createdon + "')";
+                        svSQL = "Insert into BINMASTER (BINID,LOCID,BINDESC,CREATED_BY,CREATED_ON) VALUES ('" + cy.BINID + "','" + cy.Location + "','" + cy.Description + "','" + userId + "','" + DateTime.Now + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
@@ -47,7 +50,7 @@ namespace RetailSales.Services.Master
                     }
                     else
                     {
-                        svSQL = "Update BINMASTER set BINID = '" + cy.BINID + "',BINDESC = '" + cy.Description + "',LOCID = '" + cy.Location + "',UPDATED_BY = '" + cy.Updatedby + "',UPDATED_ON = '" + cy.Updatedon + "' WHERE BINMASTER.ID ='" + cy.ID + "'";
+                        svSQL = "Update BINMASTER set BINID = '" + cy.BINID + "',BINDESC = '" + cy.Description + "',LOCID = '" + cy.Location + "',UPDATED_BY = '" + userId + "',UPDATED_ON = '" + DateTime.Now + "' WHERE BINMASTER.ID ='" + cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 

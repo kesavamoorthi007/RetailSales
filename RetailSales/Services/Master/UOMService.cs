@@ -10,10 +10,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public UOMService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UOMService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DataTable GetAllUOMGRID(string strStatus)
@@ -42,6 +44,7 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (cy.ID == null)
                 {
 
@@ -57,7 +60,7 @@ namespace RetailSales.Services.Master
                     objConn.Open();
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into UOM (UOM_CODE,UOM_DESCRIPTION,CONVERSION_FACTOR,CREATED_BY,CREATED_ON) VALUES ('" + cy.UOMCODE + "',N'" + cy.Description + "',N'" + cy.Factor + "','" + cy.Createdby + "','" + cy.Createdon + "')";
+                        svSQL = "Insert into UOM (UOM_CODE,UOM_DESCRIPTION,CONVERSION_FACTOR,CREATED_BY,CREATED_ON) VALUES ('" + cy.UOMCODE + "',N'" + cy.Description + "',N'" + cy.Factor + "','" + userId + "','" + DateTime.Now + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
@@ -66,7 +69,7 @@ namespace RetailSales.Services.Master
                     }
                     else
                     {
-                        svSQL = "Update UOM set UOM_CODE = '" + cy.UOMCODE + "',UOM_DESCRIPTION = N'" + cy.Description + "',CONVERSION_FACTOR = N'" + cy.Factor + "',UPDATED_BY = '" + cy.Updatedby + "',UPDATED_ON = '" + cy.Updatedon + "' WHERE UOM.ID ='" + cy.ID + "'";
+                        svSQL = "Update UOM set UOM_CODE = '" + cy.UOMCODE + "',UOM_DESCRIPTION = N'" + cy.Description + "',CONVERSION_FACTOR = N'" + cy.Factor + "',UPDATED_BY = '" + userId + "',UPDATED_ON = '" + DateTime.Now + "' WHERE UOM.ID ='" + cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 

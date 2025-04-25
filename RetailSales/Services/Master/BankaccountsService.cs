@@ -9,10 +9,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public BankaccountsService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public BankaccountsService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
         public DataTable GetAllBankaccountsGRID(string strStatus)
         {
@@ -90,20 +92,30 @@ namespace RetailSales.Services.Master
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+                if (Cy.ID == null)
+                {
 
+                    svSQL = "SELECT Count(ACC_NO) as cnt FROM COMP_BANK_ACC WHERE ACC_NO = LTRIM(RTRIM('" + Cy.Accountname + "')) ";
+                    if (datatrans.GetDataId(svSQL) > 0)
+                    {
+                        msg = "State Name Already Exist";
+                        return msg;
+                    }
+                }
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();
                     if (Cy.ID == null)
                     {
-                        svSQL = "Insert into COMP_BANK_ACC (ACC_NAME,ACC_NO,BANK_NAME,ACC_TYPE,BRANCH_NAME,BRANCH_ADDR,BR_COUNTRY,BR_STATE,BR_CITY,BSR_CODE,IFSC_CODE) VALUES ('" + Cy.Accountname + "','" + Cy.Accountnumber + "','" + Cy.Bankname + "','" + Cy.Accounttype + "','" + Cy.Branchname + "','" + Cy.Branchaddress + "','" + Cy.Country + "','" + Cy.State + "','" + Cy.City + "','" + Cy.Bsrcode + "','" + Cy.Ifsccode + "')";
+                        svSQL = "Insert into COMP_BANK_ACC (ACC_NAME,ACC_NO,BANK_NAME,ACC_TYPE,BRANCH_NAME,BRANCH_ADDR,BR_COUNTRY,BR_STATE,BR_CITY,BSR_CODE,IFSC_CODE,CREATED_BY,CREATED_ON) VALUES ('" + Cy.Accountname + "','" + Cy.Accountnumber + "','" + Cy.Bankname + "','" + Cy.Accounttype + "','" + Cy.Branchname + "','" + Cy.Branchaddress + "','" + Cy.Country + "','" + Cy.State + "','" + Cy.City + "','" + Cy.Bsrcode + "','" + Cy.Ifsccode + "','" + userId + "','" + DateTime.Now + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
                     }
                     else
                     {
-                        svSQL = "Update COMP_BANK_ACC set ACC_NAME = '" + Cy.Accountname + "',ACC_NO = '" + Cy.Accountnumber + "',BANK_NAME = '" + Cy.Bankname + "',ACC_TYPE = '" + Cy.Accounttype + "',BRANCH_NAME = '" + Cy.Branchname + "',BRANCH_ADDR = '" + Cy.Branchaddress + "',BR_COUNTRY = '" + Cy.Country + "',BR_STATE = '" + Cy.State + "',BR_CITY = '" + Cy.City + "',BSR_CODE = '" + Cy.Bsrcode + "',IFSC_CODE = '" + Cy.Ifsccode + "' WHERE COMP_BANK_ACC.ID ='" + Cy.ID + "'";
+                        svSQL = "Update COMP_BANK_ACC set ACC_NAME = '" + Cy.Accountname + "',ACC_NO = '" + Cy.Accountnumber + "',BANK_NAME = '" + Cy.Bankname + "',ACC_TYPE = '" + Cy.Accounttype + "',BRANCH_NAME = '" + Cy.Branchname + "',BRANCH_ADDR = '" + Cy.Branchaddress + "',BR_COUNTRY = '" + Cy.Country + "',BR_STATE = '" + Cy.State + "',BR_CITY = '" + Cy.City + "',BSR_CODE = '" + Cy.Bsrcode + "',IFSC_CODE = '" + Cy.Ifsccode + "',UPDATED_BY = '" + userId + "',UPDATED_ON = '" + DateTime.Now + "' WHERE COMP_BANK_ACC.ID ='" + Cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
                     }

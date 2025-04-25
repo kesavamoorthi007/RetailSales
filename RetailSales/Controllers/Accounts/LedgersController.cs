@@ -49,6 +49,7 @@ namespace RetailSales.Controllers.Accounts
         [HttpPost]
         public ActionResult Ledgers(Ledgers cy, string id)
         {
+            ViewBag.PageTitle = "Ledgers";
             try
             {
                 cy.ID = id;
@@ -70,7 +71,7 @@ namespace RetailSales.Controllers.Accounts
                 {
                     ViewBag.PageTitle = "Edit Ledgers";
                     TempData["notice"] = Strout;
-                    //return View();
+                    return RedirectToAction("Ledgers");
                 }
 
                 // }

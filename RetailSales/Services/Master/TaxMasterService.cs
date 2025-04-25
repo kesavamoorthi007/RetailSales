@@ -10,10 +10,12 @@ namespace RetailSales.Services.Master
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public TaxMasterService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public TaxMasterService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DataTable GetEditTaxMaster(string id)
@@ -54,6 +56,7 @@ namespace RetailSales.Services.Master
                 string StatementType = string.Empty;
                 string svSQL = "";
                 string Tax = cy.TaxName + " " + cy.Percentage + "%";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 if (cy.ID == null)
                 {
 
@@ -69,7 +72,7 @@ namespace RetailSales.Services.Master
                     objConn.Open();
                     if (cy.ID == null)
                     {
-                        svSQL = "Insert into TAXMASTER (TAX_NAME,PERCENTAGE,TAX_DESC,CREATED_ON) VALUES ('" + cy.TaxName + "','" + cy.Percentage + "','" + cy.Taxdescription + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                        svSQL = "Insert into TAXMASTER (TAX_NAME,PERCENTAGE,TAX_DESC,CREATED_BY,CREATED_ON) VALUES ('" + cy.TaxName + "','" + cy.Percentage + "','" + cy.Taxdescription + "','" + userId + "','" + DateTime.Now + "')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
@@ -79,7 +82,7 @@ namespace RetailSales.Services.Master
                     else
 
                     {
-                        svSQL = "Update TAXMASTER set TAX_NAME = '" + cy.TaxName + "',PERCENTAGE = '" + cy.Percentage + "',TAX_DESC = '" + cy.Taxdescription + "',UPDATED_ON ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE TAXMASTER.ID ='" + cy.ID + "'";
+                        svSQL = "Update TAXMASTER set TAX_NAME = '" + cy.TaxName + "',PERCENTAGE = '" + cy.Percentage + "',TAX_DESC = '" + cy.Taxdescription + "',UPDATED_BY = '" + userId + "',UPDATED_ON ='" + DateTime.Now + "' WHERE TAXMASTER.ID ='" + cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
