@@ -1,0 +1,132 @@
+﻿@model RetailSales.Models.Accounts.PaymentRequest
+
+@{
+    Layout = "_PopupLayout";
+    ViewData["Title"] = "Payment Request";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+<div style="height:25px;"></div>
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>View Payment Request </strong> </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("ViewPaymentRequest", "PaymentRequest", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-5 control-label"><strong>Supplier Name :</strong><label class="mandatory"></label></label>
+
+                                        @Html.HiddenFor(C => C.ID)
+                                        @Html.DisplayFor(C => C.SuppName)
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Requested By :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.ReqBy)
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-12">
+
+
+                                    <table id="example7" class="display nowrap table  responsive nowrap table-bordered">
+                                        <thead>
+                                            <tr>
+
+                                                <th>GRN No </th>
+                                                <th>Net (₹)</th>
+                                                <th> Requested Amt (₹) </th>
+                                                <th>Pending Amt (₹)</th>
+                                                <th></th>
+                                        </thead>
+
+                                        <tbody>
+                                            @{
+                                                int i = 0;
+
+                                                foreach (var item in Model.GRNlst.ToList())
+                                                {
+
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(o => o.GRNlst[i].GRNNo)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.GRNlst[i].GRNAmt)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.GRNlst[i].ReqAmt)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.GRNlst[i].PendAmt)</td>
+                                                        
+                                                    </tr>
+                                                    //i = i + 1;
+                                                    i++;
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="inputName3" class="col-sm-6 control-label"><strong>Total Requested Amount :</strong><label class="mandatory"></label></label>
+
+                                        @Html.DisplayFor(C => C.TotReqAmt)
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div style="height:20px;"></div>
+
+                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

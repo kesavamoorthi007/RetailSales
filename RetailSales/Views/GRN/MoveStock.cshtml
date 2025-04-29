@@ -165,13 +165,13 @@
                                                                 @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.GRNLst[i].ShopBin, Model.GRNLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;", onchange = "changeQty(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.GRNLst[i].ShopBin, Model.GRNLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;", onchange = "changeQty(this," + i + ")" })
                                                             </td>
                                                             <td>
                                                                 @Html.TextBoxFor(o => o.GRNLst[i].GodownQty, new { @id = "txtGodownQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.GRNLst[i].GodownBin, Model.GRNLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;", onchange = "changeQty(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.GRNLst[i].GodownBin, Model.GRNLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;", onchange = "changeQty(this," + i + ")" })
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                             </td>
 

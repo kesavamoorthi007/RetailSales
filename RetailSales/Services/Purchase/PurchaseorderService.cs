@@ -378,9 +378,9 @@ namespace RetailSales.Services.Purchase
                             }
                             else
                             {
-                                svSQL = "Delete PRO_DETAIL WHERE PRODUCT_ID='" + cy.ID + "'";
-                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
-                                objCmdd.ExecuteNonQuery();
+                                //svSQL = "Delete PRO_DETAIL WHERE PRODUCT_ID='" + cy.ID + "'";
+                                //SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                //objCmdd.ExecuteNonQuery();
                                 foreach (PurchaseorderItem cp in cy.PurchaseorderLst)
                                 {
 
