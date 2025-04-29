@@ -59,8 +59,11 @@ namespace RetailSales.Models
     {
         public string ID { get; set; }
         public string Item { get; set; }
+        public string Itemid { get; set; }
         public string Product { get; set; }
+        public string Productid { get; set; }
         public string Varient { get; set; }
+        public string Varientid { get; set; }
         public string Hsn { get; set; }
         public string Tariff { get; set; }
         public string UOM { get; set; }

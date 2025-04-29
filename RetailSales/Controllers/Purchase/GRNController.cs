@@ -159,9 +159,12 @@ namespace RetailSales.Controllers.Purchase
                     tda = new GRNItem();
                     tda.ShopBinlist = BindShopBin();
                     tda.GodownBinlist = BindGodownBin();
+                    tda.Itemid= dtt.Rows[i]["ITEM"].ToString();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
+                    tda.Productid= dtt.Rows[i]["PRODUCT"].ToString();
                     tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Varientid= dtt.Rows[i]["VARIANT"].ToString();
                     tda.Hsn = dtt.Rows[i]["HSN"].ToString();
                     tda.Tariff = dtt.Rows[i]["TARIFF"].ToString();
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
@@ -194,7 +197,38 @@ namespace RetailSales.Controllers.Purchase
             ic.GRNLst = TData;
             return View(ic);
         }
+        [HttpPost]
+        public ActionResult MoveStock(GRN Cy, string id)
+        {
+            try
+            {
+                Cy.ID = id;
+                string Strout = GRNService.StockAdjust(Cy);
+                if (string.IsNullOrEmpty(Strout))
+                {
+                    if (Cy.ID == null)
+                    {
+                        TempData["notice"] = "GRN Generated Successfully...!";
+                    }
+                    else
+                    {
+                        TempData["notice"] = "GRN Generated Successfully...!";
+                    }
+                    return RedirectToAction("ListGRN");
+                }
+            else
+                {
+                    ViewBag.PageTitle = "Edit Purchaseorder";
+                    TempData["notice"] = Strout;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+            return RedirectToAction("ListGRN");
+        }
         private List<SelectListItem> BindGodownBin()
         {
             try
@@ -248,16 +282,22 @@ namespace RetailSales.Controllers.Purchase
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-
-                    //EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
-                    if (dtUsers.Rows[i]["PAYMENT_TAG"].ToString() == "0")
+                    if(dtUsers.Rows[i]["IS_GRN_IN"].ToString()=="Y")
                     {
-                        Accounts = "<a href=GRNAccount?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
-                        //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                        if (dtUsers.Rows[i]["PAYMENT_TAG"].ToString() == "0")
+                        {
+                            Accounts = "<a href=GRNAccount?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View Details' width='20' /></a>";
+                            //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                        }
                     }
+                    else
+                    {
+                        Move = "<a href=MoveStock?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
+                    }
+                    //EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
+
                     View = "<a href=ViewGRN?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/file.png' alt='View' width='20'  /></a>";
 
-                    Move = "<a href=MoveStock?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
                     //DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "";
 
                 }

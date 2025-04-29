@@ -147,10 +147,16 @@
                                                     foreach (var item in Model.GRNLst.ToList())
                                                     {
 
-                                                        <tr>
-                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Item)</td>
-                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Product)</td>
-                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Varient)</td>
+                                                        <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Item)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Itemid)
+                                                            </td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Product)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Productid)
+                                                            </td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Varient)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Varientid)
+                                                            </td>
                                                             <td>@Html.DisplayFor(o => o.GRNLst[i].Hsn)</td>
                                                             <td>@Html.DisplayFor(o => o.GRNLst[i].Tariff)</td>
                                                             <td>@Html.DisplayFor(o => o.GRNLst[i].UOM)</td>
@@ -162,16 +168,19 @@
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Recived, new { @id = "txtReceived" + i })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                                @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" ,onkeyup="changeQty(this.value," + i + ")"  })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.GRNLst[i].ShopBin, Model.GRNLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;", onchange = "changeQty(this," + i + ")" })
+
+                                                                @Html.DropDownListFor(o => o.GRNLst[i].ShopBin, Model.GRNLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;" })
+
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.GRNLst[i].GodownQty, new { @id = "txtGodownQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                                @Html.TextBoxFor(o => o.GRNLst[i].GodownQty, new { @id = "txtGodownQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", onkeyup = "changeQty(this.value," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.GRNLst[i].GodownBin, Model.GRNLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;", onchange = "changeQty(this," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.GRNLst[i].GodownBin, Model.GRNLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;" })
+
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                             </td>
 
@@ -189,7 +198,7 @@
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
-                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button type="submit" class="btn btn-success" id="btnSave">Submit</button>
                             <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListGRN", "GRN")'">Cancel</button>
 
 
@@ -223,23 +232,20 @@
          
          var $shopInput = $("#txtShopQty" + i);
          var $godownInput = $("#txtGodownQty" + i);
-         $('#btnSave').click(function (e) {
-            var isValid = true;
+
              if((shopqty + godownqty) != ordqty)
              {
                  isValid = false;
                  $shopInput.css({ "border": "1px solid red", "background": "#FFCECE" });
                  $godownInput.css({ "border": "1px solid red", "background": "#FFCECE" });
-                 alert("Missing Qty!");
+                 //alert("Missing Qty!");
                  return false;
              }
              else {
                     $shopInput.css({ "border": "", "background": "" });
                     $godownInput.css({ "border": "", "background": "" });
              }
-             if (isValid == false)
-                    e.preventDefault();
-        });
+           
      }
      $(document).ready(function () {
         $('#btnSave').click(function (e) {
@@ -249,7 +255,7 @@
             $('tr.chkitemlst').each(function () {
                 if ($(this).css('display') !== 'none') {
 
-                    if ($(this).find('#txtShopQty' + j.toString()).val() == "" || $(this).find('#txtShopQty' + j.toString()).val() == "0") {
+                    if ($(this).find('#txtShopQty' + j.toString()).val() == "") {
                         isValid = false;
                         $(this).find('#txtShopQty' + j.toString()).css({
                             "border": "1px solid red",
@@ -287,7 +293,7 @@
                             });
                         }
                     }
-                    if ($(this).find('#txtGodownQty' + j.toString()).val() == "" || $(this).find('#txtGodownQty' + j.toString()).val() == "0") {
+                    if ($(this).find('#txtGodownQty' + j.toString()).val() == "") {
                         isValid = false;
                         $(this).find('#txtGodownQty' + j.toString()).css({
                             "border": "1px solid red",
@@ -323,6 +329,22 @@
                                 "background": ""
                             });
                         }
+                    }
+                    var ordqty = parseFloat(document.getElementById("txtReceived" + j).value) || 0;
+                    var shopqty = parseFloat(document.getElementById("txtShopQty" + j).value) || 0;
+                    var godownqty = parseFloat(document.getElementById("txtGodownQty" + j).value) || 0;
+                    var $shopInput = $("#txtShopQty" + j);
+                    var $godownInput = $("#txtGodownQty" + j);
+                    if ((shopqty + godownqty) != ordqty) {
+                        isValid = false;
+                        $shopInput.css({ "border": "1px solid red", "background": "#FFCECE" });
+                        $godownInput.css({ "border": "1px solid red", "background": "#FFCECE" });
+                        alert("Recived Qty and Inventory Qty Not Match . Please check");
+                        return false;
+                    }
+                    else {
+                        $shopInput.css({ "border": "", "background": "" });
+                        $godownInput.css({ "border": "", "background": "" });
                     }
                     
                 }
