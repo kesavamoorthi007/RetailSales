@@ -9,21 +9,23 @@ namespace RetailSales.Services.Purchase
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public GRNService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public GRNService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor; 
         }
         public DataTable GetAllListGRN(string strStatus)
         {
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE,PAYMENT_TAG FROM GRN_BASIC   WHERE GRN_BASIC.IS_ACTIVE = 'Y' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
+                SvSql = "SELECT IS_GRN_IN,GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE,PAYMENT_TAG FROM GRN_BASIC   WHERE GRN_BASIC.IS_ACTIVE = 'Y' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
             }
             else
             {
-                SvSql = "SELECT GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE,PAYMENT_TAG FROM GRN_BASIC  WHERE GRN_BASIC.IS_ACTIVE = 'N' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
+                SvSql = "SELECT IS_GRN_IN,GRN_BASIC_ID,GRN_NO,CONVERT(varchar, GRN_BASIC.GRN_DATE, 106) AS GRN_DATE,SUP_NAME,NET,GRN_BASIC.IS_ACTIVE,PAYMENT_TAG FROM GRN_BASIC  WHERE GRN_BASIC.IS_ACTIVE = 'N' ORDER BY GRN_BASIC.GRN_BASIC_ID DESC";
 
             }
             DataTable dtt = new DataTable();
@@ -50,7 +52,7 @@ namespace RetailSales.Services.Purchase
         {
             string SvSql = string.Empty;
             //SvSql = "SELECT POBASICID,PODETAILID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,PODETAIL.HSN,PODETAIL.TARIFF,PODETAIL.UOM,DEST_UOM,CONVT_FACTOR,QTY,CF_QTY,PODETAIL.RATE,AMOUNT,FRIGHT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM PODETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=PODETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.ID=PODETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=PODETAIL.VARIANT WHERE PODETAIL.POBASICID='" + id + "'";
-            SvSql = "SELECT GRN_BASIC_ID,GRN_DETAIL_ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,HSN,TARIFF,GRN_DETAIL.UOM,QTY,RECIVED_QTY,ACCEPTED_QTY,REJECTED_QTY,EXCEED_QTY,SHORT_QTY,DEST_UOM,CF,CF_QTY,GRN_DETAIL.RATE,AMOUNT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM GRN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=GRN_DETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=GRN_DETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=GRN_DETAIL.VARIANT WHERE GRN_DETAIL.GRN_BASIC_ID='" + id + "'";
+            SvSql = "SELECT GRN_DETAIL.VARIANT,GRN_DETAIL.ITEM,GRN_DETAIL.PRODUCT,GRN_BASIC_ID,GRN_DETAIL_ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,HSN,TARIFF,GRN_DETAIL.UOM,QTY,RECIVED_QTY,ACCEPTED_QTY,REJECTED_QTY,EXCEED_QTY,SHORT_QTY,DEST_UOM,CF,CF_QTY,GRN_DETAIL.RATE,AMOUNT,DISC_PER,DIS_AMOUNT,CGSTP,SGSTP,IGSTP,CGST,SGST,IGST,TOTAL_AMOUNT FROM GRN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=GRN_DETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=GRN_DETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=GRN_DETAIL.VARIANT WHERE GRN_DETAIL.GRN_BASIC_ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -209,6 +211,58 @@ namespace RetailSales.Services.Purchase
                         }
                     }
                 }           
+
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
+        }
+        public string StockAdjust(GRN cy)
+        {
+            string msg = "";
+            try
+            {
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+                string docno = datatrans.GetDataString("Select GRN_NO from GRN_BASIC WHERE GRN_BASIC_ID='"+ cy.ID +"'");
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    objConn.Open();
+                    foreach (GRNItem cp in cy.GRNLst)
+                    {
+                        cp.ShopQty= cp.ShopQty=="" ? "0" : cp.ShopQty;
+                        cp.GodownQty= cp.GodownQty==""?"0" : cp.GodownQty;
+                        if (Convert.ToInt32(cp.ShopQty) > 0)
+                        {
+                            string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH,CREATED_BY,CREATED_ON,BIN_ID) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "',5,'" + cp.UOM + "','" + cp.ShopQty + "','N','2024-2025','0','Shop','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "','" + userId + "','" + DateTime.Now + "','"+ cp.ShopBin +"') SELECT SCOPE_IDENTITY()";
+                            SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
+                            Object Pid1 = objCmddtss.ExecuteScalar();
+
+                            string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_BY,CREATED_ON) VALUES ('" + cy.ID + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.ShopQty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025','" + userId + "','" + DateTime.Now + "')";
+                            SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
+                            objCmddtsss.ExecuteNonQuery();
+                        }
+                        if (Convert.ToInt32(cp.GodownQty) > 0)
+                        {
+                            string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH,CREATED_BY,CREATED_ON,BIN_ID) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "',5,'" + cp.UOM + "','" + cp.GodownQty + "','N','2024-2025','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "','" + userId + "','" + DateTime.Now + "','"+ cp.GodownBin +"') SELECT SCOPE_IDENTITY()";
+                            SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
+                            Object Pid1 = objCmddtss.ExecuteScalar();
+
+                            string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_BY,CREATED_ON) VALUES ('" + cy.ID + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.GodownQty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025','" + userId + "','" + DateTime.Now + "')";
+                            SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
+                            objCmddtsss.ExecuteNonQuery();
+                        }
+
+                    }
+
+                    string Sql = "UPDATE GRN_BASIC SET IS_GRN_IN='Y' where GRN_BASIC_ID='" + cy.ID + "'";
+                    SqlCommand objCmds = new SqlCommand(Sql, objConn);
+                    objCmds.ExecuteNonQuery();
+                    objConn.Close();
+                }
+            }
 
             catch (Exception ex)
             {

@@ -15,6 +15,7 @@ namespace RetailSales.Models
         }
         public string Companyname { get; set; }
         public string Suppid { get; set; }
+        public string Suppname { get; set; }
         public List<SelectListItem> Suplst { get; set; }
         
         public string refno { get; set; }

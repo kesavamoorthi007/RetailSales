@@ -1004,6 +1004,7 @@ namespace RetailSales.Controllers.Purchase
                 ic.po = dt.Rows[0]["PONO"].ToString();
                 ic.Podate = dt.Rows[0]["PODATE"].ToString();
                 ic.Suppid = dt.Rows[0]["SUPPLIER_NAME"].ToString();
+                ic.Suppname = dt.Rows[0]["SUP_NAME"].ToString();
                 ic.Supplieraddress = dt.Rows[0]["ADDRESS"].ToString();
                 ic.Country = dt.Rows[0]["COUNTRY"].ToString();
                 ic.State = dt.Rows[0]["STATE"].ToString();

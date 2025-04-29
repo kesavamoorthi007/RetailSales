@@ -12,5 +12,6 @@ namespace RetailSales.Interface.Purchase
         DataTable GetShopBin();
         string StatusChange(string tag, string id);
         string GRNACCOUNT(GRN cy);
+        string StockAdjust(GRN cy);
     }
 }
