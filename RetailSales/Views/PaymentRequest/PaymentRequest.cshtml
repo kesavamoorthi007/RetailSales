@@ -1,0 +1,312 @@
+﻿@model RetailSales.Models.Accounts.PaymentRequest
+
+@{
+    ViewData["Title"] = "PaymentRequest";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+<div style="height:20px;"></div>
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li class="active"> <strong>Payment Request</strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    @using (Html.BeginForm("PaymentRequest", "PaymentRequest", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <br />
+                            <div class="row">
+                                
+                                    
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br> <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">*</label></label>
+                                        <div class="col-sm-12">
+                                            @Html.DropDownListFor(C => C.SuppName, Model.Suplst, "---Please Select---", new { @id = "ddlSuppName", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
+                                            @Html.HiddenFor(C => C.ID)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Requested By<label class="mandatory"></label></label>
+                                        <div class="col-sm-12">
+                                            @Html.TextBoxFor(C => C.ReqBy, new { @id = "txtReqBy", @class = "form-control", @readonly = "readonly", @TabIndex = 1 })
+                                            @Html.HiddenFor(C => C.ReqBy)
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            @* <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <p style="float:right;"> <input type="button" value="Add Row" onclick="AddRow()" class="btn btn-primary" /></p>
+                                    </div>
+                                </div>
+                            </div> *@
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <div class="col-md-12" style="overflow-x:scroll; min-width:300px; min-height:100px;">
+                                        <table class="table table-striped table-hover " id="dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>GRN No </th>
+                                                    <th>Net (₹)</th>
+                                                    <th> Requested Amt (₹) </th>
+                                                    <th>Pending Amt (₹)</th>
+                                                    <th></th>
+                                                    
+                                            </thead>
+                                            <tbody id="tbBooks">
+                                                @{
+
+                                                    int i = 0;
+                                                    int j = 1;
+
+                                                    foreach (var item in Model.GRNlst.ToList())
+                                                    {
+                                                        <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
+
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.GRNlst[i].GRNNo, new { @id = "txtgrnno" + i, @class = "form-control", @readonly = "readonly", style = "width: 150px;" })
+                                                                @Html.HiddenFor(o => o.GRNlst[i].GRNNo)
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.GRNlst[i].GRNAmt, new { @id = "txtgrnamt" + i, @class = "form-control", @readonly = "readonly", style = "width: 150px; text-align: right;" })
+                                                                @Html.HiddenFor(o => o.GRNlst[i].GRNAmt, new { @id = "txtgrnamt" + i})
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.GRNlst[i].ReqAmt, new { @id = "txtReqAmt" + i, @class = "form-control", style = "width: 150px; text-align: right;", type = "number", min = "0", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeAmt(this," + i + ")" })
+                                                                @Html.HiddenFor(o => o.GRNlst[i].ReqAmt)
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(o => o.GRNlst[i].PendAmt, new { @id = "txtPendAmt" + i, @class = "form-control", @readonly = "readonly", style = "width: 150px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeAmt(this," + i + ")" })
+                                                                @Html.HiddenFor(o => o.GRNlst[i].PendAmt)
+                                                            </td>
+                                                            <td>
+                                                                @Html.HiddenFor(o => o.GRNlst[i].Isvalid, new { @id = "Isvalid" + i })
+                                                                <input name="GRNlst.Index" type="hidden" value="@(i)" />
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        i = i + 1;
+                                                        j = j + 1;
+
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <br><label for="inputName3" class="col-sm-5 control-label">Total Requested Amount<label class="mandatory"></label></label>
+                                        <div class="col-sm-6">
+                                            @Html.TextBoxFor(C => C.TotReqAmt, new { @id = "txtTotReqAmt", @class = "form-control", style = "text-align:right", @readonly = "readonly", @TabIndex = 1 })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-8"></div>
+                            <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPaymentRequest", "PaymentRequest")'">Cancel</button>
+
+
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+    function PopulateDropDown(dropDownId, list) {
+        //alert(list);
+        $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+        $(dropDownId).trigger("liszt:updated");
+    }
+
+        function changeAmt(_this, i) {
+        try {
+            var reqAmtInput = document.getElementById("txtReqAmt" + i);
+            var netAmtInput = document.getElementById("txtgrnamt" + i);
+            var pendAmtInput = document.getElementById("txtPendAmt" + i); // New pending amount field
+
+            var reqAmt = parseFloat(reqAmtInput.value) || 0;
+            var netAmt = parseFloat(netAmtInput.value) || 0;
+
+            // Validate immediately
+            if (reqAmt > netAmt) {
+                alert("Requested Amount in row " + (i + 1) + " is higher than the Net Amount.");
+                reqAmtInput.value = "0";
+                reqAmt = 0; // Reset also here
+            }
+
+            // Calculate and update Pending Amount (Net - Requested)
+            if (pendAmtInput) {
+                var pendAmt = netAmt - reqAmt;
+                pendAmtInput.value = pendAmt.toFixed(2);
+            }
+
+            // Now calculate total requested amount again
+            var nettotamt = 0;
+            var j = 0;
+
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    var rowReqAmtInput = document.getElementById("txtReqAmt" + j);
+                    if (rowReqAmtInput) {
+                        var rowReqAmt = parseFloat(rowReqAmtInput.value) || 0;
+                        nettotamt += rowReqAmt;
+                    }
+                }
+                j++;
+            });
+
+            document.getElementById("txtTotReqAmt").value = nettotamt.toFixed(2);
+
+        } catch (ex) {
+            alert("Error: " + ex.message);
+        }
+    }
+
+     function changesupplier() {
+         //var e = 0;
+         document.getElementById("tbBooks").innerHTML = "";
+         var suppid = document.getElementById("ddlSuppName").value;
+
+         $.ajax({
+             url: 'GetSupplierDetails',
+             type: "post",
+             data: { "suppid": suppid},
+             cache: false,
+
+             success: function (result) {
+                // debugger;
+                 console.log(result);
+                 result.forEach((item) => {
+                     console.log(item);
+                     
+                     var index = $("#tbBooks").children("tr").length;
+                     //debugger;
+                     var GRNNo = "<td><input class='form-control' id='txtgrnno" + index + "' name='GRNlst[" + index + "].GRNNo' style='width: 150px;' type='text' readonly='True' value='" + item.grnNo + "' /></td>";
+                     //debugger;
+                     var GRNAmt = "<td><input class='form-control' id='txtgrnamt" + index + "' name='GRNlst[" + index + "].GRNAmt' style='width: 150px; text-align:right;' type='text' readonly='True' value='" + item.grnAmt + "' /></td>";
+
+                     var ReqAmt = "<td><input class='form-control' id='txtReqAmt" + index + "' name='GRNlst[" + index + "].ReqAmt' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeAmt(this," + index + ")' style='width: 150px; text-align:right;' /></td>";
+                     
+                     var PendAmt = "<td><input class='form-control' id='txtPendAmt" + index + "' name='GRNlst[" + index + "].PendAmt' readonly='True' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeAmt(this," + index + ")' style='width: 150px; text-align:right;' /></td>";
+                     
+                     var removeCell = "<td><input id='Isvalid" + index + "' name='GRNlst[" + index + "].Isvalid' type='hidden' value='Y'/><input name='GRNlst.Index' type='hidden' value='" + index + "'  /></td>";
+                     
+                     var newRow = "<tr class='chkitemlst' style='height: 30px; border-bottom: 1px dashed #ddd;' id='trBookOutput" + index + "'>"+ GRNNo  + GRNAmt + ReqAmt + PendAmt + removeCell +"</tr>";
+
+                     $("#tbBooks").append(newRow);
+                 });
+             },
+
+         });
+     }
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            if (document.getElementById("ddlSuppName").value == "") {
+                isValid = false;
+                $(ddlSuppName).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select Supplier Name");
+                return false;
+            }
+            else {
+                $(ddlSuppName).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+
+                    if ($(this).find('#txtReqAmt' + j.toString()).val() == "" || $(this).find('#txtReqAmt' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtReqAmt' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Requested Amount");
+                        $(this).find('#txtReqAmt' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtReqAmt' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                    
+                }
+                j += 1;
+            });
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+
+    
+</script>

@@ -75,6 +75,8 @@ internal class Program
         builder.Services.TryAddSingleton<IStockAdjustmentService, StockAdjustmentService>();
         // adding Email Config interface and services containers
         builder.Services.TryAddSingleton<IEmailConfigService, EmailConfigService>();
+        // adding Payment Request interface and services containers
+        builder.Services.TryAddSingleton<IPaymentRequestService, PaymentRequestService>();
 
         builder.Services.TryAddSingleton<ITaxMasterService, TaxMasterService>();
         builder.Services.TryAddSingleton<IDirectPurchaseService, DirectPurchaseService>();
