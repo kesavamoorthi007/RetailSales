@@ -227,6 +227,7 @@ namespace RetailSales.Services.Purchase
             {
                 var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
                 string docno = datatrans.GetDataString("Select GRN_NO from GRN_BASIC WHERE GRN_BASIC_ID='"+ cy.ID +"'");
+                string fyear = datatrans.GetCurrentFYear(DateTime.Now);
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();
@@ -236,21 +237,21 @@ namespace RetailSales.Services.Purchase
                         cp.GodownQty= cp.GodownQty==""?"0" : cp.GodownQty;
                         if (Convert.ToInt32(cp.ShopQty) > 0)
                         {
-                            string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH,CREATED_BY,CREATED_ON,BIN_ID) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "',5,'" + cp.UOM + "','" + cp.ShopQty + "','N','2024-2025','0','Shop','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "','" + userId + "','" + DateTime.Now + "','"+ cp.ShopBin +"') SELECT SCOPE_IDENTITY()";
+                            string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH,CREATED_BY,CREATED_ON,BIN_ID) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "'," + cp.Recived + ",'" + cp.UOM + "','" + cp.ShopQty + "','N','"+ fyear + "','" + cp.Rejected + "','Shop','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "','" + userId + "','" + DateTime.Now + "','"+ cp.ShopBin +"') SELECT SCOPE_IDENTITY()";
                             SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
                             Object Pid1 = objCmddtss.ExecuteScalar();
 
-                            string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_BY,CREATED_ON) VALUES ('" + cy.ID + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.ShopQty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025','" + userId + "','" + DateTime.Now + "')";
+                            string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_BY,CREATED_ON) VALUES ('" + cy.ID + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.ShopQty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','"+ fyear + "','" + userId + "','" + DateTime.Now + "')";
                             SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
                             objCmddtsss.ExecuteNonQuery();
                         }
                         if (Convert.ToInt32(cp.GodownQty) > 0)
                         {
-                            string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH,CREATED_BY,CREATED_ON,BIN_ID) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "',5,'" + cp.UOM + "','" + cp.GodownQty + "','N','2024-2025','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "','" + userId + "','" + DateTime.Now + "','"+ cp.GodownBin +"') SELECT SCOPE_IDENTITY()";
+                            string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH,CREATED_BY,CREATED_ON,BIN_ID) VALUES ('" + docno + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "'," + cp.Recived + ",'" + cp.UOM + "','" + cp.GodownQty + "','N','"+ fyear + "','" + cp.Rejected + "','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "','" + userId + "','" + DateTime.Now + "','"+ cp.GodownBin +"') SELECT SCOPE_IDENTITY()";
                             SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
                             Object Pid1 = objCmddtss.ExecuteScalar();
 
-                            string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_BY,CREATED_ON) VALUES ('" + cy.ID + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.GodownQty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025','" + userId + "','" + DateTime.Now + "')";
+                            string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_BY,CREATED_ON) VALUES ('" + cy.ID + "','" + Pid1 + "','" + cp.Itemid + "','" + cp.Productid + "','" + cp.Varientid + "','" + cp.UOM + "','" + cp.Rate + "','GRN','Plus','" + cp.GodownQty + "','GRN','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','"+ fyear + "','" + userId + "','" + DateTime.Now + "')";
                             SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
                             objCmddtsss.ExecuteNonQuery();
                         }
