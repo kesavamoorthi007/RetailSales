@@ -133,9 +133,9 @@
                                                     <th> Ordered </th>
                                                     <th> Received </th>
                                                     <th>Shop Qty</th>
-                                                    <th>BIN No</th>
+                                                    <th>Shop BIN No</th>
                                                     <th>Godown Qty</th>
-                                                    <th>BIN No</th>
+                                                    <th>Godown BIN No</th>
                                                     
                                                 </tr>
                                             </thead>
@@ -179,7 +179,7 @@
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Rejected, new { @id = "txtRejected" + i })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" ,onkeyup="changeQty(this.value," + i + ")"  })
+                                                                @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" ,onkeyup="changeSQty(this.value," + i + ")"  })
                                                             </td>
                                                             <td>
 
@@ -187,7 +187,7 @@
 
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.GRNLst[i].GodownQty, new { @id = "txtGodownQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", onkeyup = "changeQty(this.value," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.GRNLst[i].GodownQty, new { @id = "txtGodownQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", onkeyup = "changeGQty(this.value," + i + ")" })
                                                             </td>
                                                             <td>
                                                                 @Html.DropDownListFor(o => o.GRNLst[i].GodownBin, Model.GRNLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;" })
@@ -236,15 +236,19 @@
         }
         $(dropDownId).trigger("liszt:updated");
     }
-    function changeQty(_this, i) {
+    function changeSQty(_this, i) {
          var ordqty =parseFloat(document.getElementById("txtReceived" + i).value) || 0;
          var shopqty =parseFloat(document.getElementById("txtShopQty" + i).value) || 0;
          var godownqty =parseFloat(document.getElementById("txtGodownQty" + i).value) || 0;
+
+        var gqty = ordqty - shopqty;
+        document.getElementById("txtGodownQty" + i).value = gqty;
          
          var $shopInput = $("#txtShopQty" + i);
          var $godownInput = $("#txtGodownQty" + i);
 
-             if((shopqty + godownqty) != ordqty)
+                if (shopqty >  ordqty)
+             //if((shopqty + godownqty) != ordqty)
              {
                  isValid = false;
                  $shopInput.css({ "border": "1px solid red", "background": "#FFCECE" });
@@ -256,8 +260,30 @@
                     $shopInput.css({ "border": "", "background": "" });
                     $godownInput.css({ "border": "", "background": "" });
              }
-           
+       
      }
+    function changeGQty(_this, i) {
+        var ordqty = parseFloat(document.getElementById("txtReceived" + i).value) || 0;
+        var shopqty = parseFloat(document.getElementById("txtShopQty" + i).value) || 0;
+        var godownqty = parseFloat(document.getElementById("txtGodownQty" + i).value) || 0;
+        var sqty = ordqty - godownqty;
+        document.getElementById("txtShopQty" + i).value = sqty;
+        var $shopInput = $("#txtShopQty" + i);
+        var $godownInput = $("#txtGodownQty" + i);
+
+        if ( godownqty > ordqty) {
+            isValid = false;
+            $shopInput.css({ "border": "1px solid red", "background": "#FFCECE" });
+            $godownInput.css({ "border": "1px solid red", "background": "#FFCECE" });
+            //alert("Missing Qty!");
+            return false;
+        }
+        else {
+            $shopInput.css({ "border": "", "background": "" });
+            $godownInput.css({ "border": "", "background": "" });
+        }
+       
+    }
      $(document).ready(function () {
         $('#btnSave').click(function (e) {
             var isValid = true;
@@ -285,7 +311,7 @@
                         });
                     }
 
-                    if ($(this).find('#ddlShopBin' + j.toString()).val() != "" || $(this).find('#ddlShopBin' + j.toString()).val() != "0") {
+                    if ($(this).find('#txtShopQty' + j.toString()).val() != "" && $(this).find('#txtShopQty' + j.toString()).val() != "0") {
 
                         if ($(this).find('#ddlShopBin' + j.toString()).val() == "" || $(this).find('#ddlShopBin' + j.toString()).val() == 0) {
                             isValid = false;
@@ -293,7 +319,7 @@
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select BIN No");
+                            alert("Please Select Shop BIN No");
                             $(this).find('#ddlShopBin' + j.toString()).focus();
                             return false;
                         }
@@ -322,15 +348,14 @@
                             "background": ""
                         });
                     }
-                    if ($(this).find('#ddlGodownBin' + j.toString()).val() != "" || $(this).find('#ddlGodownBin' + j.toString()).val() != "0") {
-
+                    if ($(this).find('#txtGodownQty' + j.toString()).val() != "" && $(this).find('#txtGodownQty' + j.toString()).val() != "0") {
                         if ($(this).find('#ddlGodownBin' + j.toString()).val() == "" || $(this).find('#ddlGodownBin' + j.toString()).val() == 0) {
                             isValid = false;
                             $(this).find('#ddlGodownBin' + j.toString()).css({
                                 "border": "1px solid red",
                                 "background": "#FFCECE"
                             });
-                            alert("Please Select BIN No");
+                            alert("Please Select Godown BIN No");
                             $(this).find('#ddlGodownBin' + j.toString()).focus();
                             return false;
                         }
@@ -350,7 +375,7 @@
                         isValid = false;
                         $shopInput.css({ "border": "1px solid red", "background": "#FFCECE" });
                         $godownInput.css({ "border": "1px solid red", "background": "#FFCECE" });
-                        alert("Recived Qty and Inventory Qty Not Match . Please check");
+                        alert("Received and Inventory Qty Not Match . Please check");
                         return false;
                     }
                     else {

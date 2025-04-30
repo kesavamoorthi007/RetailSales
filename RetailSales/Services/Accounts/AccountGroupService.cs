@@ -215,12 +215,12 @@ namespace RetailSales.Services.Accounts
             SvSql = "SELECT T2.TRANS2ID, T1.T1VCHNO, FORMAT(T1.T1VCHDT, 'dd-MMM-yyyy') AS T1VCHDT, T1.TRANS1ID, T1.T1TYPE, T1.T1NARR, T2.DBCR, M.LEDGER_NAME AS MID, T2.DBAMOUNT, T2.CRAMOUNT FROM TRANS1 T1 JOIN TRANS2 T2 ON T1.TRANS1ID = T2.TRANS1ID JOIN ACC_LEDGER M ON M.ID = T2.MID   ";
             if (!string.IsNullOrEmpty(strfrom) && !string.IsNullOrEmpty(strTo))
             {
+                SvSql += " Where T1.T1VCHDT BETWEEN '" + strfrom + "' and '" + strTo + "'";
                
-               SvSql += " WHERE T1.T1VCHDT > DATEADD(DAY, -30, GETDATE())";
           }else
                 {
-                    SvSql += " Where T1.T1VCHDT BETWEEN '" + strfrom + "' and '" + strTo + "'";
-                }
+                SvSql += " WHERE T1.T1VCHDT > DATEADD(DAY, -30, GETDATE())";
+            }
             SvSql += " ORDER BY T2.TRANS2ID  ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
