@@ -157,15 +157,26 @@
                                                             <td>@Html.DisplayFor(o => o.GRNLst[i].Varient)
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Varientid)
                                                             </td>
-                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Hsn)</td>
-                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Tariff)</td>
-                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].UOM)</td>
+                                                            <td>
+                                                            @Html.DisplayFor(o => o.GRNLst[i].Hsn)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Hsn)
+                                                            </td>
+                                                            <td>
+                                                            @Html.DisplayFor(o => o.GRNLst[i].Tariff)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Tariff)
+                                                            </td>
+                                                            <td>
+                                                            @Html.DisplayFor(o => o.GRNLst[i].UOM)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].UOM)
+                                                            </td>
                                                             <td>
                                                                 @Html.DisplayFor(o => o.GRNLst[i].Ordered)
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Ordered)
                                                             </td>
                                                             <td>
                                                                 @Html.DisplayFor(o => o.GRNLst[i].Recived)
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Recived, new { @id = "txtReceived" + i })
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Rejected, new { @id = "txtRejected" + i })
                                                             </td>
                                                             <td>
                                                                 @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" ,onkeyup="changeQty(this.value," + i + ")"  })
@@ -180,7 +191,7 @@
                                                             </td>
                                                             <td>
                                                                 @Html.DropDownListFor(o => o.GRNLst[i].GodownBin, Model.GRNLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;" })
-
+                                                                @Html.HiddenFor(o => o.GRNLst[i].Rate, new { @id = "txtRate" + i })
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                             </td>
 

@@ -171,13 +171,13 @@ namespace RetailSales.Controllers.Purchase
                     tda.Ordered = dtt.Rows[i]["QTY"].ToString();
                     tda.Recived = dtt.Rows[i]["RECIVED_QTY"].ToString();
                     //tda.Accepted = dtt.Rows[i]["ACCEPTED_QTY"].ToString();
-                    //tda.Rejected = dtt.Rows[i]["REJECTED_QTY"].ToString();
+                    tda.Rejected = dtt.Rows[i]["REJECTED_QTY"].ToString();
                     //tda.exqty = dtt.Rows[i]["EXCEED_QTY"].ToString();
                     //tda.shortqty = dtt.Rows[i]["SHORT_QTY"].ToString();
                     //tda.DestUOM = dtt.Rows[i]["DEST_UOM"].ToString();
                     //tda.CF = dtt.Rows[i]["CF"].ToString();
                     //tda.CfQty = dtt.Rows[i]["CF_QTY"].ToString();
-                    //tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     //tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();
                     //tda.CGSTP = dtt.Rows[i]["CGSTP"].ToString();
                     //tda.SGSTP = dtt.Rows[i]["SGSTP"].ToString();
