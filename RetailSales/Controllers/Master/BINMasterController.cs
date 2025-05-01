@@ -9,15 +9,15 @@ using RetailSales.Services.Accounts;
 
 namespace RetailSales.Controllers.Master
 {
-    public class BINController : Controller
+    public class BINMasterController : Controller
     {
         IBINService BINService;
-        public BINController(IBINService _BINService)
+        public BINMasterController(IBINService _BINService)
         {
             BINService = _BINService;
         }
 
-        public IActionResult BIN(string id)
+        public IActionResult BINMaster(string id)
         {
             BIN ic = new BIN();
             ic.locationlist = BindLocation();
@@ -43,7 +43,7 @@ namespace RetailSales.Controllers.Master
         }
         [HttpPost]
 
-        public ActionResult BIN(BIN cy, string id)
+        public ActionResult BINMaster(BIN cy, string id)
         {
             ViewBag.PageTitle = "BIN";
             try
@@ -117,7 +117,7 @@ namespace RetailSales.Controllers.Master
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
 
-                    Edit = "<a href=BIN?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
+                    Edit = "<a href=BINMaster?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
                     Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else

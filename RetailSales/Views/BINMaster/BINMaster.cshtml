@@ -32,7 +32,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="widgets-container">
-                    @using (Html.BeginForm("BIN", "BIN", FormMethod.Post))
+                    @using (Html.BeginForm("BINMaster", "BINMaster", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <form>
@@ -80,7 +80,7 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-9">
                                     <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>
-                                    <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListBIN", "BIN")'">Cancel</button>
+                                    <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListBIN", "BINMaster")'">Cancel</button>
                                 </div>
                             </div>
 
