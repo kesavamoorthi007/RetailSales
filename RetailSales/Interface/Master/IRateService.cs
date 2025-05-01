@@ -25,6 +25,7 @@ namespace RetailSales.Interface.Master
         DataTable GetRateView(string id);
         DataTable GetRateViewTable(string id);
         DataTable GetUom();
+        DataTable GetProdRate();
 
         //public DataTable GetVariant(string id);
 

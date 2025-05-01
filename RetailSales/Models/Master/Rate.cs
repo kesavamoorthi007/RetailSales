@@ -16,6 +16,7 @@ namespace RetailSales.Models.Master
     public class RateListItem
     {
         public string ID { get; set; }
+        public List<SelectListItem> UOMlst { get; set; }
         public string SrcUom { get; set; }
         public List<SelectListItem> DUOMlst { get; set; }
         public string DestUom { get; set; }
@@ -23,7 +24,7 @@ namespace RetailSales.Models.Master
         public string ProdRate { get; set; }
         public string Percentage { get; set; }
         public string SalesRate { get; set; }
-        //public string Isvalid { get; set; }
+        public string Isvalid { get; set; }
     }
 
     public class RateGrid

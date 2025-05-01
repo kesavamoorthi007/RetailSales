@@ -54,6 +54,16 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <p style="float:right;"> <input type="button" value="Add Row" onclick="AddRow()" class="btn btn-primary" /></p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div style="height:30px;"></div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -68,11 +78,11 @@
                                                 <th> Product Rate (₹) </th>
                                                 <th> Percent (%) </th>
                                                 <th> Sales Rate (₹) </th>
-                                             
+                                                <th></th>
                                             </tr>
                                         </thead>
 
-                                        <tbody>
+                                        <tbody id="tbBooks">
                                             @{
                                                 int i = 0;
                                                 int j = 1;
@@ -81,17 +91,17 @@
                                                 {
 
                                                     <tr>
-                                                        <td>
+                                                        <td style="text-align: center;">
                                                             @Html.DisplayFor(o => o.RateListItemlst[i].SrcUom)
-                                                            @Html.HiddenFor(o => o.RateListItemlst[i].SrcUom)
+                                                            @Html.HiddenFor(o => o.RateListItemlst[i].SrcUom, new { @id = "txtUOM" + i })
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].ID)
                                                         </td>
                                                         <td>
-                                                            @Html.DisplayFor(o => o.RateListItemlst[i].DestUom)
+                                                            @Html.DropDownListFor(o => o.RateListItemlst[i].DestUom, Model.RateListItemlst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDUOM" + i, style = "width: 220px;" })
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].DestUom)
                                                         </td>
                                                         <td>
-                                                            @Html.DisplayFor(o => o.RateListItemlst[i].CF)
+                                                            @Html.TextBoxFor(o => o.RateListItemlst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;", Type = "number" })
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].CF)
                                                         </td>
                                                         <td style="text-align: center;">
@@ -104,9 +114,10 @@
                                                         <td>
                                                             @Html.TextBoxFor(o => o.RateListItemlst[i].SalesRate, new { @id = "txtSalesRate" + i, @class = "form-control", style = "width: 100px; text-align: right;", Type = "number", @readonly = "readonly" })
                                                         </td>
-                                                        @*<td>
+                                                        <td>
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                        </td> *@
+                                                            <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="RateListItemlst.Index" type="hidden" value="@(i)" />
+                                                        </td>
                                                     </tr>
                                                     i = i + 1;
                                                     j = j + 1;
@@ -136,9 +147,21 @@
         $('._select').select2();
     });
 
+    function PopulateDropDown(dropDownId, list) {
+        //alert(list);
+        $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');
+        if (list != null && list.length > 0) {
+            $(dropDownId).removeAttr("disabled");
+            $.each(list, function () {
+                $(dropDownId).append($("<option></option>").val(this['value']).html(this['text']));
+            });
+        }
+        $(dropDownId).trigger("liszt:updated");
+    }
+
     function changeDisc(_this, i) {
         try {
-            var i = 0;
+            
             var prodRate = parseFloat(document.getElementById("txtProdRate" + i).value) || 0;
             var Percent = parseFloat(document.getElementById("txtPercentage" + i).value) || 0;
 
@@ -153,5 +176,166 @@
             alert("Error: " + ex.message);
         }
     }
+
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+
+            var j = 0;
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+
+
+                    
+                    if ($(this).find('#ddlDUOM' + j.toString()).val() != "" || $(this).find('#ddlDUOM' + j.toString()).val() != "0") {
+
+                        if ($(this).find('#ddlDUOM' + j.toString()).val() == "" || $(this).find('#ddlDUOM' + j.toString()).val() == 0) {
+                            isValid = false;
+                            $(this).find('#ddlDUOM' + j.toString()).css({
+                                "border": "1px solid red",
+                                "background": "#FFCECE"
+                            });
+                            alert("Please Select Destination UOM");
+                            $(this).find('#ddlDUOM' + j.toString()).focus();
+                            return false;
+                        }
+                        else {
+                            $(this).find('#ddlDUOM' + j.toString()).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    }
+                    if ($(this).find('#txtCF' + j.toString()).val() == "" || $(this).find('#txtCF' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtCF' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter CF");
+                        $(this).find('#txtCF' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtCF' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+
+                    if ($(this).find('#txtPercentage' + j.toString()).val() == "" || $(this).find('#txtPercentage' + j.toString()).val() == "0") {
+                        isValid = false;
+                        $(this).find('#txtPercentage' + j.toString()).css({
+                            "border": "1px solid red",
+                            "background": "#FFCECE"
+                        });
+
+                        alert("Please Enter Percent (%)");
+                        $(this).find('#txtPercentage' + j.toString()).focus();
+                        return false;
+
+                    }
+                    else {
+                        $(this).find('#txtPercentage' + j.toString()).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+
+                }
+                j += 1;
+            });
+
+
+
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+
+    function AddRow() {
+        var opt = "";
+        var i = 0;
+        var uom = document.getElementById("txtUOM" + i).value;
+        var prate = document.getElementById("txtProdRate" + i).value;
+
+
+
+        $.ajax({
+            type: "POST",
+            url: 'GetUOMGrpJSON',
+            success: function (data) {
+
+                $.each(data, function () {
+                    opt += "<option value=" + this.value + ">" + this.text + "</option>";
+                });
+                $.ajax({
+                    type: "POST",
+                    url: 'GetProdRateJSON',
+                    success: function (data) {
+
+                        $.each(data, function () {
+                            prate += "<option value=" + this.value + ">" + this.text + "</option>";
+                        });
+                
+
+                    }
+                })
+                AppendRow(opt,uom,prate);
+
+            }
+        })
+    }
+    function removeRow(id) {
+        var table = document.getElementById("dataTable");
+        var rowCount = table.rows.length;
+        var row = document.getElementById('trBook' + id);
+        var j = 0;
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+                j += 1;
+            }
+        });
+        if (j > 1) {
+            row.style.display = "none";
+            document.getElementById('Isvalid' + id).value = "N";
+        }
+        else {
+            alert("Cannot delete all the rows.")
+        }
+    }
+    function AppendRow(opt,uom,prate)
+    {
+        var index = $("#tbBooks").children("tr").length;
+
+        var UOMcell = "<td style='text-align: center;'><label> " + uom + " </label><input class='form-control' id='txtUOM" + index + "' name='RateListItemlst[" + index + "].SrcUom' value="+uom+" type='hidden'/> </td>";
+
+        var Des = "<td><select style = 'width: 150px;' class='form-control _select newcss' id='ddlDUOM" + index + "' name='RateListItemlst[" + index + "].DestUom'><option value=''>--Please select--</option>" + opt + "</select></td>";
+
+        var CF = "<td><input class='form-control' id='txtCF" + index + "' name='RateListItemlst[" + index + "].CF'  style='width: 80px;' min='0' max='99' /></td>";
+
+        var ProRatecell = "<td style='text-align: center;'><label> " + prate + " </label><input class='form-control' id='txtProdRate" + index + "' name='RateListItemlst[" + index + "].ProdRate' value="+prate+" type='hidden'/> </td>";
+
+        var Percentage = "<td><input class='form-control' id='txtPercentage" + index + "' name='RateListItemlst[" + index + "].Percentage'  style='width: 100px; text-align: right;' min='0' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeDisc(this," + index + ")' /></td>";
+
+        var SalesRate = "<td><input class='form-control' id='txtSalesRate" + index + "' name='RateListItemlst[" + index + "].SalesRate'  style='width: 100px; text-align: right;' min='0' onkeydown='return isNumeric2(event.keyCode,this.value)' readonly='True' /></td>";
+
+        var removeCell = "<td><input id='Isvalid" + index + "' name='RateListItemlst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='RateListItemlst.Index' type='hidden' value='" + index + "'  /></td>";
+
+
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + UOMcell + Des + CF + ProRatecell + Percentage + SalesRate + removeCell + "</tr>";
+        //alert(Packing);
+        $("#tbBooks").append(newRow);
+
+        $(function () {
+            $('._select').select2();
+        });
+
+
+    }
+
 </script>
 

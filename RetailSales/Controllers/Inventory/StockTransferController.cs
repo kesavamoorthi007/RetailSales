@@ -7,6 +7,7 @@ using static RetailSales.Models.StockTransferItem;
 using RetailSales.Interface.Purchase;
 using RetailSales.Services.Purchase;
 using RetailSales.Services.Sales;
+using RetailSales.Services.Inventory;
 
 namespace RetailSales.Controllers
 {
@@ -29,6 +30,10 @@ namespace RetailSales.Controllers
 
          
             ic.DocumentDate = DateTime.Now.ToString("dd-MMM-yyyy");
+            ic.FLoclst = BindFLocation();
+            ic.Flocation = "2006";
+            ic.TLoclst = BindTLocation();
+            ic.Tlocation = "1007";
             DataTable dtv = datatrans.GetSequence("Stock Transfer");
 
             if (dtv.Rows.Count > 0)
@@ -38,10 +43,6 @@ namespace RetailSales.Controllers
             List<StockTransferItem> TData = new List<StockTransferItem>();
             StockTransferItem tda = new StockTransferItem();
 
-            ic.Flocation = "Godown";
-            ic.Tlocation = "Store";
-            ic.FBinlst = BindFBin();
-            ic.TBinlst = BindTBin();
             if (id == null)
             {
                 for (int i = 0; i < 1; i++)
@@ -50,6 +51,8 @@ namespace RetailSales.Controllers
                     tda.Itemlst = BindItem();
                     tda.Productlst = BindProduct("");
                     tda.Varientlst = BindVarient("");
+                    tda.FBinlst = BindFBin();
+                    tda.TBinlst = BindTBin();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -104,6 +107,42 @@ namespace RetailSales.Controllers
         {
             return View();
         }
+        private List<SelectListItem> BindTLocation()
+        {
+            try
+            {
+                DataTable dtDesg = StockTransferService.GetTLocation();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private List<SelectListItem> BindFLocation()
+        {
+            try
+            {
+                DataTable dtDesg = StockTransferService.GetFLocation();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public JsonResult GetItemGrpJSON()
         {
             StockTransferItem model = new StockTransferItem();
@@ -167,23 +206,28 @@ namespace RetailSales.Controllers
                 string uom = "";
                 string rate = "";
                 string stockqty = "";
-                dt = StockTransferService.GetVarientDetails(ItemId);
+                string frombin = "";
 
+                dt = StockTransferService.GetVarientDetails(ItemId);
                 if (dt.Rows.Count > 0)
                 {
-
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
                     rate = dt.Rows[0]["RATE"].ToString();
-
-
                 }
+
                 dt = StockTransferService.GetStockDetails(ItemId);
                 if (dt.Rows.Count > 0)
                 {
                     stockqty = dt.Rows[0]["BALANCE_QTY"].ToString();
                 }
 
-                var result = new { uom = uom, rate = rate, stockqty = stockqty };
+                dt = StockTransferService.GetFBinDetails(ItemId);
+                if (dt.Rows.Count > 0)
+                {
+                    frombin = dt.Rows[0]["BIN_ID"].ToString();
+                }
+
+                var result = new { uom = uom, rate = rate, stockqty = stockqty, frombin = frombin };
                 return Json(result);
             }
             catch (Exception ex)
@@ -267,7 +311,7 @@ namespace RetailSales.Controllers
             }
         }
 
-      
+
         //public List<SelectListItem> BindFlocation()
         //{
         //    try
@@ -302,6 +346,12 @@ namespace RetailSales.Controllers
         //        throw ex;
         //    }
         //}
+        public JsonResult GetFBinGrpJSON()
+        {
+            StockTransferItem model = new StockTransferItem();
+            model.FBinlst = BindFBin();
+            return Json(BindFBin());
+        }
         public List<SelectListItem> BindFBin()
         {
             try
@@ -318,6 +368,12 @@ namespace RetailSales.Controllers
             {
                 throw ex;
             }
+        }
+        public JsonResult GetTBinGrpJSON()
+        {
+            StockTransferItem model = new StockTransferItem();
+            model.TBinlst = BindTBin();
+            return Json(BindTBin());
         }
         public List<SelectListItem> BindTBin()
         {
@@ -392,10 +448,7 @@ namespace RetailSales.Controllers
                 ic.DocumentDate = dt.Rows[0]["STOCK_TRANSFER_DATE"].ToString();
                 ic.Flocation = dt.Rows[0]["FROM_LOCATION"].ToString();
                 ic.Tlocation = dt.Rows[0]["TO_LOCATION"].ToString();
-                ic.FBin = dt.Rows[0]["FBIN"].ToString();
-                ic.TBin = dt.Rows[0]["TOBIN"].ToString();
-               
-
+                
             }
 
             List<StockTransferItem> TData = new List<StockTransferItem>();
@@ -416,6 +469,8 @@ namespace RetailSales.Controllers
                     tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                     tda.Unit = dtt.Rows[i]["UNIT"].ToString();
                     tda.Stock = dtt.Rows[i]["STOCK"].ToString();
+                    tda.FBin = dtt.Rows[i]["FBIN"].ToString();
+                    tda.TBin = dtt.Rows[i]["TOBIN"].ToString();
                     tda.Qty = dtt.Rows[i]["QUANTITY"].ToString();
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.Amount = dtt.Rows[i]["AMOUNT"].ToString();

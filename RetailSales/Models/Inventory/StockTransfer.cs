@@ -7,19 +7,18 @@ namespace RetailSales.Models
         public StockTransfer()
         {
 
-            this.FBinlst = new List<SelectListItem>();
-            this.TBinlst = new List<SelectListItem>();
+            this.FLoclst = new List<SelectListItem>();
+            this.TLoclst = new List<SelectListItem>();
 
         }
 
-        public List<SelectListItem> FBinlst;
-        public List<SelectListItem> TBinlst;
+        public List<SelectListItem> FLoclst;
+        public List<SelectListItem> TLoclst;
         public string Documentid { get; set; }
         public string DocumentDate { get; set; }
         public string Flocation { get; set; }
         public string Tlocation { get; set; }
-        public string FBin { get; set; }
-        public string TBin { get; set; }
+        
         public string Order { get; set; }
         public string ddlStatus { get; set; }
 
@@ -34,6 +33,10 @@ namespace RetailSales.Models
         public string Item { get; set; }
         public List<SelectListItem> Productlst { get; set; }
         public string Product { get; set; }
+        public List<SelectListItem> FBinlst { get; set; }
+        public string FBin { get; set; }
+        public List<SelectListItem> TBinlst { get; set; }
+        public string TBin { get; set; }
         public string saveItemId { get; set; }
         public string Varient { get; set; }
         public string Unit { get; set; }
