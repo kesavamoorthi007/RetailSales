@@ -455,6 +455,23 @@
 
     });
 
+    function changeCF(_this, i) {
+         var qty =document.getElementById("txtQty" + i).value;
+         var cf =document.getElementById("txtCF" + i).value;
+
+
+         if (qty == "")
+                qty = 0;
+
+            if (cf == "")
+                cf = 0;
+
+                 var cqty = eval(cf) * eval(qty);
+                   document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
+
+     }
+
+
     function changeUOM(ItemId, i) {
          var uom =document.getElementById("txtUOM" + i).value;
          var qty =document.getElementById("txtQty" + i).value;
@@ -480,22 +497,7 @@
               }
           });
     }
-     function changeCF(_this, i) {
-         var qty =document.getElementById("txtQty" + i).value;
-         var cf =document.getElementById("txtCF" + i).value;
-
-
-         if (qty == "")
-                qty = 0;
-
-            if (cf == "")
-                cf = 0;
-
-                 var cqty = eval(cf) * eval(qty);
-                   document.getElementById("txtCfQty" + i).value = cqty.toFixed(2);
-
-     }
-
+     
      function changeProductDetails(ItemId,i) {
         $.ajax({
             url: 'GetProductJSON',

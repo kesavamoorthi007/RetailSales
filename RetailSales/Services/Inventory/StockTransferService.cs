@@ -15,10 +15,12 @@ namespace RetailSales.Services
     {
         private readonly string _connectionString;
         DataTransactions datatrans;
-        public StockTransferService(IConfiguration _configuratio)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public StockTransferService(IConfiguration _configuratio, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+            _httpContextAccessor = httpContextAccessor;
         }
         public DataTable GetAllStockTransferGRID(string strStatus)
         {
@@ -106,6 +108,16 @@ namespace RetailSales.Services
             adapter.Fill(dtt);
             return dtt;
         }
+        public DataTable GetFBinDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT INVENTORY_ITEM.BIN_ID FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetItemDetails(string ItemId)
         {
             string SvSql = string.Empty;
@@ -149,10 +161,32 @@ namespace RetailSales.Services
             return dtt;
         }
 
+        public DataTable GetFLocation()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select LOCATION_NAME,ID from LOCATION";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetTLocation()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select LOCATION_NAME,ID from LOCATION";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public DataTable GetStockTransfer(string id)
         {
             string SvSql = string.Empty;
-            SvSql = " SELECT STB.STOCK_TRANSFER_ID, STB.STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION, FBM.BINID AS FBIN, TBM.BINID AS TOBIN FROM  dbo.STOCK_TRAN_BASICS AS STB LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STB.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STB.FROM_BIN_ID = FBM.ID WHERE STB.ST_BASIC_ID='" + id + "'";
+            SvSql = " SELECT STB.STOCK_TRANSFER_ID, STB.STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION FROM  dbo.STOCK_TRAN_BASICS AS STB WHERE STB.ST_BASIC_ID='" + id + "'";
 
             //SvSql = " SELECT STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID FROM STOCK_TRAN_BASICS WHERE STOCK_TRAN_BASICS.ST_BASIC_ID='" + id + "'";
             DataTable dtt = new DataTable();
@@ -165,7 +199,7 @@ namespace RetailSales.Services
         public DataTable GetStockTransferItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT ST_BASIC_ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,UNIT,STOCK,QUANTITY,AMOUNT,STOCK_TRAN_DETAIL.RATE FROM STOCK_TRAN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STOCK_TRAN_DETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=STOCK_TRAN_DETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STOCK_TRAN_DETAIL.VARIANT   WHERE STOCK_TRAN_DETAIL.ST_BASIC_ID='" + id + "'";
+            SvSql = "SELECT ST_BASIC_ID,PRODUCT.PRODUCT_NAME,PRO_NAME.PROD_NAME,PRO_DETAIL.PRODUCT_VARIANT,UNIT,STOCK,FBM.BINID AS FBIN, TBM.BINID AS TOBIN,QUANTITY,AMOUNT,STOCK_TRAN_DETAIL.RATE FROM STOCK_TRAN_DETAIL LEFT OUTER JOIN PRODUCT ON PRODUCT.ID=STOCK_TRAN_DETAIL.ITEM LEFT OUTER JOIN PRO_NAME ON PRO_NAME.PRO_NAME_BASICID=STOCK_TRAN_DETAIL.PRODUCT LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=STOCK_TRAN_DETAIL.VARIANT LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STOCK_TRAN_DETAIL.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STOCK_TRAN_DETAIL.FROM_BIN_ID = FBM.ID WHERE STOCK_TRAN_DETAIL.ST_BASIC_ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -180,7 +214,8 @@ namespace RetailSales.Services
             {
                 string StatementType = string.Empty;
                 string svSQL = "";
-
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+                string fyear = datatrans.GetCurrentFYear(DateTime.Now);
                 if (cy.ID == null)
                 {
                     datatrans = new DataTransactions(_connectionString);
@@ -223,9 +258,18 @@ namespace RetailSales.Services
                     objCmd.Parameters.Add("@stocktransferdate", SqlDbType.Date).Value = cy.DocumentDate;
                     objCmd.Parameters.Add("@fromlocation", SqlDbType.VarChar).Value = cy.Flocation;
                     objCmd.Parameters.Add("@tolocation", SqlDbType.VarChar).Value = cy.Tlocation;
-                    objCmd.Parameters.Add("@frombinid", SqlDbType.VarChar).Value = cy.FBin;
-                    objCmd.Parameters.Add("@tobinid", SqlDbType.VarChar).Value = cy.TBin;
-
+                    //objCmd.Parameters.Add("@frombinid", SqlDbType.VarChar).Value = cy.FBin;
+                    //objCmd.Parameters.Add("@tobinid", SqlDbType.VarChar).Value = cy.TBin;
+                    if (cy.ID == null)
+                    {
+                        objCmd.Parameters.Add("@createdby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@createdon", SqlDbType.Date).Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        objCmd.Parameters.Add("@updatedby", SqlDbType.NVarChar).Value = userId;
+                        objCmd.Parameters.Add("@updatedon", SqlDbType.Date).Value = DateTime.Now;
+                    }
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
 
                     try
@@ -246,7 +290,7 @@ namespace RetailSales.Services
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into STOCK_TRAN_DETAIL (ST_BASIC_ID,ITEM,PRODUCT,VARIANT,UNIT,STOCK,QUANTITY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Stock + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
+                                        svSQL = "Insert into STOCK_TRAN_DETAIL (ST_BASIC_ID,ITEM,PRODUCT,VARIANT,UNIT,STOCK,FROM_BIN_ID,TO_BIN_ID,QUANTITY,RATE,AMOUNT) VALUES ('" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Stock + "','" + cp.FBin + "','" + cp.TBin + "','" + cp.Qty + "','" + cp.Rate + "','" + cp.Amount + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
 
@@ -266,7 +310,7 @@ namespace RetailSales.Services
                                                     SqlCommand objCmdsz = new SqlCommand(Sql1, objConn);
                                                     objCmdsz.ExecuteNonQuery();
 
-                                                    string Sql2 = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VALUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','','" + cp.Rate + "','Stock Transfer','Minus','" + cp.Qty + "','Stock Transfer','" + cy.DocumentDate + "','2024-2025','','') ";
+                                                    string Sql2 = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,DEST_UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR,CREATED_ON,CREATED_BY) VALUES ('" + dt.Rows[i]["INVENTORY_ITEM_ID"].ToString() + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','','" + cp.Rate + "','Stock Transfer','Minus','" + cp.Qty + "','Stock Transfer','" + cy.DocumentDate + "','" + fyear + "','" + DateTime.Now + "','" + userId + "') ";
                                                     SqlCommand objCmdsz1 = new SqlCommand(Sql2, objConn);
                                                     objCmdsz1.ExecuteNonQuery();
 
@@ -284,12 +328,12 @@ namespace RetailSales.Services
                                         }
                                         else
                                         {
-                                            string svSQL1 = "Insert into INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,BALANCE_QTY,MONTH,LOCATION_ID,FINANCIAL_YEAR) VALUES ('" + cy.Documentid + "','" + cy.DocumentDate + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate + "','" + cp.Qty + "','" + DateTime.Now.ToString("MMMM") + "','Store','2024-2025')";
+                                            string svSQL1 = "Insert into INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,BALANCE_QTY,MONTH,LOCATION_ID,FINANCIAL_YEAR) VALUES ('" + cy.Documentid + "','" + cy.DocumentDate + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate + "','" + cp.Qty + "','" + DateTime.Now.ToString("MMMM") + "','Store','" + fyear + "')";
                                             SqlCommand objCmddtss = new SqlCommand(svSQL1, objConn);
                                             Object Pid1 = objCmddtss.ExecuteScalar();
                                             
                                             
-                                            string svSQL2 = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid1 + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','','" + cp.Rate + "','Stock Transfer','Minus','" + cp.Qty + "','Stock Transfer','" + cy.DocumentDate + "','2024-2025')";
+                                            string svSQL2 = "Insert into INVENTORY_ITEM_TRANS (INV_ITEM_ID,TRANS_ID,GRN_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid1 + "','" + Pid + "','" + Pid + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','','" + cp.Rate + "','Stock Transfer','Minus','" + cp.Qty + "','Stock Transfer','" + cy.DocumentDate + "','" + fyear + "')";
                                             SqlCommand objCmddtsss = new SqlCommand(svSQL2, objConn);
                                             objCmddtsss.ExecuteNonQuery();
                                             

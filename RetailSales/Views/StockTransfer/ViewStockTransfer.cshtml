@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="height:20px;"></div>
+                            @* <div style="height:20px;"></div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -98,7 +98,7 @@
                                         
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
 
                             <div style="height:20px;"></div>
                             <div class="row">
@@ -114,6 +114,8 @@
                                                 <th>Variant</th>
                                                 <th>Unit</th>
                                                 <th> Stock </th>
+                                                <th> From BinID </th>
+                                                <th> To BinID </th>
                                                 <th> Qty </th>
                                                 <th> Rate (₹)</th>
                                                 <th> Amount (₹)</th>
@@ -133,6 +135,8 @@
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Varient)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Unit)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Stock)</td>
+                                                        <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].FBin)</td>
+                                                        <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].TBin)</td>
                                                         <td>@Html.DisplayFor(o => o.StockTransferItemLst[i].Qty)</td>
                                                         <td style="text-align: right">@Html.DisplayFor(o => o.StockTransferItemLst[i].Rate)</td>
                                                         <td style="text-align: right">@Html.DisplayFor(o => o.StockTransferItemLst[i].Amount)</td>

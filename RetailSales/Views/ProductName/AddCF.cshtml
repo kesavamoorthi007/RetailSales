@@ -103,6 +103,7 @@
                                                         <td style="text-align: center;">
                                                             @Html.DisplayFor(o => o.ProductDetailTablelst[i].UOM)
                                                             @Html.HiddenFor(o => o.ProductDetailTablelst[i].UOM, new { @id = "txtUOM" + i })
+                                                            @Html.HiddenFor(o => o.ProductDetailTablelst[i].Src)
                                                             @Html.HiddenFor(o => o.ProductDetailTablelst[i].saveItemId)
                                                         </td>
                                                         <td style="width:250px;">

@@ -19,64 +19,7 @@ namespace RetailSales.Controllers.Master
         {
             RateService = _RateService;
         }
-        //public IActionResult Rate(string id)
-        //{
-        //    Rate ic = new Rate();
-        //    ic.DocDate = DateTime.Now.ToString("dd-MMM-yyyy");
-
-        //    List<RateList> TData = new List<RateList>();
-        //    RateList tda = new RateList();
-        //    if (id == null)
-        //    {
-        //        DataTable dtt = new DataTable();
-        //        dtt = RateService.GetproductDetail(id);
-
-        //        if (dtt.Rows.Count > 0)
-        //        {
-        //            for (int i = 0; i < dtt.Rows.Count; i++)
-        //            {
-        //                tda = new RateList();
-        //                tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
-        //                tda.Varient = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
-        //                tda.Unit = dtt.Rows[i]["UOM"].ToString();                        
-        //                tda.Isvalid = "Y";
-        //                TData.Add(tda);
-        //            }
-
-        //        }  
-        //    }
-        //    else
-        //    {
-        //        DataTable dt = new DataTable();
-        //        dt = RateService.GetEditRate(id);
-        //        if (dt.Rows.Count > 0)
-        //        {
-        //            //ic.DocNo = dt.Rows[0]["DOC_NO"].ToString();
-        //            ic.DocDate = dt.Rows[0]["DOC_DATE"].ToString(); 
-        //            ic.ValidFrom = dt.Rows[0]["VALID_FROM"].ToString();
-        //            ic.ValidTo = dt.Rows[0]["VALID_TO"].ToString();
-        //            ic.ID = id;
-        //        }
-        //        DataTable dtt = new DataTable();
-        //        dtt = RateService.GetEditRateDetail(id);
-        //        if (dtt.Rows.Count > 0)
-        //        {
-        //            for (int i = 0; i < dtt.Rows.Count; i++)
-        //            {
-        //                tda = new RateList();
-        //                tda.Item = dtt.Rows[i]["ITEM_NAME"].ToString();
-        //                tda.Varient = dtt.Rows[i]["VARIANT"].ToString();
-        //                tda.Unit = dtt.Rows[i]["UNIT"].ToString();
-        //                tda.Rate1 = dtt.Rows[i]["RATE"].ToString();
-        //                tda.ID = id;
-        //                tda.Isvalid = "Y";
-        //                TData.Add(tda);
-        //            }                      
-        //        }
-        //    }
-        //    ic.RateListIdem = TData;
-        //    return View(ic);
-        //}
+        
 
         public IActionResult RateView(string id)
         {
@@ -104,12 +47,28 @@ namespace RetailSales.Controllers.Master
                 {
                     tda = new RateListItem();
 
-                    tda.SrcUom = dtt.Rows[0]["UOM_CODE"].ToString();
-                    tda.DestUom = dtt.Rows[0]["DEST_UOM"].ToString();
-                    tda.CF = dtt.Rows[0]["CF"].ToString();
-                    tda.ProdRate = dtt.Rows[0]["RATE"].ToString();
-                    tda.Percentage = dtt.Rows[0]["PERCENTAGE"].ToString();
-                    tda.SalesRate = dtt.Rows[0]["SALES_RATE"].ToString();
+                    tda.SrcUom = dtt.Rows[i]["UOM_CODE"].ToString();
+                    tda.DUOMlst = BindUOM();
+                    tda.DestUom = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.CF = dtt.Rows[i]["CF"].ToString();
+                    tda.ProdRate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Percentage = dtt.Rows[i]["PERCENTAGE"].ToString();
+                    tda.SalesRate = dtt.Rows[i]["SALES_RATE"].ToString();
+                    tda.Isvalid = "Y";
+                    tda.ID = id;
+                    TData.Add(tda);
+                }
+            }
+            else
+            {
+
+                for (int i = 0; i < 1; i++)
+                {
+                    tda = new RateListItem();
+                    //tda.SUOMlst = BindUOM();
+                    tda.DUOMlst = BindUOM();
+                    tda.ID = id;
+                    tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
             }
@@ -152,6 +111,13 @@ namespace RetailSales.Controllers.Master
             return View(cy);
         }
 
+        public JsonResult GetUOMGrpJSON()
+        {
+            RateListItem model = new RateListItem();
+            model.UOMlst = BindUOM();
+            return Json(BindUOM());
+        }
+
         public List<SelectListItem> BindUOM()
         {
             try
@@ -160,7 +126,7 @@ namespace RetailSales.Controllers.Master
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["UOM_CODE"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["UOM_CODE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
                 }
                 return lstdesg;
             }
@@ -170,92 +136,36 @@ namespace RetailSales.Controllers.Master
             }
         }
 
-        //anoter     
-        //public JsonResult GetItemGrpJSON()
-        //{
+        public JsonResult GetProdRateJSON()
+        {
+            RateListItem model = new RateListItem();
+            model.UOMlst = BindProdRate();
+            return Json(BindProdRate());
+        }
 
-        //    RateList model = new RateList();
-        //    model.Itemlst = BindItem(); 
-        //    return Json(BindItem()); 
-        //}
-
-        //public JsonResult GetVarientJSON(string id)
-        //{
-        //    return Json(BindVariant(id));
-        //}
-
+        public List<SelectListItem> BindProdRate()
+        {
+            try
+            {
+                DataTable dtDesg = RateService.GetProdRate();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["RATE"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public IActionResult ListRate()
         {
             return View();
         }
         
-
-//        public List<SelectListItem> BindItem()
-//        {
-//            try
-//            {
-//                DataTable dtDesg = RateService.GetItem();
-//                List<SelectListItem> lstdesg = new List<SelectListItem>();
-//                for (int i = 0; i < dtDesg.Rows.Count; i++)
-//                {
-//                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-//                }
-//                return lstdesg;
-//            }
-//            catch (Exception ex)
-//            {
-//                throw ex;
-//            }
-//        }
-
-//        private List<SelectListItem> BindVariant(string id)
-//        {
-//            try
-//            {
-//                DataTable dtDesg = RateService.GetVariant(id)
-//;
-//                List<SelectListItem> lstdesg = new List<SelectListItem>();
-//                for (int i = 0; i < dtDesg.Rows.Count; i++)
-//                {
-//                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["PRODUCT_VARIANT"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
-//                }
-//                return lstdesg;
-//            }
-//            catch (Exception ex)
-
-//            {
-//                throw ex;
-//            }
-//        }
-        //public ActionResult GetItemDetails(string ItemId)
-        //{
-        //    try
-        //    {
-        //        DataTable dt = new DataTable();
-        //        //string item = "";
-        //        string unit = "";
-        //        //string rate = "";
-        //        dt = RateService.GetItemDetails(ItemId);
-
-        //        if (dt.Rows.Count > 0)
-        //        {
-                    
-        //            unit = dt.Rows[0]["UOM"].ToString();
-        //            //rate = dt.Rows[0]["RATE"].ToString();
-
-
-        //        }
-        //        //item = item,, rate = rate 
-        //        var result = new {unit = unit};
-        //        return Json(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
         public ActionResult MyListRategrid(string strStatus)
         {
             List<RateGrid> Reg = new List<RateGrid>();

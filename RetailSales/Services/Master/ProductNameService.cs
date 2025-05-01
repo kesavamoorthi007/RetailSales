@@ -267,7 +267,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.UOM + "','" + cp.Des + "','" + cp.CF + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }
@@ -276,15 +276,15 @@ namespace RetailSales.Services.Master
                             }
                             else
                             {
-                                svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
-                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
-                                objCmdd.ExecuteNonQuery();
+                                //svSQL = "Delete UOM_CONVERT WHERE PRO_ID='" + cy.ID + "'";
+                                //SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                //objCmdd.ExecuteNonQuery();
                                 foreach (ProductDetailTable cp in cy.ProductDetailTablelst)
                                 {
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.Src + "','" + cp.Des + "','" + cp.CF + "')";
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF) VALUES ('" + proid + "','" + cp.UOM + "','" + cp.Des + "','" + cp.CF + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
                                     }

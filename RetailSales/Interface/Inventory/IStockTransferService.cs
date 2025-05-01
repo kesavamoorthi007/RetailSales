@@ -26,6 +26,9 @@ namespace RetailSales
         DataTable GetEditStockTransfer(string id);
         DataTable GetProduct(string id);
         DataTable GetStockDetails(string ItemId);
+        DataTable GetFLocation();
+        DataTable GetTLocation();
+        DataTable GetFBinDetails(string ItemId);
     }
 }
 
