@@ -18,6 +18,7 @@ namespace RetailSales.Models.Master
         public string ID { get; set; }
         public List<SelectListItem> UOMlst { get; set; }
         public string SrcUom { get; set; }
+        public string SrcUomID { get; set; }
         public List<SelectListItem> DUOMlst { get; set; }
         public string DestUom { get; set; }
         public string CF { get; set; }

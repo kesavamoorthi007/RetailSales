@@ -84,7 +84,7 @@
                     { text: 'Product Category', filtertype: 'input', datafield: 'category', width: 200 },
                     { text: 'Product Name', filtertype: 'input', datafield: 'proname', width: 200 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
-                    { text: 'CF', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
+                    { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},
                 ]
             });
@@ -98,6 +98,15 @@
             };
             $("#grid").jqxGrid({ source: source });
         });
+
+        $("#grid").on("bindingcomplete", function () {
+            $(".fancybox").fancybox({
+                width: '1000px',
+                height: '1000px',
+                arrows: false,
+            }); 
+        });
+
     });
 
 </script>
@@ -146,3 +155,29 @@
     }
 </script>
 
+<a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 1000px;"></a>
+<link rel="stylesheet" href="@Url.Content("~/css/jquery.fancybox.css?v=2.1.5")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/css/jquery.fancybox.pack.js?v=2.1.5")"></script>
+<script type="text/javascript">
+    var fancybox123;
+    jQuery(document).ready(function ($) {
+        $(".fancybox").fancybox({
+            width: '1000px',
+            height: '1000px',
+            arrows: false,
+            //autoSize : false
+        });
+        fancybox123 = $.fancybox;
+    });
+
+    function close_popup() {
+        fancybox123.close();
+        $(".fancybox1").fancybox({
+            width: '100%',
+            height: '100%',
+            arrows: false,
+        });
+        $(".fancybox1").eq(0).trigger('click');
+    }
+
+</script>

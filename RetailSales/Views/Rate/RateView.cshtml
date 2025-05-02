@@ -94,6 +94,7 @@
                                                         <td style="text-align: center;">
                                                             @Html.DisplayFor(o => o.RateListItemlst[i].SrcUom)
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].SrcUom, new { @id = "txtUOM" + i })
+                                                            @Html.HiddenFor(o => o.RateListItemlst[i].SrcUomID, new { @id = "hdUOMID" + i })
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].ID)
                                                         </td>
                                                         <td>
@@ -101,7 +102,7 @@
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].DestUom)
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.RateListItemlst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;", Type = "number" })
+                                                            @Html.TextBoxFor(o => o.RateListItemlst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 80px;",onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].CF)
                                                         </td>
                                                         <td style="text-align: center;">
@@ -112,7 +113,7 @@
                                                             @Html.TextBoxFor(o => o.RateListItemlst[i].Percentage, new { @id = "txtPercentage" + i, @class = "form-control", style = "width: 100px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeDisc(this," + i + ")" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.RateListItemlst[i].SalesRate, new { @id = "txtSalesRate" + i, @class = "form-control", style = "width: 100px; text-align: right;", Type = "number", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.RateListItemlst[i].SalesRate, new { @id = "txtSalesRate" + i, @class = "form-control", style = "width: 100px; text-align: right;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].Isvalid, new { @id = "Isvalid" + i })
@@ -261,8 +262,7 @@
         var i = 0;
         var uom = document.getElementById("txtUOM" + i).value;
         var prate = document.getElementById("txtProdRate" + i).value;
-
-
+        var uomid = document.getElementById("hdUOMID" + i).value;
 
         $.ajax({
             type: "POST",
@@ -284,7 +284,7 @@
 
                     }
                 })
-                AppendRow(opt,uom,prate);
+                AppendRow(opt, uom, prate, uomid);
 
             }
         })
@@ -307,11 +307,10 @@
             alert("Cannot delete all the rows.")
         }
     }
-    function AppendRow(opt,uom,prate)
-    {
+    function AppendRow(opt, uom, prate, uomid) {
         var index = $("#tbBooks").children("tr").length;
 
-        var UOMcell = "<td style='text-align: center;'><label> " + uom + " </label><input class='form-control' id='txtUOM" + index + "' name='RateListItemlst[" + index + "].SrcUom' value="+uom+" type='hidden'/> </td>";
+        var UOMcell = "<td style='text-align: center;'><label> " + uom + " </label><input class='form-control' id='txtUOM" + index + "' name='RateListItemlst[" + index + "].SrcUom' value=" + uom + " type='hidden' /><input class='form-control' id='hdUOMID" + index + "' name='RateListItemlst[" + index + "].SrcUomID' value=" + uomid + " type='hidden' /> </td>";
 
         var Des = "<td><select style = 'width: 150px;' class='form-control _select newcss' id='ddlDUOM" + index + "' name='RateListItemlst[" + index + "].DestUom'><option value=''>--Please select--</option>" + opt + "</select></td>";
 
@@ -319,7 +318,7 @@
 
         var ProRatecell = "<td style='text-align: center;'><label> " + prate + " </label><input class='form-control' id='txtProdRate" + index + "' name='RateListItemlst[" + index + "].ProdRate' value="+prate+" type='hidden'/> </td>";
 
-        var Percentage = "<td><input class='form-control' id='txtPercentage" + index + "' name='RateListItemlst[" + index + "].Percentage'  style='width: 100px; text-align: right;' min='0' onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeDisc(this," + index + ")' /></td>";
+        var Percentage = "<td><input class='form-control' id='txtPercentage" + index + "' name='RateListItemlst[" + index + "].Percentage'  style='width: 100px; text-align: right;' min='0'  onkeydown='return isNumeric2(event.keyCode,this.value)' onkeyup = 'changeDisc(this," + index + ")' /></td>";
 
         var SalesRate = "<td><input class='form-control' id='txtSalesRate" + index + "' name='RateListItemlst[" + index + "].SalesRate'  style='width: 100px; text-align: right;' min='0' onkeydown='return isNumeric2(event.keyCode,this.value)' readonly='True' /></td>";
 

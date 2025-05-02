@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Master.ProductName
 
 @{
-    //Layout = "_PopupLayout";
+    Layout = "_PopupLayout";
     ViewData["Title"] = "ProductName";
 }
 <style>
@@ -42,7 +42,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-3 control-label"><strong>Product Category :</strong><label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Product Category :</strong><label class="mandatory"></label></label>
 
                                         @Html.HiddenFor(C => C.ID)
                                         @Html.DisplayFor(C => C.Category)
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-3 control-label"><strong>Product Name :</strong><label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Product Name :</strong><label class="mandatory"></label></label>
 
                                         @Html.DisplayFor(C => C.ProName)
 
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-1 control-label"><strong>Description :</strong><label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Description :</strong><label class="mandatory"></label></label>
 
                                         @Html.DisplayFor(C => C.Description)
 
@@ -87,7 +87,7 @@
                                                 <th> HSN </th>
                                                 <th> Min Qty </th>
                                                 <th> Rate (₹) </th>
-                                                <th>CF</th>
+                                              @*  <th>CF</th>*@
                                         </thead>
 
                                         <tbody>
@@ -103,7 +103,7 @@
                                                         <td>@Html.DisplayFor(o => o.ProductNameLst[i].Hsn)</td>
                                                         <td>@Html.DisplayFor(o => o.ProductNameLst[i].MinQty)</td>
                                                         <td>@Html.DisplayFor(o => o.ProductNameLst[i].Rate)</td>
-                                                        <td><a href="@Url.Action("AddCF", "ProductName")?id=@item.ID" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></td>
+                                                        @*<td><a href="@Url.Action("AddCF", "ProductName")?id=@item.ID" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></td>*@
                                                     </tr>
                                                     //i = i + 1;
                                                     i++;
@@ -117,8 +117,8 @@
 
                             <div style="height:20px;"></div>
 
-                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListProductName", "ProductName")'">Cancel</button>
-
+@*                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListProductName", "ProductName")'">Cancel</button>
+*@
                             @* <button type="submit" class="btn btn-success" type="button" id="btnSave">Sales Return</button> *@
                             @* <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListStockTransfer", "StockTransfer")'">Cancel</button>*@
 

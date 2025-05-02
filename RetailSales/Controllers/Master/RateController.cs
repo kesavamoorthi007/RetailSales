@@ -46,8 +46,8 @@ namespace RetailSales.Controllers.Master
                 for (int i = 0; i < dtt.Rows.Count; i++)
                 {
                     tda = new RateListItem();
-
                     tda.SrcUom = dtt.Rows[i]["UOM_CODE"].ToString();
+                    tda.SrcUomID= dtt.Rows[i]["SRC_UOM"].ToString(); 
                     tda.DUOMlst = BindUOM();
                     tda.DestUom = dtt.Rows[i]["DEST_UOM"].ToString();
                     tda.CF = dtt.Rows[i]["CF"].ToString();
@@ -74,6 +74,10 @@ namespace RetailSales.Controllers.Master
             }
             ic.RateListItemlst = TData;
             return View(ic);
+
+
+
+
         }
         [HttpPost]
         public ActionResult RateView(Rate cy, string id)
@@ -180,7 +184,7 @@ namespace RetailSales.Controllers.Master
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    CF = "<a href=RateView?id=" + dtUsers.Rows[i]["ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    CF = "<a href=RateView?id=" + dtUsers.Rows[i]["ID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                 }
                 else
                 {

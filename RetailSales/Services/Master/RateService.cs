@@ -110,7 +110,7 @@ namespace RetailSales.Services.Master
         {
             string SvSql = string.Empty;
             //SvSql = " SELECT UOM_CONVERT.ID,PRO_ID,UOM.UOM_CODE,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM WHERE UOM_CONVERT.ID='" + id + "'";
-            SvSql = " SELECT UOM_CONVERT.PRO_ID,UOM.UOM_CODE,DEST_UOM,CF,RATE,PERCENTAGE,SALES_RATE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=UOM_CONVERT.PRO_ID WHERE UOM_CONVERT.PRO_ID='" + id + "'";
+            SvSql = " SELECT UOM_CONVERT.SRC_UOM,UOM_CONVERT.PRO_ID,UOM.UOM_CODE,DEST_UOM,CF,RATE,PERCENTAGE,SALES_RATE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=UOM_CONVERT.PRO_ID WHERE UOM_CONVERT.PRO_ID='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -142,7 +142,7 @@ namespace RetailSales.Services.Master
 
                                     //if (cp.Isvalid == "Y")
                                     //{
-                                    svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
+                                    svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.SrcUomID + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
                                     SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                     objCmds.ExecuteNonQuery();
                                     //}

@@ -431,7 +431,7 @@ namespace RetailSales.Controllers.Sales
                 throw ex;
             }
         }
-        public ActionResult GetUOMDetail(string ItemId,string uom)
+        public ActionResult GetUOMDetail(string ItemId, string uom, string proid)
         {
             try
             {
@@ -442,14 +442,14 @@ namespace RetailSales.Controllers.Sales
 
 
 
-                dt = datatrans.GetData("SELECT CF FROM UOM_CONVERT WHERE SRC_UOM = '" + uom  + "' AND DEST_UOM ='" + ItemId + "'");
+                dt = datatrans.GetData("SELECT CF FROM UOM_CONVERT WHERE SRC_UOM = (SELECT ID FROM UOM WHERE UOM_CODE='" + uom + "') AND DEST_UOM =(SELECT ID FROM UOM WHERE UOM_CODE='" + ItemId + "') AND PRO_ID='" + proid + "'");
 
                 if (dt.Rows.Count > 0)
                 {
                     cf = dt.Rows[0]["CF"].ToString();
 
                 }
-                else 
+                else
                 {
                     cf = "1";
                 }
@@ -462,7 +462,7 @@ namespace RetailSales.Controllers.Sales
                 throw ex;
             }
         }
-        
+
         public JsonResult GetCityJSON(string cityid)
         {
             //EnqItem model = new EnqItem();

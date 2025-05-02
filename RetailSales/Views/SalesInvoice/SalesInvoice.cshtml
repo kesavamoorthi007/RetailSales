@@ -272,7 +272,7 @@
                                                     <td>
                                                         <div style="display: flex; align-items: center; gap: 10px;">
 
-                                                            <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
+                                                           <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
 
                                                             @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right" })
                                                         </div>
@@ -475,13 +475,14 @@
     function changeUOM(ItemId, i) {
          var uom =document.getElementById("txtUOM" + i).value;
          var qty =document.getElementById("txtQty" + i).value;
+         var proid=document.getElementById("ddlVarient" + i).value; 
 
          if (qty == "")
                 qty = 0;
 
           $.ajax({
               url: 'GetUOMDetail',
-              data: { "ItemId": ItemId, "uom": uom },
+              data: { "ItemId": ItemId, "uom": uom , "proid": proid},
              type: "GET",
              success: function (result) {
                 
@@ -573,16 +574,26 @@
         round = round.startsWith('-') ? round.substring(1) : round;
         var net = document.getElementById("txtNet").value;
 
+        var Disc = document.getElementById("txtDisc").value || 0;
+
+            var tot = document.getElementById("txtGross").value || 0;
+
+             var Fri = document.getElementById("txtFrieghtcharge").value || 0;
+
+               var rej = eval(tot) + eval(Fri) - eval(Disc);
+
         var total=0;
      if(symbol=="+")
      {
-            total = eval(net) + eval(round);
+            total = eval(rej) + eval(round);
+             document.getElementById("txtRound").value = round;
 
      }
         if (symbol == "-") {
-            total = eval(net) - eval(round);
-
+            total = eval(rej) - eval(round);
+              document.getElementById("txtRound").value = -round;
         }
+       
         document.getElementById("txtNet").value = total.toFixed(2);
 
         //$('#toggle-state').text(symbol);
@@ -615,7 +626,7 @@
 
             var Disc = document.getElementById("txtDisc").value || 0;
 
-            var tot = document.getElementById("hidnet").value || 0;
+            var tot = document.getElementById("txtGross").value || 0;
 
 
             if (Disc == "")
@@ -637,7 +648,7 @@
 
 
             document.getElementById("txtNet").value = roundamount.toFixed(2);
-            document.getElementById("hidnet").value = rej.toFixed(2);
+            document.getElementById("hidnet").value = roundamount.toFixed(2);
 
 
             document.getElementById("txtRound").value = round.toFixed(2);
