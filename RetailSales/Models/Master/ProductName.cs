@@ -31,6 +31,10 @@ namespace RetailSales.Models.Master
         public string MinQty { get; set; }
         public string ProdDesc { get; set; }
         public string Isvalid { get; set; }
+        public List<SelectListItem> ShopBinlist { get; set; }
+        public string ShopBin { get; set; }
+        public List<SelectListItem> GodownBinlist { get; set; }
+        public string GodownBin { get; set; }
     }
 
     public class ProsuctNamegrid

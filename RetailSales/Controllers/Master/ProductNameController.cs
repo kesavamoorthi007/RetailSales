@@ -39,7 +39,8 @@ namespace RetailSales.Controllers.Master
                     tda = new ProductNameItem();
                     tda.UOMlst = BindUOM();
                     tda.HSNlst = BindHsn();
-
+                    tda.ShopBinlist = BindShopBin();
+                    tda.GodownBinlist = BindGodownBin();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -64,6 +65,10 @@ namespace RetailSales.Controllers.Master
                     for (int i = 0; i < dtt.Rows.Count; i++)
                     {
                         tda = new ProductNameItem();
+                        tda.ShopBinlist = BindShopBin();
+                        tda.GodownBinlist = BindGodownBin();
+                        tda.ShopBin= dtt.Rows[i]["SHOP_BIN"].ToString();
+                        tda.GodownBin= dtt.Rows[i]["GODOWN_BIN"].ToString();
                         tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
                         tda.UOMlst = BindUOM();
                         tda.Uom = dtt.Rows[i]["UOM"].ToString();
@@ -117,6 +122,42 @@ namespace RetailSales.Controllers.Master
             }
 
             return View(cy);
+        }
+
+        public List<SelectListItem> BindShopBin()
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='1007' AND BINMASTER.IS_ACTIVE = 'Y'");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["BINID"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<SelectListItem> BindGodownBin()
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='2006' AND BINMASTER.IS_ACTIVE = 'Y'");
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["BINID"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public JsonResult deletevariant(string ItemId)
         {
@@ -187,6 +228,18 @@ namespace RetailSales.Controllers.Master
             ProductNameItem model = new ProductNameItem();
             model.HSNlst = BindHsn();
             return Json(BindHsn());
+        }
+        public JsonResult GetshopbinJSON()
+        {
+            ProductNameItem model = new ProductNameItem();
+            model.ShopBinlist= BindShopBin();
+            return Json(BindShopBin());
+        }
+        public JsonResult GetgodownbinJSON()
+        {
+            ProductNameItem model = new ProductNameItem();
+            model.GodownBinlist = BindGodownBin();
+            return Json(BindGodownBin());
         }
         public JsonResult GetUOMGrpJSON()
         {

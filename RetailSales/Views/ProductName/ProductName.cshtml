@@ -85,7 +85,9 @@
                                                     <th>Unit</th>
                                                     <th> HSN </th>
                                                     <th>Min Qty </th>
-                                                    <th>Rate (₹) </th>                                                                                                  
+                                                    <th>Rate (₹) </th>   
+                                                    <th>Shop BIN No</th>
+                                                    <th>Godown BIN No</th>
                                                     <th>Product Description </th>
                                             </thead>
                                             <tbody id="tbBooks">
@@ -116,7 +118,11 @@
                                                                         @Html.HiddenFor(o => o.ProductNameLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                                         @Html.TextBoxFor(o => o.ProductNameLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;" })
                                                                     </td>
-                                                                    
+                                                                     <td> @Html.DropDownListFor(o => o.ProductNameLst[i].ShopBin, Model.ProductNameLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;" })
+ </td>
+ <td>
+                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].GodownBin, Model.ProductNameLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;" })
+                                                            </td>
                                                                     <td>
                                                                         @Html.TextAreaFor(o => o.ProductNameLst[i].ProdDesc, new { @id = "txtProdDesc" + i, @class = "form-control", style = "width: 150px;" })
                                                                     </td>                                                                                                                                        
@@ -368,8 +374,8 @@
     function AddRow() {
         var opt = "";
         var rem= "";
-        
-
+        var sbin="";
+        var gbin="";
 
         $.ajax({
              type: "POST",
@@ -387,13 +393,38 @@
                  $.each(data, function () {
                      rem += "<option value=" + this.value + ">" + this.text + "</option>";
                  });
-                         AppendRow(opt, rem);
+                 
+                       $.ajax({
+                      type: "POST",
+             url: 'GetshopbinJSON',
+             success: function (data) {
+
+                 $.each(data, function () {
+                     sbin += "<option value=" + this.value + ">" + this.text + "</option>";
+                 });
+
+                    $.ajax({
+                      type: "POST",
+             url: 'GetgodownbinJSON',
+             success: function (data) {
+
+                 $.each(data, function () {
+                     gbin += "<option value=" + this.value + ">" + this.text + "</option>";
+                 });
+
+                 AppendRow(opt, rem,sbin,gbin);
+             }
+         })
+
+             }
+         })
+        
              }
          })
          }
          })
     }
-    function AppendRow(opt, rem) {
+    function AppendRow(opt, rem,sopt,gopt) {
         var index = $("#tbBooks").children("tr").length;
 
         var Variant = "<td><input class='form-control' id='txtVarient" + index + "' name='ProductNameLst[" + index + "].Variant'  style='width: 220px;' type = 'text'><input id='hddetailid" + index + "' name='ProductNameLst[" + index + "].ID' type='hidden'> </td>";
@@ -406,11 +437,15 @@
 
         var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='ProductNameLst[" + index + "].Rate'  style='width: 100px; text-align: right;' </td>";
 
-        var ProdDesc = "<td><input class='form-control' id='txtProdDesc" + index + "' name='ProductNameLst[" + index + "].ProdDesc'  style='width: 150px;' type = 'text' /></td>";
+        var ProdDesc = "<td><textarea class='form-control' id='txtProdDesc" + index + "' name='ProductNameLst[" + index + "].ProdDesc'  style='width: 150px;' type = 'text' ></textarea> </td>";
+        
+        var shopbin="<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddlShopBin" + index + "' name='ProductNameLst[" + index + "].ShopBin'><option value=''>--Please select--</option>" + sopt + "</select></td>";
+
+        var godownbin="<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddlGodownBin" + index + "' name='ProductNameLst[" + index + "].GodownBin'><option value=''>--Please select--</option>" + gopt + "</select></td>";
         
         var removeCell = "<td><input id='Isvalid" + index + "' name='ProductNameLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='ProductNameLst.Index' type='hidden' value='" + index + "'  /></td>";
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Variant + Uom + Hsn + MinQty + Rate + ProdDesc + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Variant + Uom + Hsn + MinQty + Rate + shopbin + godownbin + ProdDesc + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
