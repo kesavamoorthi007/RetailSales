@@ -1,0 +1,364 @@
+﻿@model RetailSales.Models.SalesInvoiceReport
+
+@{
+    Layout = "_PopupLayout";
+    ViewData["Title"] = "SalesInvoice Report";
+}
+<style>
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+@**@
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-sm-12 text-left mt-3">
+            <button class="btn btn-outline-success me-2" type="button" onclick="printInvoice()">Print</button>
+            <button class="btn btn-outline-primary me-2" type="button" onclick="myFunction()">PDF</button>
+            <button class="btn btn-outline-secondary me-2" type="button" causesvalidation="false" onClick="window.parent.jQuery.fancybox.close();">Close</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice">
+
+                        @using (Html.BeginForm("SalesInvoiceReport1", "SalesInvoice", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @* <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="media">
+                                    </div>
+                                    <!-- End Info-->
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="text-md-end ">
+                                        <p>
+                                            <h5 class="media-heading">Invoice NO : @Html.DisplayFor(C => C.InvNo)</h5>
+                                            <h5 class="media-heading"> Invoice Date : @Html.DisplayFor(C => C.InvDate)</h5>
+
+                                        </p>
+
+                                    </div>
+                                    <!-- End Title-->
+                                </div>
+                            </div> *@
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-md-center ">
+                                        <p>
+                                            <strong>Tax Invoice</strong><br />
+                                            
+
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- End InvoiceTop-->
+                            <div class="row">
+                                <div class="col-md-5">
+                                    
+                                    <div class="row">
+                                    @*  <div class="media-left"><img class="media-object rounded-circle img-60" src="../assets/images/user/1.jpg" alt=""></div> *@
+                                    @* <label for="inputName3" class="col-sm-5 control-label"><strong>PO No :</strong><label class="mandatory"></label></label> *@
+
+                                        @Html.HiddenFor(C => C.ID)
+
+                                        <div class="media-body m-l-20">
+                                            <h4 class="media-heading">V.A.M. Rathinam And Brothers</h4>
+                                            <p>
+                                                35,Fort Main Road,Shevapet,Salem-636002<br>
+                                                <strong>GSTIN/UIN : </strong>33AACFV2120N1ZC<br>
+                                                <strong>State Name: </strong>Tamil Nadu,Code:33<br>
+                                                <span><strong>Contact : </strong>97902 33393</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="media-body m-l-20">
+                                            <h5 class="media-heading">Consignee (Ship to)</h5>
+                                            <p>
+                                                <strong>Name : </strong>@Html.DisplayFor(C => C.CustomerName)<br />
+                                                <strong>Address : </strong>@Html.DisplayFor(C => C.CustomerAdd)<br />
+                                                <strong>Mobile No : </strong>@Html.DisplayFor(C => C.CustomerPhNo)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="media-body m-l-20">
+                                            <h5 class="media-heading">Buyer (Bill to)</h5>
+                                            <p>
+                                                <strong>Name : </strong>@Html.DisplayFor(C => C.CustomerName)<br />
+                                                <strong>Address : </strong>@Html.DisplayFor(C => C.CustomerAdd)<br />
+                                                <strong>Mobile No : </strong>@Html.DisplayFor(C => C.CustomerPhNo)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    @* <p>
+                                        <strong>Customer Name : </strong>@Html.DisplayFor(C => C.CustomerName)<br />
+                                        <strong>Customer Address : </strong>@Html.DisplayFor(C => C.CustomerAdd)<br />
+                                        <strong>Phone No : </strong>@Html.DisplayFor(C => C.CustomerPhNo)
+                                    </p> *@
+
+                                    <div class="tabs-container">
+                                        @* <ul class="nav nav-pills nav-fill">
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Transporter Details</a></li>
+                                        </ul> *@
+                                        <div class="tab-content">
+
+
+                                            <div class="tab-pane active" id="tab-1">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <div class="tab-pane active" id="tab-1">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Invoice No </strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.InvNo)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Invoice Date </strong><label class="Mandatory"></label></label>
+                                                                            @Html.DisplayFor(C => C.InvDate)
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /><label for="inputName3" class="col-sm-12 control-label"><strong>Delivery Note </strong><label class="Mandatory"></label></label>
+                                                                            @* @Html.DisplayFor(C => C.LRdate) *@
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br />  <label for="inputName3" class="col-sm-12 control-label"><strong>Mode/Terms of Payment </strong><label class="Mandatory"></label></label>
+                                                                            @* @Html.DisplayFor(C => C.dispatchname) *@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @* <div style="height:10px;"></div> *@
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Reference No & Date </strong><label class="Mandatory"></label></label>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Other References </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Buyer's Order No </strong><label class="Mandatory"></label></label>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Dated </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Dispatch Doc No </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Delivery Note Date </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Dispatched Through </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Destination </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <br /> <label for="inputName3" class="col-sm-12 control-label"><strong>Terms of Delivery </strong><label class="Mandatory"></label></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                @*1st tab*@
+                                                            </div>
+                                                            @*1st tab*@
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Invoice Mid-->
+                            <div>
+                                <div class="table-responsive invoice-table custom-scrollbar" id="table">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+
+                                                <th style="text-align:center;">Description Of Goods</th>
+                                                <th>HSN/SAC</th>
+                                                <th> Quantity </th>
+                                                <th>Rate (₹)</th>
+                                                <th>Per</th>
+                                                <th>Discount (%) </th>
+                                                <th> Amount </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @{
+                                                int i = 0;
+
+                                                foreach (var item in Model.SalesInvoiceReportlst.ToList())
+                                                {
+
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].Item)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].HSN)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].Qty)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].Rate)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].Per)</td>
+                                                        <td>@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].DiscPercent)</td>
+                                                        <td style="text-align: right;">@Html.DisplayFor(o => o.SalesInvoiceReportlst[i].Total)</td>
+
+                                                    </tr>
+                                                    //i = i + 1;
+                                                    i++;
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- End Table-->
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="text-md-start ">
+                                            <p>
+                                                <strong>Amount In Words :</strong><br />
+                                                @Html.DisplayFor(C => C.AmtInWords)
+
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Total Amount</strong>
+                                            </div>
+                                            <div class="col-md-6">
+                                                : @Html.DisplayFor(C => C.TotAmt)<br />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Total Discount</strong>
+                                            </div>
+                                            <div class="col-md-6">
+                                                : @Html.DisplayFor(C => C.Discount)<br />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Round Off</strong>
+                                            </div>
+                                            <div class="col-md-6">
+                                                : @Html.DisplayFor(C => C.RoundOff)<br />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Grand Total</strong>
+                                            </div>
+                                            <div class="col-md-6">
+                                                : @Html.DisplayFor(C => C.PayAmt)<br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-9">
+                                        <br /><p>This is Computer generated Prescription. Signing is not needed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End InvoiceBot-->
+                        }
+
+
+                        <!-- End Invoice-->
+                        <!-- End Invoice Holder-->
+                        <!-- Container-fluid Ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function printInvoice() {
+      const printContents = document.querySelector('.invoice').innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+    }
+</script>

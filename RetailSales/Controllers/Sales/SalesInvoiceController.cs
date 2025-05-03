@@ -211,6 +211,98 @@ namespace RetailSales.Controllers.Sales
             return View(ic);
         }
 
+        public IActionResult SalesInvoiceReport(string id)
+        {
+            SalesInvoiceReport ic = new SalesInvoiceReport();
+            DataTable dt = new DataTable();
+            dt = SalesInvoiceService.GetSalesInvoice(id);
+            if(dt.Rows.Count > 0)
+            {
+                ic.InvNo = dt.Rows[0]["INVOICE_NO"].ToString();
+                ic.InvDate = dt.Rows[0]["INV_DATE"].ToString();
+                ic.CustomerName = dt.Rows[0]["CUSTOMER"].ToString();
+                ic.CustomerAdd = dt.Rows[0]["ADDRESS"].ToString();
+                ic.CustomerPhNo = dt.Rows[0]["MOBILE"].ToString();
+                ic.TotAmt = dt.Rows[0]["GROSS"].ToString();
+                ic.PayAmt = dt.Rows[0]["NET"].ToString();
+                ic.Discount = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.RoundOff = dt.Rows[0]["ROUND_OFF"].ToString();
+                ic.AmtInWords = dt.Rows[0]["AMTINWORDS"].ToString();
+                ic.ID = id;
+            }
+
+            DataTable dtt = new DataTable();
+            List<SalesInvoiceReportItem> TData = new List<SalesInvoiceReportItem>();
+            SalesInvoiceReportItem tda = new SalesInvoiceReportItem();
+
+            dtt = SalesInvoiceService.GetSalesInvoiceItem(id);
+            if(dtt.Rows.Count > 0)
+            {
+                for(int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new SalesInvoiceReportItem();
+                    tda.Item = dtt.Rows[i]["FULL_PRODUCT_NAME"].ToString();
+                    tda.HSN = dtt.Rows[i]["HSN_CODE"].ToString();
+                    tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Per = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.DiscPercent = dtt.Rows[i]["DISC_PER"].ToString();
+                    tda.Total = dtt.Rows[i]["TOTAL"].ToString();
+                    tda.ID = id;
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+                }
+            }
+            ic.SalesInvoiceReportlst = TData;
+            return View(ic);
+        }
+
+        public IActionResult SalesInvoiceReport1(string id)
+        {
+            SalesInvoiceReport ic = new SalesInvoiceReport();
+            DataTable dt = new DataTable();
+            dt = SalesInvoiceService.GetSalesInvoice(id);
+            if (dt.Rows.Count > 0)
+            {
+                ic.InvNo = dt.Rows[0]["INVOICE_NO"].ToString();
+                ic.InvDate = dt.Rows[0]["INV_DATE"].ToString();
+                ic.CustomerName = dt.Rows[0]["CUSTOMER"].ToString();
+                ic.CustomerAdd = dt.Rows[0]["ADDRESS"].ToString();
+                ic.CustomerPhNo = dt.Rows[0]["MOBILE"].ToString();
+                ic.TotAmt = dt.Rows[0]["GROSS"].ToString();
+                ic.PayAmt = dt.Rows[0]["NET"].ToString();
+                ic.Discount = dt.Rows[0]["DISCOUNT"].ToString();
+                ic.RoundOff = dt.Rows[0]["ROUND_OFF"].ToString();
+                ic.AmtInWords = dt.Rows[0]["AMTINWORDS"].ToString();
+                ic.ID = id;
+            }
+
+            DataTable dtt = new DataTable();
+            List<SalesInvoiceReportItem> TData = new List<SalesInvoiceReportItem>();
+            SalesInvoiceReportItem tda = new SalesInvoiceReportItem();
+
+            dtt = SalesInvoiceService.GetSalesInvoiceItem(id);
+            if (dtt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    tda = new SalesInvoiceReportItem();
+                    tda.Item = dtt.Rows[i]["FULL_PRODUCT_NAME"].ToString();
+                    tda.HSN = dtt.Rows[i]["HSN_CODE"].ToString();
+                    tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.Rate = dtt.Rows[i]["RATE"].ToString();
+                    tda.Per = dtt.Rows[i]["DEST_UOM"].ToString();
+                    tda.DiscPercent = dtt.Rows[i]["DISC_PER"].ToString();
+                    tda.Total = dtt.Rows[i]["TOTAL"].ToString();
+                    tda.ID = id;
+                    tda.Isvalid = "Y";
+                    TData.Add(tda);
+                }
+            }
+            ic.SalesInvoiceReportlst = TData;
+            return View(ic);
+        }
+
         public IActionResult ViewSalesReturn(string id)
         {
             SalesInvoice ic = new SalesInvoice();
@@ -328,31 +420,27 @@ namespace RetailSales.Controllers.Sales
                 string View = string.Empty;
                 string GoToSales = string.Empty;
                 string report = string.Empty;
+                string report1 = string.Empty;
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
+                    report = "<a href=SalesInvoiceReport?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                    report1 = "<a href=SalesInvoiceReport1?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                     View = "<a href=ViewSalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
                     if (dtUsers.Rows[i]["STATUS"].ToString() == "Generated")
                     {
                         GoToSales = "<img src='../Images/tick.png' alt='Moved to Quote' width='20' />";
-                        //EditRow = "";
-                        report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
-
+                        //report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                     }
                     else
                     {
                         GoToSales = "<a href=ViewSalesReturn?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/back.png' alt='View Details' width='20' /></a>";
                         //EditRow = "<a href=SalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
-                        report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
-
-
+                        //report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                     }
-
                     DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                     
-                    //DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
-
                 }
                 else
                 {
@@ -374,6 +462,7 @@ namespace RetailSales.Controllers.Sales
                     move = GoToSales,
                     delrow = DeleteRow,
                     report = report,
+                    report1 = report1,
 
                 });
             }
