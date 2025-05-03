@@ -77,6 +77,7 @@ namespace RetailSales.Models
         public string move { get; set; }
         public string delrow { get; set; }
         public string report { get; set; }
+        public string report1 { get; set; }
 
     }
 
