@@ -159,6 +159,8 @@ namespace RetailSales.Controllers.Purchase
                     tda = new GRNItem();
                     tda.ShopBinlist = BindShopBin();
                     tda.GodownBinlist = BindGodownBin();
+                    tda.ShopBin = dtt.Rows[i]["SHOP_BIN"].ToString();
+                    tda.GodownBin = dtt.Rows[i]["GODOWN_BIN"].ToString();
                     tda.Itemid= dtt.Rows[i]["ITEM"].ToString();
                     tda.Item = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
