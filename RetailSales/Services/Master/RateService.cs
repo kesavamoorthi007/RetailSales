@@ -159,7 +159,7 @@ namespace RetailSales.Services.Master
 
                                     if (cp.Isvalid == "Y")
                                     {
-                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUom + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
+                                        svSQL = "Insert into UOM_CONVERT (PRO_ID,SRC_UOM,DEST_UOM,CF,PERCENTAGE,SALES_RATE) VALUES ('" + proid + "','" + cp.SrcUomID + "','" + cp.DestUom + "','" + cp.CF + "','" + cp.Percentage + "','" + cp.SalesRate + "')";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
 

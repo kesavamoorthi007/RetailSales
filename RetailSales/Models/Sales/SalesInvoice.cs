@@ -38,6 +38,7 @@ namespace RetailSales.Models
     public class SalesInvoiceItem
     {
         public string saveItemId { get; set; }
+        public string sno { get; set; }
         public List<SelectListItem> Itemlst { get; set; }       
         public string Item { get; set; }
         public List<SelectListItem> Productlst { get; set; }

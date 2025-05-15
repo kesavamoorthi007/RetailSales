@@ -129,6 +129,22 @@
                                 </div>
                             </div>
                             <div style="height:30px;"></div>
+
+                            
+
+                             <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-12 control-label"><strong>Enter No. Of Rows :</strong><label class="mandatory"></label></label>
+                                        <input type="number" id="txtNoRows"  oninput="generateRows()" min="1" max="20" class="form-control">
+                                    </div>
+                                </div>
+      
+
+                            </div>
+
+                            <div style="height:30px;"></div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="btn-group">
@@ -144,7 +160,7 @@
                                     <table class="table table-striped table-hover" id="dataTable">
                                         <thead>
                                             <tr>
-
+                                                 <th>S.No.</th>
                                                 <th>Product Category</th>
                                                 <th>Product Name</th>
                                                 <th>Variant</th>
@@ -172,6 +188,7 @@
                                                 foreach (var item in Model.SalesInvoiceLst.ToList())
                                                 {
                                                     <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
+                                                       <td class="serial-no">@(j)</td>
                                                         <td>
                                                             @Html.DropDownListFor(o => o.SalesInvoiceLst[i].Item, Model.SalesInvoiceLst[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")" })
                                                             @Html.HiddenFor(o => o.SalesInvoiceLst[i].saveItemId)
@@ -390,6 +407,17 @@
             });
         }
         $(dropDownId).trigger("liszt:updated");
+    }
+    function generateRows() {
+        var numRows = parseInt(document.getElementById("txtNoRows").value, 10) || 0;
+        var currentRows = $("#tbBooks tr.chkitemlst").length; // Count existing rows
+
+        if (numRows > currentRows) {
+            var rowsToAdd = numRows - currentRows;
+            for (var i = 0; i < rowsToAdd; i++) {
+                AddRow();
+            }
+        }
     }
     function PopulateDropDown1(dropDownId, list,rvalue) {
         //alert(rvalue);
@@ -747,12 +775,13 @@
 
             let qty = parseFloat(document.getElementById("txtQty" + i).value) || 0;
             let sqty = parseFloat(document.getElementById("txtStockQty" + i).value) || 0;
+            let gqty = parseFloat(document.getElementById("txtGStockQty" + i).value) || 0;
             let up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
             let disc = parseFloat(document.getElementById("txtDiscAmount" + i).value) || 0;
             let cf = parseFloat(document.getElementById("txtCF" + i).value) || 0;
 
             // Check if quantity exceeds stock
-            if (qty > sqty) {
+            if (qty > (sqty + gqty)) {
                 alert("Entered Qty is higher than Stock Qty");
                 qty = 0;
                 document.getElementById("txtQty" + i).value = "0";
@@ -1195,6 +1224,9 @@
 
      function AppendRow(opt,rem) {
         var index = $("#tbBooks").children("tr").length;
+        var sn = eval(index) + 1;
+     var slno = "<td><lable>" + sn + "</lable><input class='form-control' id='sno" + index + "' name='PurchaseorderLst[" + index + "].sno'  style='width: 400px;' type='hidden' value=" + sn + "  /></td>";
+
 
         var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='SalesInvoiceLst[" + index + "].Item' onchange = 'changeProductDetails(this.value," + index + ")'><option value=''>--Please select--</option>" + opt + "</select></td>";
 
@@ -1232,7 +1264,7 @@
         var removeCell = "<td><input id='Isvalid" + index + "' name='SalesInvoiceLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='SalesInvoiceLst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Product + Varient  + Hsn  + UOM + StockQty + GStockQty + Qty + DestUOM + CF + CfQty + Rate + Amount + DiscPer + Discount + Total + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + slno + Item + Product + Varient  + Hsn  + UOM + StockQty + GStockQty + Qty + DestUOM + CF + CfQty + Rate + Amount + DiscPer + Discount + Total + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 
