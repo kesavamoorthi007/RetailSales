@@ -479,6 +479,7 @@ namespace RetailSales.Controllers.Sales
             try
             {
                 DataTable dt = new DataTable();
+                DataTable dtt = new DataTable();
 
                 //string des = "";
                 string uom = "";
@@ -486,6 +487,7 @@ namespace RetailSales.Controllers.Sales
                 string rate = "";
                 string uomid = "";
                 string stockqty = "";
+                string gstockqty = "";
                
                 dt = SalesInvoiceService.GetVarientDetails(ItemId);
                 
@@ -512,7 +514,17 @@ namespace RetailSales.Controllers.Sales
                     stockqty = "0";
                 }
 
-                var result = new { uomid = uomid, uom = uom, hsn = hsn, rate = rate, stockqty = stockqty };
+                dtt = SalesInvoiceService.GetGStockDetails(ItemId);
+                if (dtt.Rows.Count > 0)
+                {
+                    gstockqty = dtt.Rows[0]["TotalBalance"].ToString();
+                }
+                else
+                {
+                    gstockqty = "0";
+                }
+
+                var result = new { uomid = uomid, uom = uom, hsn = hsn, rate = rate, stockqty = stockqty , gstockqty = gstockqty };
                 return Json(result);
             }
             catch (Exception ex)

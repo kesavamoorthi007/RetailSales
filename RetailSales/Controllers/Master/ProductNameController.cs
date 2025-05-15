@@ -41,6 +41,7 @@ namespace RetailSales.Controllers.Master
                     tda.HSNlst = BindHsn();
                     tda.ShopBinlist = BindShopBin();
                     tda.GodownBinlist = BindGodownBin();
+                    tda.locationlist = BindLocation();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }
@@ -67,9 +68,11 @@ namespace RetailSales.Controllers.Master
                         tda = new ProductNameItem();
                         tda.ShopBinlist = BindShopBin();
                         tda.GodownBinlist = BindGodownBin();
+                        tda.locationlist = BindLocation();
                         tda.ShopBin= dtt.Rows[i]["SHOP_BIN"].ToString();
                         tda.GodownBin= dtt.Rows[i]["GODOWN_BIN"].ToString();
                         tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                        tda.Location= dtt.Rows[i]["LOCATION"].ToString();
                         tda.UOMlst = BindUOM();
                         tda.Uom = dtt.Rows[i]["UOM"].ToString();
                         tda.HSNlst = BindHsn();
@@ -141,7 +144,23 @@ namespace RetailSales.Controllers.Master
                 throw ex;
             }
         }
-
+        public List<SelectListItem> BindLocation()
+        {
+            try
+            {
+                DataTable dtDesg = datatrans.GetData("SELECT ID,LOCATION_NAME FROM LOCATION WHERE IS_ACTIVE='Y' UNION ALL SELECT CAST(0 AS INT), CAST('BOTH' AS VARCHAR(100)) order by 2") ;
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["LOCATION_NAME"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<SelectListItem> BindGodownBin()
         {
             try
@@ -214,6 +233,9 @@ namespace RetailSales.Controllers.Master
                     tda.Rate = dtt.Rows[i]["RATE"].ToString();
                     tda.ProdDesc = dtt.Rows[i]["PRODUCT_DESCRIPTION"].ToString();
                     tda.ID = dtt.Rows[i]["ID"].ToString();
+                    tda.Location= dtt.Rows[i]["LOCATION"].ToString();
+                    tda.GodownBin= dtt.Rows[i]["GODOWN_BIN"].ToString();
+                    tda.ShopBin = dtt.Rows[i]["SHOP_BIN"].ToString();
                     tda.Isvalid = "Y";
                     TData.Add(tda);
 
@@ -240,6 +262,12 @@ namespace RetailSales.Controllers.Master
             ProductNameItem model = new ProductNameItem();
             model.GodownBinlist = BindGodownBin();
             return Json(BindGodownBin());
+        }
+        public JsonResult GetlocationJSON()
+        {
+            ProductNameItem model = new ProductNameItem();
+            model.locationlist = BindLocation();
+            return Json(BindLocation());
         }
         public JsonResult GetUOMGrpJSON()
         {

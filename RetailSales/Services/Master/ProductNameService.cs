@@ -80,7 +80,7 @@ namespace RetailSales.Services.Master
         public DataTable GetEditProductNameItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRODUCT_ID,ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,SHOP_BIN,GODOWN_BIN FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID = '" + id + "' AND PRO_DETAIL.IS_ACTIVE='Y' ";
+            SvSql = "SELECT PRODUCT_ID,ID,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,SHOP_BIN,GODOWN_BIN,LOCATION FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID = '" + id + "' AND PRO_DETAIL.IS_ACTIVE='Y' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -102,7 +102,7 @@ namespace RetailSales.Services.Master
         public DataTable GetProductNameItem(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRODUCT_ID,PRO_DETAIL.ID,PRODUCT_VARIANT,UOM.UOM_CODE,HSNMAST.HSCODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION FROM PRO_DETAIL LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.PRODUCT_ID = '" + id + "' ";
+            SvSql = "SELECT PRODUCT_ID,PRO_DETAIL.ID,PRODUCT_VARIANT,UOM.UOM_CODE,HSNMAST.HSCODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,LOCATION,B.BINID SHOP_BIN,B1.BINID GODOWN_BIN FROM PRO_DETAIL LEFT OUTER JOIN BINMASTER B ON B.ID=SHOP_BIN LEFT OUTER JOIN BINMASTER B1 on B1.ID=GODOWN_BIN LEFT OUTER JOIN UOM ON UOM.ID=PRO_DETAIL.UOM LEFT OUTER JOIN HSNMAST ON HSNMAST.HSNMASTID=PRO_DETAIL.HSN_CODE WHERE PRO_DETAIL.PRODUCT_ID= '" + id + "' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -173,7 +173,7 @@ namespace RetailSales.Services.Master
                                //end";
                                        
 
-                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,SHOP_BIN,GODOWN_BIN) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "','"+ cp.ShopBin +"','"+ cp.GodownBin +"') SELECT SCOPE_IDENTITY()";
+                                        svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,SHOP_BIN,GODOWN_BIN,LOCATION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "','"+ cp.ShopBin +"','"+ cp.GodownBin +"','"+cp.Location+"') SELECT SCOPE_IDENTITY()";
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         Object Cid = objCmds.ExecuteScalar();
                                         string proid = Cid.ToString();
@@ -198,7 +198,7 @@ namespace RetailSales.Services.Master
                                     {
                                         if(cp.ID  == null)
                                         {
-                                            svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,SHOP_BIN,GODOWN_BIN) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "','"+ cp.ShopBin +"','"+ cp.GodownBin +"') SELECT SCOPE_IDENTITY()";
+                                            svSQL = "Insert into PRO_DETAIL (PRODUCT_ID,PRODUCT_CATEGORY,PRODUCT_VARIANT,UOM,HSN_CODE,MIN_QTY,RATE,PRODUCT_DESCRIPTION,SHOP_BIN,GODOWN_BIN,LOCATION) VALUES ('" + Pid + "','" + cy.Category + "','" + cp.Variant + "','" + cp.Uom + "','" + cp.Hsn + "','" + cp.MinQty + "','" + cp.Rate + "','" + cp.ProdDesc + "','"+ cp.ShopBin +"','"+ cp.GodownBin +"','"+cp.Location+"') SELECT SCOPE_IDENTITY()";
                                             SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                             Object Cid = objCmds.ExecuteScalar();
                                             string proid = Cid.ToString();
@@ -210,7 +210,7 @@ namespace RetailSales.Services.Master
                                         }
                                         else
                                         {
-                                            svSQL = "UPDATE PRO_DETAIL SET PRODUCT_CATEGORY='" + cy.Category + "',PRODUCT_VARIANT='" + cp.Variant + "',UOM='" + cp.Uom + "',HSN_CODE='" + cp.Hsn + "',MIN_QTY='" + cp.MinQty + "',RATE='" + cp.Rate + "',PRODUCT_DESCRIPTION='" + cp.ProdDesc + "',SHOP_BIN='"+ cp.ShopBin + "',GODOWN_BIN='"+ cp.GodownBin +"' WHERE ID='" + cp.ID + "'";
+                                            svSQL = "UPDATE PRO_DETAIL SET PRODUCT_CATEGORY='" + cy.Category + "',PRODUCT_VARIANT='" + cp.Variant + "',UOM='" + cp.Uom + "',HSN_CODE='" + cp.Hsn + "',MIN_QTY='" + cp.MinQty + "',RATE='" + cp.Rate + "',PRODUCT_DESCRIPTION='" + cp.ProdDesc + "',SHOP_BIN='"+ cp.ShopBin + "',GODOWN_BIN='"+ cp.GodownBin + "',LOCATION='"+ cp.Location +"' WHERE ID='" + cp.ID + "'";
                                             SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                            objCmds.ExecuteNonQuery();
                                         }

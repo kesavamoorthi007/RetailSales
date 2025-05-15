@@ -69,6 +69,7 @@ namespace RetailSales.Models
         public string UOM { get; set; }
         public string Ordered { get; set; }
         public string Recived { get; set; }
+        public string Location { get; set; }
         public string Accepted { get; set; }
         public string Rejected { get; set; }
         public string exqty { get; set; }

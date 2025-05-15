@@ -87,7 +87,10 @@
                                                 <th> HSN </th>
                                                 <th> Min Qty </th>
                                                 <th> Rate (₹) </th>
-                                              @*  <th>CF</th>*@
+                                             <th>Location</th>
+                                                    <th>Shop BIN No</th>
+                                                    <th>Godown BIN No</th>
+                                                    <th>Product Description </th>
                                         </thead>
 
                                         <tbody>
@@ -103,6 +106,10 @@
                                                         <td>@Html.DisplayFor(o => o.ProductNameLst[i].Hsn)</td>
                                                         <td>@Html.DisplayFor(o => o.ProductNameLst[i].MinQty)</td>
                                                         <td>@Html.DisplayFor(o => o.ProductNameLst[i].Rate)</td>
+                                                        <td>@Html.DisplayFor(o => o.ProductNameLst[i].Location)</td>
+                                                        <td>@Html.DisplayFor(o => o.ProductNameLst[i].ShopBin)</td>
+                                                        <td>@Html.DisplayFor(o => o.ProductNameLst[i].GodownBin)</td>
+                                                        <td>@Html.DisplayFor(o => o.ProductNameLst[i].ProdDesc)</td>
                                                         @*<td><a href="@Url.Action("AddCF", "ProductName")?id=@item.ID" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></td>*@
                                                     </tr>
                                                     //i = i + 1;

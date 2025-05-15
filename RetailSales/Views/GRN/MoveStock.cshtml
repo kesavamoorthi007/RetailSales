@@ -132,6 +132,7 @@
                                                     <th> Unit </th>
                                                     <th> Ordered </th>
                                                     <th> Received </th>
+                                                    <th> Location </th>
                                                     <th>Shop Qty</th>
                                                     <th>Shop BIN No</th>
                                                     <th>Godown Qty</th>
@@ -178,13 +179,12 @@
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Recived, new { @id = "txtReceived" + i })
                                                                 @Html.HiddenFor(o => o.GRNLst[i].Rejected, new { @id = "txtRejected" + i })
                                                             </td>
+                                                            <td>@Html.DisplayFor(o => o.GRNLst[i].Location)@Html.HiddenFor(o => o.GRNLst[i].Location,new { @id = "ddllocaion" + i })</td>
                                                             <td>
                                                                 @Html.TextBoxFor(o => o.GRNLst[i].ShopQty, new { @id = "txtShopQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)" ,onkeyup="changeSQty(this.value," + i + ")"  })
                                                             </td>
                                                             <td>
-
                                                                 @Html.DropDownListFor(o => o.GRNLst[i].ShopBin, Model.GRNLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;" })
-
                                                             </td>
                                                             <td>
                                                                 @Html.TextBoxFor(o => o.GRNLst[i].GodownQty, new { @id = "txtGodownQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", onkeyup = "changeGQty(this.value," + i + ")" })
@@ -225,6 +225,54 @@
     $(function () {
         $('._select').select2();
     });
+    
+     var j = 0;
+     $(document).ready(function () {
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                        changeLocation(0,j);
+                }
+
+                 j += 1;
+
+            });
+});
+function changeLocation(val,i){
+    var loc= document.getElementById("ddllocaion" + i).value;
+    var selectedVal =loc.toUpperCase();
+    var $shopBin = $('#ddlShopBin' + i);
+       var $godownBin = $('#ddlGodownBin' + i);
+        var rec=document.getElementById("txtReceived" + i).value;
+
+
+     if (selectedVal === 'BOTH') {
+                $shopBin.prop('disabled', false);
+                $godownBin.prop('disabled', false);
+
+            document.getElementById("txtShopQty" + i).disabled = false;
+            document.getElementById("txtGodownQty" + i).disabled = false;
+            }
+            else if (selectedVal === 'SHOP') {
+                $shopBin.prop('disabled', false);
+                $godownBin.prop('disabled', true).val('');
+
+            document.getElementById("txtShopQty" + i).disabled = false;
+            document.getElementById("txtGodownQty" + i).disabled = true;
+             document.getElementById("txtShopQty" + i).value=rec;
+              document.getElementById("txtGodownQty" + i).value=0;
+            }
+            else if (selectedVal === 'GODOWN') {
+                $shopBin.prop('disabled', true).val('');
+                $godownBin.prop('disabled', false);
+
+                 document.getElementById("txtShopQty" + i).disabled = true;
+            document.getElementById("txtGodownQty" + i).disabled = false;
+             document.getElementById("txtShopQty" + i).value=0;
+             document.getElementById("txtGodownQty" + i).value=rec;
+            }
+            
+
+}
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
         $(dropDownId).empty().append('<option selected="selected" value="0">--Please select--</option>');

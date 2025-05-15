@@ -172,6 +172,7 @@ namespace RetailSales.Controllers.Purchase
                     tda.UOM = dtt.Rows[i]["UOM"].ToString();
                     tda.Ordered = dtt.Rows[i]["QTY"].ToString();
                     tda.Recived = dtt.Rows[i]["RECIVED_QTY"].ToString();
+                    tda.Location= dtt.Rows[i]["LOCATION"].ToString();
                     //tda.Accepted = dtt.Rows[i]["ACCEPTED_QTY"].ToString();
                     tda.Rejected = dtt.Rows[i]["REJECTED_QTY"].ToString();
                     //tda.exqty = dtt.Rows[i]["EXCEED_QTY"].ToString();

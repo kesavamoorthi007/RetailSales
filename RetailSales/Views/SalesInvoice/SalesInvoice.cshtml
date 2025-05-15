@@ -150,7 +150,8 @@
                                                 <th>Variant</th>
                                                 <th> HSN </th>
                                                 <th> UOM </th>
-                                                <th>Stock Qty</th>
+                                                <th>Shop Stock</th>
+                                                <th>Godown Stock</th>
                                                 <th> Qty </th>
                                                 <th> Dest UOM </th>
                                                 <th> CF </th>
@@ -190,6 +191,9 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].StockQty, new { @id = "txtStockQty" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                        </td>
+                                                         <td>
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].GStockQty, new { @id = "txtGStockQty" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
@@ -545,6 +549,7 @@
                  document.getElementById("txtHsn" + i).value = result.hsn;
                  //$("#ddlDestUOM" + i).val(result.uom).trigger('change');
                  document.getElementById("txtStockQty" + i).value = result.stockqty;
+                 document.getElementById("txtGStockQty" + i).value = result.gstockqty;
                  document.getElementById("txtRate" + i).value = result.rate;
                  
                  $.ajax({
@@ -1203,6 +1208,8 @@
 
         var StockQty = "<td><input class='form-control' id='txtStockQty" + index + "' name='SalesInvoiceLst[" + index + "].StockQty'  style='width: 120px;' type='text'  readonly='True' /></td>";
 
+        var GStockQty = "<td><input class='form-control' id='txtGStockQty" + index + "' name='SalesInvoiceLst[" + index + "].GStockQty'  style='width: 120px;' type='text'  readonly='True' /></td>";
+
         var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='SalesInvoiceLst[" + index + "].Qty'  style='width: 80px;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
 
         var DestUOM = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlDestUOM" + index + "' name='SalesInvoiceLst[" + index + "].DestUOM' onchange = 'changeUOM(this.value," + index + ")'><option value=''>--Please select--</option>" + rem + "</select></td>";
@@ -1225,7 +1232,7 @@
         var removeCell = "<td><input id='Isvalid" + index + "' name='SalesInvoiceLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='SalesInvoiceLst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Product + Varient  + Hsn  + UOM + StockQty + Qty + DestUOM + CF + CfQty + Rate + Amount + DiscPer + Discount + Total + removeCell + "</tr>";
+        var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + Item + Product + Varient  + Hsn  + UOM + StockQty + GStockQty + Qty + DestUOM + CF + CfQty + Rate + Amount + DiscPer + Discount + Total + removeCell + "</tr>";
         //alert(Packing);
         $("#tbBooks").append(newRow);
 

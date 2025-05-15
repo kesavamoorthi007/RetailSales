@@ -25,7 +25,9 @@ namespace RetailSales.Models.Master
         public string Variant { get; set; }
         public List<SelectListItem> UOMlst { get; set; }
         public string Uom { get; set; }
+        public string Location { get; set; }
         public List<SelectListItem> HSNlst { get; set; }
+        public List<SelectListItem> locationlist { get; set; }
         public string Hsn { get; set; }
         public string Rate { get; set; }
         public string MinQty { get; set; }

@@ -47,6 +47,7 @@ namespace RetailSales.Models
         public string Hsn { get; set; }
         public string UOM { get; set; }
         public string StockQty { get; set; }
+        public string GStockQty { get; set; }
         public string Qty { get; set; }
         public List<SelectListItem> UOMlst { get; set; }
         public string DestUOM { get; set; }

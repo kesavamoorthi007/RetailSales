@@ -64,7 +64,18 @@ namespace RetailSales.Services.Sales
         public DataTable GetStockDetails(string ItemId)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT SUM(BALANCE_QTY) AS TotalBalance FROM INVENTORY_ITEM WHERE VARIANT = '" + ItemId + "'";
+            SvSql = "SELECT SUM(BALANCE_QTY) AS TotalBalance FROM INVENTORY_ITEM WHERE VARIANT = '" + ItemId + "' AND LOCATION_ID='Shop'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public DataTable GetGStockDetails(string ItemId)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT SUM(BALANCE_QTY) AS TotalBalance FROM INVENTORY_ITEM WHERE VARIANT = '" + ItemId + "' AND LOCATION_ID='Godown'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

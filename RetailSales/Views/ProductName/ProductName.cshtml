@@ -86,6 +86,7 @@
                                                     <th> HSN </th>
                                                     <th>Min Qty </th>
                                                     <th>Rate (₹) </th>   
+                                                    <th>Location</th>
                                                     <th>Shop BIN No</th>
                                                     <th>Godown BIN No</th>
                                                     <th>Product Description </th>
@@ -118,9 +119,12 @@
                                                                         @Html.HiddenFor(o => o.ProductNameLst[i].Isvalid, new { @id = "Isvalid" + i })
                                                                         @Html.TextBoxFor(o => o.ProductNameLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;" })
                                                                     </td>
-                                                                     <td> @Html.DropDownListFor(o => o.ProductNameLst[i].ShopBin, Model.ProductNameLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;" })
- </td>
- <td>
+                                                            <td> @Html.DropDownListFor(o => o.ProductNameLst[i].Location, Model.ProductNameLst[i].locationlist, "---Please Select---", new { @id = "ddllocation"+ i, @class = "form-control _select", @TabIndex = 1, @onchange="changeLocation(this.value," + i + ")"})</td>
+
+                                                            <td id="shopBinTd_@i">
+                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].ShopBin, Model.ProductNameLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;" })
+                                                            </td>
+                                                            <td id="godownBinTd_@i">
                                                                 @Html.DropDownListFor(o => o.ProductNameLst[i].GodownBin, Model.ProductNameLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;" })
                                                             </td>
                                                                     <td>
@@ -376,6 +380,7 @@
         var rem= "";
         var sbin="";
         var gbin="";
+        var loc = "";
 
         $.ajax({
              type: "POST",
@@ -411,8 +416,18 @@
                  $.each(data, function () {
                      gbin += "<option value=" + this.value + ">" + this.text + "</option>";
                  });
+                                        $.ajax({
+                                            type: "POST",
+                                            url: 'GetlocationJSON',
+                                            success: function (data) {
 
-                 AppendRow(opt, rem,sbin,gbin);
+                                                $.each(data, function () {
+                                                    loc += "<option value=" + this.value + ">" + this.text + "</option>";
+                                                });
+
+                                                AppendRow(opt, rem, sbin, gbin, loc);
+                                            }
+                                        })
              }
          })
 
@@ -424,7 +439,7 @@
          }
          })
     }
-    function AppendRow(opt, rem,sopt,gopt) {
+    function AppendRow(opt, rem,sopt,gopt,lopt) {
         var index = $("#tbBooks").children("tr").length;
 
         var Variant = "<td><input class='form-control' id='txtVarient" + index + "' name='ProductNameLst[" + index + "].Variant'  style='width: 220px;' type = 'text'><input id='hddetailid" + index + "' name='ProductNameLst[" + index + "].ID' type='hidden'> </td>";
@@ -438,10 +453,12 @@
         var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='ProductNameLst[" + index + "].Rate'  style='width: 100px; text-align: right;' </td>";
 
         var ProdDesc = "<td><textarea class='form-control' id='txtProdDesc" + index + "' name='ProductNameLst[" + index + "].ProdDesc'  style='width: 150px;' type = 'text' ></textarea> </td>";
-        
-        var shopbin="<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddlShopBin" + index + "' name='ProductNameLst[" + index + "].ShopBin'><option value=''>--Please select--</option>" + sopt + "</select></td>";
 
-        var godownbin="<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddlGodownBin" + index + "' name='ProductNameLst[" + index + "].GodownBin'><option value=''>--Please select--</option>" + gopt + "</select></td>";
+        var loc = "<td><select style = 'width: 100px;' class='form-control _select newcss' id='ddllocation" + index + "' name='ProductNameLst[" + index + "].Location'><option value=''>--Please select--</option>" + lopt + "</select></td>";
+
+        var shopbin = "<td id='shopBinTd_" + index + "'><select style = 'width: 100px;' class='form-control _select newcss' id='ddlShopBin" + index + "' name='ProductNameLst[" + index + "].ShopBin'><option value=''>--Please select--</option>" + sopt + "</select></td>";
+
+        var godownbin = "<td id='godownBinTd_" + index + "'><select style = 'width: 100px;' class='form-control _select newcss' id='ddlGodownBin" + index + "' name='ProductNameLst[" + index + "].GodownBin'><option value=''>--Please select--</option>" + gopt + "</select></td>";
         
         var removeCell = "<td><input id='Isvalid" + index + "' name='ProductNameLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='ProductNameLst.Index' type='hidden' value='" + index + "'  /></td>";
 
@@ -454,4 +471,65 @@
         });
         
     }
+
+     var j = 0;
+     $(document).ready(function () {
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                        changeLocation(0,j);
+                }
+
+                 j += 1;
+
+            });
+});
+
+
+    function changeLocation(locval,index){
+         var selectedVal =$('#ddllocation' + index + ' option:selected').text().toUpperCase();
+
+          var $shopBin = $('#ddlShopBin' + index);
+            var $godownBin = $('#ddlGodownBin' + index);
+
+            if (selectedVal === 'BOTH') {
+                $shopBin.prop('disabled', false);
+                $godownBin.prop('disabled', false);
+            }
+            else if (selectedVal === 'SHOP') {
+                $shopBin.prop('disabled', false);
+                $godownBin.prop('disabled', true).val('');
+            }
+            else if (selectedVal === 'GODOWN') {
+                $shopBin.prop('disabled', true).val('');
+                $godownBin.prop('disabled', false);
+            }
+            else {
+                // For "---Please Select---" or any other unknown option
+                $shopBin.prop('disabled', true).val('');
+                $godownBin.prop('disabled', true).val('');
+            }
+    }
+       @*function changeLocation(locval,index){
+            var selectedVal =$('#ddllocation' + index + ' option:selected').text().toUpperCase();
+            alert(selectedVal);
+            var $shopBinTd = $('#shopBinTd_' + index);
+            var $godownBinTd = $('#godownBinTd_' + index);
+
+            if (selectedVal === 'BOTH') {
+                $shopBinTd.show();
+                $godownBinTd.show();
+            } else if (selectedVal === 'SHOP') {
+                $shopBinTd.show();
+                $godownBinTd.hide();
+            } else if (selectedVal === 'GODOWN') {
+                $shopBinTd.hide();
+                $godownBinTd.show();
+            } else {
+                $shopBinTd.hide();
+                $godownBinTd.hide();
+            }
+       }*@
+            
+       
+
 </script>
