@@ -19,6 +19,7 @@ namespace RetailSales.Models
         public List<SelectListItem> Suplst { get; set; }
         
         public string refno { get; set; }
+        public string billno { get; set; }
         public string po { get; set; }
         public string Country { get; set; }
         public List<SelectListItem> Statelst { get; set; }
@@ -26,6 +27,7 @@ namespace RetailSales.Models
         public List<SelectListItem> Citylst { get; set; }
         public string City { get; set; }
         public string refdate { get; set; }
+        public string billdate { get; set; }
         public string Noofrows { get; set; }
         public string Podate { get; set; }
         public string Supplieraddress { get; set; }

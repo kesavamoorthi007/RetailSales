@@ -159,6 +159,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>S.No.</th>
+                                                    <th>Refresh</th>
                                                     <th>Product Category</th>
                                                     <th>Product Name</th>
                                                     <th>Variant </th>
@@ -187,6 +188,7 @@
                                                         <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
 
                                                             <td class="serial-no">@(j)</td>
+                                                            <td> <a href="#" onclick="RefreshFunction(@i);"><img src='../Images/refresh.jpeg' alt='Refresh Row' width='20' /></a></td>
                                                             <td>
                                                                 @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Item, Model.DirectPurchaseLst[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")" })
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].saveItemId)
@@ -464,6 +466,17 @@
                  AddRow();
              }
          }
+     }
+     function RefreshFunction(i){
+         $.ajax({
+             type: "POST",
+             url: 'GetItemGrpJSON',
+             success: function (response) {
+        PopulateDropDown("#ddlItem" + i, response);
+        $("#ddlItem" + i).select2("val", "");
+
+         }
+         })
      }
     $(document).ready(function () {
 
@@ -1365,11 +1378,30 @@
         if (j > 1) {
             row.style.display = "none";
             document.getElementById('Isvalid' + i).value = "N";
+              updateSerialNumbers();
         }
         else {
             alert("Cannot delete all the rows.")
         }
 
+    }
+
+    function updateSerialNumbers() {
+        var rows = document.getElementById("dataTable").rows;
+        var serialNumber = 1;  // Start from serial number 1
+
+        // Loop through the rows and update the serial number for each visible row
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            if (row.style.display !== 'none' && row.classList.contains("chkitemlst")) {
+                // Update the serial number cell (assuming the serial number is in the first column)
+                var serialCell = row.cells[0];  // Change the index if it's not the first column
+                if (serialCell) {
+                    serialCell.innerText = serialNumber;  // Update serial number text
+                    serialNumber++;  // Increment serial number for the next visible row
+                }
+            }
+        }
     }
 
      function AddRow() {
@@ -1406,9 +1438,9 @@
 
          var sn = eval(index) + 1;
 
-          var slno = "<td><lable>" + sn + "</lable><input class='form-control' id='sno" + index + "' name='DirectPurchaseLst[" + index + "].sno'  style='width: 400px;' type='hidden' value=" + sn + "  /></td>";
+          var slno = "<td ><lable>" + sn + "</lable><input class='form-control' id='sno" + index + "' name='DirectPurchaseLst[" + index + "].sno'  style='width: 400px;' type='hidden' value=" + sn + "  /></td>";
 
-
+          var refresh ="<td><a href='#' onclick='RefreshFunction(" + index + ");'><img src='../Images/refresh.jpeg' alt='Refresh Row' width='20' /></a></td>";
           var Item = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlItem" + index + "' name='DirectPurchaseLst[" + index + "].Item' onchange = 'changeProductDetails(this.value," + index + ")'><option value=''>--Please select--</option>" + opt + "</select></td>";
 
           var Product = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlProduct" + index + "' name='DirectPurchaseLst[" + index + "].Product' onchange = 'changeVarientDetails(this.value," + index + ")'><option value=''>--Please select--</option>" + opt + "</select></td>";
@@ -1451,7 +1483,7 @@
            var removeCell = "<td><input id='Isvalid" + index + "' name='DirectPurchaseLst[" + index + "].Isvalid' type='hidden' value='Y'><img  src='../Images/delete.png' onclick='removeRow(" + index + ");'  style='cursor:pointer' /><input name='DirectPurchaseLst.Index' type='hidden' value='" + index + "'  /></td>";
 
 
-         var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + slno + Item + Product + Varient + Hsn + Tariff + UOM + DestUOM + CF + Qty + CfQty + Rate + Amount + DiscPer + DiscAmount + Total + removeCell + "</tr>";
+         var newRow = "<tr class='chkitemlst'  style='height: 30px;border-bottom: 1px dashed #ddd;'  id='trBook" + index + "'>" + slno + refresh + Item + Product + Varient + Hsn + Tariff + UOM + DestUOM + CF + Qty + CfQty + Rate + Amount + DiscPer + DiscAmount + Total + removeCell + "</tr>";
          //alert(Packing);
          $("#tbBooks").append(newRow);
 
@@ -1480,11 +1512,11 @@
            $(".fancybox1").eq(0).trigger('click');
        }
      }
-     function updateSerialNumbers() {
+     @*function updateSerialNumbers() {
          $("#tbBooks tr.chkitemlst").each(function (idx) {
              $(this).find(".serial").text(idx + 1); // Update serial numbers dynamically
          });
-     }
+     }*@
 
 
 

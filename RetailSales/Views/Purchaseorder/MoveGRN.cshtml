@@ -134,7 +134,27 @@
                                     </div>
                                 </div>
                             </div>
+                              <br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Bill No.<label class="mandatory"></label></label>
+                                        <div class="col-sm-12">
+                                            @Html.TextBoxFor(C => C.billno, new { @id = "txtrefno", @class = "form-control", @TabIndex = 8 })<br />
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="inputName3" class="col-sm-4 control-label">Bill Date<label class="mandatory"></label></label>
+                                        <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
+                                            @Html.TextBoxFor(C => C.billdate, new { @id = "refdate", @class = "form-control", @TabIndex = 9, @size = "20", style = "width: 170px", @readonly = true })
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div style="height:30px;"></div>
                             <div class="row">
@@ -270,7 +290,7 @@
                                                             <td>
 
                                                                 @Html.HiddenFor(o => o.PurchaseorderLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 90px;text-align:right", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.PurchaseorderLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 90px;text-align:right", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
                                                             </td>
                                                             <td>
 
@@ -532,6 +552,18 @@
     </div>
 </div>
 <script>
+       $('.form_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+    });
     $(function () {
         $('._select').select2();
     });
