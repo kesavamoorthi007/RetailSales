@@ -79,7 +79,7 @@
                                     <div class="form-group">
                                         <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Gst, new { @id = "gstNumber", @class = "form-control", @TabIndex = 5, oninput = "this.value = this.value.toUpperCase()" ,onkeydown="validateGSTNumber();" })
+                                            @Html.TextBoxFor(C => C.Gst, new { @id = "gstNumber", @class = "form-control", @TabIndex = 5, oninput = "this.value = this.value.toUpperCase()" ,onchange="validateGSTNumber();" })
 
                                         </div>
                                     </div>
@@ -100,7 +100,7 @@
                                     <div class="form-group">
                                        <label for="inputName3" class="col-sm-4 control-label">City</label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 7, onchange = "changepincode(this.value)" })
+                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 7 })
 
                                         </div>
                                     </div>

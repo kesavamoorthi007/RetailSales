@@ -51,7 +51,7 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-5 control-label">Product Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.ProName, new { @id = "txtProName", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextBoxFor(C => C.ProName, new { @id = "txtProName", @class = "form-control", @TabIndex = 2})
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <br><label for="inputName3" class="col-sm-5 control-label">Description<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 1 })
+                                            @Html.TextAreaFor(C => C.Description, new { @id = "txtDescription", @class = "form-control", @TabIndex = 3 })
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @Html.HiddenFor(o => o.ProductNameLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                                        @Html.TextBoxFor(o => o.ProductNameLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;" })
+                                                                        @Html.TextBoxFor(o => o.ProductNameLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;",@readonly="true" })
                                                                     </td>
                                                             <td> @Html.DropDownListFor(o => o.ProductNameLst[i].Location, Model.ProductNameLst[i].locationlist, "---Please Select---", new { @id = "ddllocation"+ i, @class = "form-control _select", @TabIndex = 1, @onchange="changeLocation(this.value," + i + ")"})</td>
 
@@ -297,7 +297,7 @@
                             "background": ""
                         });
                     }
-                    if ($(this).find('#txtRate' + j.toString()).val() == "" || $(this).find('#txtRate' + j.toString()).val() == "0") {
+                   @* if ($(this).find('#txtRate' + j.toString()).val() == "" || $(this).find('#txtRate' + j.toString()).val() == "0") {
                         isValid = false;
                         $(this).find('#txtRate' + j.toString()).css({
                             "border": "1px solid red",
@@ -314,7 +314,7 @@
                             "border": "",
                             "background": ""
                         });
-                    }
+                    }*@
                     
 
                 }

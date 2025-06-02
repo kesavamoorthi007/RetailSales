@@ -138,7 +138,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Bill No.<label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">Invoice No.<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
                                             @Html.TextBoxFor(C => C.billno, new { @id = "txtrefno", @class = "form-control", @TabIndex = 8 })<br />
 
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label">Bill Date<label class="mandatory"></label></label>
+                                        <label for="inputName3" class="col-sm-4 control-label">Invoice Date<label class="mandatory"></label></label>
                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
                                             @Html.TextBoxFor(C => C.billdate, new { @id = "refdate", @class = "form-control", @TabIndex = 9, @size = "20", style = "width: 170px", @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -561,7 +561,7 @@
         todayHighlight: 1,
         startView: 2,
         minView: 2,
-        endDate: new Date(),
+        //endDate: new Date(),
         forceParse: 0
     });
     $(function () {

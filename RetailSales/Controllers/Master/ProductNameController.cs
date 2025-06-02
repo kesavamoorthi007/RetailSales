@@ -42,6 +42,7 @@ namespace RetailSales.Controllers.Master
                     tda.ShopBinlist = BindShopBin();
                     tda.GodownBinlist = BindGodownBin();
                     tda.locationlist = BindLocation();
+                    tda.Rate = "0";
                     tda.Isvalid = "Y";
                     TData.Add(tda);
                 }

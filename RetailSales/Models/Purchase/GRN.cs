@@ -53,6 +53,8 @@ namespace RetailSales.Models
         public string RoundAmt { get; set; }
         public string Disc { get; set; }
         public List<GRNItem> GRNLst { get; set; }
+        public string billno { get; set; }
+        public string billdate { get; set; }
     }
 
     public class GRNItem
