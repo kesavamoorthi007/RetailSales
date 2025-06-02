@@ -58,7 +58,7 @@
                                     <div class="form-group">
                                        <label for="inputName3" class="col-sm-5 control-label">Supplier Address</label>
                                         <div class="col-sm-12">
-                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 3 })
 
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                     <div class="form-group">
                                         <label for="inputname3" class="col-sm-4 control-label">Credit Days<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Days, new { @id = "txtDays", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Days, new { @id = "txtDays", @class = "form-control", @TabIndex = 4 })
 
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                     <div class="form-group">
                                         <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Gst, new { @id = "gstNumber", @class = "form-control", @TabIndex = 2, oninput = "this.value = this.value.toUpperCase()" })
+                                            @Html.TextBoxFor(C => C.Gst, new { @id = "gstNumber", @class = "form-control", @TabIndex = 5, oninput = "this.value = this.value.toUpperCase()" ,onkeydown="validateGSTNumber();" })
 
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                     <div class="form-group">
                                        <label for="inputName3" class="col-sm-4 control-label">State</label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 ,onchange = "changecity(this.value)" })
+                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 6 ,onchange = "changecity(this.value)" })
 
                                         </div>
                                     </div>
@@ -100,7 +100,7 @@
                                     <div class="form-group">
                                        <label for="inputName3" class="col-sm-4 control-label">City</label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1, onchange = "changepincode(this.value)" })
+                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 7, onchange = "changepincode(this.value)" })
 
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                                 {
                                                     @id = "txtMobile",
                                                     @class = "form-control",
-                                                    @TabIndex = 1,
+                                                    @TabIndex = 8,
                                                     @placeholder = "Enter Mobile Number",
                                                     @maxlength = "10",
                                                     @type = "tel",
@@ -128,7 +128,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Email ID</label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @Type = "email", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @Type = "email", @TabIndex = 9 })
                                             
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Landline No</label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Landline, new { @id = "txtLandline", @class = "form-control", @TabIndex = 1, @type = "number" })
+                                            @Html.TextBoxFor(C => C.Landline, new { @id = "txtLandline", @class = "form-control", @TabIndex = 10, @type = "number" })
 
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
 <script>
         function validateGSTNumber() {
         var gstNumber = document.getElementById('gstNumber').value;
-        var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[0-9]{1}$/;
+        var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
         
         if (gstPattern.test(gstNumber)) {
             // If the GST number is valid, hide the error message
@@ -282,19 +282,19 @@
                     "background": ""
                 });
             }
-        //   var gstNumber = document.getElementById('gstNumber').value;
-        //var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[0-9]{1}$/;
+           var gstNumber = document.getElementById('gstNumber').value;
+        var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[0-9]{1}$/;
         
-        //if (gstPattern.test(gstNumber)) {
-        //   // If the GST number is valid, hide the error message
-        //   //document.getElementById('gstError').style.display = 'none';
-        //} else {
+        if (gstPattern.test(gstNumber)) {
+           // If the GST number is valid, hide the error message
+           //document.getElementById('gstError').style.display = 'none';
+        } else {
             
-        //   // If the GST number is invalid, show the error message
-        //   alert("Invalid GST No");
-        //   return false;
-        //  // document.getElementById('gstError').style.display = 'inline';
-        //}
+           // If the GST number is invalid, show the error message
+           alert("Invalid GST No");
+           return false;
+          // document.getElementById('gstError').style.display = 'inline';
+        }
             if (document.getElementById("txtMobile").value == "") {
                 isValid = false;
                 $(txtMobile).css({
