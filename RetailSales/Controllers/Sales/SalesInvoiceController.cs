@@ -6,6 +6,7 @@ using System.Data;
 using AspNetCore.Reporting;
 using RetailSales.Services.Purchase;
 using RetailSales.Services.Master;
+using RetailSales.Models.Master;
 
 namespace RetailSales.Controllers.Sales
 {
@@ -474,7 +475,7 @@ namespace RetailSales.Controllers.Sales
 
         }
 
-        public ActionResult GetVarientDetail(string ItemId)
+        public ActionResult GetVarientDetail(string ItemId,string qty)
         {
             try
             {
@@ -488,16 +489,17 @@ namespace RetailSales.Controllers.Sales
                 string uomid = "";
                 string stockqty = "";
                 string gstockqty = "";
-               
                 dt = SalesInvoiceService.GetVarientDetails(ItemId);
-                
+
                 if (dt.Rows.Count > 0)
                 {
                     //des = dt.Rows[0]["PRODUCT_DESCRIPTION"].ToString();
                     uom = dt.Rows[0]["UOM_CODE"].ToString();
                     uomid = dt.Rows[0]["UOM_ID"].ToString();
                     hsn = dt.Rows[0]["HSCODE"].ToString();
-                    rate = dt.Rows[0]["SALES_RATE"].ToString();
+                    rate = datatrans.GetDataString("SELECT TOP 1 SALES_RATE FROM RATE_MASTER WHERE VARIENT = '" + ItemId + "' AND UOM = (SELECT ID FROM UOM WHERE UOM_CODE = '" + uom + "') AND (" + qty + " BETWEEN FROM_RANGE AND TO_RANGE OR (FROM_RANGE IS NULL AND TO_RANGE IS NULL)) ORDER BY CASE WHEN " + qty + " BETWEEN FROM_RANGE AND TO_RANGE THEN 1 ELSE 2 END");
+
+                    //rate = dt.Rows[0]["SALES_RATE"].ToString();
                     if (rate == "")
                     {
                         rate = "0";
@@ -531,6 +533,14 @@ namespace RetailSales.Controllers.Sales
             {
                 throw ex;
             }
+        }
+        public JsonResult GetProdRateJSON(string proid,string uom,string qty)
+        {
+            RateListItem model = new RateListItem();
+            
+            string rate = datatrans.GetDataString("SELECT TOP 1 SALES_RATE FROM RATE_MASTER WHERE VARIENT = '"+ proid + "' AND UOM = (SELECT ID FROM UOM WHERE UOM_CODE = '"+ uom + "') AND ("+ qty + " BETWEEN FROM_RANGE AND TO_RANGE OR (FROM_RANGE IS NULL AND TO_RANGE IS NULL)) ORDER BY CASE WHEN "+ qty + " BETWEEN FROM_RANGE AND TO_RANGE THEN 1 ELSE 2 END");
+            var result = new { rate = rate };
+            return Json(result);
         }
         public ActionResult GetUOMDetail(string ItemId, string uom, string proid)
         {

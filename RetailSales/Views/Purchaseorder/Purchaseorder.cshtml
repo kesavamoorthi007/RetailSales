@@ -1007,6 +1007,8 @@
     }
 
      function changeVarientDetails(id, i) {
+         var varient = "#ddlVarient" + i;
+         $(varient).select2("val", "0");
         $.ajax({
             url: 'GetVarientJSON',
             type: "POST",  // Fixed type to POST
@@ -1025,6 +1027,8 @@
     } 
 
     function changeProductDetails(ItemId,i) {
+        var product = "#ddlProduct" + i;
+        $(product).select2("val", "0");
         $.ajax({
             url: 'GetProductJSON',
             type: "POST",  // Fixed missing type

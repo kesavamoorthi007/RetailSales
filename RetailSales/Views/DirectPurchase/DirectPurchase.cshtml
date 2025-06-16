@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-5 control-label">Supplier Name<label class="mandatory">* </label>   <a href="@Url.Action("AddSupplier", "DirectPurchase")" class='fancybox' data-fancybox-type='iframe'><img src='../Images/plus.png' alt='Add' /></a></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ",new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 1, onchange = "changesupplier(this.value)" })
+                                            @Html.DropDownListFor(C => C.Suppid, Model.Suplst, " -- Please Select -- ",new { @id = "ddlSupplier", @Class = "form-control _select", @TabIndex = 3, onchange = "changesupplier(this.value)" })
                                             
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@
 
                                         <label for="inputName3" class="col-sm-4 control-label">Supplier Address<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextAreaFor(C => C.Supplieraddress, new { @id = "txtSupplieraddress", @class = "form-control", @TabIndex = 1, style = "height: 100px;", @readonly = true })
+                                            @Html.TextAreaFor(C => C.Supplieraddress, new { @id = "txtSupplieraddress", @class = "form-control", @TabIndex = 4, style = "height: 100px;", @readonly = true })
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
 
                                         <label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.State, new { @id = "txtState", @class = "form-control", @TabIndex = 1, @readonly = true })
+                                            @Html.TextBoxFor(C => C.State, new { @id = "txtState", @class = "form-control", @TabIndex = 5, @readonly = true })
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
 
                                         <label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.City, new { @id = "txtCity", @class = "form-control", @TabIndex = 1, @readonly = true })
+                                            @Html.TextBoxFor(C => C.City, new { @id = "txtCity", @class = "form-control", @TabIndex = 6, @readonly = true })
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Supplier Ref No<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.refno, new { @id = "txtrefno", @class = "form-control", @TabIndex = 1 })<br />
+                                            @Html.TextBoxFor(C => C.refno, new { @id = "txtrefno", @class = "form-control", @TabIndex = 7 })<br />
 
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@
                                         <label for="inputName3" class="col-sm-4 control-label">Ref Date<label class="mandatory"></label></label>
 
                                         <div class="input-group date form_date col-sm-6" data-date="" data-date-format="dd-M-yyyy">
-                                            @Html.TextBoxFor(C => C.refdate, new { @id = "refdate", @class = "form-control", @TabIndex = 2, @size = "20", style = "width: 170px", @readonly = true })
+                                            @Html.TextBoxFor(C => C.refdate, new { @id = "refdate", @class = "form-control", @TabIndex = 8, @size = "20", style = "width: 170px", @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -190,50 +190,50 @@
                                                             <td class="serial-no">@(j)</td>
                                                             <td> <a href="#" onclick="RefreshFunction(@i);"><img src='../Images/refresh.jpeg' alt='Refresh Row' width='20' /></a></td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Item, Model.DirectPurchaseLst[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Item, Model.DirectPurchaseLst[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, @TabIndex = 9,style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")" })
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].saveItemId)
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Product, Model.DirectPurchaseLst[i].Productlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlProduct" + i, style = "width: 220px;", onchange = "changeVarientDetails(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Product, Model.DirectPurchaseLst[i].Productlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlProduct" + i, @TabIndex = 10, style = "width: 220px;", onchange = "changeVarientDetails(this.value," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Varient, Model.DirectPurchaseLst[i].Varientlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVarientItem(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].Varient, Model.DirectPurchaseLst[i].Varientlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i,  @TabIndex = 11,style = "width: 220px;", onchange = "changeVarientItem(this.value," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Hsn, new { @id = "txtHsn" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Hsn, new { @id = "txtHsn" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" ,@TabIndex = 12 })
                                                             </td>
                                                             <td>
 
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Tariff, new { @id = "txtTariff" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Tariff, new { @id = "txtTariff" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly", @TabIndex = 13 })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].UOM, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].UOM, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly", @TabIndex = 14 })
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].UOM, new { @id = "txtUOM" + i })
                                                             </td>
                                                             <td>
-                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].DestUOM, Model.DirectPurchaseLst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 220px;", onchange = "changeUOM(this.value," + i + ")" })
+                                                                @Html.DropDownListFor(o => o.DirectPurchaseLst[i].DestUOM, Model.DirectPurchaseLst[i].DUOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i,  @TabIndex = 15,style = "width: 220px;", onchange = "changeUOM(this.value," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 70px;", @readonly = "readonly", @onkeyup = "changeCF(this.value," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].CF, new { @id = "txtCF" + i, @class = "form-control", style = "width: 70px;", @readonly = "readonly",  @TabIndex = 16,@onkeyup = "changeCF(this.value," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 120px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 120px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @TabIndex = 17, @onkeyup = "changeQty(this," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 120px;", type = "number", @readonly = "readonly", onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].CfQty, new { @id = "txtCfQty" + i, @class = "form-control", style = "width: 120px;", type = "number", @readonly = "readonly",  @TabIndex = 18,onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                             </td>
                                                             <td>
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")",  @TabIndex = 19})
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 120px; text-align: right;", @readonly = "readonly" , @TabIndex = 20})
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeDisc(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)",  @TabIndex = 21,style = "width: 120px; text-align: right;", @onkeyup = "changeDisc(this," + i + ")" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].DiscAmount, new { @id = "txtDiscAmount" + i, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @TabIndex = 22, style = "width: 120px; text-align: right;", @onkeyup = "changeQty(this," + i + ")" })
                                                             </td>
                                                             <td>
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].CGSTP, new { @id = "CGSTP" + i })
@@ -242,7 +242,7 @@
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].CGST, new { @id = "CGST" + i })
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].SGST, new { @id = "SGST" + i })
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].IGST, new { @id = "IGST" + i })
-                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px; text-align: right;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.DirectPurchaseLst[i].Total, new { @id = "txtTotal" + i, @class = "form-control", style = "width: 120px; text-align: right;", type = "number",  @TabIndex = 23,onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
                                                             </td>
                                                             <td>
                                                                 @Html.HiddenFor(o => o.DirectPurchaseLst[i].Isvalid, new { @id = "Isvalid" + i })
@@ -284,27 +284,27 @@
 
                                                     <th>GROSS (₹)</th>
                                                     <td>
-                                                        @Html.TextBoxFor(o => o.Gross, new { @id = "txtGross", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                        @Html.TextBoxFor(o => o.Gross, new { @id = "txtGross", @class = "form-control", style = "width: 150px;text-align:right", @TabIndex = 24,@readonly = "readonly" })
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>DISCOUNT (₹)</th>
                                                     <td>
-                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeDisTot(this)" })
+                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right",@TabIndex = 25, @onkeyup = "changeDisTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>FREIGHT (₹)</th>
                                                     <td>
 
-                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
+                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)",@TabIndex = 26, style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
                                                     </td>
                                                 </tr>                                             
                                                 <tr id="cg2">
                                                     <th> <div id="cg">CGST </div></th>
                                                     <td>
                                                         <div id="cg1">
-                                                                @Html.TextBoxFor(o => o.CGST, new { @id = "txtCGST", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.CGST, new { @id = "txtCGST", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @TabIndex = 27,style = "width: 150px;text-align:right", @readonly = "readonly" })
                                                         </div>
                                                     </td>
                                     
@@ -313,7 +313,7 @@
                                                     <th> <div id="sg">SGST</div></th>
                                                     <td>
                                                         <div id="sg1">
-                                                                @Html.TextBoxFor(o => o.SGST, new { @id = "txtSGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(o => o.SGST, new { @id = "txtSGST", @class = "form-control", style = "width: 150px;text-align:right",@TabIndex = 28, @readonly = "readonly" })
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -321,7 +321,7 @@
                                                     <th> <div id="ig">IGST</div></th>
                                                     <td>
                                                         <div id="ig1">
-                                                            @Html.TextBoxFor(o => o.IGST, new { @id = "txtIGST", @class = "form-control", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.IGST, new { @id = "txtIGST", @class = "form-control", style = "width: 150px;text-align:right", @TabIndex = 29,@readonly = "readonly" })
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -333,7 +333,7 @@
                                                             <input type="checkbox" data-toggle="toggle" id="toggle-two" data-on="-" data-off="+" data-width="60" data-onstyle="secondary" data-offstyle="secondary" onclick="changeTot(this)">
                                                            
                                                             
-                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
+                                                            @Html.TextBoxFor(o => o.Round, new { @id = "txtRound", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @TabIndex = 30,style = "width: 80px;text-align:right", @onkeyup = "changeTot(this)" })
                                                         </div>
                                                     </td>
                                                     
@@ -342,7 +342,7 @@
                                                     <th> TOTAL (₹) </th>
                                                     <td>
                                                         <input type="hidden" id="hidnet" />
-                                                        @Html.TextBoxFor(o => o.Net, new { @id = "txtNet", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @readonly = "readonly" })
+                                                        @Html.TextBoxFor(o => o.Net, new { @id = "txtNet", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @TabIndex = 31,style = "width: 150px;text-align:right", @readonly = "readonly" })
                                                     </td>
 
 
@@ -363,7 +363,7 @@
                                                                             <br /> <label for="inputName3" class="col-sm-4 control-label">LR.No<label class="Mandatory"></label></label>
 
                                                                             <div class="col-sm-12">
-                                                                                @Html.TextBoxFor(C => C.LRno, new { @id = "txtLRno", @class = "form-control", @TabIndex = 1, onkeydown = "return isNumeric2(event.keyCode,this.value)" })
+                                                                                @Html.TextBoxFor(C => C.LRno, new { @id = "txtLRno", @class = "form-control", @TabIndex = 32,onkeydown = "return isNumeric2(event.keyCode,this.value)" })
                                                                             </div>
 
                                                                         </div>
@@ -373,7 +373,7 @@
 
                                                                             <br /><label for="inputName3" class="col-sm-4 control-label">LR.Date<label class="Mandatory"></label></label>
                                                                             <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
-                                                                                @Html.TextBoxFor(C => C.LRdate, new { @id = "LRdate", @class = "form-control", @TabIndex = 2, @size = "32", @readonly = true })
+                                                                                @Html.TextBoxFor(C => C.LRdate, new { @id = "LRdate", @class = "form-control", @size = "32",@TabIndex = 33, @readonly = true })
                                                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                                             </div>
                                                                         </div>
@@ -387,7 +387,7 @@
                                                                             <br /> <label for="inputName3" class="col-sm-6 control-label">Transporter Name<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-12">
 
-                                                                                @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @class = "form-control", @TabIndex = 1 })
+                                                                                @Html.TextBoxFor(C => C.drivername, new { @id = "txtdrivername", @TabIndex = 34,@class = "form-control" })
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -396,7 +396,7 @@
                                                                             <br />  <label for="inputName3" class="col-sm-6 control-label">Place Of Dispatch<label class="Mandatory"></label></label>
 
                                                                             <div class="col-sm-12">
-                                                                                @Html.TextBoxFor(C => C.dispatchname, new { @id = "txtdispatchname", @class = "form-control", @TabIndex = 1 })
+                                                                                @Html.TextBoxFor(C => C.dispatchname, new { @id = "txtdispatchname", @TabIndex = 35,@class = "form-control" })
                                                                             </div>
 
                                                                         </div>
@@ -409,7 +409,7 @@
 
                                                                             <br /> <label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
-                                                                                @Html.TextBoxFor(C => C.Amountinwords, new { @id = "Amountinwords", @class = "form-control", @TabIndex = 2, onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = true })
+                                                                                @Html.TextBoxFor(C => C.Amountinwords, new { @id = "Amountinwords",@TabIndex = 36, @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = true })
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -425,7 +425,7 @@
 
                                                                             <br /> <label for="inputName3" class="col-sm-2 control-label">Narration<label class="Mandatory"></label></label>
                                                                             <div class="col-sm-10">
-                                                                                @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration", @class = "form-control", @value = "Invoice to", @TabIndex = 1 })
+                                                                                @Html.TextAreaFor(C => C.Narration, new { @id = "txtNarration",@TabIndex = 37, @class = "form-control", @value = "Invoice to" })
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1133,6 +1133,8 @@
           }
     }
     function changeVarientDetails(id, i) {
+        var varient = "#ddlVarient" + i;
+        $(varient).select2("val", "0");
         $.ajax({
             url: 'GetVarientJSON',
             type: "POST",  // Fixed type to POST
@@ -1151,6 +1153,8 @@
     }
 
     function changeProductDetails(ItemId,i) {
+        var product = "#ddlProduct" + i;
+        $(product).select2("val", "0");
         $.ajax({
             url: 'GetProductJSON',
             type: "POST",  // Fixed missing type

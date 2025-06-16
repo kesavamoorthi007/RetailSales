@@ -14,6 +14,7 @@ namespace RetailSales.Interface.Master
         DataTable GetproductDetail(string id);
 
         string RateCRUD(Rate cy, string proid);
+        string CFCRUD(Rate cy, string proid);
 
         public DataTable GetEditRate(string id);
 
@@ -23,6 +24,7 @@ namespace RetailSales.Interface.Master
 
         public string StatusChange(string tag, string id);
         DataTable GetRateView(string id);
+        DataTable GetOldRate(string id);
         DataTable GetRateViewTable(string id);
         DataTable GetUom();
         DataTable GetProdRate();

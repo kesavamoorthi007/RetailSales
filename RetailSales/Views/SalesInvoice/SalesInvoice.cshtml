@@ -213,7 +213,7 @@
                                                             @Html.TextBoxFor(o => o.SalesInvoiceLst[i].GStockQty, new { @id = "txtGStockQty" + i, @class = "form-control", style = "width: 120px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.SalesInvoiceLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty1(this," + i + ")" })
                                                         </td>
                                                         <td>
                                                             @Html.DropDownListFor(o => o.SalesInvoiceLst[i].DestUOM, Model.SalesInvoiceLst[i].UOMlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlDestUOM" + i, style = "width: 120px;", onchange = "changeUOM(this.value," + i + ")" })
@@ -568,9 +568,10 @@
      }
 
      function changeVarientItem(ItemId, i) {
+        var qty = document.getElementById("txtQty" + i).value;
          $.ajax({
              url: 'GetVarientDetail',
-             data: { "ItemId": ItemId },
+            data: { "ItemId": ItemId, "qty": qty },
              type: "GET",
              success: function (result) {
                  document.getElementById("txtUOM" + i).value = result.uom;
@@ -787,6 +788,79 @@
                 document.getElementById("txtQty" + i).value = "0";
                 
             }
+
+            let amount = qty * up;
+            let cfQty = qty * cf;
+            let totalAfterDisc = amount - disc;
+
+            // Update calculated values to UI
+            document.getElementById("txtAmount" + i).value = amount.toFixed(2);
+            document.getElementById("txtCfQty" + i).value = cfQty;
+            document.getElementById("txtTotal" + i).value = totalAfterDisc.toFixed(2);
+
+            // Loop through all visible item rows
+            $('tr.chkitemlst').each(function () {
+                if ($(this).css('display') !== 'none') {
+                    let amt = parseFloat($(this).find('[id^="txtAmount"]').val()) || 0;
+                    let total = parseFloat($(this).find('[id^="txtTotal"]').val()) || 0;
+                    let discount = parseFloat($(this).find('[id^="txtDiscAmount"]').val()) || 0;
+
+                    totamt += amt;
+                    totamount += total;
+                    disttotamt += discount;
+                }
+                j++;
+            });
+
+            // Rounding and summary updates
+            let roundamount = Math.round(totamount);
+            let round = roundamount - totamount;
+
+            document.getElementById("txtGross").value = totamt.toFixed(2);
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = roundamount.toFixed(2);
+            document.getElementById("txtRound").value = round.toFixed(2);
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+        } catch (ex) {
+            alert(ex.message);
+        }
+    }
+
+    function changeQty1(_this, i) {
+        try {
+            let totamt = 0;
+            let totamount = 0;
+            let disttotamt = 0;
+            let j = 0;
+
+            let qty = parseFloat(document.getElementById("txtQty" + i).value) || 0;
+            let sqty = parseFloat(document.getElementById("txtStockQty" + i).value) || 0;
+            let gqty = parseFloat(document.getElementById("txtGStockQty" + i).value) || 0;
+            let up = parseFloat(document.getElementById("txtRate" + i).value) || 0;
+            let disc = parseFloat(document.getElementById("txtDiscAmount" + i).value) || 0;
+            let cf = parseFloat(document.getElementById("txtCF" + i).value) || 0;
+
+            // Check if quantity exceeds stock
+            if (qty > (sqty + gqty)) {
+                alert("Entered Qty is higher than Stock Qty");
+                qty = 0;
+                document.getElementById("txtQty" + i).value = "0";
+
+            }
+            var varient = document.getElementById("ddlVarient" + i).value;
+            var uom = document.getElementById("txtUOM" + i).value;
+            if (varient != "" || varient != "0"){
+                $.ajax({
+                    type: "POST",
+                    data: { "proid": varient, "uom": uom, "qty": qty },
+                    url: 'GetProdRateJSON',
+                    success: function (data) {
+                        document.getElementById("txtRate" + i).value = data.rate;
+                    }
+                })
+            }
+            
 
             let amount = qty * up;
             let cfQty = qty * cf;
@@ -1242,7 +1316,7 @@
 
         var GStockQty = "<td><input class='form-control' id='txtGStockQty" + index + "' name='SalesInvoiceLst[" + index + "].GStockQty'  style='width: 120px;' type='text'  readonly='True' /></td>";
 
-        var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='SalesInvoiceLst[" + index + "].Qty'  style='width: 80px;' min='0'' max='99' onkeyup = 'changeQty(this," + index + ")' /></td>";
+        var Qty = "<td><input class='form-control' id='txtQty" + index + "' name='SalesInvoiceLst[" + index + "].Qty'  style='width: 80px;'  onkeyup = 'changeQty1(this," + index + ")' /></td>";
 
         var DestUOM = "<td><select style = 'width: 220px;' class='form-control _select newcss' id='ddlDestUOM" + index + "' name='SalesInvoiceLst[" + index + "].DestUOM' onchange = 'changeUOM(this.value," + index + ")'><option value=''>--Please select--</option>" + rem + "</select></td>";
 

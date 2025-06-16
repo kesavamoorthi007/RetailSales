@@ -65,7 +65,7 @@
 
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">From Location<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.Flocation, Model.FLoclst, "--Please Select--", new { @id = "ddlFlocation", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.Flocation, Model.FLoclst, "--Please Select--", new { @id = "ddlFlocation", @Class = "form-control _select", @TabIndex = 1 ,@onchange="flocchange(this.value)" })
                                             
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@
 
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">To Location<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.Tlocation, Model.TLoclst, "--Please Select--", new { @id = "ddlTlocation", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.Tlocation, Model.TLoclst, "--Please Select--", new { @id = "ddlTlocation", @Class = "form-control _select", @TabIndex = 1,@onchange="locchange(this.value)" })
                                             
                                         </div>
                                     </div>
@@ -188,6 +188,84 @@
     </div>
 </div>
 <script>
+      function locchange(locid){
+                var i = 0;
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+            (function (index) {
+                 
+   var ItemId = document.getElementById("ddlVarient" + index).value;
+                    if (ItemId != "" && ItemId != "0") {
+                  
+                        $.ajax({
+                    url: "GetFBinJSON",
+                    type: "post",
+                       data: { 'ItemId': ItemId ,'loc' :locid },
+                    cache: false,
+                    success: function (response) {
+                           PopulateDropDown("#ddlTBin" + index, response);
+                           var Fbin = "#ddlTBin" + index;
+            $(Fbin).select2("val", "0");
+                    }
+
+                });
+
+                    }
+
+            })(i);
+                i += 1;
+        }
+        });
+                }
+
+
+ function flocchange(locid){
+                      var i = 0;
+        $('tr.chkitemlst').each(function () {
+            if ($(this).css('display') !== 'none') {
+            (function (index) {
+                 
+   var ItemId = document.getElementById("ddlVarient" + index).value;
+                    if (ItemId != "" && ItemId != "0") {
+
+                     $.ajax({
+                        url: 'GetVarientDetails',
+                        data: { "ItemId": ItemId, "floc": locid },
+                        type: "GET",
+                        success: function (result) {
+                             document.getElementById("txtUOM" + index).value = result.uom;
+                document.getElementById("txtRate" + index).value = result.rate;
+                  document.getElementById("txtStock" + index).value = result.stockqty;
+
+                        },
+                        error: function () {
+                            alert("Data Not Found");
+                        }
+                    });
+
+
+                        $.ajax({
+                    url: "GetFBinJSON",
+                    type: "post",
+                       data: { 'ItemId': ItemId ,'loc' :locid },
+                    cache: false,
+                    success: function (response) {
+                           PopulateDropDown("#ddlFBin" + index, response);
+                           var Fbin = "#ddlFBin" + index;
+            $(Fbin).select2("val", "0");
+                    }
+
+                });
+
+                    }
+
+            })(i);
+                i += 1;
+        }
+        });
+                }
+
+
     $('.form_time').datetimepicker({
         weekStart: 1,
         todayBtn: 1,
@@ -443,9 +521,10 @@
     }
 
      function changeVarientItem(ItemId, i) {
+         var floc=document.getElementById("ddlFlocation").value;
         $.ajax({
             url: 'GetVarientDetails',
-            data: { "ItemId": ItemId },
+             data: { "ItemId": ItemId ,"floc" : floc},
             type: "GET",
             success: function (result) {
                 document.getElementById("txtUOM" + i).value = result.uom;
@@ -458,6 +537,21 @@
                 alert("Data Not Found");
             }
         });
+
+
+              $.ajax({
+                    url: "GetFBinJSON",
+                    type: "post",
+                    data: { 'ItemId': ItemId ,"loc" : floc},
+                    cache: false,
+                    success: function (response) {
+                        PopulateDropDown("#ddlFBin" + i, response);
+                          var Fbin = "#ddlFBin" + i;
+            $(Fbin).select2("val", "0");
+                    }
+
+                });
+
      }
 
 

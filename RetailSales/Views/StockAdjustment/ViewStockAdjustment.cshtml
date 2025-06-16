@@ -98,7 +98,6 @@
                                                 <th> Qty </th>
                                                 @* <th> Rate (₹) </th>
                                                 <th> Amount (₹)</th> *@
-                                                <th></th>
                                         </thead>
 
                                         <tbody>
@@ -115,8 +114,8 @@
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].Unit)</td>
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].StockQty)</td> 
                                                         <td>@Html.DisplayFor(o => o.StockAdjustmentList[i].Qty)</td>
-                                                        <td style="text-align: right;">@Html.HiddenFor(o => o.StockAdjustmentList[i].Rate)</td>
-                                                        <td style="text-align: right;">@Html.HiddenFor(o => o.StockAdjustmentList[i].Amount)</td>
+                                                       @* <td style="text-align: right;">@Html.HiddenFor(o => o.StockAdjustmentList[i].Rate)</td>
+                                                        <td style="text-align: right;">@Html.HiddenFor(o => o.StockAdjustmentList[i].Amount)</td>*@
                                                     </tr>
                                                     //i = i + 1;
                                                     i++;

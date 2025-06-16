@@ -279,6 +279,7 @@ namespace RetailSales.Controllers.Purchase
                 tda = new PurchaseorderItem();
                 tda.UOMlst = BindUOM();
                 tda.Hsnlst = BindHsn();
+                tda.Rate = "0";
                 tda.Isvalid = "Y";
                 TData.Add(tda);
             }

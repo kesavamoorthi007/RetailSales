@@ -118,7 +118,19 @@ namespace RetailSales.Services.Master
             return dtt;
         }
 
-        public string RateCRUD(Rate cy, string proid)
+        public DataTable GetOldRate(string id)
+        {
+            string SvSql = string.Empty;
+            //SvSql = " SELECT UOM_CONVERT.ID,PRO_ID,UOM.UOM_CODE,CONVRT_FACTOR,UOM_CONVERT.IS_ACTIVE FROM UOM_CONVERT LEFT OUTER JOIN UOM ON UOM.ID=UOM_CONVERT.SRC_UOM WHERE UOM_CONVERT.ID='" + id + "'";
+            SvSql = " SELECT R.FROM_RANGE,R.TO_RANGE,R.VARIENT,UOM.UOM_CODE,R.UOM,RATE,PERCENTAGE,SALES_RATE FROM RATE_MASTER R LEFT OUTER JOIN UOM ON UOM.ID=R.UOM LEFT OUTER JOIN PRO_DETAIL ON PRO_DETAIL.ID=R.VARIENT WHERE R.VARIENT='" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
+        public string CFCRUD(Rate cy, string proid)
         {
             string msg = "";
             try
@@ -163,20 +175,73 @@ namespace RetailSales.Services.Master
                                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                                         objCmds.ExecuteNonQuery();
 
-                                        //if (cy.ID == null)
-                                        //{
-                                        //    svSQL = "Insert into UOM_CONVERT (PRO_ID,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
-                                        //    SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                                        //    objCmds.ExecuteNonQuery();
-                                        //}
-                                        //else
-                                        //{
-                                        //    //svSQL = "UPDATE UOM_CONVERT SET SRC_UOM='" + cp.SrcUom + "',DEST_UOM='" + cp.DestUom + "',CF='" + cp.CF + "',PERCENT='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "' WHERE ID='" + cy.ID + "'";
-                                        //    svSQL = "UPDATE UOM_CONVERT SET PERCENTAGE='" + cp.Percentage + "',SALES_RATE='" + cp.SalesRate + "',UPDATED_BY='" + userId + "',UPDATED_ON='" + DateTime.Now + "' WHERE PRO_ID='" + proid + "'";
-                                        //    SqlCommand objCmds = new SqlCommand(svSQL, objConn);
-                                        //    objCmds.ExecuteNonQuery();
-                                        //}
-                                        //}
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    }
+                    objConn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Error Occurs, While inserting / updating Data";
+                throw ex;
+            }
+
+            return msg;
+        }
+
+        public string RateCRUD(Rate cy, string proid)
+        {
+            string msg = "";
+            try
+            {
+                string StatementType = string.Empty;
+                string svSQL = "";
+                var userId = _httpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+                using (SqlConnection objConn = new SqlConnection(_connectionString))
+                {
+                    try
+                    {
+
+                        objConn.Open();
+                        proid = cy.ID;
+                        if (cy.RateListItemlst != null)
+                        {
+                            if (cy.ID == null)
+                            {
+                                foreach (RateListItem cp in cy.RateListItemlst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into RATE_MASTER (VARIENT,FROM_RANGE,TO_RANGE,UOM,PUR_RATE,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.FromRange + "','" + cp.ToRange + "','" + cp.DestUom + "','"+ cp.ProdRate +"','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
+                                    SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                    objCmds.ExecuteNonQuery();
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                svSQL = "Delete RATE_MASTER WHERE VARIENT='" + cy.ID + "'";
+                                SqlCommand objCmdd = new SqlCommand(svSQL, objConn);
+                                objCmdd.ExecuteNonQuery();
+                                foreach (RateListItem cp in cy.RateListItemlst)
+                                {
+
+                                    if (cp.Isvalid == "Y")
+                                    {
+                                        svSQL = "Insert into RATE_MASTER (VARIENT,FROM_RANGE,TO_RANGE,UOM,PUR_RATE,PERCENTAGE,SALES_RATE,CREATED_BY,CREATED_ON) VALUES ('" + proid + "','" + cp.FromRange + "','" + cp.ToRange + "','" + cp.DestUom + "','" + cp.ProdRate + "','" + cp.Percentage + "','" + cp.SalesRate + "','" + userId + "','" + DateTime.Now + "')";
+                                        SqlCommand objCmds = new SqlCommand(svSQL, objConn);
+                                        objCmds.ExecuteNonQuery();
+                                       
                                     }
                                 }
 

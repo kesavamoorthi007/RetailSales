@@ -169,6 +169,7 @@ namespace RetailSales.Controllers.Inventory
                     docid = dtUsers.Rows[i]["DOCID"].ToString(),
                     docdate = dtUsers.Rows[i]["DOCDATE"].ToString(),
                     view = View,
+                    proname= dtUsers.Rows[i]["PRODUCT"].ToString()
                     //edit = Edit,
                     //delete = Delete,
 

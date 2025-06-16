@@ -25,16 +25,17 @@ namespace RetailSales.Services
         public DataTable GetAllStockTransferGRID(string strStatus)
         {
             string SvSql = string.Empty;
+
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT STB.ST_BASIC_ID, STB.STOCK_TRANSFER_ID,CONVERT(varchar,STB.STOCK_TRANSFER_DATE,106) AS STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION, STB.IS_ACTIVE, FBM.BINID AS FBIN, TBM.BINID AS TOBIN FROM  dbo.STOCK_TRAN_BASICS AS STB LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STB.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STB.FROM_BIN_ID = FBM.ID ORDER BY ST_BASIC_ID DESC";
-
+                strStatus = "Y";
             }
-            else
-            {
-                SvSql = "SELECT ST_BASIC_ID,STOCK_TRANSFER_ID,STOCK_TRANSFER_DATE,FROM_LOCATION,TO_LOCATION,FROM_BIN_ID,TO_BIN_ID,IS_ACTIVE   FROM STOCK_TRAN_BASICS ORDER BY ST_BASIC_ID DESC";
-
-            }
+                SvSql = @"SELECT STB.ST_BASIC_ID, STB.STOCK_TRANSFER_ID,CONVERT(varchar,STB.STOCK_TRANSFER_DATE,106) AS STOCK_TRANSFER_DATE, STB.FROM_LOCATION, STB.TO_LOCATION, STB.IS_ACTIVE, FBM.BINID AS FBIN, TBM.BINID AS TOBIN,(
+SELECT STRING_AGG(P.PRODUCT_NAME + ' - ' + PN.PROD_NAME, ', ') AS ProductList
+FROM STOCK_TRAN_DETAIL SD
+LEFT JOIN PRO_NAME PN ON SD.PRODUCT = PN.PRO_NAME_BASICID
+LEFT JOIN PRODUCT P ON P.ID = SD.ITEM
+WHERE SD.ST_BASIC_ID = STB.ST_BASIC_ID ) as PRODUCT  FROM  dbo.STOCK_TRAN_BASICS AS STB LEFT OUTER JOIN dbo.BINMASTER AS TBM ON STB.TO_BIN_ID = TBM.ID LEFT OUTER JOIN dbo.BINMASTER AS FBM ON STB.FROM_BIN_ID = FBM.ID WHERE STB.IS_ACTIVE='"+ strStatus + "' ORDER BY ST_BASIC_ID DESC";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -98,20 +99,22 @@ namespace RetailSales.Services
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetStockDetails(string ItemId)
+        public DataTable GetStockDetails(string ItemId,string floc)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT INVENTORY_ITEM.BALANCE_QTY FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
+          //  SvSql = "select ID,BINID from BINMASTER where LOCID=(SELECT ID FROM LOCATION WHERE LOCATION_NAME='" + floc + "' )";
+            SvSql = "SELECT INVENTORY_ITEM.BALANCE_QTY FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "' AND LOCATION_ID='"+ floc + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
-        public DataTable GetFBinDetails(string ItemId)
+        public DataTable GetFBinDetails(string floc)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT INVENTORY_ITEM.BIN_ID FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
+            SvSql = "select ID,BINID from BINMASTER where LOCID=(SELECT ID FROM LOCATION WHERE LOCATION_NAME='" + floc + "' )";
+            //SvSql = "SELECT INVENTORY_ITEM.BIN_ID FROM INVENTORY_ITEM WHERE INVENTORY_ITEM.VARIANT='" + ItemId + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

@@ -43,11 +43,10 @@
                 { name: 'documentid', type: 'string' },
                 { name: 'stocktransferdate', type: 'string' },
                 { name: 'fromLoc', type: 'string' },
-              
                 { name: 'toLoc', type: 'string' },
                 { name: 'fBin', type: 'string' },
                 { name: 'tBin', type: 'string' },
-               
+                { name: 'proname', type: 'string' },
                 { name: 'view', type: 'string' },
                 // { name: 'delrow', type: 'string' },
 
@@ -86,14 +85,13 @@
 
                 columns: [
 
-                    { text: 'Transfer No', filtertype: 'checkedlist', datafield: 'documentid', width: 100 },
-                    { text: 'Transfer Date', filtertype: 'input', datafield: 'stocktransferdate', width: 200 },
+                    { text: 'Transfer No', filtertype: 'checkedlist', datafield: 'documentid', width: 150 },
+                    { text: 'Transfer Date', filtertype: 'input', datafield: 'stocktransferdate', width: 150 },
                     { text: 'From Location', filtertype: 'input', datafield: 'fromLoc', width: 150 },
                     { text: 'To Location', filtertype: 'input', datafield: 'toLoc', width: 150 },
                     { text: 'From Bin', filtertype: 'input', datafield: 'fBin', width: 100 },
                     { text: 'To Bin', filtertype: 'input', datafield: 'tBin', width: 100 },
-                 
-
+                    { text: 'Product', filtertype: 'input', datafield: 'proname', width: 300 },
                     { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     //{ text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]
@@ -108,6 +106,14 @@
             };
             $("#grid").jqxGrid({ source: source });
         });
+              $("#grid").on("bindingcomplete", function () {
+      $(".fancybox").fancybox({
+                width: '1000px',
+                height: '1000px',
+                arrows: false,
+                //autoSize : false
+            }); // or Fancybox v3+
+    });
     });
 
 </script>
@@ -156,4 +162,29 @@
     }
 </script>
 
+<a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 1000px;"></a>
+<link rel="stylesheet" href="@Url.Content("~/css/jquery.fancybox.css?v=2.1.5")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/css/jquery.fancybox.pack.js?v=2.1.5")"></script>
+<script type="text/javascript">
+    var fancybox123;
+    jQuery(document).ready(function ($) {
+        $(".fancybox").fancybox({
+            width: '1000px',
+            height: '1000px',
+            arrows: false,
+            //autoSize : false
+        });
+        fancybox123 = $.fancybox;
+    });
 
+    function close_popup() {
+        fancybox123.close();
+        $(".fancybox1").fancybox({
+            width: '100%',
+            height: '100%',
+            arrows: false,
+        });
+        $(".fancybox1").eq(0).trigger('click');
+    }
+
+</script>

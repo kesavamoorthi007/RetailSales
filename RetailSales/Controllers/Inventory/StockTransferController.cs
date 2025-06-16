@@ -31,9 +31,9 @@ namespace RetailSales.Controllers
          
             ic.DocumentDate = DateTime.Now.ToString("dd-MMM-yyyy");
             ic.FLoclst = BindFLocation();
-            ic.Flocation = "2006";
+            ic.Flocation = "Godown";
             ic.TLoclst = BindTLocation();
-            ic.Tlocation = "1007";
+            ic.Tlocation = "Shop";
             DataTable dtv = datatrans.GetSequence("Stock Transfer");
 
             if (dtv.Rows.Count > 0)
@@ -115,7 +115,7 @@ namespace RetailSales.Controllers
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["LOCATION_NAME"].ToString() });
                 }
                 return lstdesg;
             }
@@ -133,7 +133,7 @@ namespace RetailSales.Controllers
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["ID"].ToString() });
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["LOCATION_NAME"].ToString(), Value = dtDesg.Rows[i]["LOCATION_NAME"].ToString() });
                 }
                 return lstdesg;
             }
@@ -197,7 +197,7 @@ namespace RetailSales.Controllers
                 throw ex;
             }
         }
-        public ActionResult GetVarientDetails(string ItemId)
+        public ActionResult GetVarientDetails(string ItemId,string floc)
         {
             try
             {
@@ -215,7 +215,7 @@ namespace RetailSales.Controllers
                     rate = dt.Rows[0]["RATE"].ToString();
                 }
 
-                dt = StockTransferService.GetStockDetails(ItemId);
+                dt = StockTransferService.GetStockDetails(ItemId, floc);
                 if (dt.Rows.Count > 0)
                 {
                     stockqty = dt.Rows[0]["BALANCE_QTY"].ToString();
@@ -267,6 +267,28 @@ namespace RetailSales.Controllers
         public JsonResult GetProductJSON(string ItemId)
         {
             return Json(BindProduct(ItemId));
+        }
+        public JsonResult GetFBinJSON(string ItemId,string loc)
+        {
+            return Json(BindFBinItem(ItemId,loc));
+        }
+
+        public List<SelectListItem> BindFBinItem(string ItemId, string loc)
+        {
+            try
+            {
+                DataTable dtDesg = StockTransferService.GetFBinDetails(loc);
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["BINID"].ToString(), Value = dtDesg.Rows[i]["BINID"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<SelectListItem> BindProduct(string id)
@@ -407,7 +429,7 @@ namespace RetailSales.Controllers
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancyboxs' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    View = "<a href=ViewStockTransfer?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     //DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ST_BASIC_ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
                 }
                 else
@@ -424,6 +446,7 @@ namespace RetailSales.Controllers
                     toLoc = dtUsers.Rows[i]["TO_LOCATION"].ToString(),
                     fBin = dtUsers.Rows[i]["FBIN"].ToString(),
                     tBin = dtUsers.Rows[i]["TOBIN"].ToString(),
+                    proname = dtUsers.Rows[i]["PRODUCT"].ToString(),
                     view = View,
                     delrow = DeleteRow,
 

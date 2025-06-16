@@ -44,6 +44,7 @@
                 { name: 'type', type: 'string' },
                 { name: 'docid', type: 'string' },
                 { name: 'docdate', type: 'string' },
+                { name: 'proname', type: 'string' },
                 { name: 'view', type: 'string' },
                 //{ name: 'edit', type: 'string' },
                 //{ name: 'delete', type: 'string' },
@@ -59,9 +60,7 @@
             }
         }
         );
-        var linkrenderer1 = function (row, column, value) {
-        return '<a href="' + value + '" class="fancybox" data-fancybox-type="iframe"><img src="../Images/pdficon.png" alt="View Details" width="20" /></a>';
-    }
+      
 
         $("#grid").jqxGrid(
             {
@@ -87,10 +86,11 @@
 
                 columns: [
 
-                    { text: 'Stock Adjustment No', filtertype: 'input', datafield: 'docid', width: 200 },
-                    { text: 'Date', filtertype: 'input', datafield: 'docdate', width: 200 },                   
-                    { text: 'Type', filtertype: 'input', datafield: 'type', width: 200 },
-                    { text: 'Location', filtertype: 'checkedlist', datafield: 'location', width: 200 },
+                    { text: 'Stock Adjustment No', filtertype: 'input', datafield: 'docid', width: 150 },
+                    { text: 'Date', filtertype: 'input', datafield: 'docdate', width: 150 },                   
+                    { text: 'Type', filtertype: 'input', datafield: 'type', width: 150 },
+                    { text: 'Location', filtertype: 'checkedlist', datafield: 'location', width: 150 },
+                    { text: 'Product', filtertype: 'checkedlist', datafield: 'proname', width: 300 },
                     { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                     //{ text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                     //{ text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
@@ -106,14 +106,13 @@
             };
             $("#grid").jqxGrid({ source: source });
         });
-            $("#grid").on("bindingcomplete", function () {
-      $(".fancybox").fancybox({
+        $("#grid").on("bindingcomplete", function () {
+            $(".fancybox").fancybox({
                 width: '1000px',
                 height: '1000px',
                 arrows: false,
-                //autoSize : false
             }); // or Fancybox v3+
-    });
+        });
     });
 
 </script>

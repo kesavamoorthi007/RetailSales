@@ -76,7 +76,7 @@
                                     <div class="form-group">
                                         <label for="gstNumber" class="col-sm-4 control-label">GST No<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.GST, new { @id = "gstNumber", @class = "form-control", @TabIndex = 2, oninput = "this.value = this.value.toUpperCase()" })
+                                        @Html.TextBoxFor(C => C.GST, new { @id = "gstNumber", @class = "form-control", @TabIndex = 2, oninput = "this.value = this.value.toUpperCase()"  ,onchange="validateGSTNumber();"})
 
                                         </div>
                                     </div>

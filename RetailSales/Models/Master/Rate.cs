@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using DocumentFormat.OpenXml.Office.CoverPageProps;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RetailSales.Models.Master
 {
@@ -25,6 +26,8 @@ namespace RetailSales.Models.Master
         public string ProdRate { get; set; }
         public string Percentage { get; set; }
         public string SalesRate { get; set; }
+        public string FromRange { get; set; }
+        public string ToRange { get; set; }
         public string Isvalid { get; set; }
     }
 
@@ -35,6 +38,7 @@ namespace RetailSales.Models.Master
         public string varint { get; set; }
         public string proname { get; set; }
         public string cf { get; set; }
+        public string rate { get; set; }
 
     }
 }
