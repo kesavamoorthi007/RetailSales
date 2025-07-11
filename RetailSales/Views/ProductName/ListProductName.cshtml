@@ -59,7 +59,7 @@
 
         $("#grid").jqxGrid(
             {
-                width: '75%',
+                width: '100%',
                 source: dataAdapter,
                 height: 450,
                 source: source,
@@ -81,8 +81,8 @@
 
                 columns: [
 
-                    { text: 'Product Category', filtertype: 'input', datafield: 'category', width: 200 },
-                    { text: 'Product Name', filtertype: 'input', datafield: 'proname', width: 200 },
+                    { text: 'Product Category', filtertype: 'input', datafield: 'category', width: 150 },
+                    { text: 'Product Name', filtertype: 'input', datafield: 'proname', width: 450 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                     { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100},

@@ -81,13 +81,13 @@
                 showgroupaggregates: true,
                 showstatusbar: true,
                 showaggregates: true,
-                groups: ['product'],
+                //groups: ['product'],
                 columns: [
-                     { text: 'Location', filtertype: 'checkedlist', groupable: true, datafield: 'location', width: 120 },
-                    { text: 'Product Category', filtertype: 'checkedlist', groupable: true, datafield: 'item', width: 200 },
-                    { text: 'Product Name', filtertype: 'checkedlist', groupable: true, datafield: 'product', width: 200 },
-                    { text: 'Variant', filtertype: 'checkedlist', groupable: true, datafield: 'variant', width: 250 },
-                    { text: 'Unit', filtertype: 'checkedlist', datafield: 'uom', width: 100 },
+                     { text: 'Location', filtertype: 'checkedlist', groupable: true, datafield: 'location', width: 100 },
+                    { text: 'Product Category', filtertype: 'checkedlist', groupable: true, datafield: 'item', width: 150 },
+                    { text: 'Product Name', filtertype: 'checkedlist', groupable: true, datafield: 'product', width: 350 },
+                    { text: 'Variant', filtertype: 'checkedlist', groupable: true, datafield: 'variant', width: 200 },
+                    { text: 'Unit', filtertype: 'checkedlist', datafield: 'uom', width: 80 },
                      {
                       text: 'Balance Quantity', datafield: 'qty', aggregates: ["sum"], cellsalign: 'right',
                       cellsrenderer: function (row, column, value, defaultRender, column, rowData) {
@@ -96,7 +96,8 @@
                           }
                       },
                       aggregatesrenderer: function (aggregates, column, element) {
-                          var renderstring = '<div style="position: relative; margin-top: 4px; margin-right:5px; text-align: right; overflow: hidden;">' + "Total" + ': ' + aggregates.sum + '</div>';
+                            var roundedSum = parseFloat(aggregates.sum).toFixed(2);
+                            var renderstring = '<div style="position: relative; margin-top: 4px; margin-right:5px; text-align: right; overflow: hidden;">' + "Total" + ': ' + roundedSum + '</div>';
                           return renderstring;
                       }
                   }
