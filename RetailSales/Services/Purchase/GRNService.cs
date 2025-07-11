@@ -63,7 +63,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetShopBin()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='1007' AND BINMASTER.IS_ACTIVE = 'Y' ";
+            SvSql = "SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='1' AND BINMASTER.IS_ACTIVE = 'Y' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -74,7 +74,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetGodownBin()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='2006' AND BINMASTER.IS_ACTIVE = 'Y' ";
+            SvSql = "SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='2' AND BINMASTER.IS_ACTIVE = 'Y' ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

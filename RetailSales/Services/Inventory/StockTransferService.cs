@@ -299,7 +299,7 @@ WHERE SD.ST_BASIC_ID = STB.ST_BASIC_ID ) as PRODUCT  FROM  dbo.STOCK_TRAN_BASICS
 
                                         double qty = Convert.ToDouble(cp.Qty);
 
-                                        DataTable dt = datatrans.GetData("Select * from INVENTORY_ITEM  where ITEM_ID='" + cp.Item + "' and PRODUCT='" + cp.Product + "' AND VARIANT='" + cp.Varient + "' AND BALANCE_QTY!=0");
+                                        DataTable dt = datatrans.GetData("Select * from INVENTORY_ITEM  where ITEM_ID='" + cp.Item + "' and PRODUCT='" + cp.Product + "' AND VARIANT='" + cp.Varient + "' AND BALANCE_QTY!=0 AND LOCATION_ID='"+ cy.Flocation + "'");
                                         if (dt.Rows.Count > 0)
                                         {
                                             for (int i = 0; i < dt.Rows.Count; i++)
@@ -317,13 +317,13 @@ WHERE SD.ST_BASIC_ID = STB.ST_BASIC_ID ) as PRODUCT  FROM  dbo.STOCK_TRAN_BASICS
                                                     SqlCommand objCmdsz1 = new SqlCommand(Sql2, objConn);
                                                     objCmdsz1.ExecuteNonQuery();
 
-                                                    //string Sql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + cy.Documentid + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "',5,'" + cp.Unit + "','" + cp.Qty + "','N','2024-2025','0','Store','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
-                                                    //SqlCommand objCmdsz2 = new SqlCommand(Sql3, objConn);
-                                                    //Object Pid1 = objCmdsz2.ExecuteScalar();
-                                                    
-                                                    //string Sql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate + "','Stock Transfer','Minus','" + cp.Qty + "','Stock Transfer','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
-                                                    //SqlCommand objCmdsz3 = new SqlCommand(Sql4, objConn);
-                                                    //objCmdsz3.ExecuteNonQuery();
+                                                    string Sql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + cy.Documentid + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "',5,'" + cp.Unit + "','" + cp.Qty + "','N','2024-2025','0','"+ cy.Tlocation +"','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
+                                                    SqlCommand objCmdsz2 = new SqlCommand(Sql3, objConn);
+                                                    Object Pid1 = objCmdsz2.ExecuteScalar();
+
+                                                    string Sql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Unit + "','" + cp.Rate + "','Stock Transfer','Plus','" + cp.Qty + "','Stock Transfer','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','2024-2025')";
+                                                    SqlCommand objCmdsz3 = new SqlCommand(Sql4, objConn);
+                                                    objCmdsz3.ExecuteNonQuery();
                                                 }
 
 

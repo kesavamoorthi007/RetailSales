@@ -323,7 +323,6 @@
                                                             }
 
                                                             <td>
-                                                                
                                                                 @Html.TextBoxFor(o => o.PurchaseorderLst[i].DiscPer, new { @id = "txtDiscPer" + i, @class = "form-control", style = "width: 100px;text-align:right", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeDisc(this," + i + ")" })
                                                             </td>
 
@@ -374,15 +373,15 @@
                                                 <tr>
                                                     <th>DISCOUNT (₹)</th>
                                                     <td>
-                                                        
-                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeDisTot(this)" })
+
+                                                        @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>FREIGHT (₹)</th>
                                                     <td>
-                                                        
-                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeFrightTot(this)" })
+
+                                                        @Html.TextBoxFor(o => o.Frieghtcharge, new { @id = "txtFrieghtcharge", @class = "form-control", onkeydown = "return isNumeric2(event.keyCode,this.value)", style = "width: 150px;text-align:right", @onkeyup = "changeTot(this)" })
                                                     </td>
                                                 </tr>
                                                 if (Model.State == "Tamil Nadu"){
@@ -1198,7 +1197,7 @@
             //     document.getElementById("txtDiscAmount" + i).value = Disc.toFixed(2);
             // }
 
-            var tottax = eval(tot)- eval(Disc);
+            var tottax = eval(tot);/*- eval(Disc);*/
 
             // Calculate tax percentages
             var igstperc = (eval(tottax) / 100) * IGST;
@@ -1452,55 +1451,77 @@
     //         alert("Error: " + ex.message);
     //     }
     // }
-    function changeDisTot(_this) {
+    function changeTot(_this) {
          try {
-             var GTot = 0;
-             var j = 0;
-             var qty = 0;
-             var tot = 0;
-             var totfrieght = 0;
-             var cgsttotamt = 0;
-             var sgsttotamt = 0;
-             var igsttotamt = 0;
-             var disttotamt = 0;
-             var rej = 0;
-             var totdis = 0;
-             var tpknc = 0;
-             var tochr = 0;
-             var tsdis = 0;
-             var totamt = 0;
-             var totamount = 0;
+              var GTot = 0;
+            var j = 0;
+            var qty = 0;
+            var tot = 0;
+            var totfrieght = 0;
+            var cgsttotamt = 0;
+            var sgsttotamt = 0;
+            var igsttotamt = 0;
+            var disttotamt = 0;
+            var rej = 0;
+            var totdis = 0;
+            var tpknc = 0;
+            var tochr = 0;
+            var tsdis = 0;
+            var totamt = 0;
+            var totamount = 0;
+            var CGST =0;
+            var SGST =0;
+            var IGST = 0;
+            var state = document.getElementById("state").value;
+            var Fri = document.getElementById("txtFrieghtcharge").value;
 
-             var Disc = document.getElementById("txtDisc").value;
+            var tot = document.getElementById("txtGross").value;
+            var Disc = document.getElementById("txtDisc").value;
 
-             var tot = document.getElementById("hidnet").value;
+            if (state == "Tamil Nadu") {
+                 CGST = document.getElementById("txtCGST").value;
+                SGST = document.getElementById("txtSGST").value;
+            }
+            else {
+                  IGST = document.getElementById("txtIGST").value;
+            }
+
+            if (Fri == "")
+                Fri = 0;
+
+            if (tot == "")
+                tot = 0;
+
+          @*  if (Disc == "")
+                Disc = 0;*@
+
+            if (IGST == "")
+                IGST = 0;
+
+            if (CGST == "")
+                CGST = 0;
+
+            if (SGST == "")
+                SGST = 0;
+
+            var rej = eval(tot) + eval(Fri)- eval(Disc) + eval(CGST) + eval(SGST) + eval(IGST);
+            //document.getElementById("txtNet").value = rej.toFixed(2);
 
 
-             if (Disc == "")
-                 Disc = 0;
+            var roundamount = Math.round(rej);
 
-             if (tot == "")
-                 tot = 0;
-
-
-             var rej = eval(tot) - eval(Disc) ;
-             document.getElementById("txtNet").value = rej.toFixed(2);
-
-
-             var roundamount = Math.round(rej);
-
-             var round = eval(roundamount) - eval(rej);
+            var round = eval(roundamount) - eval(rej);
 
 
 
 
-             document.getElementById("txtNet").value = roundamount.toFixed(2);
-             document.getElementById("hidnet").value = rej.toFixed(2);
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = rej.toFixed(2);
 
 
-             document.getElementById("txtRound").value = round.toFixed(2);
+            document.getElementById("txtRound").value = round.toFixed(2);
 
-             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
 
 
          }
@@ -1508,62 +1529,62 @@
              alert(ex.message);
          }
      }
-      function changeFrightTot(_this) {
-         try {
-             var GTot = 0;
-             var j = 0;
-             var qty = 0;
-             var tot = 0;
-             var totfrieght = 0;
-             var cgsttotamt = 0;
-             var sgsttotamt = 0;
-             var igsttotamt = 0;
-             var disttotamt = 0;
-             var rej = 0;
-             var totdis = 0;
-             var tpknc = 0;
-             var tochr = 0;
-             var tsdis = 0;
-             var totamt = 0;
-             var totamount = 0;
+     // function changeFrightTot(_this) {
+     //    try {
+     //        var GTot = 0;
+     //        var j = 0;
+     //        var qty = 0;
+     //        var tot = 0;
+     //        var totfrieght = 0;
+     //        var cgsttotamt = 0;
+     //        var sgsttotamt = 0;
+     //        var igsttotamt = 0;
+     //        var disttotamt = 0;
+     //        var rej = 0;
+     //        var totdis = 0;
+     //        var tpknc = 0;
+     //        var tochr = 0;
+     //        var tsdis = 0;
+     //        var totamt = 0;
+     //        var totamount = 0;
 
-             var Fri = document.getElementById("txtFrieghtcharge").value;
+     //        var Fri = document.getElementById("txtFrieghtcharge").value;
 
-             var tot = document.getElementById("hidnet").value;
-
-
-             if (Fri == "")
-                 Fri = 0;
-
-             if (tot == "")
-                 tot = 0;
+     //        var tot = document.getElementById("hidnet").value;
 
 
-             var rej = eval(tot) + eval(Fri) ;
-             document.getElementById("txtNet").value = rej.toFixed(2);
+     //        if (Fri == "")
+     //            Fri = 0;
+
+     //        if (tot == "")
+     //            tot = 0;
 
 
-             var roundamount = Math.round(rej);
-
-             var round = eval(roundamount) - eval(rej);
-
+     //        var rej = eval(tot) + eval(Fri) ;
+     //        document.getElementById("txtNet").value = rej.toFixed(2);
 
 
+     //        var roundamount = Math.round(rej);
 
-             document.getElementById("txtNet").value = roundamount.toFixed(2);
-             document.getElementById("hidnet").value = rej.toFixed(2);
-
-
-             document.getElementById("txtRound").value = round.toFixed(2);
-
-             document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+     //        var round = eval(roundamount) - eval(rej);
 
 
-         }
-         catch (ex) {
-             alert(ex.message);
-         }
-     }
+
+
+     //        document.getElementById("txtNet").value = roundamount.toFixed(2);
+     //        document.getElementById("hidnet").value = rej.toFixed(2);
+
+
+     //        document.getElementById("txtRound").value = round.toFixed(2);
+
+     //        document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+     //    }
+     //    catch (ex) {
+     //        alert(ex.message);
+     //    }
+     //}
     function roundtorupee(amt) {
         if (amt - round_decimals(amt, 0) > 0.5)
             return pad_with_zeros(round_decimals(amt + 1, 0));

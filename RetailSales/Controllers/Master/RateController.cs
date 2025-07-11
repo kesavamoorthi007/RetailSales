@@ -189,7 +189,7 @@ namespace RetailSales.Controllers.Master
             try
             {
                 cy.ID = id;
-                string Strout = RateService.RateCRUD(cy, id);
+                string Strout = RateService.CFCRUD(cy, id);
                 if (string.IsNullOrEmpty(Strout))
                 {
                     if (cy.ID == null)

@@ -132,7 +132,7 @@ namespace RetailSales.Controllers.Master
         {
             try
             {
-                DataTable dtDesg = datatrans.GetData("SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='1007' AND BINMASTER.IS_ACTIVE = 'Y'");
+                DataTable dtDesg = datatrans.GetData("SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='1' AND BINMASTER.IS_ACTIVE = 'Y'");
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -166,7 +166,7 @@ namespace RetailSales.Controllers.Master
         {
             try
             {
-                DataTable dtDesg = datatrans.GetData("SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='2006' AND BINMASTER.IS_ACTIVE = 'Y'");
+                DataTable dtDesg = datatrans.GetData("SELECT BINMASTER.ID,BINMASTER.BINID,BINMASTER.IS_ACTIVE FROM BINMASTER WHERE LOCID='2' AND BINMASTER.IS_ACTIVE = 'Y'");
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
