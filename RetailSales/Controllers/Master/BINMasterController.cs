@@ -67,7 +67,7 @@ namespace RetailSales.Controllers.Master
                 {
                     ViewBag.PageTitle = "Edit BIN";
                     TempData["notice"] = Strout;
-                    return RedirectToAction("BIN");
+                   
                 }
 
             }
@@ -76,7 +76,7 @@ namespace RetailSales.Controllers.Master
                 throw ex;
             }
 
-            return View(cy);
+            return RedirectToAction("ListBIN");
         }
 
         public IActionResult ListBIN()

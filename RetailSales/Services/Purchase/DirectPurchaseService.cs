@@ -262,15 +262,15 @@ namespace RetailSales.Services.Purchase
 
                                         string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + doc + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.Qty + "','" + cp.UOM + "','" + cp.Qty + "','N','"+ fyear + "','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
                                         SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
-                                        objConn.Open();
+                                        //objConn.Open();
                                         Object Pid1 = objCmddtss.ExecuteScalar();
-                                        objConn.Close();
+                                        //objConn.Close();
 
                                         string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Rate + "','DP','Plus','" + cp.Qty + "','DP','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','"+ fyear + "')";
                                         SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
-                                        objConn.Open();
+                                        //objConn.Open();
                                         objCmddtsss.ExecuteNonQuery();
-                                        objConn.Close();
+                                        //objConn.Close();
                                     }
                                 }
                             }
@@ -291,15 +291,15 @@ namespace RetailSales.Services.Purchase
                                         //string varient = datatrans.GetDataString("SELECT ID FROM PRO_DETAIL WHERE PRODUCT_VARIANT='" + cp.Varient + "'");
                                         string svsql3 = "INSERT INTO INVENTORY_ITEM (DOC_ID,DOC_DATE,ITEM_ID,PRODUCT,VARIANT,REC_GOOD_QTY,UOM,BALANCE_QTY,IS_LOCKED,FINANCIAL_YEAR,WASTAGE,LOCATION_ID,INV_ITEM_STATUS,UNIT_COST,MONTH) VALUES ('" + doc + "','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "'," + cp.Qty + ",'" + cp.UOM + "','" + cp.Qty + "','N','"+ fyear + "','0','Godown','','" + cp.Rate + "','" + DateTime.Now.ToString("MMMM") + "') SELECT SCOPE_IDENTITY()";
                                         SqlCommand objCmddtss = new SqlCommand(svsql3, objConn);
-                                        objConn.Open();
+                                        //objConn.Open();
                                         Object Pid1 = objCmddtss.ExecuteScalar();
-                                        objConn.Close();
+                                        //objConn.Close();
 
                                         string svsql4 = "INSERT INTO INVENTORY_ITEM_TRANS (GRN_ID,INV_ITEM_ID,ITEM_ID,PRODUCT,VARIANT,UOM,UNIT_COST,TRANS_TYPE,TRANS_IMPACT,TRANS_QTY,TRANS_NOTES,TRANS_DATE,FINANCIAL_YEAR) VALUES ('" + Pid + "','" + Pid1 + "','" + cp.Item + "','" + cp.Product + "','" + cp.Varient + "','" + cp.UOM + "','" + cp.Rate + "','DP','Plus','" + cp.Qty + "','DP','" + DateTime.Now.ToString("dd-MMM-yyyy") + "','"+ fyear + "')";
                                         SqlCommand objCmddtsss = new SqlCommand(svsql4, objConn);
-                                        objConn.Open();
+                                        //objConn.Open();
                                         objCmddtsss.ExecuteNonQuery();
-                                        objConn.Close();
+                                        //objConn.Close();
 
                                     }
                                 }

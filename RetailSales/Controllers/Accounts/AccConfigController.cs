@@ -120,7 +120,7 @@ namespace RetailSales.Controllers
                 throw ex;
             }
 
-            return View(Cy);
+            return RedirectToAction("ListAccConfig");
         }
 
         public IActionResult ListAccConfig()

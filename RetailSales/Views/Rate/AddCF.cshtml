@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
 
-                                    <table id="example7" class="display nowrap table  responsive nowrap table-bordered">
+                                    <table id="dataTable" class="display nowrap table  responsive nowrap table-bordered">
                                         <thead>
                                             <tr>
 
@@ -87,7 +87,7 @@
                                                 foreach (var item in Model.RateListItemlst.ToList())
                                                 {
 
-                                                    <tr>
+                                                    <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
                                                         <td style="text-align: center;">
                                                             @Html.DisplayFor(o => o.RateListItemlst[i].SrcUom)
                                                             @Html.HiddenFor(o => o.RateListItemlst[i].SrcUom, new { @id = "txtUOM" + i })
@@ -249,7 +249,7 @@
     function AppendRow(opt, uom,  uomid) {
         var index = $("#tbBooks").children("tr").length;
 
-        var UOMcell = "<td style='text-align: center;'><label> " + uom + " </label><input class='form-control' id='txtUOM" + index + "' name='RateListItemlst[" + index + "].SrcUom' value=" + uom + " type='hidden' /><input class='form-control' id='hdUOMID" + index + "' name='RateListItemlst[" + index + "].SrcUomID' value=" + uomid + " type='hidden' /> </td>";
+        var UOMcell = "<td style='text-align: center;'><label> " + uom + " </label><input class='form-control' id='txtUOM" + index + "' name='RateListItemlst[" + index + "].SrcUom' value='" + uom + "' type='hidden' /><input class='form-control' id='hdUOMID" + index + "' name='RateListItemlst[" + index + "].SrcUomID' value='" + uomid + "' type='hidden' /> </td>";
 
         var Des = "<td><select style = 'width: 150px;' class='form-control _select newcss' id='ddlDUOM" + index + "' name='RateListItemlst[" + index + "].DestUom'><option value=''>--Please select--</option>" + opt + "</select></td>";
 
