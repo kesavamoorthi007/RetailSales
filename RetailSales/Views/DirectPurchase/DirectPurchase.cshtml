@@ -926,14 +926,16 @@
             if (tot == "")
                 tot = 0;
 
-            if(Disc < tot){
+            if(tot!=0)
+                {
+                      if(Disc < tot){
                 var rej = eval(tot) - eval(Disc) ;
                 document.getElementById("txtNet").value = rej.toFixed(2);
             }
             else{
                 alert("Discount is higher than Total");
-                document.getElementById("txtDisc" + i).value = "0";
-                document.getElementById("txtNet" + i).value = tot.toFixed(2);
+                document.getElementById("txtDisc").value = "0";
+                document.getElementById("txtNet").value = tot.toFixed(2);
             }
             
 
