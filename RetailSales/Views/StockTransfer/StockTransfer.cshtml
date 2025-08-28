@@ -65,7 +65,7 @@
 
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">From Location<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.Flocation, Model.FLoclst, "--Please Select--", new { @id = "ddlFlocation", @Class = "form-control _select", @TabIndex = 1 ,@onchange="flocchange(this.value)" })
+                                            @Html.DropDownListFor(C => C.Flocation, Model.FLoclst, "--Please Select--", new { @id = "ddlFlocation", @Class = "form-control _select", @TabIndex = 3 ,@onchange="flocchange(this.value)" })
                                             
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@
 
                                         <br /> <label for="inputName3" class="col-sm-4 control-label">To Location<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.Tlocation, Model.TLoclst, "--Please Select--", new { @id = "ddlTlocation", @Class = "form-control _select", @TabIndex = 1,@onchange="locchange(this.value)" })
+                                            @Html.DropDownListFor(C => C.Tlocation, Model.TLoclst, "--Please Select--", new { @id = "ddlTlocation", @Class = "form-control _select", @TabIndex = 4,@onchange="locchange(this.value)" })
                                             
                                         </div>
                                     </div>
@@ -123,37 +123,37 @@
                                                 {
                                                     <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].Item, Model.StockTransferItemLst[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].Item, Model.StockTransferItemLst[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")", @TabIndex = 5 })
                                                             @Html.HiddenFor(o => o.StockTransferItemLst[i].saveItemId)
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].Product, Model.StockTransferItemLst[i].Productlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlProduct" + i, style = "width: 220px;", onchange = "changeItem(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].Product, Model.StockTransferItemLst[i].Productlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlProduct" + i, style = "width: 220px;", onchange = "changeItem(this.value," + i + ")", @TabIndex = 6 })
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].Varient, Model.StockTransferItemLst[i].Varientlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVarientItem(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].Varient, Model.StockTransferItemLst[i].Varientlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVarientItem(this.value," + i + ")", @TabIndex = 7 })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Unit, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Unit, new { @id = "txtUOM" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly", @TabIndex = 8 })
                                                         </td>
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Stock, new { @id = "txtStock" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Stock, new { @id = "txtStock" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly", @TabIndex = 9 })
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].FBin, Model.StockTransferItemLst[i].FBinlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlFBin" + i, style = "width: 220px;" })
+                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].FBin, Model.StockTransferItemLst[i].FBinlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlFBin" + i, style = "width: 220px;", @TabIndex = 10 })
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].TBin, Model.StockTransferItemLst[i].TBinlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlTBin" + i, style = "width: 220px;" })
+                                                            @Html.DropDownListFor(o => o.StockTransferItemLst[i].TBin, Model.StockTransferItemLst[i].TBinlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlTBin" + i, style = "width: 220px;", @TabIndex = 11 })
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.StockTransferItemLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;",onkeyup = "changeQty(this.value,"+i+")"})
+                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", onkeyup = "changeQty(this.value," + i + ")", @TabIndex = 12 })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px; text-align: right"})
+                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px; text-align: right", @TabIndex = 13 })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly"})
+                                                            @Html.TextBoxFor(o => o.StockTransferItemLst[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly", @TabIndex = 14 })
                                                         </td>
                                                         <td>
                                                             @Html.HiddenFor(o => o.StockTransferItemLst[i].Isvalid, new { @id = "Isvalid" + i })

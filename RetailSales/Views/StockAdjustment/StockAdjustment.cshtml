@@ -55,7 +55,7 @@
 
                                                 @Html.RadioButtonFor(C => C.Type, "Addition", new { @TabIndex = 2 })
                                                 <label id="mt-radio">Addition (+)</label>&emsp;
-                                                @Html.RadioButtonFor(C => C.Type, "Deduction", new { @TabIndex = 2 })
+                                                @Html.RadioButtonFor(C => C.Type, "Deduction", new { @TabIndex = 3 })
                                                 <label id="mt-radio">Deduction (-)</label>
                                             </div>
                                         </div>                                        
@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-5 control-label">Stock Adjustment Number<label class="mandatory"></label></label>
                                         <div class="col-sm-5">
-                                            @Html.TextBoxFor(C => C.DocId, new { @id = "txtDocId", @class = "form-control", @TabIndex = 1, @readonly = "readonly" })<br />
+                                            @Html.TextBoxFor(C => C.DocId, new { @id = "txtDocId", @class = "form-control", @TabIndex = 4, @readonly = "readonly" })<br />
                                             
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Date<label class="mandatory">*</label></label>
                                         <div class="input-group date form_date col-sm-2" data-date="" data-date-format="dd-M-yyyy" style="width: 200px">
-                                            @Html.TextBoxFor(C => C.DocDate, new { @id = "txtDocDate", @class = "form-control", @TabIndex = 2, @readonly = true })
+                                            @Html.TextBoxFor(C => C.DocDate, new { @id = "txtDocDate", @class = "form-control", @TabIndex = 5, @readonly = true })
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                        
@@ -122,32 +122,32 @@
                                                 {
                                                     <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Item, Model.StockAdjustmentList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Item, Model.StockAdjustmentList[i].Itemlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlItem" + i, style = "width: 220px;", onchange = "changeProductDetails(this.value," + i + ")", @TabIndex = 6 })
                                                             @Html.HiddenFor(o => o.StockAdjustmentList[i].saveItemId)
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Product, Model.StockAdjustmentList[i].Productlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlProduct" + i, style = "width: 220px;", onchange = "changeVariantDetails(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Product, Model.StockAdjustmentList[i].Productlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlProduct" + i, style = "width: 220px;", onchange = "changeVariantDetails(this.value," + i + ")", @TabIndex = 7 })
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Variant, Model.StockAdjustmentList[i].Variantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVariantItem(this.value," + i + ")" })
+                                                            @Html.DropDownListFor(o => o.StockAdjustmentList[i].Variant, Model.StockAdjustmentList[i].Variantlst, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlVarient" + i, style = "width: 220px;", onchange = "changeVariantItem(this.value," + i + ")", @TabIndex = 8 })
                                                             
                                                         </td>                                                        
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].Unit, new { @id = "txtUnit" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].Unit, new { @id = "txtUnit" + i, @class = "form-control", style = "width: 80px;", @readonly = "readonly", @TabIndex = 9 })
                                                         </td>
                                                         <td>
 
-                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].StockQty, new { @id = "txtStockQty" + i, @class = "form-control", style = "width: 80px;", type = "number", @readonly = "readonly", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].StockQty, new { @id = "txtStockQty" + i, @class = "form-control", style = "width: 80px;", type = "number", @readonly = "readonly", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @TabIndex = 10 })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.StockAdjustmentList[i].Qty, new { @id = "txtQty" + i, @class = "form-control", style = "width: 80px;", type = "number", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @TabIndex = 11 })
                                                         </td>
 
                                                         <td>
-                                                            @Html.HiddenFor(o => o.StockAdjustmentList[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")" })
-                                                       
-                                                            @Html.HiddenFor(o => o.StockAdjustmentList[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly" })
+                                                            @Html.HiddenFor(o => o.StockAdjustmentList[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 80px; text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @TabIndex = 12 })
+
+                                                            @Html.HiddenFor(o => o.StockAdjustmentList[i].Amount, new { @id = "txtAmount" + i, @class = "form-control", style = "width: 80px;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "changeQty(this," + i + ")", @readonly = "readonly", @TabIndex = 13 })
                                                        
                                                             @Html.HiddenFor(o => o.StockAdjustmentList[i].Isvalid, new { @id = "Isvalid" + i })
                                                             <img onclick="removeRow(@(i));" src="../Images/delete.png" style="cursor:pointer" /> <input name="StockAdjustmentList.Index" type="hidden" value="@(i)" />
@@ -172,7 +172,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Narration<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextAreaFor(C => C.Reason, new { @id = "txtReason", @class = "form-control", @TabIndex = 1 }) <br />
+                                            @Html.TextAreaFor(C => C.Reason, new { @id = "txtReason", @class = "form-control", @TabIndex = 14 }) <br />
 
                                         </div>
                                     </div>

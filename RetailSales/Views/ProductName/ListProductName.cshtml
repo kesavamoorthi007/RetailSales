@@ -165,7 +165,10 @@
             width: '1000px',
             height: '1000px',
             arrows: false,
-            //autoSize : false
+            afterClose: function () {
+                location.reload();
+                return;
+            }
         });
         fancybox123 = $.fancybox;
     });
