@@ -102,33 +102,33 @@
                                                                 <tr id="trBook@(i)" class="chkitemlst" style="height: 30px;border-bottom: 1px dashed #ddd;">
 
                                                                     <td>
-                                                                        @Html.TextBoxFor(o => o.ProductNameLst[i].Variant, new { @class = "form-control", @id = "txtVarient" + i, style = "width: 220px;" })
+                                                                @Html.TextBoxFor(o => o.ProductNameLst[i].Variant, new { @class = "form-control", @id = "txtVarient" + i, style = "width: 220px;", @TabIndex = 4 })
                                                                         @Html.HiddenFor(o => o.ProductNameLst[i].ID,new {@id="hddetailid" + i})
                                                                     </td>
                                                                     <td>
-                                                                        @Html.DropDownListFor(o => o.ProductNameLst[i].Uom, Model.ProductNameLst[i].UOMlst, "---Please Select---", new { @id = "ddlUOM" + i, @class = "form-control _select newcss", style = "width: 100px;" })
+                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].Uom, Model.ProductNameLst[i].UOMlst, "---Please Select---", new { @id = "ddlUOM" + i, @class = "form-control _select newcss", style = "width: 100px;", @TabIndex = 5 })
                                                                     </td>
                                                                     <td>
-                                                                        @Html.DropDownListFor(o => o.ProductNameLst[i].Hsn, Model.ProductNameLst[i].HSNlst, "---Please Select---", new { @id = "ddlHsn" + i, @class = "form-control _select newcss", style = "width: 100px;" })
+                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].Hsn, Model.ProductNameLst[i].HSNlst, "---Please Select---", new { @id = "ddlHsn" + i, @class = "form-control _select newcss", style = "width: 100px;", @TabIndex = 6 })
                                                                     </td>
                                                                     <td>
 
-                                                                        @Html.TextBoxFor(o => o.ProductNameLst[i].MinQty, new { @id = "txtMinQty" + i, @class = "form-control", style = "width: 100px;" })
+                                                                @Html.TextBoxFor(o => o.ProductNameLst[i].MinQty, new { @id = "txtMinQty" + i, @class = "form-control", style = "width: 100px;", @TabIndex = 7 })
                                                                     </td>
                                                                     <td>
                                                                         @Html.HiddenFor(o => o.ProductNameLst[i].Isvalid, new { @id = "Isvalid" + i })
-                                                                        @Html.TextBoxFor(o => o.ProductNameLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;",@readonly="true" })
+                                                                @Html.TextBoxFor(o => o.ProductNameLst[i].Rate, new { @id = "txtRate" + i, @class = "form-control", style = "width: 100px; text-align: right;", @readonly = "true", @TabIndex = 8 })
                                                                     </td>
-                                                            <td> @Html.DropDownListFor(o => o.ProductNameLst[i].Location, Model.ProductNameLst[i].locationlist, "---Please Select---", new { @id = "ddllocation"+ i, @class = "form-control _select", @TabIndex = 1, @onchange="changeLocation(this.value," + i + ")"})</td>
+                                                            <td> @Html.DropDownListFor(o => o.ProductNameLst[i].Location, Model.ProductNameLst[i].locationlist, "---Please Select---", new { @id = "ddllocation" + i, @class = "form-control _select", @TabIndex = 9, @onchange = "changeLocation(this.value," + i + ")"})</td>
 
                                                             <td id="shopBinTd_@i">
-                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].ShopBin, Model.ProductNameLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;" })
+                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].ShopBin, Model.ProductNameLst[i].ShopBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlShopBin" + i, style = "width: 120px;", @TabIndex = 10 })
                                                             </td>
                                                             <td id="godownBinTd_@i">
-                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].GodownBin, Model.ProductNameLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;" })
+                                                                @Html.DropDownListFor(o => o.ProductNameLst[i].GodownBin, Model.ProductNameLst[i].GodownBinlist, "---Please Select---", new { @class = "form-control _select newcss", @id = "ddlGodownBin" + i, style = "width: 120px;", @TabIndex = 11 })
                                                             </td>
                                                                     <td>
-                                                                        @Html.TextAreaFor(o => o.ProductNameLst[i].ProdDesc, new { @id = "txtProdDesc" + i, @class = "form-control", style = "width: 150px;" })
+                                                                @Html.TextAreaFor(o => o.ProductNameLst[i].ProdDesc, new { @id = "txtProdDesc" + i, @class = "form-control", style = "width: 150px;", @TabIndex = 12 })
                                                                     </td>                                                                                                                                        
                                                                     <td>
                                                                         @Html.HiddenFor(o => o.ProductNameLst[i].Isvalid, new { @id = "Isvalid" + i })

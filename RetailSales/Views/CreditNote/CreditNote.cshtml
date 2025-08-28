@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <label for="inputName3" class="col-sm-4 control-label">Voucher No<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 2,@readonly = "readonly"})
+                                            @Html.TextBoxFor(C => C.VocNo, new { @id = "txtVocNo", @class = "form-control", @TabIndex = 1,@readonly = "readonly"})
                                             @Html.HiddenFor(C => C.ID)
 
 
@@ -54,7 +54,7 @@
                                         <label for="inputName3" class="col-sm-4 control-label">Voucher Date<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
                                             <div class="input-group date form_date col-sm-12" data-date="" data-date-format="dd-M-yyyy">
-                                                @Html.TextBoxFor(C => C.VocDate, new { @id = "txtVocDate", @class = "form-control", @TabIndex = 1, @size = "32", style = "width: 170px", @readonly = "readonly" })
+                                                @Html.TextBoxFor(C => C.VocDate, new { @id = "txtVocDate", @class = "form-control", @TabIndex = 2, @size = "32", style = "width: 170px", @readonly = "readonly" })
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
@@ -101,25 +101,25 @@
 
 
                                                         <td>
-                                                            @Html.RadioButtonFor(o => o.CreditNotelst[i].DBCR, "Dr", new { @id = "txtDBCR", @TabIndex = 2, @onchange = "changeentry(this.value," + i + ")" })
+                                                            @Html.RadioButtonFor(o => o.CreditNotelst[i].DBCR, "Dr", new { @id = "txtDBCR", @TabIndex = 3, @onchange = "changeentry(this.value," + i + ")" })
                                                             <label id="mt-radio">Dr</label>
-                                                            @Html.RadioButtonFor(o => o.CreditNotelst[i].DBCR, "Cr", new { @id = "txtDBCR", @TabIndex = 3, @onchange = "changeentry(this.value," + i + ")" })
+                                                            @Html.RadioButtonFor(o => o.CreditNotelst[i].DBCR, "Cr", new { @id = "txtDBCR", @TabIndex = 4, @onchange = "changeentry(this.value," + i + ")" })
                                                             <label id="mt-radio">Cr</label>
                                                         </td>
                                                         <td>
-                                                            @Html.DropDownListFor(o => o.CreditNotelst[i].AccName, Model.CreditNotelst[i].AccNamelst, "---Please Select---", new { @class = "form-control _select newcss", @id = "txtAccName" + i,@onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;" })
+                                                            @Html.DropDownListFor(o => o.CreditNotelst[i].AccName, Model.CreditNotelst[i].AccNamelst, "---Please Select---", new { @class = "form-control _select newcss", @id = "txtAccName" + i, @onchange = "changeAcc_LedgerItem(this.value," + i + ")", style = "width: 200px;", @TabIndex = 5 })
 
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].DebitAmt, new { @id = "txtDebitAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totdeAmount(this," + i + ")", @TabIndex = 6 })
                                                         </td>
 
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].CreditAmt, new { @id = "txtCreditAmt" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @onkeyup = "totcrAmount(this," + i + ")", @TabIndex = 7 })
                                                             
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(o => o.CreditNotelst[i].Balance, new { @id = "txtBalance" + i, @class = "form-control", style = "width: 150px;text-align: right;", onkeydown = "return isNumeric2(event.keyCode,this.value)", @readonly = "readonly", @TabIndex = 8 })
 
                                                         </td>
 
@@ -152,7 +152,7 @@
 
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Total Debit Amount<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.totdeb, new { @id = "totdeb", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
+                                            @Html.TextBoxFor(C => C.totdeb, new { @id = "totdeb", @class = "form-control", @TabIndex = 9, @readonly = "readonly" })
 
                                             <br />
                                         </div>
@@ -164,7 +164,7 @@
 
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Total Credit Amount<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.totcri, new { @id = "totcri", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
+                                            @Html.TextBoxFor(C => C.totcri, new { @id = "totcri", @class = "form-control", @TabIndex = 10, @readonly = "readonly" })
                                             <br />
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
 
                                         <br /><label for="inputName3" class="col-sm-2 control-label">Amount In Words<label class="mandatory"></label></label>
                                         <div class="col-sm-6">
-                                            @Html.TextBoxFor(C => C.AmtWd, new { @id = "txtAmtWd", @class = "form-control", @TabIndex = 2, @readonly = "readonly" })
+                                            @Html.TextBoxFor(C => C.AmtWd, new { @id = "txtAmtWd", @class = "form-control", @TabIndex = 11, @readonly = "readonly" })
                                             <br />
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-2 control-label">Narration</label>
                                         <div class="col-sm-6">
-                                            @Html.TextAreaFor(C => C.Narr, new { @id = "txtNarr", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextAreaFor(C => C.Narr, new { @id = "txtNarr", @class = "form-control", @TabIndex = 12 })
                                             @Html.HiddenFor(C => C.ID)
                                             <br />
                                         </div>
