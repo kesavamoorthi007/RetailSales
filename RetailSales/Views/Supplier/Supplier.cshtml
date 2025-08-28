@@ -165,19 +165,23 @@
     </div>
 </div>
 <script>
-        function validateGSTNumber() {
-        var gstNumber = document.getElementById('gstNumber').value;
+           function validateGSTNumber() {
+        var gstNumber = document.getElementById('gstNumber').value.trim();
         var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
-        
-        if (gstPattern.test(gstNumber)) {
-            // If the GST number is valid, hide the error message
-            //document.getElementById('gstError').style.display = 'none';
-        } else {
-            // If the GST number is invalid, show the error message
-            alert("Invalid GST No");
-           // document.getElementById('gstError').style.display = 'inline';
+
+        if (gstNumber === "") {
+            alert("Please Enter GST No");
+            return false;
         }
+
+        if (!gstPattern.test(gstNumber)) {
+            alert("Invalid GST No");
+            return false;
+        }
+
+        return true;
     }
+
 
     function PopulateDropDown(dropDownId, list) {
         //alert(list);
@@ -282,19 +286,7 @@
                     "background": ""
                 });
             }
-           var gstNumber = document.getElementById('gstNumber').value;
-        var gstPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[0-9]{1}$/;
-        
-        if (gstPattern.test(gstNumber)) {
-           // If the GST number is valid, hide the error message
-           //document.getElementById('gstError').style.display = 'none';
-        } else {
-            
-           // If the GST number is invalid, show the error message
-           alert("Invalid GST No");
-           return false;
-          // document.getElementById('gstError').style.display = 'inline';
-        }
+
             if (document.getElementById("txtMobile").value == "") {
                 isValid = false;
                 $(txtMobile).css({

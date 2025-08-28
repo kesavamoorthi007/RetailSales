@@ -100,7 +100,7 @@ namespace RetailSales.Services.Purchase
         public DataTable GetVariant(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID='" + id + "' AND PRO_DETAIL.IS_ACTIVE = 'Y'";
+            SvSql = "SELECT PRO_DETAIL.ID,PRODUCT_VARIANT FROM PRO_DETAIL WHERE PRO_DETAIL.PRODUCT_ID='" + id + "' AND PRO_DETAIL.IS_ACTIVE = 'Y' AND PRODUCT_VARIANT IS NOT NULL";
             //SvSql = "SELECT ID,CONCAT(PRODUCT_VARIANT, ' - ', HSCODE) AS Variant_HSN FROM PRO_DETAIL JOIN HSNMAST ON HSN_CODE = HSNMASTID WHERE PRO_DETAIL.PRODUCT_CATEGORY='" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
