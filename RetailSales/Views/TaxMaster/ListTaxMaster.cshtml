@@ -55,7 +55,9 @@
             }
         }
         );
-
+         var linkrenderer1 = function (row, column, value) {
+            return '<a href="' + value + '" onclick="return ConfirmDelete()"><img  src="../Images/Inactive.png"  style="text-align: center; margin-top: 5px;padding-left:25px;"/></a>';
+        }
         $("#grid").jqxGrid(
             {
                 width: '75%',

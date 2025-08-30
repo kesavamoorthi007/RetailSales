@@ -94,18 +94,18 @@ namespace RetailSales.Controllers.Master
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
 
-                string DeleteRow = string.Empty;
+                //string DeleteRow = string.Empty;
                 string EditRow = string.Empty;
                 string a= dtUsers.Rows[i]["IS_ACTIVE"].ToString();
                 if (a == "Y")
                 {
                     EditRow = "<a href=Location?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    //DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    //DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
                 Reg.Add(new Locationgrid
                 {
@@ -114,7 +114,7 @@ namespace RetailSales.Controllers.Master
                     address = dtUsers.Rows[i]["LOC_ADDRESS"].ToString(),
                     bin = dtUsers.Rows[i]["BIN"].ToString(),
                     editrow = EditRow,
-                    delrow = DeleteRow,
+                    //delrow = DeleteRow,
 
                 });
             }
