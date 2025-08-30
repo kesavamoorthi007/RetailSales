@@ -187,12 +187,12 @@ namespace RetailSales.Controllers.Master
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     EditRow = "<a href=Bankaccounts?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    DeleteRow = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new Bankaccountsgrid
                 {
@@ -216,8 +216,15 @@ namespace RetailSales.Controllers.Master
         }
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = BankaccountsService.StatusChange(tag, id);
+            string flag = "";
+            if (tag == "Del")
+            {
+                flag = BankaccountsService.StatusChange(tag, id);
+            }
+            else
+            {
+                flag = BankaccountsService.RemoveChange(tag, id);
+            }
             if (string.IsNullOrEmpty(flag))
             {
 
@@ -229,21 +236,21 @@ namespace RetailSales.Controllers.Master
                 return RedirectToAction("ListBankaccounts");
             }
         }
-        public ActionResult Remove(string tag, string id)
-        {
+        //public ActionResult Remove(string tag, string id)
+        //{
 
-            string flag = BankaccountsService.RemoveChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
-            {
+        //    string flag = BankaccountsService.RemoveChange(tag, id);
+        //    if (string.IsNullOrEmpty(flag))
+        //    {
 
-                return RedirectToAction("ListBankaccounts");
-            }
-            else
-            {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListBankaccounts");
-            }
-        }
+        //        return RedirectToAction("ListBankaccounts");
+        //    }
+        //    else
+        //    {
+        //        TempData["notice"] = flag;
+        //        return RedirectToAction("ListBankaccounts");
+        //    }
+        //}
 
     }
 }

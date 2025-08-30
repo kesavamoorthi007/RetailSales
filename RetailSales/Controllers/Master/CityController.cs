@@ -6,6 +6,7 @@ using RetailSales.Interface;
 using RetailSales.Models;
 
 using RetailSales.Services;
+using RetailSales.Services.Master;
 using System.Data;
 using City = RetailSales.Models.City;
 
@@ -158,12 +159,12 @@ namespace RetailSales.Controllers
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     EditRow = "<a href=City?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    DeleteRow = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new Citygrid
                 {
@@ -188,8 +189,15 @@ namespace RetailSales.Controllers
         // delete action
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = CityServices.StatusChange(tag, id);
+            string flag = "";
+            if (tag == "Del")
+            {
+                flag = CityServices.StatusChange(tag, id);
+            }
+            else
+            {
+                flag = CityServices.RemoveChange(tag, id);
+            }
             if (string.IsNullOrEmpty(flag))
             {
 
@@ -202,21 +210,5 @@ namespace RetailSales.Controllers
             }
         }
 
-        // disabled page
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = CityServices.RemoveChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
-            {
-
-                return RedirectToAction("ListCity");
-            }
-            else
-            {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListCity");
-            }
-        }
     }
 }
