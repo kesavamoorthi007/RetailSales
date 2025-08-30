@@ -92,12 +92,12 @@ namespace RetailSales.Controllers.Master
                 if (dtUsers.Rows[i]["STATUS"].ToString() == "Y")
                 {
                     EditRow = "<a href=CCategory?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit' /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='25' /></a>";
+                    DeleteRow = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new CCategorygrid
                 {
@@ -118,8 +118,15 @@ namespace RetailSales.Controllers.Master
         }
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = CCategoryService.StatusChange(tag, id);
+            string flag = "";
+            if (tag == "Del")
+            {
+                flag = CCategoryService.StatusChange(tag, id);
+            }
+            else
+            {
+                flag = CCategoryService.RemoveChange(tag, id);
+            }
             if (string.IsNullOrEmpty(flag))
             {
 
@@ -131,20 +138,20 @@ namespace RetailSales.Controllers.Master
                 return RedirectToAction("ListCCategory");
             }
         }
-        public ActionResult Remove(string tag, string id)
-        {
+        //public ActionResult Remove(string tag, string id)
+        //{
 
-            string flag = CCategoryService.RemoveChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
-            {
+        //    string flag = CCategoryService.RemoveChange(tag, id);
+        //    if (string.IsNullOrEmpty(flag))
+        //    {
 
-                return RedirectToAction("ListCCategory");
-            }
-            else
-            {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListCCategory");
-            }
-        }
+        //        return RedirectToAction("ListCCategory");
+        //    }
+        //    else
+        //    {
+        //        TempData["notice"] = flag;
+        //        return RedirectToAction("ListCCategory");
+        //    }
+        //}
     }
 }

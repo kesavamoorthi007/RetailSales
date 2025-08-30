@@ -58,7 +58,9 @@
             }
         }
         );
-
+         var linkrenderer1 = function (row, column, value) {
+            return '<a href="' + value + '" onclick="return ConfirmDelete()"><img  src="../Images/Inactive.png"  style="text-align: center; margin-top: 5px;padding-left:25px;"/></a>';
+        }
         $("#grid").jqxGrid(
             {
                 width: '90%',
@@ -87,7 +89,7 @@
                     { text: 'State name', filtertype: 'input', datafield: 'statid', width: 200 },
                     { text: 'City Name', filtertype: 'checkedlist', datafield: 'ciname', width: 200 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
-                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70},
+                    { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, cellsrenderer: linkrenderer1,autoshowfiltericon: false, cellsalign: 'center', width: 70},
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -144,6 +146,6 @@
 </div>
 <script>
     function ConfirmDelete() {
-        return confirm("Are you sure you want to delete?");
+        return confirm("Are you sure you want to Enabled Or Disabled?");
     }
 </script>

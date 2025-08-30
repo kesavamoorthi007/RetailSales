@@ -104,13 +104,13 @@ namespace RetailSales.Controllers.Master
                 {
 
                     Edit = "<a href=EmailConfig?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    Delete = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
 
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "DeleteMR?Active=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new ListEmailConfig
                 {
@@ -134,23 +134,15 @@ namespace RetailSales.Controllers.Master
 
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = EmailConfigService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListEmailConfig");
+                flag = EmailConfigService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListEmailConfig");
+                flag = EmailConfigService.RemoveChange(tag, id);
             }
-        }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = EmailConfigService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 
