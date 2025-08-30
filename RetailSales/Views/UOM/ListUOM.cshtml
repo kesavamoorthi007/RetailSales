@@ -56,7 +56,9 @@
             }
         }
         );
-
+         var linkrenderer1 = function (row, column, value) {
+            return '<a href="' + value + '" onclick="return ConfirmDelete()"><img  src="../Images/Inactive.png"  style="text-align: center; margin-top: 5px;padding-left:25px;"/></a>';
+        }
         $("#grid").jqxGrid(
             {
                 width: '70%',
@@ -85,7 +87,7 @@
                     { text: 'Description', filtertype: 'input', datafield: 'description', width: 150 },
                     { text: 'Conversion Factor', filtertype: 'input', datafield: 'factor', width: 150 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 75 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 75},
+                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsrenderer: linkrenderer1,cellsalign: 'center', width: 75},
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -142,6 +144,6 @@
 </div>
 <script>
     function ConfirmDelete() {
-        return confirm("Are you sure you want to delete?");
+        return confirm("Are you sure you want to Enabled Or Disabled?");
     }
 </script>
