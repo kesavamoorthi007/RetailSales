@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Accounts.PaymentRequest
 
 @{
-    Layout = "_PopupLayout";
+    //Layout = "_PopupLayout";
     ViewData["Title"] = "Payment Request";
 }
 <style>
@@ -117,8 +117,7 @@
 
 
                             <div style="height:20px;"></div>
-
-                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPaymentRequest", "PaymentRequest")'">Cancel</button>
 
                         </form>
                     }

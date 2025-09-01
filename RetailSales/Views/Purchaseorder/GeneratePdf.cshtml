@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.GeneratePdf
 
 @{
-    Layout = "_PopupLayout";
+    //Layout = "_PopupLayout";
     ViewData["Title"] = "Generate Pdf";
 }
 <style>
@@ -24,7 +24,9 @@
         <div class="col-sm-12 text-left mt-3">
             <button class="btn btn-outline-success me-2" type="button" onclick="printInvoice()">Print</button>
             <button class="btn btn-outline-primary me-2" type="button" onclick="downloadPdf()">PDF</button>
-            <button class="btn btn-outline-secondary me-2" type="button" causesvalidation="false" onClick="window.parent.jQuery.fancybox.close();">Close</button>
+            <button class="btn btn-outline-secondary me-" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'">Close</button>
+
+            @* //<button class="btn btn-outline-secondary me-2" type="button" causesvalidation="false" onClick="window.parent.jQuery.fancybox.close();">Close</button> *@
         </div>
     </div>
     <br />

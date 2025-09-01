@@ -186,8 +186,7 @@ namespace RetailSales.Controllers.Purchase
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewDirectPurchase?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
-                    
+                    View = "<a href='ViewDirectPurchase?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["DPBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else

@@ -298,8 +298,8 @@ namespace RetailSales.Controllers.Purchase
                         Move = "<a href=MoveStock?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/sharing.png' alt='View Details' width='20' /></a>";
                     }
                     //EditRow = "<a href=Purchaseorder?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
-
-                    View = "<a href=ViewGRN?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/file.png' alt='View' width='20'  /></a>";
+                    View = "<a href='ViewGRN?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    //View = "<a href=ViewGRN?id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "><img src='../Images/file.png' alt='View' width='20'  /></a>";
 
                     //DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["GRN_BASIC_ID"].ToString() + "";
 

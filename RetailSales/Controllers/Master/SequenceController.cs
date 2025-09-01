@@ -2,6 +2,7 @@
 using RetailSales.Interface;
 using RetailSales.Models;
 using RetailSales.Services;
+using RetailSales.Services.Master;
 using System.Data;
 
 
@@ -100,12 +101,12 @@ namespace RetailSales.Controllers
                 if (a == "Y")
                 {
                     EditRow = "<a href=Sequence?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    DeleteRow = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new Sequencegrid
                 {
@@ -129,8 +130,15 @@ namespace RetailSales.Controllers
         }
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = SequenceService.StatusChange(tag, id);
+            string flag = "";
+            if (tag == "Del")
+            {
+                flag = SequenceService.StatusChange(tag, id);
+            }
+            else
+            {
+                flag = SequenceService.RemoveChange(tag, id);
+            }
             if (string.IsNullOrEmpty(flag))
             {
 
@@ -142,21 +150,5 @@ namespace RetailSales.Controllers
                 return RedirectToAction("ListSequence");
             }
         }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = SequenceService.RemoveChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
-            {
-
-                return RedirectToAction("ListSequence");
-            }
-            else
-            {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListSequence");
-            }
-        }
-
     }
 }

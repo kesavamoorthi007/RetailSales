@@ -55,11 +55,9 @@
                 }
             }
             );
-
-            var linkrenderer1 = function (row, column, value) {
-        return '<a href="' + value + '" class="fancybox" data-fancybox-type="iframe"><img src="../Images/pdficon.png" alt="View Details" width="20" /></a>';
-    }
-                
+    var linkrenderer1 = function (row, column, value) {
+                return '<a href="' + value + '" onclick="return ConfirmDelete()"><img  src="../Images/Inactive.png"  style="text-align: center; margin-top: 5px;padding-left:25px;"/></a>';
+            }
             $("#grid").jqxGrid(
                 {
                     width: '100%',
@@ -90,7 +88,7 @@
                         { text: 'Tot Requested Amt', filtertype: 'input', datafield: 'totreqamt', cellsalign: 'right', width: 150 },
                         { text: 'View', datafield: 'view', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                         { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
-                        { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 80 },
+                        { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false,  cellsrenderer: linkrenderer1,autoshowfiltericon: false, cellsalign: 'center', width: 80 },
                         
                     ]
 
@@ -159,12 +157,11 @@
 </div>
 <script>
     function ConfirmDelete() {
-        return confirm("Are you sure you want to delete?");
-
+        return confirm("Are you sure you want to Enabled Or Disabled?");
     }
 </script>
 
-<a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 1000px;"></a>
+@* <a class="fancybox1" rel="group" data-fancybox-type="iframe" href="#" style="display: none; width: 1000px;"></a>
 <link rel="stylesheet" href="@Url.Content("~/css/jquery.fancybox.css?v=2.1.5")" type="text/css" media="screen" />
 <script type="text/javascript" src="@Url.Content("~/css/jquery.fancybox.pack.js?v=2.1.5")"></script>
 <script type="text/javascript">
@@ -189,7 +186,7 @@
         $(".fancybox1").eq(0).trigger('click');
     }
 
-</script>
+</script> *@
 
 
 

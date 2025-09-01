@@ -1,6 +1,6 @@
 ﻿@model RetailSales.Models.Purchaseorder
 @{
-    Layout = "_PopupLayout";
+    // Layout = "_PopupLayout";
     ViewData["Title"] = "PurchasOrder";
 }
 <style>
@@ -359,8 +359,8 @@
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
-                            @* <button type="submit" class="btn btn-success" type="button" id="btnSave">Sales Return</button> *@
-                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListPurchaseorder", "Purchaseorder")'">Cancel</button>
+
 
 
                         </form>

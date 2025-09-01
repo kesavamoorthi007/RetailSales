@@ -1,6 +1,6 @@
 ﻿@model RetailSales.Models.SalesInvoice
 @{
-    Layout = "_PopupLayout";
+    //Layout = "_PopupLayout";
     ViewData["Title"] = "Sales Invoice";
 }
 <style>
@@ -254,8 +254,7 @@
 
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
-
-                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListSalesInvoice", "SalesInvoice")'">Cancel</button>
 
 
                         </form>

@@ -317,8 +317,8 @@ namespace RetailSales.Controllers
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-
-                    ViewRow = "<a href=ViewAccConfig?id=" + dtUsers.Rows[i]["ADCOMPHID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/view_icon.png' alt='View' /></a>";
+                    ViewRow = "<a href='ViewAccConfig?id=" + dtUsers.Rows[i]["ADCOMPHID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    //ViewRow = "<a href=ViewAccConfig?id=" + dtUsers.Rows[i]["ADCOMPHID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View' /></a>";
                     EditRow = "<a href=AccConfig?id=" + dtUsers.Rows[i]["ADCOMPHID"].ToString() + "><img src='../Images/edit.png' alt='Edit' /></a>";
                     DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ADCOMPHID"].ToString() + "";
                 }

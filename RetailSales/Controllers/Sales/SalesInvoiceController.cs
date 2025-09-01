@@ -425,9 +425,13 @@ namespace RetailSales.Controllers.Sales
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    report = "<a href=SalesInvoiceReport?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
-                    report1 = "<a href=SalesInvoiceReport1?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
-                    View = "<a href=ViewSalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    report = "<a href='SalesInvoiceReport?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "' target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                    report1 = "<a href='SalesInvoiceReport1?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "' target='_blank'><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                    View = "<a href='ViewSalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+
+                    //report = "<a href=SalesInvoiceReport?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                    //report1 = "<a href=SalesInvoiceReport1?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
+                    //View = "<a href=ViewSalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/file.png' alt='View Details' width='20' /></a>";
 
                     if (dtUsers.Rows[i]["STATUS"].ToString() == "Generated")
                     {
