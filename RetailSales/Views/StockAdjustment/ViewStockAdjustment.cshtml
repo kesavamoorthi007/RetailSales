@@ -1,7 +1,7 @@
 ﻿@model RetailSales.Models.Inventory.StockAdjustment
 
 @{
-    Layout = "_PopupLayout";
+    //Layout = "_PopupLayout";
     ViewData["Title"] = "Stock Adjustment";
 }
 <style>
@@ -145,10 +145,8 @@
 
                             <div style="height:20px;"></div>
 
-                            <input type="button" class="btn btn-danger" value="Close" onClick="window.parent.jQuery.fancybox.close();" />
-                            
-                            @* <button type="submit" class="btn btn-success" type="button" id="btnSave">Sales Return</button> *@
-                            @* <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListStockTransfer", "StockTransfer")'">Cancel</button>*@
+                           
+                            <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListStockTransfer", "StockTransfer")'">Cancel</button>
                             
 
 

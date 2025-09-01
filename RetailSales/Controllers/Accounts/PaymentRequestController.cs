@@ -8,6 +8,7 @@ using RetailSales.Models.Accounts;
 using RetailSales.Models.Inventory;
 using RetailSales.Services.Accounts;
 using RetailSales.Services.Inventory;
+using RetailSales.Services.Master;
 using RetailSales.Services.Purchase;
 
 namespace RetailSales.Controllers.Accounts
@@ -174,15 +175,16 @@ namespace RetailSales.Controllers.Accounts
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewPaymentRequest?id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    //View = "<a href=ViewPaymentRequest?id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    View = "<a href='ViewPaymentRequest?id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     Edit = "<a href=PaymentRequest?id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    Delete = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "";
                 }
                 else
                 {
                     View = "";
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["PAYREQBASICID"].ToString() + "";
                 }
                 Reg.Add(new ListPaymentRequestgrid
                 {
@@ -256,23 +258,15 @@ namespace RetailSales.Controllers.Accounts
         }
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = PaymentRequestService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListPaymentRequest");
+                flag = PaymentRequestService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListPaymentRequest");
+                flag = PaymentRequestService.RemoveChange(tag, id);
             }
-        }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = PaymentRequestService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 

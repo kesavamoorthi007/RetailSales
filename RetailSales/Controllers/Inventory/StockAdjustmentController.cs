@@ -151,12 +151,14 @@ namespace RetailSales.Controllers.Inventory
 
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
-                    View = "<a href=ViewStockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    View = "<a href='ViewStockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "' target='_blank'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
+                    //View = "<a href=ViewStockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     //Edit = "<a href=StockAdjustment?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
                     //Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
                 }
                 else
                 {
+                    View = "";
                     //Edit = "";
                     //Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["STKADJBASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
                 }
