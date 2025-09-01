@@ -15,9 +15,15 @@ namespace RetailSales.Controllers.Master
     public class SupplierController : Controller
     {
         ISupplierService SupplierService;
-        public SupplierController(ISupplierService _SupplierService)
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
+
+        public SupplierController(ISupplierService _SupplierService, IConfiguration _configuratio)
         {
             SupplierService = _SupplierService;
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+            datatrans = new DataTransactions(_connectionString);
         }
 
         public IActionResult Supplier(String id)
@@ -174,13 +180,13 @@ namespace RetailSales.Controllers.Master
                 {
 
                     Edit = "<a href=Supplier?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    Delete = "DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + ">";
                 }
                 else
                 {                   
 
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new ListSuppliergrid
                 {
@@ -203,8 +209,17 @@ namespace RetailSales.Controllers.Master
         
         public ActionResult DeleteMR(string tag, string id)
         {
+            string flag = "";
+            DataTable te = datatrans.GetData("SELECT SUP_NAME FROM DPBASIC B WHERE B.SUP_NAME='" + id + "' UNION SELECT SUP_ID FROM GRN_BASIC B WHERE  B.SUP_ID='" + id + "'");
+            if (te.Rows.Count > 0)
+            {
+                TempData["notice"] = "This Suppliar Can not be Delete";
 
-            string flag = SupplierService.StatusChange(tag, id);
+            }
+            else
+            {
+                 flag = SupplierService.StatusChange(tag, id);
+            }
             if (string.IsNullOrEmpty(flag))
             {
 

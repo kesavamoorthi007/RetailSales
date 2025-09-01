@@ -453,13 +453,13 @@ namespace RetailSales.Controllers.Master
                 {
                     View = "<a href=ViewProductName?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + " class='fancybox' data-fancybox-type='iframe'><img src='../Images/file.png' alt='View Details' width='20' /></a>";
                     Edit = "<a href=ProductName?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    Delete = "DeleteMR?id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "";
                 }
                 else
                 {
                     View = "";
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "Remove?tag=Del&id=" + dtUsers.Rows[i]["PRO_NAME_BASICID"].ToString() + "";
                 }
                 Reg.Add(new ProsuctNamegrid
                 {
@@ -483,8 +483,18 @@ namespace RetailSales.Controllers.Master
 
         public ActionResult DeleteMR(string tag, string id)
         {
+            string flag = "";
+            DataTable te = datatrans.GetData("SELECT ITEM FROM DPBASIC B,DPDETAIL D WHERE B.DPBASICID=D.DPBASICID AND D.PRODUCT='" + id + "' UNION SELECT ITEM FROM GRN_BASIC B,GRN_DETAIL D WHERE B.GRN_BASIC_ID=D.GRN_BASIC_ID AND D.PRODUCT='" + id +"'");
+            if(te.Rows.Count>0)
+            {
+                TempData["notice"] = "This Product Can not be Delete";
 
-            string flag = ProductNameService.StatusChange(tag, id);
+            }
+            else
+            {
+                flag = ProductNameService.StatusChange(tag, id);
+
+            }
             if (string.IsNullOrEmpty(flag))
             {
 
