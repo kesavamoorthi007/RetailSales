@@ -9,9 +9,16 @@ namespace RetailSales.Controllers.Master
     public class CCategoryController : Controller
     {
         ICCategoryService CCategoryService;
-        public CCategoryController(ICCategoryService _CCategoryService)
+        IConfiguration? _configuratio;
+        private string? _connectionString;
+        DataTransactions datatrans;
+        public CCategoryController(ICCategoryService _CCategoryService, IConfiguration _configuratio)
         {
             CCategoryService = _CCategoryService;
+            _connectionString = _configuratio.GetConnectionString("MySqlConnection");
+
+            datatrans = new DataTransactions(_connectionString);
+
         }
         public IActionResult CCategory(string id)
         {
@@ -121,7 +128,16 @@ namespace RetailSales.Controllers.Master
             string flag = "";
             if (tag == "Del")
             {
-                flag = CCategoryService.StatusChange(tag, id);
+                DataTable te = datatrans.GetData("SELECT ITEM FROM DPBASIC B,DPDETAIL D WHERE B.DPBASICID=D.DPBASICID AND D.ITEM='" + id + "' UNION SELECT ITEM FROM GRN_BASIC B,GRN_DETAIL D WHERE B.GRN_BASIC_ID=D.GRN_BASIC_ID AND D.ITEM='" + id + "'");
+                if (te.Rows.Count > 0)
+                {
+                    TempData["notice"] = "This Product Category Can not be Delete";
+
+                }
+                else
+                {
+                    flag = CCategoryService.StatusChange(tag, id);
+                }
             }
             else
             {
