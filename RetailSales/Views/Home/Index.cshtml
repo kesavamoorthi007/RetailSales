@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model RetailSales.Models.Home
+@{
     Layout = "_Layout";
 }
 <style>
@@ -18,35 +20,35 @@
     <!-- Page Body Start-->
     <div class="page-body-wrapper">
         @* <div class="page-body"> *@
-            <div class="container-fluid">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="col-6"> 
-                            <h4>
+        <div class="container-fluid">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
                             Dashboard
-                            </h4>
-                        </div>
-                        <div class="col-6">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
+                        </h4>
+                    </div>
+                    <div class="col-6">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
                                 <a href="@Url.Action("Index", "Home")">
-                                        <svg class="stroke-icon">
-                                            <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li class="breadcrumb-item">Dashboard</li>
-                            </ol>
-                        </div>
+                                    <svg class="stroke-icon">
+                                        <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">Dashboard</li>
+                        </ol>
                     </div>
                 </div>
             </div>
-            <!-- Container-fluid starts-->
-            <div class="container-fluid">
-                <div class="row size-column">
-                    <div class="col-xxl-9 box-col-12">
-                        <div class="row">
-                            <div class="col-xl-3 col-sm-6">
+        </div>
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="row size-column">
+                <div class="col-xxl-9 box-col-12">
+                    <div class="row">
+                        <div class="col-xl-3 col-sm-6">
                             <div class="card o-hidden small-widget">
                                 <div class="card-body total-upcoming">
                                     <span class="f-w-600 f-14">Dashboard</span>
@@ -102,63 +104,63 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="card o-hidden small-widget">
-                                    <div class="card-body total-Progress border-b-warning border-2">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="card o-hidden small-widget">
+                                <div class="card-body total-Progress border-b-warning border-2">
                                     <span class="f-w-600 f-14">Inventory</span>
-                                        <div class="project-details">
-                                            <div class="project-counter">
+                                    <div class="project-details">
+                                        <div class="project-counter">
                                             <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><h2 class="f-w-600 f-14">15</h2></a>
-                                            </div>
-                                            <div class="product-sub bg-warning-light">
-                                                <svg class="invoice-icon">
+                                        </div>
+                                        <div class="product-sub bg-warning-light">
+                                            <svg class="invoice-icon">
                                                 <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><use href="../assets/svg/icon-sprite.svg#new-order"></use></a>
-                                                </svg>
-                                            </div>
+                                            </svg>
                                         </div>
-                                        <ul class="bubbles">
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                        </ul>
                                     </div>
+                                    <ul class="bubbles">
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="card o-hidden small-widget">
-                                    <div class="card-body total-Complete border-b-secondary border-2">
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="card o-hidden small-widget">
+                                <div class="card-body total-Complete border-b-secondary border-2">
                                     <span class="f-w-600 f-14">Sales</span>
-                                        <div class="project-details">
-                                            <div class="project-counter">
+                                    <div class="project-details">
+                                        <div class="project-counter">
                                             <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><h2 class="f-w-600 f-14">22</h2></a>
-                                            </div>
-                                            <div class="product-sub bg-secondary-light">
-                                                <svg class="invoice-icon">
-                                                <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><use href="../assets/svg/icon-sprite.svg#sale"></use></a>
-                                                </svg>
-                                            </div>
                                         </div>
-                                        <ul class="bubbles">
-                                            <li class="bubble"> </li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"> </li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"> </li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"></li>
-                                            <li class="bubble"> </li>
-                                        </ul>
+                                        <div class="product-sub bg-secondary-light">
+                                            <svg class="invoice-icon">
+                                                <a href="@Url.Action("ListSalesInvoice", "SalesInvoice")"><use href="../assets/svg/icon-sprite.svg#sale"></use></a>
+                                            </svg>
+                                        </div>
                                     </div>
+                                    <ul class="bubbles">
+                                        <li class="bubble"> </li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"> </li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"> </li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"> </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-sm-6">
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
                             <div class="card o-hidden small-widget">
                                 <div class="card-body total-Complete border-b-secondary border-2">
                                     <span class="f-w-600 f-14">Master</span>
@@ -186,14 +188,209 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Container-fluid Ends-->
-      @*   </div> *@
-        
+        </div>
+        <!-- Container-fluid Ends-->
+        @*   </div> *@
+
 
     </div>
 </div>
+<div class="app-body">
+    <div class="row gx-3">
+        <div class="col-xxl-12 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">Top Selling Product and Variants</h5>
 
+                    <!-- Chart Type Selector -->
+                    <select id="chartType" class="form-select form-select-sm" style="width:200px;">
+                        <option value="bar" selected>Bar (Variant vs Qty)</option>
+                        <option value="pie">Pie (Total Variant Share)</option>
+                        <option value="line">Line (Variant Trend)</option>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div id="variantChart" style="height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        @section Scripts {
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+
+                    var chartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ProductChart));
+
+                    var labels = [];
+                    var labelQty = {};
+
+                    // Build labels as "ProductName (Variant)"
+                    chartData.forEach(function (item) {
+                        var label = (item.ProductName || "Unknown") + " (" + (item.Variant || "Default") + ")";
+                        if (!labels.includes(label)) labels.push(label);
+
+                        if (!labelQty[label]) labelQty[label] = 0;
+                        labelQty[label] += Number(item.TotalQtySold);
+                    });
+
+                    // Series for Bar/Line
+                    var series = [{ name: "Quantity Sold", data: labels.map(v => labelQty[v]) }];
+
+                    // Pie chart data
+                    var pieLabels = labels;
+                    var pieData = labels.map(v => labelQty[v]);
+
+                    var options = {
+                        chart: { type: "bar", height: 400 },
+                        plotOptions: { bar: { horizontal: true } }, // horizontal for readability
+                        series: series,
+                        xaxis: {
+                            categories: labels,
+                            labels: {
+                                style: { fontSize: '12px', colors: '#000' },
+                                formatter: function (value) {
+                                    if (!value) return "";
+                                    return String(value).replace(" (", "\n(");
+                                }
+                            }
+                        },
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function (val) { return val; }
+                        },
+                        tooltip: {
+                            y: { formatter: function (val) { return val + " Sold"; } }
+                        },
+                        colors: ["#116AEF", "#EF3B2C", "#4CAF50", "#F57600", "#8E44AD", "#B57FCC"],
+                        legend: { show: true }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#variantChart"), options);
+                    chart.render();
+
+                    // Chart type switch
+                    document.getElementById("chartType").addEventListener("change", function () {
+                        var newType = this.value;
+
+                        if (newType === "pie") {
+                            chart.updateOptions({
+                                chart: { type: "pie" },
+                                series: pieData,
+                                labels: pieLabels.map(l => String(l).replace(" (", "\n(")),
+                                dataLabels: {
+                                    enabled: true,
+                                    style: { fontSize: '12px', colors: ['#fff'] },
+                                    formatter: function (val, opts) {
+                                        let raw = opts.w.config.series[opts.seriesIndex];
+                                        return raw + " (" + val.toFixed(1) + "%)";
+                                    }
+                                },
+                                tooltip: {
+                                    y: { formatter: function (val) { return val + " Sold"; } }
+                                },
+                                legend: {
+                                    position: 'right',
+                                    formatter: function (seriesName, opts) {
+                                        let val = opts.w.config.series[opts.seriesIndex];
+                                        let total = opts.w.config.series.reduce((a, b) => a + b, 0);
+                                        let percent = ((val / total) * 100).toFixed(1);
+                                        return String(seriesName).replace(" (", "\n(") + ": " + val + " (" + percent + "%)";
+                                    }
+                                },
+                                xaxis: {}
+                            }, true, true);
+                        } else if (newType === "line") {
+                            chart.updateOptions({
+                                chart: { type: "line" },
+                                series: series,
+                                xaxis: {
+                                    categories: labels,
+                                    labels: {
+                                        style: { fontSize: '12px', colors: '#000' },
+                                        formatter: function (value) {
+                                            if (!value) return "";
+                                            return String(value).replace(" (", "\n(");
+                                        }
+                                    }
+                                },
+                                stroke: { width: 3, curve: 'smooth' },
+                                markers: { size: 4 },
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function (val) { return val; }
+                                },
+                                tooltip: {
+                                    shared: true,
+                                    intersect: false,
+                                    y: { formatter: function (val) { return val + " Sold"; } }
+                                }
+                            }, true, true);
+                        } else {
+                            chart.updateOptions({
+                                chart: { type: "bar" },
+                                plotOptions: { bar: { horizontal: true } },
+                                series: series,
+                                xaxis: {
+                                    categories: labels,
+                                    labels: {
+                                        style: { fontSize: '12px', colors: '#000' },
+                                        formatter: function (value) {
+                                            if (!value) return "";
+                                            return String(value).replace(" (", "\n(");
+                                        }
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function (val) { return val; }
+                                },
+                                tooltip: {
+                                    y: { formatter: function (val) { return val + " Sold"; } }
+                                }
+                            }, true, true);
+                        }
+                    });
+
+                });
+            </script>
+        }
+
+        @* <div class="col-xxl-6 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">Month-Wise Patient Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div id="patients"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-6 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">Monthly Patient Type Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div id="treatment"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xxl-3 col-sm-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">Patients by Gender</h5>
+                </div>
+                <div class="card-body">
+                    <div class="auto-align-graph">
+                        <div id="genderAge"></div>
+                    </div>
+                </div>
+            </div>
+        </div> *@
+    </div>
+</div>

@@ -33,6 +33,7 @@ internal class Program
 
         builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		builder.Services.TryAddSingleton<ILoginService, LoginService>();
+		builder.Services.TryAddSingleton<IHomeService, HomeService>();
 		builder.Services.TryAddSingleton<ICountryService, CountryService>();
         builder.Services.TryAddSingleton<IEmployeeService, EmployeeService>();
         builder.Services.TryAddSingleton<ICustomerService, CustomerService>();
