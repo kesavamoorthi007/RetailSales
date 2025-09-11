@@ -201,22 +201,15 @@ namespace RetailSales.Controllers
 
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = HSNcodeService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListHSNcode");
+                flag = HSNcodeService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListHSNcode");
+                flag = HSNcodeService.RemoveChange(tag, id);
             }
-        }public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = HSNcodeService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 
@@ -228,7 +221,6 @@ namespace RetailSales.Controllers
                 return RedirectToAction("ListHSNcode");
             }
         }
-
         public ActionResult Myhsncodegrid(string strStatus)
         {
             List<HsnList> Reg = new List<HsnList>();
@@ -246,15 +238,13 @@ namespace RetailSales.Controllers
                 {
 
                     EditRow = "<a href=HSNcode?id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "><img src='../Images/edit.png' alt='Edit' /></a>";
-                    //DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
                 }
                 else
                 {
 
                     EditRow = "";
-                    //DeleteRow = "Remove?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    DeleteRow = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["HSNMASTID"].ToString() + "";
                 }
 
                

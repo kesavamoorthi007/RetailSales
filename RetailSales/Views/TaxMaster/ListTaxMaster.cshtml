@@ -85,7 +85,7 @@
                     { text: 'Tax Name', filtertype: 'input', datafield: 'taxname', width: 250 },
                     { text: 'Percentage', filtertype: 'input', datafield: 'percentage', width: 150 },
                     { text: 'Edit', datafield: 'edit', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
-                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
+                    { text: 'Delete', datafield: 'delete', sortable: false, exportable: false, filterable: false, groupable: false,cellsrenderer: linkrenderer1, autoshowfiltericon: false, cellsalign: 'center', width: 100 },
                 ]
             });
         $("#ddlStatus").change(function () {
@@ -142,6 +142,6 @@
 </div>
 <script>
     function ConfirmDelete() {
-        return confirm("Are you sure you want to delete?");
+        return confirm("Are you sure you want to Enabled Or Disabled?");
     }
 </script>

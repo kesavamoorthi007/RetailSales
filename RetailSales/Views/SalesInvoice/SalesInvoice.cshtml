@@ -74,60 +74,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">Customer Name<label class="mandatory"></label></label>
-                                        <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Customer, new { @id = "txtCustomer", @class = "form-control", @TabIndex = 3 })
-                                        </div>
-                                    </div>
-                                </div>
+                               
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br /> <label for="inputName3" class="col-sm-5 control-label">Customer Address<label class="mandatory"></label></label>
-                                        <div class="col-sm-12">
-                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 4 })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">State<label class="mandatory"></label></label>
-                                        <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 5, onchange = "changecity(this.value)" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">City<label class="mandatory"></label></label>
-                                        <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 6 })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br><label for="inputName3" class="col-sm-5 control-label">Phone No<label class="mandatory">*</label></label>
-
-                                        <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Mobile, new
-                                                {
-                                                    @id = "Mobile",
-                                                    @class = "form-control",
-                                                    @TabIndex = 7,
-                                                    @maxlength = "10",
-                                                    @type = "tel",
-                                                    @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
-                                                })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div style="height:30px;"></div>
 
                             
@@ -260,6 +209,7 @@
 
 
                             <div style="height:30px;"></div>
+                           
                             <div class="row">
                                 <div class="col-md-4" style="overflow-x:scroll; min-width:300px; min-height:300px;">
 
@@ -379,6 +329,163 @@
                                 </div>
                             </div>
 
+                            <div style="height:25px;"></div>
+
+                            <div class="row">
+                                <!-- Customer Name -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br>
+                                        <label for="txtCustomer" class="control-label">Customer Name <label class="mandatory"></label></label>
+                                        @Html.TextBoxFor(C => C.Customer, new { @id = "txtCustomer", @class = "form-control", @TabIndex = 3 })
+                                    </div>
+                                </div>
+
+                                <!-- Customer Address -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br>
+                                        <label for="txtAddress" class="control-label">Customer Address <label class="mandatory"></label></label>
+                                        @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 4 })
+                                    </div>
+                                </div>
+
+                                <!-- State -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <br>
+                                        <label for="ddlState" class="control-label">State <label class="mandatory"></label></label>
+                                        @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--",
+                                                 new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 5, onchange = "changecity(this.value)" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- City -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="ddlCity" class="control-label">City <label class="mandatory"></label></label>
+                                        @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--",
+                                                 new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 6 })
+                                    </div>
+                                </div>
+
+                                <!-- Phone No -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="Mobile" class="control-label">Phone No <label class="mandatory">*</label></label>
+                                        @Html.TextBoxFor(C => C.Mobile, new
+                                            {
+                                                @id = "Mobile",
+                                                @class = "form-control",
+                                                @TabIndex = 7,
+                                                @maxlength = "10",
+                                                @type = "tel",
+                                                @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
+                                            })
+                                    </div>
+                                </div>
+                                <!-- Payment Type -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="ddlPayment" class="control-label">Payment Type <label class="mandatory">*</label></label>
+                                        <select id="ddlPayment" class="form-control" onchange="showPaymentDetails(this.value)">
+                                            <option value="">--Please Select--</option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="Card">Card</option>
+                                            <option value="UPI">UPI</option>
+                                            <option value="NetBanking">Net Banking</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Dynamic Payment Details -->
+                            <div id="paymentDetails" style="display:none; margin-top:15px;">
+                                <!-- Cash -->
+                                <div id="cashDiv" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="control-label">Cash Received By</label>
+                                            <input type="text" class="form-control" placeholder="Enter Collector Name" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card -->
+                                <div id="cardDiv" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="control-label">Card Number</label>
+                                            <input type="text" class="form-control" maxlength="16" placeholder="Enter Card Number" />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="control-label">Card Holder Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter Card Holder Name" />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="control-label">Expiry Date</label>
+                                            <input type="month" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="control-label">CVV</label>
+                                            <input type="password" class="form-control" maxlength="3" placeholder="Enter CVV" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- UPI -->
+                                <div id="upiDiv" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="control-label">UPI ID</label>
+                                            <input type="text" class="form-control" placeholder="example@upi" />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="control-label">UPI Reference No</label>
+                                            <input type="text" class="form-control" placeholder="Enter UPI Ref No" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Net Banking -->
+                                <div id="netBankingDiv" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="control-label">Bank Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter Bank Name" />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="control-label">Transaction ID</label>
+                                            <input type="text" class="form-control" placeholder="Enter Transaction ID" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function showPaymentDetails(value) {
+                                    document.getElementById("paymentDetails").style.display = "block";
+                                    document.getElementById("cashDiv").style.display = "none";
+                                    document.getElementById("cardDiv").style.display = "none";
+                                    document.getElementById("upiDiv").style.display = "none";
+                                    document.getElementById("netBankingDiv").style.display = "none";
+
+                                    if (value === "Cash") {
+                                        document.getElementById("cashDiv").style.display = "block";
+                                    } else if (value === "Card") {
+                                        document.getElementById("cardDiv").style.display = "block";
+                                    } else if (value === "UPI") {
+                                        document.getElementById("upiDiv").style.display = "block";
+                                    } else if (value === "NetBanking") {
+                                        document.getElementById("netBankingDiv").style.display = "block";
+                                    } else {
+                                        document.getElementById("paymentDetails").style.display = "none";
+                                    }
+                                }
+                            </script>
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button type="submit" class="btn btn-success" type="button" id="btnSave">Submit</button>

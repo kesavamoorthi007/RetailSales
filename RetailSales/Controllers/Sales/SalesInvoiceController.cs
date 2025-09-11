@@ -444,14 +444,14 @@ namespace RetailSales.Controllers.Sales
                         //EditRow = "<a href=SalesInvoice?id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/edit.png' alt='Edit 'width='20'  /></a>";
                         //report = "<a><img src='../Images/pdficon.png' alt='View Details' width='20' /></a>";
                     }
-                    DeleteRow = "<a href=DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "";
                     
                 }
                 else
                 {
                     GoToSales = "";
                     report = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
+                    DeleteRow = "Remove?tag=Active&id=" + dtUsers.Rows[i]["SAL_INV_BASICID"].ToString() + "";
                     //DeleteRow = "<a><img src='../Images/Inactive.png' alt='Reactive' width='20' /></a>";
                 }
                 Reg.Add(new SalesInvoicegrid
@@ -765,23 +765,15 @@ namespace RetailSales.Controllers.Sales
 
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = SalesInvoiceService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListSalesInvoice");
+                flag = SalesInvoiceService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListSalesInvoice");
+                flag = SalesInvoiceService.RemoveChange(tag, id);
             }
-        }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = SalesInvoiceService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 

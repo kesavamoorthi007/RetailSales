@@ -121,12 +121,12 @@ namespace RetailSales.Controllers.Accounts
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     EditRow = "<a href=Ledgers?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    DeleteRow = "DeleteMR?Active=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new ledgergrid
                 {
@@ -147,23 +147,15 @@ namespace RetailSales.Controllers.Accounts
         }
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = LedgersService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListLedgers");
+                flag = LedgersService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListLedgers");
+                flag = LedgersService.RemoveChange(tag, id);
             }
-        }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = LedgersService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 
