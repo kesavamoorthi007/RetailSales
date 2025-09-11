@@ -91,12 +91,12 @@ namespace RetailSales.Controllers.Master
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     EditRow = "<a href=Product?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    DeleteRow = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     EditRow = "";
-                    DeleteRow = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    DeleteRow = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new Productgrid
                 {
@@ -116,23 +116,15 @@ namespace RetailSales.Controllers.Master
         }
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = ProductService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListProduct");
+                flag = ProductService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListProduct");
+                flag = ProductService.RemoveChange(tag, id);
             }
-        }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = ProductService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 

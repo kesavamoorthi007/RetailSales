@@ -13,6 +13,18 @@
         margin-right: calc(-0.5 * var(--bs-gutter-x));
         margin-left: calc(-0.5 * var(--bs-gutter-x));
     }
+
+    .app-body .row {
+        display: block !important;
+    }
+
+    .app-body .col-xxl-12,
+    .app-body .col-sm-12,
+    .app-body .col-12 {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
 </style>
 <div style="height:20px;"></div>
 <!-- page-wrapper Start-->
@@ -199,13 +211,12 @@
     </div>
 </div>
 <div class="app-body">
+    <!-- Top Selling Product -->
     <div class="row gx-3">
-        <div class="col-xxl-12 col-sm-12">
+        <div class="col-12">
             <div class="card mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title">Top Selling Product and Variants</h5>
-
-                    <!-- Chart Type Selector -->
                     <select id="chartType" class="form-select form-select-sm" style="width:200px;">
                         <option value="bar" selected>Bar (Variant vs Qty)</option>
                         <option value="pie">Pie (Total Variant Share)</option>
@@ -217,36 +228,211 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        @section Scripts {
-            <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
+    <!-- Daily Sales Summary -->
+    <div class="row gx-3">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">Daily Sales Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div id="salesAreaChart" style="height:400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-12 col-sm-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title">Monthly Sales Summary</h5>
+            </div>
+            <div class="card-body">
+                <div id="monthlyLineChart" style="height:400px;"></div>
+            </div>
+        </div>
+    </div>
 
-                    var chartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ProductChart));
+</div>
 
-                    var labels = [];
-                    var labelQty = {};
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".col-xxl-6, .col-sm-12").forEach(function (col) {
+            col.classList.remove("col-xxl-6");
+            col.classList.add("col-12");
+        });
+    });
 
-                    // Build labels as "ProductName (Variant)"
-                    chartData.forEach(function (item) {
-                        var label = (item.ProductName || "Unknown") + " (" + (item.Variant || "Default") + ")";
-                        if (!labels.includes(label)) labels.push(label);
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var monthlyData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MonthlyChart));
 
-                        if (!labelQty[label]) labelQty[label] = 0;
-                        labelQty[label] += Number(item.TotalQtySold);
-                    });
+        var months = monthlyData.map(x => x.MonthYear);
+        var sales = monthlyData.map(x => x.Total_Sales);
+        var amount = monthlyData.map(x => x.Total_Amount);
 
-                    // Series for Bar/Line
-                    var series = [{ name: "Quantity Sold", data: labels.map(v => labelQty[v]) }];
+        var options = {
+            series: [
+                {
+                    name: 'Total Sales',
+                    type: 'line',
+                    data: sales
+                },
+                {
+                    name: 'Total Amount',
+                    type: 'line',
+                    data: amount
+                }
+            ],
+            chart: {
+                height: 400,
+                type: 'line',
+                zoom: { enabled: false }
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 3
+            },
+            
+            xaxis: {
+                categories: months,
+                title: { text: 'Month-Year' }
+            },
+            yaxis: [
+                {
+                    title: { text: "Total Sales" }
+                },
+                {
+                    opposite: true,
+                    title: { text: "Total Amount" }
+                }
+            ],
+            markers: {
+                size: 5
+            }
+        };
 
-                    // Pie chart data
-                    var pieLabels = labels;
-                    var pieData = labels.map(v => labelQty[v]);
+        var chart = new ApexCharts(document.querySelector("#monthlyLineChart"), options);
+        chart.render();
+    });
+</script>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
-                    var options = {
-                        chart: { type: "bar", height: 400 },
-                        plotOptions: { bar: { horizontal: true } }, // horizontal for readability
+            var chartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ProductChart));
+
+            var labels = [];
+            var labelQty = {};
+
+            // Build labels as "ProductName (Variant)"
+            chartData.forEach(function (item) {
+                var label = (item.ProductName || "Unknown") + " (" + (item.Variant || "Default") + ")";
+                if (!labels.includes(label)) labels.push(label);
+
+                if (!labelQty[label]) labelQty[label] = 0;
+                labelQty[label] += Number(item.TotalQtySold);
+            });
+
+            // Series for Bar/Line
+            var series = [{ name: "Quantity Sold", data: labels.map(v => labelQty[v]) }];
+
+            // Pie chart data
+            var pieLabels = labels;
+            var pieData = labels.map(v => labelQty[v]);
+
+            var options = {
+                chart: { type: "bar", height: 400 },
+                plotOptions: { bar: { horizontal: true } }, // horizontal for readability
+                series: series,
+                xaxis: {
+                    categories: labels,
+                    labels: {
+                        style: { fontSize: '12px', colors: '#000' },
+                        formatter: function (value) {
+                            if (!value) return "";
+                            return String(value).replace(" (", "\n(");
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) { return val; }
+                },
+                tooltip: {
+                    y: { formatter: function (val) { return val + " Sold"; } }
+                },
+                colors: ["#116AEF", "#EF3B2C", "#4CAF50", "#F57600", "#8E44AD", "#B57FCC"],
+                legend: { show: true }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#variantChart"), options);
+            chart.render();
+
+            // Chart type switch
+            document.getElementById("chartType").addEventListener("change", function () {
+                var newType = this.value;
+
+                if (newType === "pie") {
+                    chart.updateOptions({
+                        chart: { type: "pie" },
+                        series: pieData,
+                        labels: pieLabels.map(l => String(l).replace(" (", "\n(")),
+                        dataLabels: {
+                            enabled: true,
+                            style: { fontSize: '12px', colors: ['#fff'] },
+                            formatter: function (val, opts) {
+                                let raw = opts.w.config.series[opts.seriesIndex];
+                                return raw + " (" + val.toFixed(1) + "%)";
+                            }
+                        },
+                        tooltip: {
+                            y: { formatter: function (val) { return val + " Sold"; } }
+                        },
+                        legend: {
+                            position: 'right',
+                            formatter: function (seriesName, opts) {
+                                let val = opts.w.config.series[opts.seriesIndex];
+                                let total = opts.w.config.series.reduce((a, b) => a + b, 0);
+                                let percent = ((val / total) * 100).toFixed(1);
+                                return String(seriesName).replace(" (", "\n(") + ": " + val + " (" + percent + "%)";
+                            }
+                        },
+                        xaxis: {}
+                    }, true, true);
+                } else if (newType === "line") {
+                    chart.updateOptions({
+                        chart: { type: "line" },
+                        series: series,
+                        xaxis: {
+                            categories: labels,
+                            labels: {
+                                style: { fontSize: '12px', colors: '#000' },
+                                formatter: function (value) {
+                                    if (!value) return "";
+                                    return String(value).replace(" (", "\n(");
+                                }
+                            }
+                        },
+                        stroke: { width: 3, curve: 'smooth' },
+                        markers: { size: 4 },
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function (val) { return val; }
+                        },
+                        tooltip: {
+                            shared: true,
+                            intersect: false,
+                            y: { formatter: function (val) { return val + " Sold"; } }
+                        }
+                    }, true, true);
+                } else {
+                    chart.updateOptions({
+                        chart: { type: "bar" },
+                        plotOptions: { bar: { horizontal: true } },
                         series: series,
                         xaxis: {
                             categories: labels,
@@ -264,133 +450,57 @@
                         },
                         tooltip: {
                             y: { formatter: function (val) { return val + " Sold"; } }
-                        },
-                        colors: ["#116AEF", "#EF3B2C", "#4CAF50", "#F57600", "#8E44AD", "#B57FCC"],
-                        legend: { show: true }
-                    };
-
-                    var chart = new ApexCharts(document.querySelector("#variantChart"), options);
-                    chart.render();
-
-                    // Chart type switch
-                    document.getElementById("chartType").addEventListener("change", function () {
-                        var newType = this.value;
-
-                        if (newType === "pie") {
-                            chart.updateOptions({
-                                chart: { type: "pie" },
-                                series: pieData,
-                                labels: pieLabels.map(l => String(l).replace(" (", "\n(")),
-                                dataLabels: {
-                                    enabled: true,
-                                    style: { fontSize: '12px', colors: ['#fff'] },
-                                    formatter: function (val, opts) {
-                                        let raw = opts.w.config.series[opts.seriesIndex];
-                                        return raw + " (" + val.toFixed(1) + "%)";
-                                    }
-                                },
-                                tooltip: {
-                                    y: { formatter: function (val) { return val + " Sold"; } }
-                                },
-                                legend: {
-                                    position: 'right',
-                                    formatter: function (seriesName, opts) {
-                                        let val = opts.w.config.series[opts.seriesIndex];
-                                        let total = opts.w.config.series.reduce((a, b) => a + b, 0);
-                                        let percent = ((val / total) * 100).toFixed(1);
-                                        return String(seriesName).replace(" (", "\n(") + ": " + val + " (" + percent + "%)";
-                                    }
-                                },
-                                xaxis: {}
-                            }, true, true);
-                        } else if (newType === "line") {
-                            chart.updateOptions({
-                                chart: { type: "line" },
-                                series: series,
-                                xaxis: {
-                                    categories: labels,
-                                    labels: {
-                                        style: { fontSize: '12px', colors: '#000' },
-                                        formatter: function (value) {
-                                            if (!value) return "";
-                                            return String(value).replace(" (", "\n(");
-                                        }
-                                    }
-                                },
-                                stroke: { width: 3, curve: 'smooth' },
-                                markers: { size: 4 },
-                                dataLabels: {
-                                    enabled: true,
-                                    formatter: function (val) { return val; }
-                                },
-                                tooltip: {
-                                    shared: true,
-                                    intersect: false,
-                                    y: { formatter: function (val) { return val + " Sold"; } }
-                                }
-                            }, true, true);
-                        } else {
-                            chart.updateOptions({
-                                chart: { type: "bar" },
-                                plotOptions: { bar: { horizontal: true } },
-                                series: series,
-                                xaxis: {
-                                    categories: labels,
-                                    labels: {
-                                        style: { fontSize: '12px', colors: '#000' },
-                                        formatter: function (value) {
-                                            if (!value) return "";
-                                            return String(value).replace(" (", "\n(");
-                                        }
-                                    }
-                                },
-                                dataLabels: {
-                                    enabled: true,
-                                    formatter: function (val) { return val; }
-                                },
-                                tooltip: {
-                                    y: { formatter: function (val) { return val + " Sold"; } }
-                                }
-                            }, true, true);
                         }
-                    });
+                    }, true, true);
+                }
+            });
 
-                });
-            </script>
-        }
+        });
+    </script>
+}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
 
-        @* <div class="col-xxl-6 col-sm-12">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5 class="card-title">Month-Wise Patient Summary</h5>
-                </div>
-                <div class="card-body">
-                    <div id="patients"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xxl-6 col-sm-12">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5 class="card-title">Monthly Patient Type Summary</h5>
-                </div>
-                <div class="card-body">
-                    <div id="treatment"></div>
-                </div>
-            </div>
-        </div>
+        // --- Product Chart (already implemented by you) ---
+        var chartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ProductChart));
 
-        <div class="col-xxl-3 col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5 class="card-title">Patients by Gender</h5>
-                </div>
-                <div class="card-body">
-                    <div class="auto-align-graph">
-                        <div id="genderAge"></div>
-                    </div>
-                </div>
-            </div>
-        </div> *@
-    </div>
-</div>
+        // existing product chart code here...
+
+        // --- Sales Area Chart ---
+        var salesData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.SalesChart));
+
+        var salesDates = salesData.map(x => new Date(x.INV_DATE).toLocaleDateString());
+        var totalAmounts = salesData.map(x => x.Total_Amount);
+        var totalSales = salesData.map(x => x.Total_Sales);
+
+        var optionsSales = {
+            chart: { type: "area", height: 400, toolbar: { show: true } },
+            series: [
+                { name: "Total Amount", data: totalAmounts },
+                { name: "No. of Sales", data: totalSales }
+            ],
+            xaxis: {
+                categories: salesDates,
+                labels: { rotate: -45, style: { fontSize: '12px', colors: '#000' } }
+            },
+            dataLabels: { enabled: false },
+            stroke: { curve: "smooth", width: 3 },
+            fill: { type: "gradient", gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.1, stops: [0, 90, 100] } },
+            tooltip: {
+                shared: true,
+                intersect: false,
+                y: {
+                    formatter: function (val, opts) {
+                        return opts.seriesIndex === 0 ? "₹" + val.toFixed(2) : val + " Sales";
+                    }
+                }
+            },
+            legend: { position: "top", horizontalAlign: "center" },
+            colors: ["#116AEF", "#F57600"]
+        };
+
+        var salesChart = new ApexCharts(document.querySelector("#salesAreaChart"), optionsSales);
+        salesChart.render();
+    });
+</script>

@@ -144,12 +144,12 @@ namespace RetailSales.Controllers.Accounts
                 if (dtUsers.Rows[i]["IS_ACTIVE"].ToString() == "Y")
                 {
                     Edit = "<a href=AccountGroup?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/edit.png' alt='Edit'  /></a>";
-                    Delete = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate'  /></a>";
+                    Delete = "DeleteMR?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 else
                 {
                     Edit = "";
-                    Delete = "<a href=Remove?tag=Del&id=" + dtUsers.Rows[i]["ID"].ToString() + "><img src='../Images/reactive.png' alt='Reactive' width='28' /></a>";
+                    Delete = "DeleteMR?tag=Active&id=" + dtUsers.Rows[i]["ID"].ToString() + "";
                 }
                 Reg.Add(new ListAccountGroupgrid
                 {
@@ -215,23 +215,15 @@ namespace RetailSales.Controllers.Accounts
 
         public ActionResult DeleteMR(string tag, string id)
         {
-
-            string flag = AccountGroupService.StatusChange(tag, id);
-            if (string.IsNullOrEmpty(flag))
+            string flag = "";
+            if (tag == "Del")
             {
-
-                return RedirectToAction("ListAccountGroup");
+                flag = AccountGroupService.StatusChange(tag, id);
             }
             else
             {
-                TempData["notice"] = flag;
-                return RedirectToAction("ListAccountGroup");
+                flag = AccountGroupService.RemoveChange(tag, id);
             }
-        }
-        public ActionResult Remove(string tag, string id)
-        {
-
-            string flag = AccountGroupService.RemoveChange(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 
