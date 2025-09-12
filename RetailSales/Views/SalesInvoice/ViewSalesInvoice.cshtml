@@ -42,54 +42,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Customer Name :</strong><label class="Mandatory"></label></label>
-                                        @Html.DisplayFor(C => C.Customer)
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Address :</strong><label class="Mandatory"></label></label>
-                                        @Html.DisplayFor(C => C.Address)
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label"><strong>State :</strong><label class="Mandatory"></label></label>
-                                        @Html.DisplayFor(C => C.State)
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="inputName3" class="col-sm-4 control-label"><strong>City :</strong><label class="Mandatory"></label></label>
-                                        @Html.DisplayFor(C => C.City)
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style="height:30px;"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-
-                                        <label for="inputName3" class="col-sm-4 control-label"><strong>Phone No :</strong><label class="Mandatory"></label></label>
-
-                                        @Html.DisplayFor(C => C.Mobile)
-
-                                    </div>
-                                </div>
-                                
-                            </div>
-
-
                             <div style="height:30px;"></div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -153,7 +105,7 @@
                             <div style="height:30px;"></div>
                             <div class="row">
 
-                                <div class="col-md-4" style="overflow-x:scroll; min-width:300px; min-height:300px;">
+                                <div class="col-md-4">
 
                                     <table class="table table-striped table-hover" id="dataTable">
                                         <thead>
@@ -252,6 +204,152 @@
                             </div>
 
 
+                            
+                            <div style="height:15px;"></div>
+                            <div class="row">
+                                
+
+                                <!-- Phone No -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="Mobile" class="control-label">Phone No : </label>
+                                        @Html.DisplayFor(C => C.Mobile)
+                                    </div>
+                                </div>
+                                <!-- Payment Type -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="ddlPaymentType" class="control-label">
+                                            Payment Type :  <label class="mandatory"></label>
+                                        </label>
+                                        @Html.DisplayFor(C => C.Payment)
+                                        @Html.HiddenFor(C => C.Payment)
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <!-- Payment Details Section -->
+                            @if (Model.Payment == "Cash")
+                            {
+                                <!-- Cash -->
+                                <div style="height:15px;"></div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Cash Received By : </label>
+                                        @Html.DisplayFor(C => C.CashRecivedBy)
+                                    </div>
+                                </div>
+                                
+                            }
+                           
+                            <!-- Card -->
+                            @if (Model.Payment == "Card")
+                            {
+                                <div style="height:15px;"></div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Card Number : </label>
+                                        @Html.DisplayFor(C => C.CardNumber)
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Card Holder Name : </label>
+                                        @Html.DisplayFor(C => C.HolderName)
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Expiry Date : </label>
+                                        @Html.DisplayFor(C => C.ExpiryDate)
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">CVV : </label>
+                                        @Html.DisplayFor(C => C.cvv)
+                                    </div>
+                                </div>
+                            }
+                            
+                            <!-- UPI -->
+                            @if (Model.Payment == "UPI")
+                            {
+                                <div style="height:15px;"></div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">UPI ID : </label>
+                                        @Html.DisplayFor(C => C.Upi)
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="control-label">UPI Reference No : </label>
+                                        @Html.DisplayFor(C => C.UpiRefNo)
+                                    </div>
+                                </div>
+                            }
+                            
+                            <!-- Net Banking -->
+                            @if (Model.Payment == "NetBanking")
+                            {
+                                <div style="height:15px;"></div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Bank Name : </label>
+                                        @Html.DisplayFor(C => C.BankName)
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Transaction ID : </label>
+                                        @Html.DisplayFor(C => C.Transaction)
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.Payment != "Cash")
+                            {
+                                <div class="row">
+                                    <!-- Customer Name -->
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <br>
+                                            <label for="txtCustomer" class="control-label">
+                                                Customer Name : <label class="mandatory"></label>
+                                            </label>
+                                            @Html.DisplayFor(C => C.Customer)
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer Address -->
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <br>
+                                            <label for="txtAddress" class="control-label">
+                                                Customer Address : <label class="mandatory"></label>
+                                            </label>
+                                            @Html.DisplayFor(C => C.Address)
+                                        </div>
+                                    </div>
+
+                                    <!-- State -->
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <br>
+                                            <label for="ddlState" class="control-label">
+                                                State : <label class="mandatory"></label>
+                                            </label>
+                                            @Html.DisplayFor(C => C.State)
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div style="height:15px;"></div>
+                                <div class="row">
+                                    <!-- City -->
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+
+                                            <label for="ddlCity" class="control-label">City : <label class="mandatory"></label></label>
+                                            @Html.DisplayFor(C => C.City)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
                             <button class="btn btn-danger" type="button" causesvalidation="false" onclick="location.href='@Url.Action("ListSalesInvoice", "SalesInvoice")'">Cancel</button>
