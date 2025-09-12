@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace RetailSales.Models
 {
@@ -9,11 +10,14 @@ namespace RetailSales.Models
             
             this.Statelst = new List<SelectListItem>();
             this.Citylst = new List<SelectListItem>();
+            this.Paymentlst = new List<SelectListItem>();
 
         }
         public List<SelectListItem> Statelst;
         public List<SelectListItem> Citylst;
+        public List<SelectListItem> Paymentlst;
         public string ID { get; set; }
+        public string Payment { get; set; }
         public string InvoiceNo { get; set; }
         public string DocNo { get; set; }
         public string InvoiceDate { get; set; }
@@ -32,7 +36,22 @@ namespace RetailSales.Models
         public string Amountinwords { get; set; }
         public string Return { get; set; }
         public string Rt { get; set; }
+        public string DiscPre { get; set; }
+
         public string ddlStatus { get; set; }
+
+        [Required(ErrorMessage = "CVV is required")]
+        [RegularExpression("^[0-9]{3}$", ErrorMessage = "CVV must be exactly 3 digits")]
+        public string cvv { get; set; }
+        public string CashRecivedBy { get; set; }
+        public string CardNumber { get; set; }
+        public string HolderName { get; set; }
+        public string ExpiryDate { get; set; }
+        public string Upi { get; set; }
+        public string UpiRefNo { get; set; }
+        public string BankName { get; set; }
+        public string Transaction { get; set; }
+
         public List<SalesInvoiceItem> SalesInvoiceLst { get; set; }
     }
     public class SalesInvoiceItem

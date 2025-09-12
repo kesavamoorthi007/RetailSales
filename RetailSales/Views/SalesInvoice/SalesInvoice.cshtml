@@ -226,6 +226,12 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <th>DISCOUNT (%)</th>
+                                                    <td>
+                                                        @Html.TextBoxFor(o => o.DiscPre, new { @id = "txtDiscPre", @class = "form-control", style = "width: 150px;text-align:right", @TabIndex = 24, @onkeyup = "changePreTot(this)" })
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <th>DISCOUNT (₹)</th>
                                                     <td>
                                                         @Html.TextBoxFor(o => o.Disc, new { @id = "txtDisc", @class = "form-control", style = "width: 150px;text-align:right", @TabIndex = 24 , @onkeyup = "changeDisTot(this)" })
@@ -332,44 +338,6 @@
                             <div style="height:25px;"></div>
 
                             <div class="row">
-                                <!-- Customer Name -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br>
-                                        <label for="txtCustomer" class="control-label">Customer Name <label class="mandatory"></label></label>
-                                        @Html.TextBoxFor(C => C.Customer, new { @id = "txtCustomer", @class = "form-control", @TabIndex = 3 })
-                                    </div>
-                                </div>
-
-                                <!-- Customer Address -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br>
-                                        <label for="txtAddress" class="control-label">Customer Address <label class="mandatory"></label></label>
-                                        @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 4 })
-                                    </div>
-                                </div>
-
-                                <!-- State -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <br>
-                                        <label for="ddlState" class="control-label">State <label class="mandatory"></label></label>
-                                        @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--",
-                                                 new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 5, onchange = "changecity(this.value)" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <!-- City -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="ddlCity" class="control-label">City <label class="mandatory"></label></label>
-                                        @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--",
-                                                 new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 6 })
-                                    </div>
-                                </div>
-
                                 <!-- Phone No -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -385,106 +353,143 @@
                                             })
                                     </div>
                                 </div>
+
                                 <!-- Payment Type -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="ddlPayment" class="control-label">Payment Type <label class="mandatory">*</label></label>
-                                        <select id="ddlPayment" class="form-control" onchange="showPaymentDetails(this.value)">
-                                            <option value="">--Please Select--</option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="Card">Card</option>
-                                            <option value="UPI">UPI</option>
-                                            <option value="NetBanking">Net Banking</option>
-                                        </select>
+                                        <label for="ddlPaymentType" class="control-label">Payment Type <label class="mandatory"></label></label>
+                                        @Html.DropDownListFor(C => C.Payment,
+                                                 Model.Paymentlst,
+                                                 "--Please Select--",
+                                                 new
+                                                 {
+                                                     @id = "ddlPayment",
+                                                     @class = "form-control _select",
+                                                     @tabindex = 8,
+                                                     onchange = "showPaymentDetails(this.value)"
+                                                 })
                                     </div>
                                 </div>
                             </div>
-                            <!-- Dynamic Payment Details -->
-                            <div id="paymentDetails" style="display:none; margin-top:15px;">
+
+                            <!-- Payment Details Section -->
+                            <div class="row" id="paymentDetails" style="margin-top:15px;">
+
                                 <!-- Cash -->
-                                <div id="cashDiv" style="display:none;">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <label class="control-label">Cash Received By</label>
-                                            <input type="text" class="form-control" placeholder="Enter Collector Name" />
-                                        </div>
+                                <div id="cashDiv" class="col-lg-4" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="control-label">Cash Received By</label>
+                                        @Html.TextBoxFor(C => C.CashRecivedBy, new { @id = "txtCashRecivedBy", @class = "form-control", @TabIndex = 9 })
                                     </div>
                                 </div>
 
                                 <!-- Card -->
-                                <div id="cardDiv" style="display:none;">
+                                <div id="cardDiv" style="display:none;" class="col-lg-12">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <label class="control-label">Card Number</label>
-                                            <input type="text" class="form-control" maxlength="16" placeholder="Enter Card Number" />
+                                            @Html.TextBoxFor(C => C.CardNumber, new { @id = "txtCardNumber", @class = "form-control", @maxlength = "16", @inputmode = "numeric", onkeypress = "return isNumberKey(event)" })
                                         </div>
                                         <div class="col-lg-4">
                                             <label class="control-label">Card Holder Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter Card Holder Name" />
+                                            @Html.TextBoxFor(C => C.HolderName, new { @id = "txtHolderName", @class = "form-control" })
                                         </div>
                                         <div class="col-lg-4">
                                             <label class="control-label">Expiry Date</label>
-                                            <input type="month" class="form-control" />
+                                            @Html.TextBoxFor(C => C.ExpiryDate, new { @id = "txtExpiryDate", @class = "form-control", @type = "month" })
                                         </div>
                                     </div>
-                                    <br>
-                                    <div class="row">
+                                    <div class="row mt-2">
                                         <div class="col-lg-4">
                                             <label class="control-label">CVV</label>
-                                            <input type="password" class="form-control" maxlength="3" placeholder="Enter CVV" />
+                                            @Html.PasswordFor(C => C.cvv, new { @id = "txtcvv", @class = "form-control", maxlength = "3", inputmode = "numeric", onkeypress = "return isNumberKey1(event)" })
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- UPI -->
-                                <div id="upiDiv" style="display:none;">
+                                <div id="upiDiv" style="display:none;" class="col-lg-12">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <label class="control-label">UPI ID</label>
-                                            <input type="text" class="form-control" placeholder="example@upi" />
+                                            @Html.TextBoxFor(C => C.Upi, new { @id = "txtUpi", @class = "form-control" })
                                         </div>
                                         <div class="col-lg-4">
                                             <label class="control-label">UPI Reference No</label>
-                                            <input type="text" class="form-control" placeholder="Enter UPI Ref No" />
+                                            @Html.TextBoxFor(C => C.UpiRefNo, new { @id = "txtUpiRefNo", @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Net Banking -->
-                                <div id="netBankingDiv" style="display:none;">
+                                <div id="netBankingDiv" style="display:none;" class="col-lg-12">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <label class="control-label">Bank Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter Bank Name" />
+                                            @Html.TextBoxFor(C => C.BankName, new { @id = "txtBankName", @class = "form-control" })
                                         </div>
                                         <div class="col-lg-4">
                                             <label class="control-label">Transaction ID</label>
-                                            <input type="text" class="form-control" placeholder="Enter Transaction ID" />
+                                            @Html.TextBoxFor(C => C.Transaction, new { @id = "txtTransaction", @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+
+                            <!-- Customer Details -->
+                            <div id="customerDetails" style="display:none; margin-top:20px;">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Customer Name</label>
+                                        @Html.TextBoxFor(C => C.Customer, new { @id = "txtCustomer", @class = "form-control" })
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Customer Address</label>
+                                        @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control" })
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="control-label">State</label>
+                                        @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--",
+                                                 new { @id = "ddlState", @Class = "form-control _select", onchange = "changecity(this.value)" })
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-4">
+                                        <label class="control-label">City</label>
+                                        @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select" })
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <script>
-                                function showPaymentDetails(value) {
-                                    document.getElementById("paymentDetails").style.display = "block";
+                                function isNumberKey1(evt) {
+                                    var charCode = evt.which ? evt.which : evt.keyCode;
+                                    return !(charCode < 48 || charCode > 57); // only digits
+                                }
+
+                                    function showPaymentDetails(value) {
                                     document.getElementById("cashDiv").style.display = "none";
                                     document.getElementById("cardDiv").style.display = "none";
                                     document.getElementById("upiDiv").style.display = "none";
                                     document.getElementById("netBankingDiv").style.display = "none";
+                                    document.getElementById("customerDetails").style.display = "none";
 
                                     if (value === "Cash") {
                                         document.getElementById("cashDiv").style.display = "block";
                                     } else if (value === "Card") {
                                         document.getElementById("cardDiv").style.display = "block";
+                                        document.getElementById("customerDetails").style.display = "block";
                                     } else if (value === "UPI") {
                                         document.getElementById("upiDiv").style.display = "block";
+                                        document.getElementById("customerDetails").style.display = "block";
                                     } else if (value === "NetBanking") {
                                         document.getElementById("netBankingDiv").style.display = "block";
-                                    } else {
-                                        document.getElementById("paymentDetails").style.display = "none";
+                                        document.getElementById("customerDetails").style.display = "block";
                                     }
                                 }
+
                             </script>
                             <div style="height:30px;"></div>
                             <div class="col-lg-8"></div>
@@ -752,6 +757,44 @@
             changeTot(this);
         });
     });
+
+    function changePreTot(_this) {
+        try {
+           
+
+            var tot = document.getElementById("txtGross").value || 0;
+            var DiscPre = document.getElementById("txtDiscPre").value || 0;
+
+
+            var Precentage = (eval(tot)/100) * eval(DiscPre);
+            
+
+
+            var rej = eval(tot) - eval(Precentage) ;
+            document.getElementById("txtDisc").value = Precentage.toFixed(2);
+
+
+            var roundamount = Math.round(rej);
+
+            var round = eval(roundamount) - eval(rej);
+
+
+
+
+            document.getElementById("txtNet").value = roundamount.toFixed(2);
+            document.getElementById("hidnet").value = roundamount.toFixed(2);
+
+
+            document.getElementById("txtRound").value = round.toFixed(2);
+
+            document.getElementById("Amountinwords").value = withDecimal(roundamount.toFixed(2));
+
+
+        }
+        catch (ex) {
+            alert(ex.message);
+        }
+    }
 
     function changeDisTot(_this) {
         try {
@@ -1438,7 +1481,7 @@
 
         var CfQty = "<td><input class='form-control' id='txtCfQty" + index + "' name='SalesInvoiceLst[" + index + "].CfQty' readonly='True' style='width: 70px;' min='0'' max='99' /></td>";
 
-        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='SalesInvoiceLst[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' /></td>";
+        var Rate = "<td><input class='form-control' id='txtRate" + index + "' name='SalesInvoiceLst[" + index + "].Rate'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;'  onkeyup = 'changeDisc(this.value," + index + ")' /></td>";
 
         var Amount = "<td><input class='form-control' id='txtAmount" + index + "' name='SalesInvoiceLst[" + index + "].Amount'  onkeydown='return isNumeric2(event.keyCode,this.value)' style='width: 120px; text-align: right;' readonly='True' /></td>";
 

@@ -28,6 +28,7 @@ namespace RetailSales.Controllers.Sales
         public IActionResult SalesInvoice(string id)
         {
             SalesInvoice ic = new SalesInvoice();
+            ic.Paymentlst = BindPayment();
             ic.Statelst = BindState();
             ic.Citylst = BindCity("");
 
@@ -151,7 +152,23 @@ namespace RetailSales.Controllers.Sales
 
             return View(cy);
         }
+        public List<SelectListItem> BindPayment()
+        {
+            try
+            {
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                lstdesg.Add(new SelectListItem() { Text = "Cash", Value = "Cash" });
+                lstdesg.Add(new SelectListItem() { Text = "UPI", Value = "UPI" });
+                lstdesg.Add(new SelectListItem() { Text = "Card", Value = "Card" });
+                lstdesg.Add(new SelectListItem() { Text = "Net Banking", Value = "NetBanking" });
 
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public IActionResult ViewSalesInvoice(string id)
         {
             SalesInvoice ic = new SalesInvoice();
@@ -175,6 +192,16 @@ namespace RetailSales.Controllers.Sales
                 ic.Round = dt.Rows[0]["ROUND_OFF"].ToString();
                 ic.Amountinwords = dt.Rows[0]["AMTINWORDS"].ToString();
                 ic.Remarks = dt.Rows[0]["NARRATION"].ToString();
+                ic.Payment = dt.Rows[0]["PAYMENT_TYPE"].ToString();
+                ic.CashRecivedBy = dt.Rows[0]["CASH_RECIVED_BY"].ToString();
+                ic.Upi = dt.Rows[0]["UPI_ID"].ToString();
+                ic.UpiRefNo = dt.Rows[0]["UPI_REF_NO"].ToString();
+                ic.CardNumber = dt.Rows[0]["CARD_NUMBER"].ToString();
+                ic.HolderName = dt.Rows[0]["CARD_HOLDER_NAME"].ToString();
+                ic.ExpiryDate = dt.Rows[0]["EXPIRY_DATE"].ToString();
+                ic.cvv = dt.Rows[0]["CVV"].ToString();
+                ic.BankName = dt.Rows[0]["BANK_NAME"].ToString();
+                ic.Transaction = dt.Rows[0]["TRANSACTION_ID"].ToString();
                 ic.ID = id;
 
             }

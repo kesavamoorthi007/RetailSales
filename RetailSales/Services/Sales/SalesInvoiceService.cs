@@ -135,7 +135,7 @@ namespace RetailSales.Services.Sales
         public DataTable GetSalesInvoice(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,CUSTOMER,ADDRESS,STATE.STATE_NAME,CITY.CITY_NAME,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,NET,AMTINWORDS,NARRATION from SALES_INV LEFT OUTER JOIN STATE ON STATE.ID=SALES_INV.STATE LEFT OUTER JOIN CITY ON CITY.ID=SALES_INV.CITY where SALES_INV.SAL_INV_BASICID =" + id + "";
+            SvSql = "Select INVOICE_NO,CONVERT(varchar, SALES_INV.INV_DATE, 106) AS INV_DATE,PAYMENT_TYPE,CASH_RECIVED_BY,UPI_ID,UPI_REF_NO,CARD_NUMBER,CARD_HOLDER_NAME,EXPIRY_DATE,CVV,BANK_NAME,TRANSACTION_ID,CUSTOMER,ADDRESS,STATE.STATE_NAME,CITY.CITY_NAME,MOBILE,GROSS,DISCOUNT,FRIGHT,ROUND_OFF,NET,AMTINWORDS,NARRATION from SALES_INV LEFT OUTER JOIN STATE ON STATE.ID=SALES_INV.STATE LEFT OUTER JOIN CITY ON CITY.ID=SALES_INV.CITY where SALES_INV.SAL_INV_BASICID =" + id + "";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -188,10 +188,10 @@ namespace RetailSales.Services.Sales
                     datatrans = new DataTransactions(_connectionString);
 
 
-                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'SI' AND IS_ACTIVE = 'Y'");
-                    string InvoiceNo = string.Format("{0}{1}{2}", "SI/", "24-25/", (idc + 1).ToString());
+                    int idc = datatrans.GetDataId(" SELECT LAST_NUMBER FROM SEQUENCE WHERE PREFIX = 'VAM' AND IS_ACTIVE = 'Y'");
+                    string InvoiceNo = string.Format("{0}{1}{2}", "VAM/", "24-25/", (idc + 1).ToString());
 
-                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='SI' AND IS_ACTIVE ='Y'";
+                    string updateCMd = " UPDATE SEQUENCE SET LAST_NUMBER ='" + (idc + 1).ToString() + "' WHERE PREFIX ='VAM' AND IS_ACTIVE ='Y'";
                     try
                     {
                         datatrans.UpdateStatus(updateCMd);
@@ -231,6 +231,16 @@ namespace RetailSales.Services.Sales
                     objCmd.Parameters.Add("@Net", SqlDbType.Float).Value = cy.Net;
                     objCmd.Parameters.Add("@Amountinwords", SqlDbType.NVarChar).Value = cy.Amountinwords;
                     objCmd.Parameters.Add("@Narration", SqlDbType.NVarChar).Value = cy.Remarks;
+                    objCmd.Parameters.Add("@PaymentType", SqlDbType.NVarChar).Value = cy.Payment;
+                    objCmd.Parameters.Add("@CashRecivedBy", SqlDbType.NVarChar).Value = cy.CashRecivedBy;
+                    objCmd.Parameters.Add("@Upi", SqlDbType.NVarChar).Value = cy.Upi;
+                    objCmd.Parameters.Add("@UpiRefNumber", SqlDbType.NVarChar).Value = cy.UpiRefNo;
+                    objCmd.Parameters.Add("@CardNumber", SqlDbType.NVarChar).Value = cy.CardNumber;
+                    objCmd.Parameters.Add("@CardHolderName", SqlDbType.NVarChar).Value = cy.HolderName;
+                    objCmd.Parameters.Add("@ExpiryDate", SqlDbType.NVarChar).Value = cy.ExpiryDate;
+                    objCmd.Parameters.Add("@Cvv", SqlDbType.NVarChar).Value = cy.cvv;
+                    objCmd.Parameters.Add("@BankName", SqlDbType.NVarChar).Value = cy.BankName;
+                    objCmd.Parameters.Add("@Transation", SqlDbType.NVarChar).Value = cy.Transaction;
                     objCmd.Parameters.Add("@StatementType", SqlDbType.NVarChar).Value = StatementType;
                     try
                     {
