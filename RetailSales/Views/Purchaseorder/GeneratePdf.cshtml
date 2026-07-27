@@ -1,4 +1,5 @@
-﻿@model RetailSales.Models.GeneratePdf
+﻿@using DocumentFormat.OpenXml.Office2010.PowerPoint
+@model RetailSales.Models.GeneratePdf
 
 @{
     //Layout = "_PopupLayout";
@@ -10,6 +11,55 @@
         position: relative;
         top: 2px;
         left: 5px;
+    }
+
+    .invoice {
+        width: 210mm;
+        margin: auto;
+        background: #fff;
+    }
+
+    .container {
+        width: 210mm;
+    }
+
+    .container {
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .party-box {
+        vertical-align: top;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse !important;
+    }
+
+    table, th, td {
+        border: 1px solid #000 !important;
+    }
+
+    th, td {
+        padding: 6px 8px;
+        font-size: 12px;
+        vertical-align: middle;
+    }
+
+    thead th {
+        background: #6c757d !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Prevent broken borders */
+    tr, td, th {
+        page-break-inside: avoid !important;
     }
 </style>
 <script type="text/javascript">
@@ -34,85 +84,110 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="invoice">
+ <div class="invoice" id="invoice">
                         @using (Html.BeginForm("GeneratePdf", "Purchaseorder", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
-                            <div class="row">
-                                <div class="col-sm-6"></div>
-                                <div class="col-sm-6">
-                                    <div class="text-md-end">
-                                        <h5>PO NO : @Html.DisplayFor(C => C.PoNo)</h5>
-                                        <h5>PO Date : @Html.DisplayFor(C => C.PoDate)</h5>
-                                    </div>
-                                </div>
+
+                            <div class="row align-items-center mb-3">
+                                <div class="col-6 d-flex align-items-center">
+            <img src="~/assets/images/logo/VAM.png" style="max-width:250px; height:auto;">
+        </div>
+       <div class="col-sm-6 d-flex justify-content-end">
+           <div style="max-width: 250px;"></div>
+    <div class="d-inline-block text-start">
+        <p class="mb-1">
+            <span class="fw-semibold">PO No:</span>
+            <span>@Model.PoNo</span>
+        </p>
+        <p class="mb-0">
+            <span class="fw-semibold">Date:</span>
+            <span>@Model.PoDate:dd-MM-yyyy</span>
+        </p>
+    </div>
+</div>
+    </div>
+
+                            <table class="w-100 mb-4">
+                                <tr>
+                                    <td class="party-box">
+                                        <strong>V.A.M. Rathinam And Brothers</strong><br>
+                                        35, Fort Main Road,<br>
+                                        Salem – 636002<br>
+                                        <strong>GSTIN:</strong> 33AACFV2120N1ZC
+                                    </td>
+                                    <td class="party-box">
+                                        <strong>@Model.SuppName</strong><br>
+                                        @Model.SuppAdd<br>
+                                        <strong>GST:</strong> @Model.GSTNo
+                                    </td>
+                                </tr>
+                            </table>
+
+           <br />
+           
+       
+    <div class="table-responsives">
+        <table class="table table-bordered text-center align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>S.no</th>
+                    <th>Category</th>
+                    <th>Product</th>
+                    <th>Variant</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.GeneratePdfLst != null && Model.GeneratePdfLst.Any())
+                {
+                    int sl = 1;
+                    foreach (var item in Model.GeneratePdfLst)
+                    {
+                        <tr>
+                            <td>@sl</td>
+                            <td>@item.Category</td>
+                            <td>@item.Product</td>
+                            <td>@item.Variant</td>
+                            <td>@item.Rate</td>
+                            <td>@item.Qty</td>
+                            <td>@item.Total_Amount</td>
+                            
+                        </tr>
+                        sl++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">
+                            No items available
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="media-body m-l-20">
-                                        <h4>V.A.M. Rathinam And Brothers</h4>
-                                        <p>
-                                            35,Fort Main Road,Shevapet,Salem-636002<br>
-                                            <strong>GSTIN/UIN : </strong>33AACFV2120N1ZC<br>
-                                            <strong>State Name: </strong>Tamil Nadu,Code:33<br>
-                                            <span><strong>Contact : </strong>97902 33393</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="media-body m-l-50">
-                                        <h4>@Html.DisplayFor(C => C.SuppName)</h4>
-                                        @Html.DisplayFor(C => C.SuppAdd)<br />
-                                        <strong>GST : </strong>@Html.DisplayFor(C => C.GSTNo)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive invoice-table custom-scrollbar">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Product Category</th>
-                                            <th>Product Name</th>
-                                            <th>Variant</th>
-                                            <th>Qty</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            int i = 0;
-                                            foreach (var item in Model.GeneratePdfLst)
-                                            {
-                                                <tr>
-                                                    <td>@Html.DisplayFor(o => o.GeneratePdfLst[i].Category)</td>
-                                                    <td>@Html.DisplayFor(o => o.GeneratePdfLst[i].Product)</td>
-                                                    <td>@Html.DisplayFor(o => o.GeneratePdfLst[i].Variant)</td>
-                                                    <td>@Html.DisplayFor(o => o.GeneratePdfLst[i].Qty)</td>
-                                                </tr>
-                                                i++;
-                                            }
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 text-end">
-                                    <p>
-                                        For and on behalf of <br />
-                                        <strong>V.A.M.Rathinam & Bros.,</strong> <br /><br />
-                                        <h6>Director / Authorized Signatory</h6>
+                            <hr />
+                            <div class="row mt-5">
+                                <div class="col-md-8">
+                                    <p class="text-muted fst-italic">
+                                        This is a system generated document. Signature not required.
                                     </p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-9">
-                                    <p>This is a computer-generated document. Signing is not needed.</p>
+                                <div class="col-md-4 text-end">
+                                    <p>
+                                        For <strong>V.A.M. Rathinam & Bros.,</strong><br /><br />
+                                        <strong>Authorized Signatory</strong>
+                                    </p>
                                 </div>
-                            </div>
+</div>
+
+
                         }
-                    </div> <!-- invoice -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,13 +198,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-        function printInvoice() {
-      const printContents = document.querySelector('.invoice').innerHTML;
-      const originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-    }
+        
 
     async function downloadPdf() {
         const { jsPDF } = window.jspdf;
@@ -139,7 +208,8 @@
         const imgData = canvas.toDataURL('image/png');
 
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgWidth = pageWidth;
         const pageHeight = 297;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
@@ -157,5 +227,10 @@
         }
 
         pdf.save("PurchaseOrder.pdf");
+    }
+</script>
+<script>
+        function printInvoice() {
+     window.print();
     }
 </script>

@@ -23,7 +23,9 @@ namespace RetailSales.Models
         public string Category { get; set; }
         public string Product { get; set; }
         public string Variant { get; set; }
+        public string Rate { get; set; }
         public string Qty { get; set; }
+        public string Total_Amount { get; set; }
         public string Isvalid { get; set; }
     }
 }

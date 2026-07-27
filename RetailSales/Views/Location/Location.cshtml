@@ -102,22 +102,29 @@
         $('#btnSave').click(function (e) {
             var isValid = true;
 
-            if (document.getElementById("txtLocationname").value == "") {
-                isValid = false;
-                $(txtLocationname).css({
-                    "border": "1px solid red",
-                    "background": "#FFCECE"
-                });
+           var locationInput = document.getElementById("txtLocationname");
+var locationValue = locationInput.value.trim();
 
-                alert("Please Enter Location Name");
-                return false;
-            }
-            else {
-                $(txtLocationname).css({
-                    "border": "",
-                    "background": ""
-                });
-            }
+// update trimmed value back to input
+locationInput.value = locationValue;
+
+if (locationValue === "") {
+    isValid = false;
+
+    $(locationInput).css({
+        "border": "1px solid red",
+        "background": "#FFCECE"
+    });
+
+    alert("Please Enter Location Name");
+    return false;
+} else {
+    $(locationInput).css({
+        "border": "",
+        "background": ""
+    });
+}
+
             
 
             if (isValid == false)
