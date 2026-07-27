@@ -43,7 +43,7 @@
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Company Name<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
 
-                                            @Html.TextBoxFor(C => C.CompanyName, new { @id = "txtCompanyName", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.CompanyName, new { @id = "txtCompanyName", @class = "form-control", @TabIndex = 1 })
 
                                             @Html.HiddenFor(C => C.ID)
                                         </div>
@@ -58,7 +58,7 @@
                                                 {
                                                     @id = "txtMobile",
                                                     @class = "form-control",
-                                                    @TabIndex = 1,
+                                                    @TabIndex = 2,
                                                     @maxlength = "10",
                                                     @type = "tel",
                                                     @onkeypress = "return event.charCode >= 48 && event.charCode <= 57"
@@ -72,7 +72,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Address<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextAreaFor(C => C.Address, new { @id = "txtAddress", @class = "form-control", @TabIndex = 3 })
 
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Country<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.Country, Model.Countrylst, "--Please Select--", new { @id = "ddlCountry", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.Country, Model.Countrylst, "--Please Select--", new { @id = "ddlCountry", @Class = "form-control _select", @TabIndex = 4 })
 
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">State<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.State, Model.Statelst, "--Please Select--", new { @id = "ddlState", @Class = "form-control _select", @TabIndex = 5 })
 
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">City<label class="mandatory">*</label></label>
                                         <div class="col-sm-12">
-                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 1 })
+                                            @Html.DropDownListFor(C => C.City, Model.Citylst, "--Please Select--", new { @id = "ddlCity", @Class = "form-control _select", @TabIndex = 6 })
 
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Email ID<label class="mandatory"></label></label>
 
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @type = "email", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Email, new { @id = "txtEmail", @class = "form-control", @type = "email", @TabIndex = 7 })
 
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Landline No<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Landline, new { @id = "txtLandline", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Landline, new { @id = "txtLandline", @class = "form-control", @TabIndex = 8 })
 
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                     <div class="form-group">
                                         <br /><label for="inputName3" class="col-sm-4 control-label">Website<label class="mandatory"></label></label>
                                         <div class="col-sm-12">
-                                            @Html.TextBoxFor(C => C.Website, new { @id = "txtWebsite", @class = "form-control", @TabIndex = 2 })
+                                            @Html.TextBoxFor(C => C.Website, new { @id = "txtWebsite", @class = "form-control", @TabIndex = 9 })
 
                                         </div>
                                     </div>

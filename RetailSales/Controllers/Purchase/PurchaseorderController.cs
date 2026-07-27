@@ -843,7 +843,9 @@ namespace RetailSales.Controllers.Purchase
                     tda.Category = dtt.Rows[i]["PRODUCT_NAME"].ToString();
                     tda.Product = dtt.Rows[i]["PROD_NAME"].ToString();
                     tda.Variant = dtt.Rows[i]["PRODUCT_VARIANT"].ToString();
+                    tda.Rate = dtt.Rows[i]["Rate"].ToString();
                     tda.Qty = dtt.Rows[i]["QTY"].ToString();
+                    tda.Total_Amount = dtt.Rows[i]["Total_Amount"].ToString();
                     tda.ID = id;
                     tda.Isvalid = "Y";
                     TData.Add(tda);
